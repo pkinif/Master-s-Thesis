@@ -1,0 +1,40 @@
+---
+title: "DataBase Documentation"
+author: "Kinif Pierrick"
+date: "26 mars 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Introduction
+
+The goal of this pdf document is threefold. First it aims at getting a handle on the data. Second it explains how I built the database. Lastly I define each variable. 
+
+# Get a handle on my data
+
+First, let me import my database.For this I use the `read.table` function from the `utils` package  [@HenrikBengtsson2017]. 
+
+```{r}
+library(utils)
+DataBase<-data.frame(read.table("DataBase_26032018.csv", sep = ";", header = TRUE ))
+```
+
+The `dim` function shows that the database contains `r nrow(DataBase)` rows and `r ncol(DataBase)` variables.
+
+```{r}
+dim(DataBase)
+```
+
+Let's have a closer look on the database in using the `names` and `head` function.
+
+```{r}
+names(DataBase)
+head(DataBase)
+```
+
+
+#Reference
