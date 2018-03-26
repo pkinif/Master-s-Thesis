@@ -1,2 +1,5 @@
 # Thesis
-This is a repository containing the project of my master's thesis. Today is 26th March 2018. 
+Project: This repository contains the project of my master's thesis.
+Author : Kinif Pierrick
+Starting Date : 26th March 2018
+
