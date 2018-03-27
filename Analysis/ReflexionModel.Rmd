@@ -9,8 +9,26 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+ > There has been a lack of consensus and norms in empirical studies regarding the selection of the appropriate environmental performance, financial performance, and control variables necessary to examine these relationships (Wagner 2007).
+ 
+# What motivation to study the link between CFP and CEP?
 
-# Deep analysis of [@Chencrosscountrycomparisongreen2018] and  [@LiUnderstandingImpactGreen2017]
+ > From [@Dixon-Fowler2013a] : The primary arguments in this line of research are that positive environmental performance represents a focus on innovation and operational efficiency (e.g., Porter and van der Linde 1995), reflects strong organizational and management capabilities (e.g., Aragon-Correa 1998), enhances firm legitimacy (e.g., Hart 1995), and allows a firm to meet the needs of diverse stakeholders (e.g., Freeman and Evan 1990). First, environmental performance is viewed as a proxy for operational efficiency (e.g., Porter and van der Linde 1995; Starik and Marcus 2000). The ecoefficiency argument is based on the notion that pollution is a waste of resources and represents unnecessary costs for the firm (Porter and van der Linde 1995). Improved efficiency via environmental performance lowers costs and increases innovation leading to competitive advantage (Aragon-Correa 1998;Christmann 2000;Judge and Douglas 1998; Klassen and Whybark 1999; Russo and Fouts 1997; Shrivastava 1995). Second, strong environmental performance might be viewed as a measure of organizational and managerial capabilities including a long-term versus short-term perspective, a focus on continuous innovation and reduced organizational risk (Aragon-Correa 1998; Hart 1995; Sharma 2000; Russo and Fouts 1997; Sharma and Vredenburg 1998; Shrivastava1995). Third, firms with strong environmental performance might reap reputational benefits, which result in social legitimacy (Hart 1995), the ability to attract and retain quality employees (Turban and Greening 1997), and increased sales (Russo and Fouts 1997). Finally, instrumental stakeholder theory posits that to be successful, firms must meet the needs of diverse stakeholder groups, including environmental, employee, and societal groups (Freeman and Evan 1990; Marcus and Geffen 1998; Sharma and Vredenburg 1998).
+
+
+# Why the nexus is controversed?
+
+Citation from [@Dixon-Fowler2013a]:
+
+ > The lack of uniformity in measures has been thought to be a reason for some of the inconsistent findings in the literature (Greiffen and Mahon 1997; Ullman 1985). For example while competitive advantage resulting from reputational benefits of positive environmental perfor mance, reduced risk perceptions, and meeting the needs of stakeholders may be reflected in market-based measures, accounting measures may be better indicators of efficiency and organizational capabilities (Orlitzky et al. 2003). Additionally, some financial performance measures may represent short-term performance gains (e.g., stock-price), whereas others may represent more long-term financial viability (e.g., ROE). Thus, we may expect different outcomes based on the choice of the financial performance variable (i.e., ROA, stock-price, sales growth, market share, etc.). A second methodological issue is that past research has not consistently considered the potential for a lag between a firm’s environmental performance and subsequent financial performance results raising issues of causality. Therefore, we compare studies which measure environmental and financial performance simultaneously to those studies in which the dependent variable, financial performance, is lagged for 1-year or more.
+
++ the fact that scholars also use several indicators for CEP?There are no consensus. Idem control variable. 
+
+Citation from [@Dixon-Fowler2013a]:
+
+ > Environmental performance has also been measured using a variety of objective and non-objective measures using data such as independent databases (e.g., KLD; Turban and Greening 1997), self-report surveys from managers (e.g., Judge and Douglas 1998), and pollution indicators (e.g., TRI: Clarkson et al. 2008) 
+ 
+ # Deep analysis of [@Chencrosscountrycomparisongreen2018] and  [@LiUnderstandingImpactGreen2017]
 
 
 
@@ -23,15 +41,49 @@ The first hypothesis have been tested with T-tests on the impact of each green i
 - Hypothesis 3: The higher the level of green initiatives (Pay Link, Sustainability Themed Committee and Audit), the higher the level of financial performance (Leverage, Profit Margin, Return on Assets, Market to Book Ratio and Assets Turnover).
 
 
-Hypothesis 2 and 3 were tested by regression analysis. Five regression     analysis were conducted to see how green initiatives and green performance impact financial performance using Energy Productivity, Carbon Productivity, Water Productivity, Waste Productivity, Green Revenue, Pay Link, Sustainability Themed Committee and Audit as independent variables, and each financial indicator (Leverage, Profit Margin, Return on Total Assets, Market to Book Ratio and Assets Turnover) as dependent variables
+Hypothesis 2 and 3 were tested by regression analysis. Five regression  analysis were conducted to see how green initiatives and green performance impact financial performance using Energy Productivity, Carbon Productivity, Water Productivity, Waste Productivity, Green Revenue, Pay Link, Sustainability Themed Committee and Audit as independent variables, and each financial indicator (Leverage, Profit Margin, Return on Total Assets, Market to Book Ratio and Assets Turnover) as dependent variables
    
 
 Les auteurs ont donc réalisé 5 régressions pour tester les hypothèses deux et trois. Ils ont pris chaque indicateurs financiers comme VD qu'ils ont régressé sur les variables de green initiatives et performances.
 
-**Dans le contexte d'une panel data analysis, je ne pense pas que ce soit pertinent de faire ainsi. Aussi, quel est l'intérêt d'avoir plusieurs VD? Pourquoi ne pas prendre qu'une seule VD comme indicateur des performances financiers? Et genre ROA, ROE, leverage ect... variable de controle? [@PrzychodzenRelationshipsecoinnovationfinancial2015] **
+**Dans le contexte d'une panel data analysis, je ne pense pas que ce soit pertinent de faire ainsi. Aussi, quel est l'intérêt d'avoir plusieurs VD? Pourquoi ne pas prendre qu'une seule VD comme indicateur des performances financiers? Et genre ROA, ROE, leverage ect... variable de controle? [@PrzychodzenRelationshipsecoinnovationfinancial2015]**
 
 
 # Corporate Financial Performance as Dependent variable
+
+## [@Dixon-Fowler2013a]
+
+[@Dixon-Fowler2013a] carried out a meta analytics review to adress the question "When does it pay to be green?". [@Albertini2013] dit the same and even more in answering this question "How does it pay to be green?". 
+
+*[Dixon-Fowler2013a] provide a meta-analytic review of CEP–CFP literature in which they identify potential moderators to the CEP–CFP link including environmental performance type (reactive vs. proactive), firm characteristics (e.g., large vs.small firm, public vs. private firm, US-based firms vs.international firms, and worst offenders vs. a broader.*
+
+**The following citation come to reinforce my conviction to test the hypotheseaccording to the industry sector.**
+
+ > From Dixon-Fowler2013a]: Regulatory differences for firms in certain industries may also influence the relationship between CEP and CFP. Specifically, it is possible that the ‘‘worst offenders,’’ firms in industries with negative reputations regarding environmental performance, may experience greater media attention and more pressure from NGOs, consumers, and governmental authorities, resulting in the potential for greater gains in organizational legitimacy through better environmental performance (Bansel 2005; Berrone and Gomez-Mejia 2009; Hoffman 2001). Moreover, executives in such high polluting industries, for example, may have less influence over the environmental performance given the nature of the business (Berrone and Gomez-Mejia 2009). A number of existing CEP–CFP studies have focused on the ‘‘worst offenders,’’ particularly high polluting industries (i.e., oil and gas, heavy manufacturing, EPA lists, etc.) (e.g., Bragdon and Marlin 1972; Christmann 2000; Clarkson et al.2008; Freedman and Jaggi 1986).
+ 
+ **Here are results of this meta analytics reveiw :**
+ 
+ 1. Proactive stratgeis do not appear to lead to greater financial return than reactives approaches
+ 
+ 2.CEP appears to influence market-based financial performance measures to a greater extent than other indcators.
+ 
+ 3. sector industry do not affect the CEP-CFP influence
+ 
+ 4. Samples including small firms have a greater affect on the correlation between CEP and CFP than those that only include large firms
+ 
+ 5. The correlation between pricate firms CEP and CFP is not significantly different than the relationship between public firms CEP and CFP
+ 
+ 6. They also examine the moderating effect of methodological issues by examining the different measurement sof environmental performance. Results revealed that the difference in operationalizing environmental performance does not significantly influence the CEP-CFP relationship.
+ 
+ 7. They also found no significant difference in outcome regardless of wheter the dependent variable was lagged or was measured simultaneously.
+ 
+ 8. there is no significant difference in the outcomes when using self-reported measures as opposed to archival data (Q = 1.18, p = 0.28). Studies using self-reported measures of environmental performance do not seem to have a stronger association with firm financial performance (Q = 0.06, p = 0.08)
+
+
+**Conclusion** : 
+
+ > The results of our meta-analysis confirm and extend the findings of Orlitzky et al. (2003) in demonstrating that existing empirical studies support the position that it ‘‘pays to be green.’’However, our findings regarding the moderating influences on the CEP-CFP relationship suggest that future research should investigate additional moderating influences to better understand this relationship. Of particular interest would be relationships that help guide managers in understanding the conditions that lead to the greatest performance benefits when supporting the environment.
+ 
 
 ## [@Albertini2013]
 
@@ -46,27 +98,23 @@ Below is copy-paste only :
   3. Furthermore, CEM involves **organizational processes** measured by other indicators than accounting-based or market-based indexes. Cost advantage generated by pollution control equipment, or differentiation advantage due to green product sales or due to a firm’s good environmental reputation are used to measure financial performance (Christmann, 2000). Hart (Hart, 1995; Hart & Dowell, 2011) and Porter and van der Linde (1995a) have presented the argument of innovation offsets and specific capabilities developed by proactive companies. Green product innovation and environmental process innovation are seen to be good proxies for the evaluation of competitive advantage in natural resource–based view research (Judge & Douglas, 1998).
 
 
-- conclude that the relationship between CEM and CFP is more positive when CFP is measured by accounting-based indicators than when it is measured by other financial performance variables.. The results confirm theoretical inconsistencies (stakeholder mismatching), as the relationship between CEM and CFP is not significant when CFP is measured by market-based indicators. As
-Wood and Jones (1995) argue, there is no theory that explains whether stakeholders would or would not prefer a company that invests money in green issues to be ranked higher in pollution
-control indexes.
+- conclude that the relationship between CEM and CFP is more positive when CFP is measured by accounting-based indicators than when it is measured by other financial performance variables.. The results confirm theoretical inconsistencies (stakeholder mismatching), as the relationship between CEM and CFP is not significant when CFP is measured by market-based indicators. As Wood and Jones (1995) argue, there is no theory that explains whether stakeholders would or would not prefer a company that invests money in green issues to be ranked higher in pollution control indexes.
 
-- Firms that have addressed the environmental issue by
-implementing an EMS need to develop particular organizational capabilities. This type of environmental management transforms the organization, modifying manufacturing processes and integrating environmental management into day-to-day operations. Environmental performance improvement becomes an objective of a firm’s strategy, just as financial profitability is. The goal
-of an environmentally proactive strategy is to significantly reduce pollution through well-defined environmental objectives rather than to merely control emissions through end-of-pipe 
-ments. This kind of strategy is people-intensive and depends on tacit skill development through employee involvement (Hart, 1995; Hart & Dowell, 2011).
+- Firms that have addressed the environmental issue by implementing an EMS need to develop particular organizational capabilities. This type of environmental management transforms the organization, modifying manufacturing processes and integrating environmental management into day-to-day operations. Environmental performance improvement becomes an objective of a firm’s strategy, just as financial profitability is. The goal of an environmentally proactive strategy is to significantly reduce pollution through well-defined environmental objectives rather than to merely control emissions through end-of-pipe ments. This kind of strategy is people-intensive and depends on tacit skill development through employee involvement (Hart, 1995; Hart & Dowell, 2011).
 
 
- > In this context it seems that “How does it pay to be green?” is a more accurate question than “Does it pay to be green?” when addressing the consequences of CEM on CFP (Kallio & Nordberg,
-2006). Our results confirm that the organization and environment-related research is today legitimate without the need to find win–win solutions.
+ > In this context it seems that “How does it pay to be green?” is a more accurate question than “Does it pay to be green?” when addressing the consequences of CEM on CFP (Kallio & Nordberg, 2006). Our results confirm that the organization and environment-related research is today legitimate without the need to find win–win solutions.
 
-** ATTENTION ** *Albertini 2013 have inserted an appendix at the end of her paper. This one giver a strong overview of studies included in the meta-analyses. Therefore I can know for each papers which indicators they have used for both CEP and CFP !!!! =)* 
+**ATTENTION** 
 
-  ** Based on this table** : I can observe that some papers are interesting for my research. A lot used ROA and tobin's Q.
+*Albertini 2013 have inserted an appendix at the end of her paper. This one giver a strong overview of studies included in the meta-analyses. Therefore I can know for each papers which indicators they have used for both CEP and CFP !!!!* 
+
+  **Based on this table** : I can observe that some papers are interesting for my research. A lot used ROA and tobin's Q.
   
 
 - **[@Berrone2009]** used ROE and Tobin's Q as CFP indicators and both chemical emission and pollution level (waste generation level) as indicators of CEP. They made a longitudinal study (i.e. Fixed-Effects and Random effect Panel Data Analyses  depending on the hypotheses) with a sample of 469 US firms giving a total of 2088 observations. They also used firm size as a control variable.
 
-- ** [@Busch2011] ** --> do not have acces
+- **[@Busch2011]** --> do not have acces
 
 - **[@Sulkowski2011]** --> do not have access, I have asked for it, let's wait a bit.
 
@@ -81,13 +129,13 @@ a sample of 179 publicly held Canadian firms and use the measures of CSP provide
 
 - **[@King2001]** : Explore the link between CFP and CEP in analyzing 652 U.S. manufacturing firms over the time period 1987 to 1996 (i.e. longitudinal study - OLS, fixed effect model and random). Financial indicators are ROA and Tobin's Q. Environmental indicators are TRI and pollution reduction.
 
-  > **Dependent Variable**... In accordance with more recent "pays to be green" studies, we use a simplified measure of Tobin's q (Dowell, Hart, & Yeung 2000).We calculate Tobin's q  by dividing the sum of firm equity value, book value of long-term debt, and net current liabilities by  the book value of total assets.All financial data were obtained from the Compustat database.
+  > **Dependent Variable** ... In accordance with more recent "pays to be green" studies, we use a simplified measure of Tobin's q (Dowell, Hart, & Yeung 2000).We calculate Tobin's q  by dividing the sum of firm equity value, book value of long-term debt, and net current liabilities by  the book value of total assets.All financial data were obtained from the Compustat database.
  
-  > **Variable control: ** These measures include 1) the company's size (Firm Size) calculated as the log of the company’s assets, 2) the capital intensity of a firm (Capital Intensity) calculated by dividing capital expenditures by sales,  3) the annual growth of the firm (Growth) calculated as the percentage change in sales, 4) the degree to which the firm is leveraged (Leverage) divided as the ratio of its debt to assets, and 5) the R&D intensity (R&D Intensity) calculated by dividing research & development expenses by total assets. 
+  > **Variable control:** These measures include 1) the company's size (Firm Size) calculated as the log of the company’s assets, 2) the capital intensity of a firm (Capital Intensity) calculated by dividing capital expenditures by sales,  3) the annual growth of the firm (Growth) calculated as the percentage change in sales, 4) the degree to which the firm is leveraged (Leverage) divided as the ratio of its debt to assets, and 5) the R&D intensity (R&D Intensity) calculated by dividing research & development expenses by total assets. 
 
  > **Conclusion**: In this paper, we further explore whether it "pays to be green".  We use longitudinal data and statistical methods that reduce the potential for unobserved differences among firms to create a misleading association between environmental and financial performance.  We also test to see whether pollution reduction causes financial gain.  Table 5 presents a summary of these results.  We find evidence of an association between pollution reduction and financial gain, but we cannot prove the direction of causality.  We also show that firms in cleaner industries have higher Tobin's q, but we are unable to rule out possible confounding effects from fixed firm attributes.  Moreover, we cannot show that firms that move to cleaner industries improve their financial performance.  
  
- ** I think I should really test if industry sector impact the relationship between CFP and CEP**
+ **I think I should really test if industry sector impact the relationship between CFP and CEP**
  
 - **[@Dowell2000]** : Longitudinal study with S&P 500 listed companies from 1994 to 1997. Study the link between CFP(i.e; tobin's q) and CEP (i.e. IRRC Corporate environmental profile data) with some control variables (i.e. capital structure, R&D and avertising expenditues, multinationality, leverage, firm size). 
 
@@ -149,10 +197,10 @@ Thus [@Ludecadedebatenexus2014] have shown that 21 empirical studies of their sa
 
 - [@PrzychodzenRelationshipsecoinnovationfinancial2015] use Fiancial leverage (i.e. debt ratio as control variale) to explore four types of eco-innovation (product, process, market and sources of supply) and their impact on accounting-based measurers of financial performance using the data on Polish and Hungarian publicly traded companies from the years 2006e2013
 
-- [@Delmas2015] use  includes several financial variables to control for sources of firm-level heterogeneity, in line with previous studies of financial and environmental performance (Dowell et al., 2000; Elsayed & Paton, 2005; King & Lenox, 2002). Firm total assets account for variation in firm size, while leverage is approximated by the ratio of total debt to total assets. Growth is defined as the annual change in sales divided by total sales and controls for variations in production (King & Lenox, 2002). Capital expenditures divided by total sales controls for capital intensity (Elsayed & Paton, 2005; King & Lenox, 2002). Due to a prohibitively large number of missing values for research and development expenditures in the Compustat database, this variable was not included in our analysis (see McWilliams & Siegel, 2000). ** To correct for skewed distributions, the financial control variables are transformed using the natural logarithm. **
+- [@Delmas2015] use  includes several financial variables to control for sources of firm-level heterogeneity, in line with previous studies of financial and environmental performance (Dowell et al., 2000; Elsayed & Paton, 2005; King & Lenox, 2002). Firm total assets account for variation in firm size, while leverage is approximated by the ratio of total debt to total assets. Growth is defined as the annual change in sales divided by total sales and controls for variations in production (King & Lenox, 2002). Capital expenditures divided by total sales controls for capital intensity (Elsayed & Paton, 2005; King & Lenox, 2002). Due to a prohibitively large number of missing values for research and development expenditures in the Compustat database, this variable was not included in our analysis (see McWilliams & Siegel, 2000). **To correct for skewed distributions, the financial control variables are transformed using the natural logarithm.**
 
 
-** Pourquoi parfois ROA = Control Variable et parfois = VD? Trouver justification de pourquoi j'utilise ROA en VD plutot que VC? Ou inverse? ***
+**Pourquoi parfois ROA = Control Variable et parfois = VD? Trouver justification de pourquoi j'utilise ROA en VD plutot que VC? Ou inverse?**
 
 - As control variables, in all the models financial leverage, sales growth, firm size, country, industry and year dummies have been included. Given that firms with high indebtedness experience significant financial constraints and, ultimately, deliver inferior CFP (Gleason et al., 2000), the leverage ratio is included in the present study as a proxy of financial distress (estimated as the ratio of total debt to total assets). There is also a vast amount of research that suggests that sales growth has a positive influence on firm profitability (Delmar et al., 2013). The log-difference of net sales for firm i between time t and t-1 is adopted as a proxy of the sales growth (García-Manjon and Romero-Merino, 2012). The natural logarithm of total assets has been included in all the regressions to control for the effect of firm size (Becker-Blease et al., 2010). Country, industry and year dummies have been included in order to capture the heterogeneity across different countries, industrial sectors and time periods. [@ManriqueAnalyzingEffectCorporate2017]
  
@@ -164,8 +212,7 @@ Thus [@Ludecadedebatenexus2014] have shown that 21 empirical studies of their sa
 
 - From [@Albertini2013] : A number of studies have proposed conceptual frameworks or explanations for the existence of a causal relationship between CEM and CFP. Numerous studies have suggested that the relationship is positive (Al Tuwaijri, Christensen, & Hughes, 2004; Hart & Ahuja, 1996; Judge & Douglas, 1998; Montabon, Sroufe, & Narisimhan, 2007; Russo & Fouts, 1997; Sroufe, 2003; Stanwick & Stanwick, 1999) following Porter’s “win-win” argument and natural resource–based view theory (Hart, 1995; Hart & Dowell, 2011). However, other research has concluded that CFP is negatively associated with CEM over a short period of time (Blacconiere & Patten, 1994; Jaggi & Freedman, 1992); and with proactive environmental strategies over a longer period of time (Cordeiro & Sarkis, 1997; McPeak, Devirian, & Seaman, 2010; Yu, Ting, & Wu, 2009). Yet other studies have established that the relationship between CEM and CFP cannot be proved because of the difficulties of measuring the environmental management consequences on profitability (Collison, Lorraine, & Power, 2004; King & Lenox, 2001; Murray, Sinclair, Power, & Gray, 2006).
 
-> Even though the results of previous empirical research remain contradictory, the relationship between CEM and CFP seems to be positive. Therefore the research question worth studying is
-“When does it pay to be green?” rather than “Does it pay to be green?” [@Albertini2013]
+> Even though the results of previous empirical research remain contradictory, the relationship between CEM and CFP seems to be positive. Therefore the research question worth studying is “When does it pay to be green?” rather than “Does it pay to be green?” [@Albertini2013]
 
 
 
