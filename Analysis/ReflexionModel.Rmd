@@ -52,11 +52,24 @@ Thus [@Ludecadedebatenexus2014] have shown that 21 empirical studies of their sa
 
 
  > We use ROA and Tobin’s q to approximate short- and long-term perspectives of financial performance, respectively. We calculate these variables based on financial information provided by Compustat. ROA is a standard accounting measure of financial performance, which is calculated by dividing earnings before interest by total assets (King & Lenox, 2002). Tobin’s q is defined as the ratio of a firm’s market value to the replacement cost of its assets, which this study approximates using the method developed in Chung and Pruitt (1994), which we describe in Appendix A. Tobin’s q incorporates the market value of firms and is thus able to reflect intangible attributes, which are not captured by an accounting-based measure like ROA. ROA and Tobin’s q provide complementary information regarding a firm’s financial performance, which allows us to differentially evaluate the effect of environmental performance. Whereas the former demonstrates how efficiently a firm generates profit per unit of production,the latter reflects intangible measures of performance, like investor confidence and reputation (Dowell et al., 2000; King & Lenox, 2002; Konar & Cohen, 2001). In this sense, Tobin’s q can incorporate how robust the market interprets a firm to be in the face of future climate legislation, whereas ROA only acknowledges a firm’s GHG emissions indirectly via the efficiency of its use in producing earnings (Busch & Hoffmann, 2011). Both measures have been used in empirical research into the effect of environmental performance on financial performance (Dowell et al., 2000; Elsayed & Paton, 2005; King & Lenox, 2002). However, to the best of our knowledge, only King and Lenox (2002) and Nakao, Amano, Matsumura, Genba, and Nakano (2007) used both measures in the same study. Notably, both studies uncovered substantively equivalent effects of environmental performance on Tobin’s q and on ROA. Compared to ROA, calculating Tobin’s q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a discrepancy in the number of observations for each dependent variable in this study, resulting in asymmetric sample spaces (see Table 4). To check whether this introduces sample bias, an identical analysis was conducted on the set of observations common to both dependent variables. The results were robust to both sample spaces (results available on request from the authors). [@Delmas2015]
+
+
+ > Concerning dependent variable, extent research on CFP widely uses either market-based indicators that capture firm’s current and future gains (Tobin’s q, market capitalization, stock market performance), and/or accounting-based indicators (i.e., return on equity (ROE), ROA, return on sales (ROS)) that capture a firm’s current ability to create value by using its assets (Sanchez-Ballesta and García-Meca, 2007). Tobin’s q and ROE have been used to account for both market- and accounting-based measures of CFP. Tobin’s q is estimated as the ratio between (book value of total assets e book value of shareholder’s equity þ market value of shareholder’s equity) and (book value of total assets). ROE is defined as (net income e preferred dividend requirements) divided by the average of last year’s and current year’s common equity. To reduce the weight of extreme outliers, Tobin’s q and ROE have been winsorized at the 5th and 95th percentiles.[@ManriqueAnalyzingEffectCorporate2017]
+ 
  
  
  
  
 # Corporate Social Performance
+
+## Corporate Environmental Management
+
+- [@Albertini2013] considers corporate environmental management (CEM) as a concept that embraces environmental management, environmental disclosure, and environmental performance.
+
+ > ... as research in the area of environmental management has increased, various proxies have been utilized to measure CEM (Walls, Phan, & Berrone, 2011; Yu et al., 2009). Most studies have used negative externalities (Earnhart & Lizal, 2007; Hart & Ahuja, 1996); some have used data reported from the Toxic Release Inventory (Clarkson & Li, 2004; Dooley & Lerner, 1994; Hamilton, 1995); some have used voluntary participation in environmental programs (Dowell, Hart, & Yeung, 2000; Khanna & Damon, 1999); yet others have used rewards or similar recognition (Klassen & McLaughlin, 1996) or environmental disclosure (Blacconiere & Northcut, 1997; Cohen, Fenn, & Konar, 1997). These different proxies focus on specific goals of CEM practices such as maintaining legitimacy, conforming to environmental regulation, or improving environmental performance. Thus, a close examination of research findings is critical for furthering knowledge in this area.[@Albertini2013]
+ 
+ 
+
 
 ## Definition of CSP and link with green performance and sustainable development? 
 
@@ -75,6 +88,15 @@ Thus [@Ludecadedebatenexus2014] have shown that 21 empirical studies of their sa
 
 ** Pourquoi parfois ROA = Control Variable et parfois = VD? Trouver justification de pourquoi j'utilise ROA en VD plutot que VC? Ou inverse? ***
 
+- As control variables, in all the models financial leverage, sales growth, firm size, country, industry and year dummies have been included. Given that firms with high indebtedness experience significant financial constraints and, ultimately, deliver inferior CFP (Gleason et al., 2000), the leverage ratio is included in the present study as a proxy of financial distress (estimated as the ratio of total debt to total assets). There is also a vast amount of research that suggests that sales growth has a positive influence on firm profitability (Delmar et al., 2013). The log-difference of net sales for firm i between time t and t-1 is adopted as a proxy of the sales growth (García-Manjon and Romero-Merino, 2012). The natural logarithm of total assets has been included in all the regressions to control for the effect of firm size (Becker-Blease et al., 2010). Country, industry and year dummies have been included in order to capture the heterogeneity across different countries, industrial sectors and time periods. [@ManriqueAnalyzingEffectCorporate2017]
+ 
+
+# Relation between CEM/CSP and CFP
+
+- From [@Albertini2013] : A number of studies have proposed conceptual frameworks or explanations for the existence of a causal relationship between CEM and CFP. Numerous studies have suggested that the relationship is positive (Al Tuwaijri, Christensen, & Hughes, 2004; Hart & Ahuja, 1996; Judge & Douglas, 1998; Montabon, Sroufe, & Narisimhan, 2007; Russo & Fouts, 1997; Sroufe, 2003; Stanwick & Stanwick, 1999) following Porter’s “win-win” argument and natural resource–based view theory (Hart, 1995; Hart & Dowell, 2011). However, other research has concluded that CFP is negatively associated with CEM over a short period of time (Blacconiere & Patten, 1994; Jaggi & Freedman, 1992); and with proactive environmental strategies over a longer period of time (Cordeiro & Sarkis, 1997; McPeak, Devirian, & Seaman, 2010; Yu, Ting, & Wu, 2009). Yet other studies have established that the relationship between CEM and CFP cannot be proved because of the difficulties of measuring the environmental management consequences on profitability (Collison, Lorraine, & Power, 2004; King & Lenox, 2001; Murray, Sinclair, Power, & Gray, 2006).
+
+> Even though the results of previous empirical research remain contradictory, the relationship between CEM and CFP seems to be positive. Therefore the research question worth studying is
+“When does it pay to be green?” rather than “Does it pay to be green?” [@Albertini2013]
 
 
 
