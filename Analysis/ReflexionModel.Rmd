@@ -77,7 +77,20 @@ ments. This kind of strategy is people-intensive and depends on tacit skill deve
 - **[@Wu2010]** --> do not have access, I have asked for it, let's wait a bit.
 
 - **[@Makni2009]** --> This study assesses the causal relationship between corporate social performance (CSP) and financial performance (FP). We perform our empirical analyses on
-a sample of 179 publicly held Canadian firms and use the measures of CSP provided by Canadian Social Investment Databasefor   the   years   2004   and   2005.   Using   the ‘‘Granger  causality’’  approach,  we  find  no  significant relationship between a composite measure of a firm’s CSP and  FP,  except  for  market  returns.  However,  using individual measures of CSP, we find a robust significant negative impact of the environmental dimension of CSP and three measures of FP, namely return on assets, return on  equity,  and  market  returns. They used 3 control variable : size, industry sector and risk
+a sample of 179 publicly held Canadian firms and use the measures of CSP provided by Canadian Social Investment Databasefor   the   years   2004   and   2005.   Using   the ‘‘Granger  causality’’  approach,  we  find  no  significant relationship between a composite measure of a firm’s CSP and  FP,  except  for  market  returns.  However,  using individual measures of CSP, we find a robust significant negative impact of the environmental dimension of CSP and three measures of FP, namely return on assets, return on  equity,  and  market  returns. They used 3 control variable : size, industry sector and risk.
+
+- **[@King2001]** : Explore the link between CFP and CEP in analyzing 652 U.S. manufacturing firms over the time period 1987 to 1996 (i.e. longitudinal study - OLS, fixed effect model and random). Financial indicators are ROA and Tobin's Q. Environmental indicators are TRI and pollution reduction.
+
+  > **Dependent Variable**... In accordance with more recent "pays to be green" studies, we use a simplified measure of Tobin's q (Dowell, Hart, & Yeung 2000).We calculate Tobin's q  by dividing the sum of firm equity value, book value of long-term debt, and net current liabilities by  the book value of total assets.All financial data were obtained from the Compustat database.
+ 
+  > **Variable control: ** These measures include 1) the company's size (Firm Size) calculated as the log of the company’s assets, 2) the capital intensity of a firm (Capital Intensity) calculated by dividing capital expenditures by sales,  3) the annual growth of the firm (Growth) calculated as the percentage change in sales, 4) the degree to which the firm is leveraged (Leverage) divided as the ratio of its debt to assets, and 5) the R&D intensity (R&D Intensity) calculated by dividing research & development expenses by total assets. 
+
+ > **Conclusion**: In this paper, we further explore whether it "pays to be green".  We use longitudinal data and statistical methods that reduce the potential for unobserved differences among firms to create a misleading association between environmental and financial performance.  We also test to see whether pollution reduction causes financial gain.  Table 5 presents a summary of these results.  We find evidence of an association between pollution reduction and financial gain, but we cannot prove the direction of causality.  We also show that firms in cleaner industries have higher Tobin's q, but we are unable to rule out possible confounding effects from fixed firm attributes.  Moreover, we cannot show that firms that move to cleaner industries improve their financial performance.  
+ 
+ ** I think I should really test if industry sector impact the relationship between CFP and CEP**
+ 
+- **[@Dowell2000]** : Longitudinal study with S&P 500 listed companies from 1994 to 1997. Study the link between CFP(i.e; tobin's q) and CEP (i.e. IRRC Corporate environmental profile data) with some control variables (i.e. capital structure, R&D and avertising expenditues, multinationality, leverage, firm size). 
+
 
 
 ## Ludecasdedebatnexus2014
