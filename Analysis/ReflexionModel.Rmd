@@ -1,0 +1,81 @@
+---
+title: "ReflexionModel"
+author: "Kinif Pierrick"
+date: "27 mars 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Deep analysis of [@Chencrosscountrycomparisongreen2018] and  [@LiUnderstandingImpactGreen2017]
+
+
+
+- Hypothesis 1: The higher the level of green initiatives (Pay Link, Sustainability Themed Committee and Audit), the higher the level of green performance (Energy Productivity, Carbon Productivity, Water Productivity, Waste Production and Green Revenue).
+
+The first hypothesis have been tested with T-tests on the impact of each green initiative on green performance
+
+- Hypothesis 2: The higher the level of green performance (Energy Productivity, Carbon Productivity, Water Productivity, Waste Production and Green Revenue), the higher the level of financial performance (Debit Ratio, Profit Margin, Return on Assets, Market to Book Ratio and Assets Turnover).
+
+- Hypothesis 3: The higher the level of green initiatives (Pay Link, Sustainability Themed Committee and Audit), the higher the level of financial performance (Leverage, Profit Margin, Return on Assets, Market to Book Ratio and Assets Turnover).
+
+
+Hypothesis 2 and 3 were tested by regression analysis. Five regression     analysis were conducted to see how green initiatives and green performance impact financial performance using Energy Productivity, Carbon Productivity, Water Productivity, Waste Productivity, Green Revenue, Pay Link, Sustainability Themed Committee and Audit as independent variables, and each financial indicator (Leverage, Profit Margin, Return on Total Assets, Market to Book Ratio and Assets Turnover) as dependent variables
+   
+
+Les auteurs ont donc réalisé 5 régressions pour tester les hypothèses deux et trois. Ils ont pris chaque indicateurs financiers comme VD qu'ils ont régressé sur les variables de green initiatives et performances.
+
+**Dans le contexte d'une panel data analysis, je ne pense pas que ce soit pertinent de faire ainsi. Aussi, quel est l'intérêt d'avoir plusieurs VD? Pourquoi ne pas prendre qu'une seule VD comme indicateur des performances financiers? Et genre ROA, ROE, leverage ect... variable de controle? [@PrzychodzenRelationshipsecoinnovationfinancial2015] **
+
+
+# Corporate Financial Performance as Dependent variable
+
+- [@Ludecadedebatenexus2014] have presented a critical review of relevant empirical research articles on the nexus between corporate social performance (i.e. CSP) and corportate financial performance (i.e. CFP) published during the ten-year period from 2002 to 2011. They decomposed both variables into several group classification and summarized the frequencies of appearance of control variables.CFP had been subdivided into the three-group classification of [@Orlitzky2003], namely :
+
+
+1. **the accounting-based measure** which consists of profitability measures, asset utilization (e.g. Return on asset, Asset Turnover) and growth measures [@Orlitzky2003]. 
+
+2. **the market-based measure** reflect the notion that shareholders are a primary stackeholder group [@Cochran1984] and contains several measures such as price per share, share price appreciation, stock performance, market return, market value to book value and others [@VanBeurden2008].
+
+3. and **the perceptual measure** of CFP which ask survey respondents to provide subjective estimates of firms' financial performance. 
+
+ > Amongst the three generic CFP measures, the accounting-based measures are objective and audited, market-based measures are partly objective, and perceptual are largely subjective based on the survey respondents perceptions [@Ludecadedebatenexus2014].
+
+ > ... weaknesses in one type of performance measure can be alleviated to some extent by the use of another [@McWilliams2006]
+
+Thus [@Ludecadedebatenexus2014] have shown that 21 empirical studies of their sample, namely 81 papers, have used two types of CFP measures in their own paper. 
+
+- [@Delmas2015]: Existing studies commonly use accounting- or market-based measures of financial performance interchangeably (Margolis et al., 2007; Peloza, 2009). However, both methods are not perfect substitutes. Accounting measures are often used to evaluate initiatives that affect the firm in the short term, such as those that reduce operating costs (Peloza, 2009). In contrast, market-based measures capture investors’ long-term perceptions of the future profitability of a firm’s current or recent management practices (Dowell et al., 2000; King & Lenox, 2002; Konar & Cohen, 2001).
+
+
+ > We use ROA and Tobin’s q to approximate short- and long-term perspectives of financial performance, respectively. We calculate these variables based on financial information provided by Compustat. ROA is a standard accounting measure of financial performance, which is calculated by dividing earnings before interest by total assets (King & Lenox, 2002). Tobin’s q is defined as the ratio of a firm’s market value to the replacement cost of its assets, which this study approximates using the method developed in Chung and Pruitt (1994), which we describe in Appendix A. Tobin’s q incorporates the market value of firms and is thus able to reflect intangible attributes, which are not captured by an accounting-based measure like ROA. ROA and Tobin’s q provide complementary information regarding a firm’s financial performance, which allows us to differentially evaluate the effect of environmental performance. Whereas the former demonstrates how efficiently a firm generates profit per unit of production,the latter reflects intangible measures of performance, like investor confidence and reputation (Dowell et al., 2000; King & Lenox, 2002; Konar & Cohen, 2001). In this sense, Tobin’s q can incorporate how robust the market interprets a firm to be in the face of future climate legislation, whereas ROA only acknowledges a firm’s GHG emissions indirectly via the efficiency of its use in producing earnings (Busch & Hoffmann, 2011). Both measures have been used in empirical research into the effect of environmental performance on financial performance (Dowell et al., 2000; Elsayed & Paton, 2005; King & Lenox, 2002). However, to the best of our knowledge, only King and Lenox (2002) and Nakao, Amano, Matsumura, Genba, and Nakano (2007) used both measures in the same study. Notably, both studies uncovered substantively equivalent effects of environmental performance on Tobin’s q and on ROA. Compared to ROA, calculating Tobin’s q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a discrepancy in the number of observations for each dependent variable in this study, resulting in asymmetric sample spaces (see Table 4). To check whether this introduces sample bias, an identical analysis was conducted on the set of observations common to both dependent variables. The results were robust to both sample spaces (results available on request from the authors). [@Delmas2015]
+ 
+ 
+ 
+ 
+# Corporate Social Performance
+
+## Definition of CSP and link with green performance and sustainable development? 
+
+## CSP classification
+
+
+
+# Control Variables
+
+- As seen from Table 4, size, industry, capital structure, financial return (ROA, ROE, ROS and EPS) and risk are the top five most frequently used control variables in explaining the CSP-CFP relationship. This largely confirms Andersen and Dejoy's (2011) summary that size, industry, risk, R&D and advertising expenses are the most commonly used control variables.
+
+- [@PrzychodzenRelationshipsecoinnovationfinancial2015] use Fiancial leverage (i.e. debt ratio as control variale) to explore four types of eco-innovation (product, process, market and sources of supply) and their impact on accounting-based measurers of financial performance using the data on Polish and Hungarian publicly traded companies from the years 2006e2013
+
+- [@Delmas2015] use  includes several financial variables to control for sources of firm-level heterogeneity, in line with previous studies of financial and environmental performance (Dowell et al., 2000; Elsayed & Paton, 2005; King & Lenox, 2002). Firm total assets account for variation in firm size, while leverage is approximated by the ratio of total debt to total assets. Growth is defined as the annual change in sales divided by total sales and controls for variations in production (King & Lenox, 2002). Capital expenditures divided by total sales controls for capital intensity (Elsayed & Paton, 2005; King & Lenox, 2002). Due to a prohibitively large number of missing values for research and development expenditures in the Compustat database, this variable was not included in our analysis (see McWilliams & Siegel, 2000). ** To correct for skewed distributions, the financial control variables are transformed using the natural logarithm. **
+
+
+** Pourquoi parfois ROA = Control Variable et parfois = VD? Trouver justification de pourquoi j'utilise ROA en VD plutot que VC? Ou inverse? ***
+
+
+
+
+#References

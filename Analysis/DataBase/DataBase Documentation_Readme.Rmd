@@ -2,7 +2,7 @@
 title: "DataBase Documentation"
 author: "Kinif Pierrick"
 date: "26 mars 2018"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -12,7 +12,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-The goal of this pdf document is threefold. First it aims at getting a handle on the data. Second it explains how I built the database. Lastly I define each variable. 
+The goal of this pdf document is threefold. Firstly I give a description of the database and explain how I built it. Secondly it aims at getting a handle on the data. Lastly I describe each variables. 
+
+# Database Description
+
+
 
 # Get a handle on my data
 
@@ -29,11 +33,11 @@ The `dim` function shows that the database contains `r nrow(DataBase)` rows and 
 dim(DataBase)
 ```
 
-Let's have a closer look on the database in using the `names` and `head` function.
+Let's have a closer look on the database in using the `names` and `head` function. The first one lists name of each variable whereas the second one returns the first lines of the database. 
 
-```{r}
+```{r echo=FALSE}
 names(DataBase)
-head(DataBase)
+head(DataBase[, 1:5])
 ```
 
 

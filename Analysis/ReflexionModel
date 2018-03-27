@@ -1,0 +1,20 @@
+Hypothesis 1: The higher the level of green initiatives (Pay Link, Sustainability Themed Committee and Audit), the higher the level of green performance (Energy Productivity, Carbon Productivity, Water Productivity, Waste Production and Green Revenue).
+
+    --> T-tests on the impact of each green initiative on green performance
+
+Hypothesis 2: The higher the level of green performance (Energy Productivity, Carbon Productivity, Water Productivity, Waste Production and Green Revenue), the higher the level of financial performance (Debit Ratio, Profit Margin, Return on Assets, Market to Book Ratio and Assets Turnover).
+
+Hypothesis 3: The higher the level of green initiatives (Pay Link, Sustainability Themed Committee and Audit), the higher the level of financial performance (Leverage, Profit Margin, Return on Assets, Market to Book Ratio and Assets Turnover).
+
+
+   Hypothesis 2 and 3 were tested by regression analysis. Five regression     analysis were conducted to see how green initiatives and green performance impact financial performance using Energy Productivity, Carbon Productivity, Water Productivity, Waste Productivity, Green Revenue, Pay Link, Sustainability Themed Committee and Audit as independent variables, and each financial indicator (Leverage, Profit Margin, Return on Total Assets, Market to Book Ratio and Assets Turnover) as dependent variables
+   
+   
+
+Les auteurs ont donc réalisé 5 régressions pour tester les hypothèses deux et trois. Ils ont pris chaque indicateurs financiers comme VD qu'ils ont régressé sur les variables de green initiatives et performances.
+
+Dans le contexte d'une panel data analysis, je ne pense pas que ce soit pertinent de faire ainsi. Aussi, quel est l'intérêt d'avoir plusieurs VD? Pourquoi ne pas prendre qu'une seule VD comme indicateur des performances financiers? Et genre ROA, ROE, leverage ect... variable de controle? Pryzdoken et al. 2015
+
+
+[@Delmas2015] 
+
