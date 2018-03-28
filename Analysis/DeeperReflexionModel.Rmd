@@ -88,7 +88,7 @@ The final sample includes 3490 publicly-traded firms from 58 countries and 19 in
 
 4. Leverage Ratio influence negatively CFP
 
-5. Firm size is negatively associated with CFP and this effect is more pronoucef for Tobin's Q than for ROE
+5. Firm size is negatively associated with CFP and this effect is more pronounced for Tobin's Q than for ROE
 
 
 
@@ -99,5 +99,82 @@ The final sample includes 3490 publicly-traded firms from 58 countries and 19 in
 
 #@Delmas2015
 
+##Variables
+
+**Dependent Variables:** 
+
+CFP indicators :
+
+1. ROA (Y1)
+
+2. Tobin's Q (Y2)
+
+**Independent Variables:**
+
+CEP indicators: 
+
+1. Total greenhouse gas emissions (X1)
+
+2. Water abstraction (X2)
+
+3. General Waste (X3)
+
+4. Volatile Organic compounds (X4)
+
+5. Heavy metals (X5)
+
+6. Natural resources (X6)
+
+*Nb: Authors applied log transformations to all of the 6 IV to adjust for the skewed distribution.*
+
+
+**Control Variables:**
+
+1. KLD concerns (X7)
+
+2. KLD strengths (X8)
+
+3. Disclosure (X9)
+
+4. Growth (X10)
+
+5. Leverage (X11)
+
+6. Capital Intensity (X12)
+
+7. Firm size (X13)
+
+*Nb: X10--> X13 is log*
+
+
+##Hypotheses
+
+**H1:** All else equals, the more a firm decreases GHG emissions the lower its short-term financial performance (i.e. ROA)
+
+**H2:** All else equals, the more a firm decreases carbon emissions the more positive the investors' perceptions of future market performance (i.e. Tobin's Q)
+
+
+##DataBase
+
+1095 US firms corporations from 2004 to 2008
+
+##Methodology
+
+- Panel data analyses with fixed effect model (i.e. Haumsman test rejected the random effects model in favor of the fixed effects model for both Y1 and Y2)
+
+- Statistics descriptive (meann sd, min, max + variable description) see table 1 and table 3 (by industry sector) **Note to myself: it could be interesting to take the same layout than table 1 for my thesis**
+
+- Matrix of correlation
+
+- They made 2 models for their fixed effect Regression Analysis (i.e. one for each dependent variable). 
+
+**Note to myself: I could make a mix between the methodology of dalmas et al2015 and the one of Miroshnychenko2017, namely in my case it will be 6 models: model 1; Regress only green performance variables ( + cv's) on CFP ROA, model 2; Regress only green performance variables ( + cv's) on CFP Tobin's Q, model 3; Regress only green initiatives variables ( + cv's) on CFP ROA, model 4; regress only green initiatives variables ( + cv's) on CFP tobin's q, model 5; Regress all variables ( + cv's) on CFP ROA and finaly model 6; regress all variables ( + cv's) on CFP Tobin's Q.** 
+
+
+##Results
+
+- Investing in proactive environmental strategies might be costly in the short term, yet profitable in the long term
+
+- 
 #References
 
