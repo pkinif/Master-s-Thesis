@@ -1,0 +1,103 @@
+---
+title: "DeeperReflexionModel"
+author: "Kinif Pierrick"
+date: "28 mars 2018"
+output: pdf_document
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+#@MiroshnychenkoGreenpracticesfinancial2017
+
+## Variables
+
+**Dependent Variables:** Two indicators of corporate financial performance (CFP) :
+
+1. Tobin's Q (Y1) 
+
+2. ROE (Y2)
+
+
+**Independent variables:** Four indicators of Corporate Environmental Performance (CEP) :
+
+1. Internal Pollution Prevention index (X1)
+
+2. Green Supply Chain Management Index (X2)
+
+3. Green Product Index (X3)
+
+4. ISO 14001 (X4)
+
+**Control Variables:** 
+
+1. Financial leverage (X5)
+
+2. Sales Growth (x6)
+
+3. Firm size (X7)
+
+4. Country (X8)
+
+5. Industry Sector (X9)
+
+6. Year dummies 
+
+
+##DataBase
+
+The final sample includes 3490 publicly-traded firms from 58 countries and 19 industrial sectors covering the period from 2002 till 2014 inclusively
+
+
+##Hypotheses
+
+**H1:** Internal PP practices have a positive impact on CFP
+
+**H2:** Green Supply Chain Management have a positive impact on CFP
+
+**H3:** Green Product Development Practices have a positive impact on CFP
+
+**H4:** ISO 14001 adoption has a positive impact on CFP
+
+##Methodology
+
+![Econometric Model](Miroshnychenko2017EconometricModel.JPG)
+
+
+- **OLS estimators** has been adopted to estimate the main explanatory model. The authors estimate the OLS regression in micro pnael using the **Huber-White sandwich estimators** to account for the heteroscedasticity problem (Long et Erwin 200)
+
+- A series of **univariate tests** (i.e. Independent sample t-test with unequal variances and of Wilkinson rank-sum test) have been performed to compare whether the mean differences and median differences in green practices and in financial performance European Countries and the rest of the world are statistically significant
+
+- **Correlation** for key variables had been measured. They calculated as well the **variance inflation factors** (VIF) of all the independent and control variables to test **the effects of multicollinearity** in the regression analysis.
+
+- They performed 10 models of regression analyses. Model 1 and 2 was performed using both Tobin's q and ROE as CFP proxies and included only X1 and control variables. They did the same for X2, X3 et X4. Model 9 (Y1) and 10 (Y2) contained all variables, namely x1 --> x4 + control variables.
+
+- In order to test the robustness of their model they also performed a **sensitivity analysis**. See paper for further details. 
+
+
+##Results
+
+1. H1, H2 and H3 were verified. Besides the major drivers of CFP at the firm level are internal green practices (PP and GSCM) while external green practices (GDP) play a secondary role in determining CFP.
+
+2. The present study clearly reveals that green practices are related to company’s future market value, as well as future firm profitability, confirming the general theorization that CEP has a significant positive impact on CFP (Ambec and Lanoie, 2008).
+
+3. Sales Growth is strongly and positively related to CFP in all the models
+
+4. Leverage Ratio influence negatively CFP
+
+5. Firm size is negatively associated with CFP and this effect is more pronoucef for Tobin's Q than for ROE
+
+
+
+#@JaspervanHuijgevoort2017
+
+
+
+
+#@Delmas2015
+
+#References
+

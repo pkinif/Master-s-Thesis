@@ -28,7 +28,7 @@ Citation from [@Dixon-Fowler2013a]:
 
  > Environmental performance has also been measured using a variety of objective and non-objective measures using data such as independent databases (e.g., KLD; Turban and Greening 1997), self-report surveys from managers (e.g., Judge and Douglas 1998), and pollution indicators (e.g., TRI: Clarkson et al. 2008) 
  
- # Deep analysis of [@Chencrosscountrycomparisongreen2018] and  [@LiUnderstandingImpactGreen2017]
+# Deep analysis of [@Chencrosscountrycomparisongreen2018] and  [@LiUnderstandingImpactGreen2017]
 
 
 
