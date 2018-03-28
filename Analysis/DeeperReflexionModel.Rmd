@@ -67,7 +67,7 @@ The final sample includes 3490 publicly-traded firms from 58 countries and 19 in
 ![Econometric Model](Miroshnychenko2017EconometricModel.JPG)
 
 
-- **OLS estimators** has been adopted to estimate the main explanatory model. The authors estimate the OLS regression in micro pnael using the **Huber-White sandwich estimators** to account for the heteroscedasticity problem (Long et Erwin 200)
+- **OLS estimators** has been adopted to estimate the main explanatory model. The authors estimate the OLS regression in micro panel using the **Huber-White sandwich estimators** to account for the heteroscedasticity problem (Long et Erwin 200)
 
 - A series of **univariate tests** (i.e. Independent sample t-test with unequal variances and of Wilkinson rank-sum test) have been performed to compare whether the mean differences and median differences in green practices and in financial performance European Countries and the rest of the world are statistically significant
 
@@ -94,7 +94,94 @@ The final sample includes 3490 publicly-traded firms from 58 countries and 19 in
 
 #@JaspervanHuijgevoort2017
 
+##Variables
 
+**Dependent Variables:**
+
+1. Tobin's Q simple as proxy of CFP (Y1) [^1]
+
+[^1]: Perfect and Wiles (1994) describe five different estimators of Tobin’s q. According to @JaspervanHuijgevoort2017, in most empirical work the 'simple' methodology is used to estimate tobin's Q.
+
+**Independent Variables:**
+
+2. ESG score (x1)
+
+3. E score (x2)
+
+4. S score (x3)
+
+5. G score (x4)
+
++ drivers of each subgroup (i.e. E,S and G)
+
+**Control Variables:**
+
+Sames as ones used in Derwall(2007) and Waddock and Graves(1997), namely :
+
+1. firms size
+
+2. ROA
+
+3. Sales growth
+
+4. R&D expenses
+
+
+##Hypotheses
+
+**H1:** ESG practices do increase the corporate financial performance of European small capitalization firms.
+
+**H2:** Individual E, S and G factors of European small capitalization firms do increase the corporate financial performance.
+
+**H3:** Environmental drivers behind the sub score corporate environmental performance do influence the corporate financial performance of European small capitalization in a positive way.
+
+**H4:** H4: Social drivers behind the sub score corporate social performance do influence the corporate financial performance of European small capitalization in a positive way.
+
+**H5:** Governance drivers behind the sub score corporate governance performance do influence the corporate financial performance of European small capitalization in a positive way.
+
+**H6:** The size of a firm has a moderate role in the effect of ESG and corporate financial performance.
+
+##DataBase
+
+738 firm year observations of the STOXX Europe 200
+
+##Methodology
+
+* Panel data analyses using mutli-dimensional methodology 
+
+* OLS estimators technique
+
+* Hypothesizes are tested using both univariate and multivariate regression analyses
+
+  + **H1** is tested with an univariate approach regressing X1 on Y1 including control variables
+  
+  + **H2** is tested with a multivariate regression analysis with each subgroup (i;e. E, S and G) as an independent variable
+  
+  + **H3,H4 and H5** are tested with a multivariate regression analysis with each drivers of each subgroup (i.e. E,S and G)
+  
+  + **H6** : To test the moderating effect of size on the ESG and corporate financial performance the sample is divided into three equally groups based on the size of a firm. For each of the three groups the first stage regressions is conducted. After these regressions the statistically significance of the differences between the groups will be determined. To determine the statistically significance of the differences the approach of Fairchild and MacKinnon (2009) is used. For the second and third group, dummy variables of firms size are multiplied with the corresponding ESG rating dummy variables. In order to determine the statistically significance of the differences all the dummy variables are used as explanatory variables in the model
+  
+* Wu-Hausman test to test the endogeneity bias
+
+* Robustness analysis in using a different dependent variable. The author followed the methodology proposed by Dyck, Lins, Roth and Wagner (2016)
+
+**Note to myself: I should check Dyck et al. 2016 to see if I could use the same methodo?**
+
+
+* Correlation Matrix
+
+
+**Note to mysefl: here the author does note take t+1 for Y1**
+
+
+
+##Results
+
+* H1, H6 is verified
+
+* H2, H3, H5 is rejected
+
+* H4 cannot be rejected neither affirmed as non significant
 
 
 #@Delmas2015
@@ -160,13 +247,15 @@ CEP indicators:
 
 ##Methodology
 
-- Panel data analyses with fixed effect model (i.e. Haumsman test rejected the random effects model in favor of the fixed effects model for both Y1 and Y2)
+- Panel data analyses with fixed effect model (i.e. Hausman test rejected the random effects model in favor of the fixed effects model for both Y1 and Y2)
 
-- Statistics descriptive (meann sd, min, max + variable description) see table 1 and table 3 (by industry sector) **Note to myself: it could be interesting to take the same layout than table 1 for my thesis**
+- Statistics descriptive (mean sd, min, max + variable description) see table 1 and table 3 (by industry sector) **Note to myself: it could be interesting to take the same layout than table 1 for my thesis**
 
 - Matrix of correlation
 
-- They made 2 models for their fixed effect Regression Analysis (i.e. one for each dependent variable). 
+- They made 2 models for their fixed effect Regression Analysis (i.e. one for each dependent variable). Both dependent variables are t+1. 
+
+**Note to myself: Should I also take Y in t+1?**
 
 **Note to myself: I could make a mix between the methodology of dalmas et al2015 and the one of Miroshnychenko2017, namely in my case it will be 6 models: model 1; Regress only green performance variables ( + cv's) on CFP ROA, model 2; Regress only green performance variables ( + cv's) on CFP Tobin's Q, model 3; Regress only green initiatives variables ( + cv's) on CFP ROA, model 4; regress only green initiatives variables ( + cv's) on CFP tobin's q, model 5; Regress all variables ( + cv's) on CFP ROA and finaly model 6; regress all variables ( + cv's) on CFP Tobin's Q.** 
 
@@ -175,6 +264,11 @@ CEP indicators:
 
 - Investing in proactive environmental strategies might be costly in the short term, yet profitable in the long term
 
-- 
+- Both hypotheses verified
+
+- Firm size : negative impact (significant) 
+
+- Growth : positive impact (significant)
+
 #References
 
