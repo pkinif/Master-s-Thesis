@@ -1,0 +1,7 @@
+Questions pour Sophie
+
+- Pour mes ratios (debtRatio, P/B and Tobin's), j'ai parfois des valeurs négatives, devrais-je transofmer les données en valeur absoule? Ou alors je mets au carré?
+
+- Devrais-je considérer prendre le log de certaine variable en cas de skweness trop élevé?
+
+- Pour mon analyse de Robustness
