@@ -4,4 +4,14 @@ Questions pour Sophie
 
 - Devrais-je considérer prendre le log de certaine variable en cas de skweness trop élevé?
 
-- Pour mon analyse de Robustness
+- Pour mon analyse de Robustness, j'ai vu que certains papers refaisaient leur regréssion en utilisant un autre indicateur de performance financière comme VD. Devrais-je faire pareil? ROE? 
+
+- J'ai vu que yahoo finance avait de nouvelles données dispo sur les esg score de analatytics. Serait-ce intérèssant, d'une quelconque manière de refaire ma régression avec le E score de chaque entreprise comme proxy de green performance? Robustness analysis?
+
+- Wheisheng et al. 2014 ont montré que les financial return (ROA, ROE, ROS, EPS) étaient souvent repris comme variable de controle. Je possède les valeurs de ROE mais étant donné que je prends le ROA comme VD, est-ce pertinent de prendre ROE comme vc? Ou alors je garde ROE pour ma robustness Analysis?
+
+-Si j'utilise ROA et Tobin's Q comme VD: j'ai les données Tobins's Q pour 350 entreprises. Alors que pour roa : j'ai les data pour 398 entreprises. Est-ce que pour réaliser les deux types de modèles, je dois avoir exactement le même échantillonage? donc dans ce cas mon échantillon serait de 350? Ou alors je peux faire deux échantillons différents? Dans ce cas, devrais-je faire une certaine analyse pour véfifier qu'il n'y a pas de biais créer par le double échantillon? Si oui, comment? (two-sample t-test for unpaired data?)
+
+- Donc pour le moment je possède les données financières pour les années 2012,2013,2014 et 2015 et les données environnementales des rankings 2014,2015,2016 qui sont estimées à partir des données des entreprises en 2012,2013,2014. Dans les différents papers que j'ai parcouru, j'ai pu observé que certains prenaient la VD en t+1 et VI/VC en t et d'autres VD en t et VC/VI en t-1. Cela serait pour controuner le problèmde d'endogénéité présent dans les panel data. Il y a-t-il une différence entre les deux méthodes? 
+
+
