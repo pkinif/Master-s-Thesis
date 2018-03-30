@@ -1,0 +1,112 @@
+---
+output: 
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+bibliography: References.bib
+#csl:
+fontsize: 12pt
+geometry: margin = 1.2in
+urlcolor: black
+linkcolor: black
+citecolor: blue
+header-includes:
+- \usepackage{placeins}
+- \usepackage{fancyhdr}
+- \usepackage{setspace}
+- \usepackage{chngcntr}
+- \onehalfspacing
+- \counterwithin{figure}{section}
+- \counterwithin{table}{section}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.path = 'figures/',
+                      echo = FALSE, warning = FALSE, message = FALSE)
+
+# Code chunks option applied to the whole document
+```
+
+\pagenumbering{gobble} 
+
+```{r child = 'Coverpage.Rmd'}
+```
+
+
+\newpage
+
+
+\pagenumbering{roman}
+
+
+```{r child = 'Abstract.Rmd'}
+```
+
+\newpage
+
+
+```{r child = 'Acknowledgments.Rmd'}
+```
+
+\newpage
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\newpage
+
+\addcontentsline{toc}{section}{List of Figures}
+\listoftables
+
+\newpage
+
+\addcontentsline{toc}{section}{List of Tables}
+\listoffigures
+
+\newpage
+\pagenumbering{arabic}
+
+```{r child = 'Introduction.Rmd'} 
+```
+
+\FloatBarrier
+\newpage
+
+```{r child = 'LiteratureReview.Rmd'} 
+```
+
+\FloatBarrier
+\newpage
+
+```{r child = 'Hypotheses.Rmd'} 
+```
+
+\FloatBarrier
+\newpage
+
+```{r child = 'Methodology.Rmd'} 
+```
+
+\FloatBarrier
+\newpage
+```{r child = 'DataDescription.Rmd'} 
+```
+
+\FloatBarrier
+\newpage
+```{r child = 'Results.Rmd'} 
+```
+
+\FloatBarrier
+\newpage
+```{r child = 'Discussion.Rmd'} 
+```
+
+\FloatBarrier
+\newpage
+```{r child = 'Conclusion.Rmd'} 
+```
+
+\newpage
+
+# References

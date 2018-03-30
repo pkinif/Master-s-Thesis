@@ -1,0 +1,21 @@
+# Introduction {-}
+
+Over the past decades, humanity is progressively becoming aware of the finiteness of earth’s resources and its impact on the current global warming. On the one hand, @HoughtonClimateChange19951996 anticipated in their first report an average global warming between +1° and +3.5° C until 2100 relative to the temperature of 1990. They also warned that an increase of temperatures superior to +2° C could have some harsh climatic repercussions. On the other hand the Kyoto Protocol had been written in 1997, enforced in 2005 and led to the first Global Agreement on global warming during the Paris Conference in 2015. Those different solutions implemented over the past decades did not have any significant impacts on the fight against global warming. Greenhouse Gas Emissions (GGE) have still increased considerably across years. Although the environmental consciousness-raising had already gained ground, according to @JeanJouzel2017 human being have to act now if he we want to have a chance to reduce effects of climate change. 
+
+For the last several decades, companies have been more and more considered as entities responsible for stewardship of the natural environment [@MajumdarRulesDiscretionProductivity2001; @PrzychodzenRelationshipsecoinnovationfinancial2015]. Ecosystem degradation and resources depletion engender a threat to firm’s longevity [@Dowell2000], and as a reaction, firms have to pro-actively adopt an environmental strategy [@HartNaturalResourceBasedViewFirm1995]. In his speech at Lloyds of London 2015, Mark Carney, Governor of the Bank of England and Chair of the Financial Stability Board (FSB), identified climate change as one of the most material threats to financial stability [@Elliott2015]. To this end, companies facing higher risks associated to climate change are ones subject to greater incentives to develop green strategies [@HoffmanClimateChangeStrategy2005]. However, both economic benefits and strategic opportunities deriving from sustainable development are usually underestimated by managers and still too many companies do not feel concerned about global warming [@Berchicci11PostcardsEdge2007; @HartNaturalResourceBasedViewFirm1995]. Moreover, according to @Scarpellinieconomicfinanceinterface2016, green projects are not common in companies of many countries because of significant barriers and a negligible culture of excluding sustainable development from an organization’s strategy. If we consider that people’s actions reflect a variable mix of altruistic motivation, material self-interest, and social or self-image concerns [@BenabouIncentivesProsocialBehavior2006], demonstrating that green development is a significant interest for firms could be a serious step forward in the fight against global warming.
+
+**To be continued...**
+
+<!--  Continue with somethink like this :
+
+From Delmas et al 2015 :
+
+In this study, the impacts of corporate green practices on CFP are examined following the sustainable-value framework proposed by Hart and
+Milstein (2003). Using a panel of 3490 publicly-traded firms from 58 countries for the period 2002e2014, this study explores whether internal and external green practices are able, individually and in combination, to improve CFP at company level. Corporate green practices’ effects on both market-based and accountingbased measures of CFP are examined.
+
+The rest of the paper is organized as follows: the next section
+provides an overview of the main findings emerging from the literature related to the hypotheses of the study. After that, the dataset and the estimation methodology are described. Next, the results are presented and discussed. The last section discusses the main contributions to the literature and avenues for future research.
+
+-->
+
+

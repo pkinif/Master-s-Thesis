@@ -1,0 +1,45 @@
+---
+output:
+  pdf_document:
+    fig_caption: yes
+---
+
+\begin{centering}
+
+\vspace{3 cm}
+
+\Huge
+
+{\bf Here I have to write the title of my thesis}
+
+\vspace{3 cm}
+
+\Large
+KINIF Pierrick
+
+\vspace{3 cm}
+
+
+\normalsize
+Submitted in partial fulfilment of the requirements of the Master's Degree of Business Management and Administration, Finance Specialisation
+
+
+
+May 2018
+
+\vspace{3 cm}
+
+\normalsize
+
+Faculty of Economics, Social Sciences and Business Administration
+
+\normalsize
+University of Namur
+
+\vspace{2 cm}
+
+
+![caption](\figures\UNamur.png)
+
+
+\end{centering}
