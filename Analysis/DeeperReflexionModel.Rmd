@@ -12,9 +12,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Issues with panel datato considerate
 
-> From [@Delmas2015] :Panel data include observations on N cross section units (i.e., firms) over T time-periods. As panel data analysis uses variation in both these dimensions, it is considered to be one of the most efficient analytical methods for data (Asteriou, 2006).
+From @Delmas2015
 
-From...
+> Panel data include observations on N cross section units (i.e., firms) over T time-periods. As panel data analysis uses variation in both these dimensions, it is considered to be one of the most efficient analytical methods for data (Asteriou, 2006).
+
+From @Ng2015
 
 > We address two commonly known issues that may contaminate the interpretation of results when applying statistical models to panel data. First, it is known that the panel dataset commonly used in accounting research produces incorrectly specified test statistics (e.g., overstated t-statistics) due to year-specific fixed effects that drive cross-sectional correlation and the firm fixed effects that drive the time-series correlation (Gow et al., 2010). Prior research commonly uses two statistical methodologies to circumvent these problems. First, prior studies use regressions with fixed effects at firm/industry and year levels to address the problem. Also, it has been shown that using a two-way clustering approach for robust standard errors clustered by firm/industry and year variables could help address these problems (Petersen, 2009 ). Our main results are calculated using regressions controlling for fixed effects of indus-tries and years. In ourrobustness tests, we apply two-way clustering regressions by firm and year and recalculate all regressions. Re-sults are qualitatively similar.
 The second issue is related to the problem of endogeneity. Cost ofequity could be affected by business sustainability, but at the same time, sustainability performance measures and cost of equity could be jointly determined by other factors such as financial performance. One solution to such a problem involves using simultaneous equations like two-stage-least-square (2SLS) with instrumental variables or three-stage-least-square (3SLS). In order to address the problem of endogeneity, we follow Ferreira and Laux (2007) and use a lead lag regression design where business sustainability measures and control variables are pre-determined (at time t − 1). Since the dependent variableis costof equity attime t while theexplanatory variablesare lagged, the problem of endogeneity could be alleviated. Furthermore, we perform two-stage-least-square regressions to control for endogeneity and obtain qualitatively similar results (not reported) in Subsection 5.4.

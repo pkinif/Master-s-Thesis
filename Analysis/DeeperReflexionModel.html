@@ -125,6 +125,17 @@ $(document).ready(function () {
 </div>
 
 
+<div id="issues-with-panel-datato-considerate" class="section level1">
+<h1>Issues with panel datato considerate</h1>
+<p>From <span class="citation">Delmas, Nairn-Birch, and Lim (2015)</span></p>
+<blockquote>
+<p>Panel data include observations on N cross section units (i.e., firms) over T time-periods. As panel data analysis uses variation in both these dimensions, it is considered to be one of the most efficient analytical methods for data (Asteriou, 2006).</p>
+</blockquote>
+<p>From <span class="citation">Ng and Rezaee (2015)</span></p>
+<blockquote>
+<p>We address two commonly known issues that may contaminate the interpretation of results when applying statistical models to panel data. First, it is known that the panel dataset commonly used in accounting research produces incorrectly specified test statistics (e.g., overstated t-statistics) due to year-specific fixed effects that drive cross-sectional correlation and the firm fixed effects that drive the time-series correlation (Gow et al., 2010). Prior research commonly uses two statistical methodologies to circumvent these problems. First, prior studies use regressions with fixed effects at firm/industry and year levels to address the problem. Also, it has been shown that using a two-way clustering approach for robust standard errors clustered by firm/industry and year variables could help address these problems (Petersen, 2009 ). Our main results are calculated using regressions controlling for fixed effects of indus-tries and years. In ourrobustness tests, we apply two-way clustering regressions by firm and year and recalculate all regressions. Re-sults are qualitatively similar. The second issue is related to the problem of endogeneity. Cost ofequity could be affected by business sustainability, but at the same time, sustainability performance measures and cost of equity could be jointly determined by other factors such as financial performance. One solution to such a problem involves using simultaneous equations like two-stage-least-square (2SLS) with instrumental variables or three-stage-least-square (3SLS). In order to address the problem of endogeneity, we follow Ferreira and Laux (2007) and use a lead lag regression design where business sustainability measures and control variables are pre-determined (at time t − 1). Since the dependent variableis costof equity attime t while theexplanatory variablesare lagged, the problem of endogeneity could be alleviated. Furthermore, we perform two-stage-least-square regressions to control for endogeneity and obtain qualitatively similar results (not reported) in Subsection 5.4.</p>
+</blockquote>
+</div>
 <div id="miroshnychenkogreenpracticesfinancial2017" class="section level1">
 <h1><span class="citation">Miroshnychenko, Barontini, and Testa (2017)</span></h1>
 <div id="variables" class="section level2">
@@ -305,7 +316,10 @@ $(document).ready(function () {
 <li><p>Matrix of correlation</p></li>
 <li><p>They made 2 models for their fixed effect Regression Analysis (i.e. one for each dependent variable). Both dependent variables are t+1.</p></li>
 </ul>
-<p><strong>Note to myself: Should I also take Y in t+1?</strong></p>
+<blockquote>
+<p>The observations in Xit are lagged 1 year behind the dependent variables. By lagging the independent variables 1 year behind financial performance, we further increase our confidence in the direction of the relationship.</p>
+</blockquote>
+<p><strong>Note to myself: Should I also take Y in t+1? Or I do both, namely one or I consider financial data for 2012,2013 and 2014 (t) and an other one where I consider financial data for 2013,2014 and 2015 (t+1)??? Maybe it could show that financial performance is better in t+1 than t? Long term performance?</strong></p>
 <p><strong>Note to myself: I could make a mix between the methodology of dalmas et al2015 and the one of Miroshnychenko2017, namely in my case it will be 6 models: model 1; Regress only green performance variables ( + cv’s) on CFP ROA, model 2; Regress only green performance variables ( + cv’s) on CFP Tobin’s Q, model 3; Regress only green initiatives variables ( + cv’s) on CFP ROA, model 4; regress only green initiatives variables ( + cv’s) on CFP tobin’s q, model 5; Regress all variables ( + cv’s) on CFP ROA and finaly model 6; regress all variables ( + cv’s) on CFP Tobin’s Q.</strong></p>
 </div>
 <div id="results-2" class="section level2">
@@ -329,6 +343,9 @@ $(document).ready(function () {
 </div>
 <div id="ref-MiroshnychenkoGreenpracticesfinancial2017">
 <p>Miroshnychenko, Ivan, Roberto Barontini, and Francesco Testa. 2017. “Green Practices and Financial Performance: A Global Outlook.” <em>Journal of Cleaner Production</em> 147 (Supplement C): 340–51. doi:<a href="https://doi.org/10.1016/j.jclepro.2017.01.058">10.1016/j.jclepro.2017.01.058</a>.</p>
+</div>
+<div id="ref-Ng2015">
+<p>Ng, Anthony C., and Zabihollah Rezaee. 2015. “Business Sustainability Performance and Cost of Equity Capital.” <em>Journal of Corporate Finance</em> 34 (October): 128–49. doi:<a href="https://doi.org/10.1016/j.jcorpfin.2015.08.003">10.1016/j.jcorpfin.2015.08.003</a>.</p>
 </div>
 </div>
 </div>
