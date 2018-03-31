@@ -9,6 +9,48 @@ Here is my methodology...
 
 ## Econometric Model
 
+Panel data or longitudinal data include observations on N cross section units (i.e., firms) over T time-periods. As panel data analysis uses variation in both these dimensions, it is considered to be one of the most efficient analytical methods for data [@DimitriosAsteriou2006]. It usually contains more degress of freedom and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007, @HsiaoChapitrePanelData2014].
+
+
+**this is an equation test: **
+
+Here is the equation of my econometric model:
+
+
+\begin{equation}
+Per_{it} = \beta_{0} + \beta_{1} (X1_{t-1}) + \beta_{2} (X2_{t-1}) + \varepsilon_{it}
+\label{EconometricModel}
+\end{equation}
+
+Dans l'\autoref{EconometricModel}, blabla ou dans l'équation \ref{EconometricModel}
+
+where :\
+\(\beta_{0}\) is the intercept,\
+\(\beta_{1}\) is not the intercept.
+
+
+
+
+
 ## Endogeneity test
+
+Even if panel data have a lot of advantages...
+
+
+Two issues involved in utilizing panel data, namely heterogeneity bias and selectivity bias [@HsiaoChapitrePanelData2014].
+
+Citation from @HsiaoChapitrePanelData2014:
+
+> It is only by taking proper account of selectivity and heterogeneity biases in the panel data that one can have confidence in the results obtained.
+
+@Dangsearchrobustmethods2015 examine which methods are appropriate for estimating dynamic panel data models in empirical corporate finance,especially in short panels of company data, in the likely presence of (1) unobserved heterogeneity and endogeneity, (2) residual serial correlation, or (3) fractional dependent variables. The bias-corrected fixed-effects estimators, based on an analytical, bootstrap, or indirect inference approach, are found to be the most appropriate and robust methods. 
+
+But @MiroshnychenkoGreenpracticesfinancial2017 used the OLS regressions in micro panel using the Huber-White sand
+wich estimator, to account for the heteroscedasticity problem... **Which method should I use?**
+
+
+Hausmann test to test the random effects model for both dependant variables?
+
+
 
 ## Sensitivity Analysis

@@ -2,6 +2,16 @@
 
 According to...
 
+
+* The link between CEP and CFP. Literrature have shown that it pays to be green. However answering the question "When an how does it pay to be green?" remains unclear. 
+
+* Citation from [@EndrikatMakingsenseconflicting2014]
+
+> Over the last four decades, myriad studies have sought to identify the relationship
+between these performance constructs. In this context, one of the most fundamental issues shaping research on the focal relationship refers to the direction of causality (i.e., whether CEP influences CFP, whether CFP influences CEP, or whether there is a
+bidirectional relationship)
 ## Subsection 1
+
+* 
 
 ## Subsection 2
