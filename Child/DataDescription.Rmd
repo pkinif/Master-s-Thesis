@@ -1,3 +1,14 @@
-# Data Description
+---
+output:
+  pdf_document
+---
 
-This is my data...
+# Data 
+
+## Sample Selection
+
+## Dependent Variables
+      
+## Independent Variables
+      
+## Control Variables

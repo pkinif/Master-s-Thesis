@@ -89,15 +89,17 @@ knitr::opts_chunk$set(fig.path = '/figures/',
 
 \FloatBarrier
 \newpage
-\fancyhead[CO,CE]{Methodology}
-```{r child = 'Methodology.Rmd'} 
+\fancyhead[CO,CE]{Data Description}
+```{r child = 'DataDescription.Rmd'} 
 ```
 
 \FloatBarrier
 \newpage
-\fancyhead[CO,CE]{Data Description}
-```{r child = 'DataDescription.Rmd'} 
+\fancyhead[CO,CE]{Methodology}
+```{r child = 'Methodology.Rmd'} 
 ```
+
+
 
 \FloatBarrier
 \newpage

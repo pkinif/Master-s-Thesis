@@ -1,7 +1,14 @@
+---
+output:
+  pdf_document
+---
+
 # Methodology
 
 Here is my methodology...
 
-## Subsection 1
+## Econometric Model
 
-## Subsection 2
+## Endogeneity test
+
+## Sensitivity Analysis

@@ -10,7 +10,7 @@ bibliography: references.bib
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Issues with panel datato considerate
+# Issues with panel data to considerate
 
 From @Delmas2015
 

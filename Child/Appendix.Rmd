@@ -1,3 +1,7 @@
-# Appendix 1 {-}
+# Appendix {-}
 
-This is an appendix
+## Appendix A : This is an appendix a {-}
+
+
+\newpage
+## Appendix B : This is an appendix b {-}
