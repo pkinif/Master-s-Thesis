@@ -1,3 +1,7 @@
 # Methodology
 
 Here is my methodology...
+
+## Subsection 1
+
+## Subsection 2

@@ -21,7 +21,7 @@ header-includes:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(fig.path = 'figures/',
+knitr::opts_chunk$set(fig.path = '/figures/',
                       echo = FALSE, warning = FALSE, message = FALSE)
 
 # Code chunks option applied to the whole document
@@ -60,12 +60,12 @@ knitr::opts_chunk$set(fig.path = 'figures/',
 \tableofcontents
 
 \newpage
-\fancyhead[CO,CE]{List of Figures}
+\fancyhead[CO,CE]{List of Tables}
 \addcontentsline{toc}{section}{List of Tables}
 \listoftables
 
 \newpage
-\fancyhead[CO,CE]{List of Tables}
+\fancyhead[CO,CE]{List of Figures}
 \addcontentsline{toc}{section}{List of Figures}
 \listoffigures
 
@@ -115,6 +115,11 @@ knitr::opts_chunk$set(fig.path = 'figures/',
 \newpage
 \fancyhead[CO,CE]{Conclusion}
 ```{r child = 'Conclusion.Rmd'} 
+```
+
+\newpage
+\fancyhead[CO,CE]{Appendix}
+```{r child = 'Appendix.Rmd'} 
 ```
 
 \newpage
