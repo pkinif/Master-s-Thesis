@@ -13,12 +13,17 @@ DB<-data.frame(read.csv2("Analysis/DataBase/DataBase_010418.csv", sep = ";",stri
 
 # Let's measure the cook distance
 
-## Here I regress Y on X's
-M1<-lm(TobinsQ~EnergyProductivity+CarbonProductivity+WaterProductivity+WasteProductivity+GreenReputation+SustainabilityPayLink+SustainableThemedCommitment+AuditScore+DebtRatio+NetMargin+log(Asset)+ROE,data=DB)
+## Here I regress Y on X's - several models
+M1_ROA<-lm(ROA~EnergyProductivity+CarbonProductivity+WaterProductivity+WasteProductivity+GreenReputation+SustainabilityPayLink+SustainableThemedCommitment+AuditScore+DebtRatio^2+NetMargin+log(Asset)+ROE,data=DB)
+
+
+M1_Tobin <-lm(TobinsQ~EnergyProductivity+CarbonProductivity+WaterProductivity+WasteProductivity+GreenReputation+SustainabilityPayLink+SustainableThemedCommitment+AuditScore+DebtRatio^2+NetMargin+log(Asset)+ROE,data=DB)
+
+
 
 ## I calculate my cooks distance. Cook’s distance is a measure computed with respect to a given regression model and therefore is impacted only by the X variables included in the model. Cook’s distance computes the influence exerted by each data point (row) on the predicted outcome.
 
-cooksd <- cooks.distance(mod)
+cooksd <- cooks.distance(M1_ROA)
 
 ## I summarise on a graph, those observations that have a cook’s distance greater than 4 times the mean may be classified as influential.
 
