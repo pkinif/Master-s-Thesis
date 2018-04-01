@@ -5,9 +5,34 @@ output:
 ```{r}
 if (!require("utils")) install.packages("utils")
 
-# I dowload my DataBase with read.csv2
 library(utils)
+library(car)
+
+# I dowload my DataBase with read.csv2
 DB<-data.frame(read.csv2("Analysis/DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
+# Let's measure the cook distance
+
+## Here I regress Y on X's
+M1<-lm(TobinsQ~EnergyProductivity+CarbonProductivity+WaterProductivity+WasteProductivity+GreenReputation+SustainabilityPayLink+SustainableThemedCommitment+AuditScore+DebtRatio+NetMargin+log(Asset)+ROE,data=DB)
+
+## I calculate my cooks distance. Cook’s distance is a measure computed with respect to a given regression model and therefore is impacted only by the X variables included in the model. Cook’s distance computes the influence exerted by each data point (row) on the predicted outcome.
+
+cooksd <- cooks.distance(mod)
+
+## I summarise on a graph, those observations that have a cook’s distance greater than 4 times the mean may be classified as influential.
+
+plot(cooksd, pch="*", cex=2, main="Influential Obs by Cooks distance")  # plot cook's distance
+abline(h = 4*mean(cooksd, na.rm=T), col="red")  # add cutoff line
+text(x=1:length(cooksd)+1, y=cooksd, labels=ifelse(cooksd>4*mean(cooksd, na.rm=T),names(cooksd),""), col="red")  # add labels
+
+##The following command find out the influential rows, namely rows where are the outliers of my BD
+
+influential <- as.numeric(names(cooksd)[(cooksd > 4*mean(cooksd, na.rm=T))])  
+
+## The function outlierTest from car package gives the most extreme observation based on the given model
+
+car::outlierTest(M1)
 ```
 
 
