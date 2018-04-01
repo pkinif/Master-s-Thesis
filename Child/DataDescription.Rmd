@@ -2,9 +2,17 @@
 output:
   pdf_document
 ---
+```{r}
+if (!require("utils")) install.packages("utils")
+
+# I dowload my DataBase with read.csv2
+library(utils)
+DB<-data.frame(read.csv2("Analysis/DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+```
+
 
 # Data 
-
+DataBase_010418
 ## Sample Selection
 
 My database is a long panel data containing *n* companies, each of which includes *T* observations measured at 1 through *t* time period. As the same companies are observed for each period, I can describe my panel data as a fixed panel [@Greene2007].
