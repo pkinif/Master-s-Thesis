@@ -7,6 +7,10 @@ output:
 
 ## Sample Selection
 
+My database is a long panel data containing *n* companies, each of which includes *T* observations measured at 1 through *t* time period. As the same companies are observed for each period, I can describe my panel data as a fixed panel [@Greene2007].
+
+Balanced or unbalanced panel data?
+
 ## Dependent Variables
       
 ## Independent Variables
