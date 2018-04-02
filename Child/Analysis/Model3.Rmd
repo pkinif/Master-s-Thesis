@@ -10,18 +10,34 @@ DB_Tobin<-data.frame(read.csv2("DataBase/DB_Tobin.csv", sep = ";",stringsAsFacto
 ```
 
 
-## Model 1
+## Model 3
 
-### Test
-
-Analyse and test of my first model. These tests help select the panel model to be estimated. Here is my first model :
-
-**Model 1 :** Green Initiatives on Tobin's Q
+**Model 3 :** Green Performance on Tobin's Q
 
 \begin{equation}
-TobinsQ_{it+1}=\beta_{0} + \beta_{1} (SP_{it}) + \beta_{2} (ST_{it}) + \beta_{3} (AS_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
-\label{M1}
+TobinsQ_{it+1}=\beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (GP_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
+\label{M3}
 \end{equation}
+
+
+
+where :
+
+* \(TobinsQ_{it+1}\) = a proxy for a firm's financial performance
+* \(ROA_{it+1}\) = a proxy for a firm's financial performance
+* \(EP_{it}\) = a proxy for a firm's energy productivity
+* \(CP_{it}\) = a proxy for a firm's carbon productivity
+* \(WatP_{it}\) = a proxy for a firm's water productivity
+* \(WasP_{it}\) = a proxy for a firm's waste productivity
+* \(GP_{it}\) = a proxy for a firm's green reputation
+* \(SP_{it}\) = a proxy for a firm's sustainability pay link
+* \(ST_{it}\) = a proxy for a firm's sustainability themed commitment
+* \(EP_{it}\) = a proxy for a firm's audit score
+* \(C_{it}\) = a vector of control variables that include financial leverage, firm size and industry sector
+* \(\varepsilon_{it}\) = the error term
+
+
+### Test
 
 #### Tests of poolability
 
@@ -30,15 +46,15 @@ Citation from [@Croissant2008] :
 > *pooltest tests the hypothesis that the same coeffcients apply to each individual. It is a standard F test, based on the comparison of a model obtained for the full sample and a model based on the estimation of an equation for each individual. The first argument of pooltest is a plm object. The second argument is a pvcm object obtained with model=within. If the first argument is a pooling model, the test applies to all the coefficients (including the intercepts), if it is a within model, different intercepts are assumed.*
 
 ```{r}
-# Test of poolability --> error that I cannot understand
+# Test of poolability --> Error that I do not understand
 
-# M1_pvcm <- pvcm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+# M3_pvcm <- pvcm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-# M1_plm<-plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data=DB_Tobin, model="within")
+# M3_plm<-plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-# pooltest(M1_pvcm,M1_plm)
+# pooltest(M5_pvcm,M5_plm)
 
-# pooltest(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model = "within")
+# pooltest(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
 ```
 
 #### Fixed or Random : Hausman Test 
@@ -49,11 +65,11 @@ Citation from @Torres-Reyna2010 :
 
 
 ```{r}
-fixed <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model = "within")
+fixed3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-random <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model = "random")
+random3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model = "random")
 
-phtest(fixed,random)
+phtest(fixed3,random3)
 ```
 
 **Interpretation :** P-Value < 0.05 then Ho is rejected and I have to use the fixed-effect.
@@ -62,17 +78,16 @@ phtest(fixed,random)
 #### Testing for time and companies fixed effects
 
 ```{r}
-fixed <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model = "within")
 
-fixed_time <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset) + factor(YearFinancialIndicator), data = DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model = "within")
+fixed_time3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset) + factor(YearFinancialIndicator), data = DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model = "within")
 
 
 # Testing the time-fixed effects. The null is that no time-fixed effects needed
-pFtest(fixed_time, fixed)
+pFtest(fixed_time3, fixed3)
 
 
 ```
-**Interpretation Fixed_time effect :** P-Value is > 0.05 meaning that null hypothesis is verified and that there is not a significant time-fixed effect. **So I do not need to use time fixed effect in my model1!!**
+**Interpretation Fixed_time effect :** P-Value is > 0.05 meaning that null hypothesis is verified and that there is a non significant time-fixed effect. **So I do not need to use time fixed effect in this model!!**
 
 
 #### Testing for cross-sectional dependence/contemporaneous correlation
@@ -84,11 +99,11 @@ Citation from @Torres-Reyna2010 :
 
 
 ```{r}
-pcdtest(fixed_time, test = c("lm"))
-pcdtest(fixed_time, test = c("cd"))
+pcdtest(fixed_time3, test = c("lm"))
+pcdtest(fixed_time3, test = c("cd"))
 
-pcdtest(fixed, test = c("lm"))
-pcdtest(fixed, test = c("cd"))
+pcdtest(fixed3, test = c("lm"))
+pcdtest(fixed3, test = c("cd"))
 
 ```
 Depending the method used, HO is verified (Pesaran), namely the model do not have cross-sectional dependence or rejected (Breusch-Pagan)... **Which one is the most suitable for my model?**
@@ -97,8 +112,8 @@ Depending the method used, HO is verified (Pesaran), namely the model do not hav
 #### Testing for serial correlation
 
 ```{r}
-pbgtest(fixed_time)
-pbgtest(fixed)
+pbgtest(fixed_time3)
+pbgtest(fixed3)
 ```
 
 **Interpretation:** HO is rejected as p-value < 0.05 then I have serial correlation....
@@ -121,7 +136,7 @@ Ho : Series has stationarity
 if (!require("lmtest")) install.packages("lmtest")
 library(lmtest)
 
-bptest(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset) + factor(Companies), data = DB_Tobin, studentize = F)
+bptest(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset) + factor(Companies), data = DB_Tobin, studentize = F)
 
 ```
 **Interpretation: ** p-value < 0.05 then the null hypothesis of homoskedasticity is rejected and heteroskedasticity assumed... 
@@ -149,12 +164,12 @@ The following options apply*:
 
 
 ```{r}
-coeftest(fixed) # Original coefficients 
-coeftest(fixed, vcovHC) # Heteroskedasticity consistent coefficients
-coeftest(fixed, vcovHC(fixed, method = "arellano")) # Heteroskedasticity consistent
-coeftest(fixed, vcovHC(fixed, type = "HC3")) # Heteroskedasticity consistent coefficients, type 3coefficients (Arellano)
+coeftest(fixed3) # Original coefficients 
+coeftest(fixed3, vcovHC) # Heteroskedasticity consistent coefficients
+coeftest(fixed3, vcovHC(fixed3, method = "arellano")) # Heteroskedasticity consistent
+coeftest(fixed3, vcovHC(fixed3, type = "HC3")) # Heteroskedasticity consistent coefficients, type 3coefficients (Arellano)
 # The following shows the HC standard errors of the coefficients
-t(sapply(c("HC0", "HC1", "HC2", "HC3", "HC4"), function(x) sqrt(diag(vcovHC(fixed, type = x)))))
+t(sapply(c("HC0", "HC1", "HC2", "HC3", "HC4"), function(x) sqrt(diag(vcovHC(fixed3, type = x)))))
 ```
 
 

@@ -22,4 +22,6 @@ Questions pour Sophie
 
 - Le PLM package qui permet de faire des panel data analyses via R ; The two-ways effect model is for the moment only available for balanced panels (see @Croissant2008a). Hence Should I have a balanced panel data?
 
-- Dois-je refaire tous les test de panel data (hausman,...) sur chacun de mes 6 models?
+- Dois-je refaire tous les test de panel data (hausman,...) sur chacun de mes 6 models? I think so but let's ask.
+
+- donner résultats test des 6 models et avoir son avis

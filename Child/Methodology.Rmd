@@ -37,10 +37,6 @@ M1_ROA<-lm(ROA~EnergyProductivity+CarbonProductivity+WaterProductivity+WasteProd
 ```
 
 
-
-
-
-
 * @Ng2015 used the two-stage-least-square regressions to estimate its models. 
 
 ** In case of presence of endogeneyity in an econometric model,  OLS is not capable of delivering consistent parameter estimates [@Wooldridge2008].**
