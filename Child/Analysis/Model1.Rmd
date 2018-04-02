@@ -1,0 +1,34 @@
+---
+output: pdf_document
+---
+
+```{r}
+if (!require("plm")) install.packages("plm")
+library(plm)
+
+# I dowload my DataBase with read.csv2
+DB<-data.frame(read.csv2("Analysis/DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+```
+
+# Model 1
+
+## Test
+
+Analyse and test of my first model. These tests help select the panel model to be estimated. Here is my first model :
+
+**Model 1 :** Green Initiatives on Tobin's Q
+
+\begin{equation}
+TobinsQ_{it+1}=\beta_{0} + \beta_{1} (SP_{it}) + \beta_{2} (ST_{it}) + \beta_{3} (AS_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
+\label{M1}
+\end{equation}
+
+### Tests of poolability
+
+Citation from [@Croissant2008] :
+
+> *pooltest* tests the hypothesis that the same coeffcients apply to each individual. It is a standard F test, based on the comparison of a model obtained for the full sample and a model based on the estimation of an equation for each individual. The first argument of pooltest is a plm object. The second argument is a pvcm object obtained with model=within. If the first argument is a pooling model, the test applies to all the coefficients (including the intercepts), if it is a within model, different intercepts are assumed.
+
+
+
+

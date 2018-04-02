@@ -26,11 +26,13 @@ effect, or both, which are analyzed by fixed effect and/or random effect models.
 
 ```{r}
 if (!require("plm")) install.packages("plm")
-
 library(plm)
 
-M1_ROA<-lm(ROA~EnergyProductivity+CarbonProductivity+WaterProductivity+WasteProductivity+GreenReputation+SustainabilityPayLink+SustainableThemedCommitment+AuditScore+DebtRatio^2+NetMargin+log(Asset)+ROE,data=DB)
+# I dowload my DataBase with read.csv2
+DB<-data.frame(read.csv2("Analysis/DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
+#First Model
+M1_ROA<-lm(ROA~EnergyProductivity+CarbonProductivity+WaterProductivity+WasteProductivity+GreenReputation+SustainabilityPayLink+SustainableThemedCommitment+AuditScore+DebtRatio^2+NetMargin+log(Asset)+ROE,data=DB)
 
 ```
 
@@ -71,21 +73,90 @@ Hausmann test to test the random effects model for both dependant variables?
 
 ## Econometric Model
 
-**this is an equation test: **
+The first hypothesis have been tested with T-tests on the impact of each green initiative on green performance.
 
-Here is the equation of my econometric model:
-
+Both Hypotheses two and three have been tested by regression analysis. Econometric models are based on @Delmas2015 and @MiroshnychenkoGreenpracticesfinancial2017 and started from the general form:
 
 \begin{equation}
-Per_{it} = \beta_{0} + \beta_{1} (X1_{t-1}) + \beta_{2} (X2_{t-1}) + \varepsilon_{it}
-\label{EconometricModel}
+Y_{t+1}=\beta_{0} + \beta_{1} (X_{it}) + + \beta_{2} (C_{it}) + \varepsilon_{it}
+\label{GeneralForm}
 \end{equation}
 
-Dans l'\autoref{EconometricModel}, blabla ou dans l'équation \ref{EconometricModel}
+where \(Y_{t+1}\) is the financial performance of firm \(i\) in year \(t+1\), \(\beta\) is the vector of estimated regression coefficients for each of the explanatory variables \(X_{it}\), \(C_{it}\) is a vector of control
+variables that include financial leverage, firm size and industry sector, \(\varepsilon_{it}\)is the error term.
 
-where :\
-\(\beta_{0}\) is the intercept,\
-\(\beta_{1}\) is not the intercept.
+More precisely I will test six models :
+
+
+**Model 1 :** Green Initiatives on Tobin's Q
+
+\begin{equation}
+TobinsQ_{it+1}=\beta_{0} + \beta_{1} (SP_{it}) + \beta_{2} (ST_{it}) + \beta_{3} (AS_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
+\label{M1}
+\end{equation}
+
+
+**Model 2 :** Green Initiatives on ROA
+
+\begin{equation}
+ROA_{it+1}=\beta_{0} + \beta_{1} (SP_{it}) + \beta_{2} (ST_{it}) + \beta_{3} (AS_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
+\label{M2}
+\end{equation}
+
+
+**Model 3 :** Green Performance on Tobin's Q
+
+\begin{equation}
+TobinsQ_{it+1}=\beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (GP_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
+\label{M3}
+\end{equation}
+
+
+**Model 4 :** Green Performance on ROA
+
+\begin{equation}
+ROA_{it+1}=\beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (GP_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
+\label{M4}
+\end{equation}
+
+
+**Model 5 :** Both Green Performance and Green Initiative on Tobin's Q
+
+\begin{equation}
+TobinsQ_{it+1}=\beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (GP_{it}) + \beta_{6} (SP_{it}) + \beta_{7} (ST_{it}) + \beta_{8} (AS_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
+\label{M5}
+\end{equation}
+
+
+**Model 6 :** Both Green Performance and Green Initiative on ROA
+
+\begin{equation}
+ROA_{it+1}=\beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (GP_{it}) + \beta_{6} (SP_{it}) + \beta_{7} (ST_{it}) + \beta_{8} (AS_{it})+ (C_{it}) + \varepsilon_{it}
+\label{M6}
+\end{equation}
+
+
+where :
+
+* \(TobinsQ_{it+1}\) = a proxy for a firm's financial performance
+* \(ROA_{it+1}\) = a proxy for a firm's financial performance
+* \(EP_{it}\) = a proxy for a firm's energy productivity
+* \(CP_{it}\) = a proxy for a firm's carbon productivity
+* \(WatP_{it}\) = a proxy for a firm's water productivity
+* \(WasP_{it}\) = a proxy for a firm's waste productivity
+* \(GP_{it}\) = a proxy for a firm's green reputation
+* \(SP_{it}\) = a proxy for a firm's sustainability pay link
+* \(ST_{it}\) = a proxy for a firm's sustainability themed commitment
+* \(EP_{it}\) = a proxy for a firm's audit score
+* \(C_{it}\) = a vector of control variables that include financial leverage, firm size and industry sector
+* \(\varepsilon_{it}\) = the error term
+
+
+
+
+Dans l'\autoref{M1}, blabla ou dans l'équation \ref{M1}
+
+
 
 
 

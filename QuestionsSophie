@@ -14,8 +14,10 @@ Questions pour Sophie
 
 - Donc pour le moment je possède les données financières pour les années 2012,2013,2014 et 2015 et les données environnementales des rankings 2014,2015,2016 qui sont estimées à partir des données des entreprises en 2012,2013,2014. Dans les différents papers que j'ai parcouru, j'ai pu observé que certains prenaient la VD en t+1 et VI/VC en t et d'autres VD en t et VC/VI en t-1. Cela serait pour controuner le problèmde d'endogénéité présent dans les panel data. Il y a-t-il une différence entre les deux méthodes? 
 
-- Est-ce quand da base de donnée, je peux laisser les date 2012,2013,2014,2015 ou je dois les échanger par une time period (e.g. 1,2,3,4?)
+- Est-ce quand da base de donnée, je peux laisser les date 2012,2013,2014,2015 ou je dois les échanger par une time period (e.g. 1,2,3,4?) Répondu! See @Croissant2008a
 
 - Par rapport à mes outliers, devrais-je pour chacun de mes modèles, regarder quels sont les outliers? Anyway, quelle est la meilleure méthode pour traiter les outliers détectés? Imputation avec la médiane? Le capper avec 1.5 * IQR limits? Ou alors le considérer comme une missing value et appliquer une méthode de prédiction? 
 
 - Entre ROA et Tobins Q, comment faire la distinction dans l'interpretation des models? (Questions personnelles)
+
+- Le PLM package qui permet de faire des panel data analyses via R ; The two-ways effect model is for the moment only available for balanced panels (see @Croissant2008a). Hence Should I have a balanced panel data?
