@@ -6,18 +6,19 @@ if (!require("plm")) install.packages("plm")
 library(plm)
 
 # I dowload my DataBase with read.csv2
-DB_Tobin<-data.frame(read.csv2("DataBase/DB_Tobin.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+DB_ROA<-data.frame(read.csv2("DataBase/DB_ROA.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 ```
 
 
-## Model 5
+## Model 4
 
-**Model 5 :** Both Green Performance and Green Initiative on Tobin's Q
+**Model 4 :** Green Performance on ROA
 
 \begin{equation}
-TobinsQ_{it+1}=\beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (GP_{it}) + \beta_{6} (SP_{it}) + \beta_{7} (ST_{it}) + \beta_{8} (AS_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
-\label{M5}
+ROA_{it+1}=\beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (GP_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
+\label{M4}
 \end{equation}
+
 
 
 where :
@@ -47,13 +48,13 @@ Citation from [@Croissant2008] :
 ```{r}
 # Test of poolability --> Error that I do not understand
 
-# M5_pvcm <- pvcm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_ROA, index=c("Companies", "YearFinancialIndicator"), model="within")
+# M4_pvcm <- pvcm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_ROA, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-# M5_plm<-plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_ROA, index=c("Companies", "YearFinancialIndicator"), model="within")
+# M4_plm<-plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_ROA, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-# pooltest(M5_pvcm,M5_plm)
+# pooltest(M4_pvcm,M4_plm)
 
-# pooltest(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB_ROA, index=c("Companies", "YearFinancialIndicator"), model = "within")
+# pooltest(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_ROA, index=c("Companies", "YearFinancialIndicator"), model="within")
 ```
 
 #### Fixed or Random : Hausman Test 
@@ -64,29 +65,29 @@ Citation from @Torres-Reyna2010 :
 
 
 ```{r}
-fixed5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_ROA, index=c("Companies", "YearFinancialIndicator"), model="within")
+fixed4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_ROA, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-random5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_ROA, index=c("Companies", "YearFinancialIndicator"), model = "random")
+random4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_ROA, index=c("Companies", "YearFinancialIndicator"), model = "random")
 
-phtest(fixed5,random5)
+phtest(fixed4,random4)
 ```
 
 **Interpretation :** P-Value < 0.05 then Ho is rejected and I have to use the fixed-effect.
 
 
-#### Testing for time fixed effects
+#### Testing for time and companies fixed effects
 
 ```{r}
 
-fixed_time5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset) + factor(YearFinancialIndicator), data = DB_ROA, index=c("Companies", "YearFinancialIndicator"), model = "within")
+fixed_time4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset) + factor(YearFinancialIndicator), data = DB_ROA, index=c("Companies", "YearFinancialIndicator"), model = "within")
 
 
 # Testing the time-fixed effects. The null is that no time-fixed effects needed
-pFtest(fixed_time5, fixed5)
+pFtest(fixed_time4, fixed4)
 
 
 ```
-**Interpretation Fixed_time effect :** P-Value is > 0.05 meaning that null hypothesis is verified and that there is a non significant time-fixed effect. **So I do notneed to use time fixed effect in this model!!**
+**Interpretation Fixed_time effect :** P-Value is < 0.05 meaning that null hypothesis is rejected and that there is a significant time-fixed effect. **So I do need to use time fixed effect in this model!!**
 
 
 #### Testing for cross-sectional dependence/contemporaneous correlation
@@ -98,11 +99,11 @@ Citation from @Torres-Reyna2010 :
 
 
 ```{r}
-pcdtest(fixed_time5, test = c("lm"))
-pcdtest(fixed_time5, test = c("cd"))
+pcdtest(fixed_time4, test = c("lm"))
+pcdtest(fixed_time4, test = c("cd"))
 
-pcdtest(fixed5, test = c("lm"))
-pcdtest(fixed5, test = c("cd"))
+pcdtest(fixed4, test = c("lm"))
+pcdtest(fixed4, test = c("cd"))
 
 ```
 Depending the method used, HO is verified (Pesaran), namely the model do not have cross-sectional dependence or rejected (Breusch-Pagan)... **Which one is the most suitable for my model?**
@@ -111,8 +112,8 @@ Depending the method used, HO is verified (Pesaran), namely the model do not hav
 #### Testing for serial correlation
 
 ```{r}
-pbgtest(fixed_time5)
-pbgtest(fixed5)
+pbgtest(fixed_time4)
+pbgtest(fixed4)
 ```
 
 **Interpretation:** HO is rejected as p-value < 0.05 then I have serial correlation....
@@ -135,7 +136,7 @@ Ho : Series has stationarity
 if (!require("lmtest")) install.packages("lmtest")
 library(lmtest)
 
-bptest(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset) + factor(Companies), data = DB_ROA, studentize = F)
+bptest(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset) + factor(Companies), data = DB_ROA, studentize = F)
 
 ```
 **Interpretation: ** p-value < 0.05 then the null hypothesis of homoskedasticity is rejected and heteroskedasticity assumed... 
@@ -163,12 +164,12 @@ The following options apply*:
 
 
 ```{r}
-coeftest(fixed5) # Original coefficients 
-coeftest(fixed5, vcovHC) # Heteroskedasticity consistent coefficients
-coeftest(fixed5, vcovHC(fixed5, method = "arellano")) # Heteroskedasticity consistent
-coeftest(fixed5, vcovHC(fixed5, type = "HC3")) # Heteroskedasticity consistent coefficients, type 3coefficients (Arellano)
+coeftest(fixed4) # Original coefficients 
+coeftest(fixed4, vcovHC) # Heteroskedasticity consistent coefficients
+coeftest(fixed4, vcovHC(fixed4, method = "arellano")) # Heteroskedasticity consistent
+coeftest(fixed4, vcovHC(fixed4, type = "HC3")) # Heteroskedasticity consistent coefficients, type 3coefficients (Arellano)
 # The following shows the HC standard errors of the coefficients
-t(sapply(c("HC0", "HC1", "HC2", "HC3", "HC4"), function(x) sqrt(diag(vcovHC(fixed5, type = x)))))
+t(sapply(c("HC0", "HC1", "HC2", "HC3", "HC4"), function(x) sqrt(diag(vcovHC(fixed4, type = x)))))
 ```
 
 

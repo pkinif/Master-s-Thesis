@@ -52,7 +52,7 @@ Citation from [@Croissant2008] :
 
 # M3_plm<-plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-# pooltest(M5_pvcm,M5_plm)
+# pooltest(M3_pvcm,M3_plm)
 
 # pooltest(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + GreenReputation + DebtRatio^2 + NetMargin + log(Asset), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
 ```
