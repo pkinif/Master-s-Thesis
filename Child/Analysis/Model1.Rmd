@@ -2,13 +2,6 @@
 output: pdf_document
 ---
 
-```{r}
-if (!require("plm")) install.packages("plm")
-library(plm)
-
-# I dowload my DataBase with read.csv2
-DB<-data.frame(read.csv2("Analysis/DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
-```
 
 # Model 1
 
@@ -27,7 +20,46 @@ TobinsQ_{it+1}=\beta_{0} + \beta_{1} (SP_{it}) + \beta_{2} (ST_{it}) + \beta_{3}
 
 Citation from [@Croissant2008] :
 
-> *pooltest* tests the hypothesis that the same coeffcients apply to each individual. It is a standard F test, based on the comparison of a model obtained for the full sample and a model based on the estimation of an equation for each individual. The first argument of pooltest is a plm object. The second argument is a pvcm object obtained with model=within. If the first argument is a pooling model, the test applies to all the coefficients (including the intercepts), if it is a within model, different intercepts are assumed.
+> *pooltest tests the hypothesis that the same coeffcients apply to each individual. It is a standard F test, based on the comparison of a model obtained for the full sample and a model based on the estimation of an equation for each individual. The first argument of pooltest is a plm object. The second argument is a pvcm object obtained with model=within. If the first argument is a pooling model, the test applies to all the coefficients (including the intercepts), if it is a within model, different intercepts are assumed.*
+
+```{r}
+if (!require("plm")) install.packages("plm")
+library(plm)
+
+# I dowload my DataBase with read.csv2
+DB<-data.frame(read.csv2("DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
+# Test of poolability --> error that I cannot understand
+
+# M1_pvcm <- pvcm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data=DB, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+# M1_plm<-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data=DB, model="within")
+
+# pooltest(M1_pvcm,M1_plm)
+
+# pooltest(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB, index=c("Companies", "YearFinancialIndicator"), model = "within")
+```
+
+### Fixed or Random : Hausman Test 
+
+Citation from @Torres-Reyna2010 :
+
+> *To decide between fixed or random effects you can run a Hausman test where the null hypothesis is that the preferred model is random effects vs. the alternative the fixed effects (see Green, 2008, chapter 9).  It basically tests whether the unique errors (ui) are correlated with the regressors, the null hypothesis is they are not.*
+
+
+```{r}
+fixed <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB, index=c("Companies", "YearFinancialIndicator"), model = "within")
+
+random <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB, index=c("Companies", "YearFinancialIndicator"), model = "random")
+
+phtest(fixed,random)
+```
+
+**Interpretation :** P-Value < 0.05 then Ho is rejected and I have to use the fixed-effect.
+
+
+
+
 
 
 
