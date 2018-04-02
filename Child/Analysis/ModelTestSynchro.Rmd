@@ -1,0 +1,77 @@
+---
+output: pdf_document
+---
+
+# Tests
+
+This section will not be in the final document. It is only to report the result of the bunch of tests I carried out in order to define which panel data methotolody I will use for each one of my 6 models.
+
+@Croissant2008a and @Torres-Reyna2010 really helped me.
+
+Here are the tests : 
+
+1. Test of poolability 
+2. Hausmann Test to determine the fixed or random effect
+3. Test for time fixed effect
+4. Test for cross-sectional dependence
+5. Test for serial correlation
+6. Test for stationarity
+7. Test for heteroskedasticity
+
+
+\begin{table}[]
+\centering
+\caption{Test Summary}
+\label{TestSummary}
+\begin{tabular}{lllllll}
+\hline
+ & \textbf{Model 1} & \textbf{Model 2} & \textbf{Model 3} & \textbf{Model 4} & \textbf{Model 5} & \textbf{Model 6} \\ \hline
+\textbf{Poolability} & NA & NA & NA & NA & NA & NA \\
+\textbf{Hausmann} & Fixed & Fixed & Fixed & Fixed & Fixed & Fixed \\
+\textbf{Time Fixed Effect} & No & Yes & No & Yes & No & Yes \\
+\textbf{Cross Sectional Dependence} & ? & Yes & ? & ? & ? & Yes \\
+\textbf{Serial Correlation} & Yes & Yes & Yes & Yes & Yes & Yes \\
+\textbf{Stationarity} & None & None & None & None & None & None \\
+\textbf{Heteroskedasticity} & Yes & Yes & Yes & Yes & Yes & Yes \\ \hline
+\end{tabular}
+\end{table}
+
+
+The table \ref{TestSummary} summaries the result of each test for each model. You can find details below.
+
+Regarding the poolability test I have an issue with my code that I still need to solve. This is why it writtent *NA* in the table \ref{TestSummary}. I have also an issue with the test for cross-sectionnal dependence. Indeed depending the method I used with the test syntax (i.e. Pesaran's CD test (test="cd"), Breusch and Pagan's LM test (test="lm"), I got divergent results. **Do you know why?**
+
+**Some specifications :**
+
+1. The data base of model 1,3 and 5 (i.e. model with DV = ROA) is not the same than the one of model 2,4 and 6 (i.e. model with DV = Tobins Q). Indeed I have 350 companies whose I have the tobin's Q value as I have 399 companies whose I have the ROA's value. **What do you think? Can I do that? Maybe should I do a test to test if both sample are the same? What kind of test?**
+
+2. As in my data base I have some negatieve DebtRatio (i.e. leverage) I used the sq(DebtRatio) as a control variable. **Is it ok?**
+
+3. I did not remove outliers from my databases. **I still need to have your opinion about the outliers treatment in panel data.** However I have identified them with the cooks distance. Basically I have about 15 outliers in each database. 
+
+4. I have unbalanced panel data
+
+\newpage
+```{r child = 'Model1.Rmd'}
+```
+\newpage
+
+```{r child = 'Model2.Rmd'}
+```
+\newpage
+
+```{r child = 'Model3.Rmd'}
+```
+\newpage
+```{r child = 'Model4.Rmd'}
+```
+\newpage
+```{r child = 'Model5.Rmd'}
+```
+\newpage
+```{r child = 'Model6.Rmd'}
+```
+
+
+
+

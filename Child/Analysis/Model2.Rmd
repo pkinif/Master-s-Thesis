@@ -6,7 +6,7 @@ if (!require("plm")) install.packages("plm")
 library(plm)
 
 # I dowload my DataBase with read.csv2
-DB_ROA<-data.frame(read.csv2("DataBase/DataBase_010418", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+DB_ROA<-data.frame(read.csv2("DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 ```
 
 
@@ -74,7 +74,7 @@ phtest(fixed2,random2)
 **Interpretation :** P-Value < 0.05 then Ho is rejected and I have to use the fixed-effect.
 
 
-#### Testing for time and companies fixed effects
+#### Testing for time fixed effects
 
 ```{r}
 

@@ -6,7 +6,7 @@ if (!require("plm")) install.packages("plm")
 library(plm)
 
 # I dowload my DataBase with read.csv2
-DB_ROA<-data.frame(read.csv2("DataBase/DB_ROA.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+DB_ROA<-data.frame(read.csv2("DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 ```
 
 
@@ -18,8 +18,6 @@ DB_ROA<-data.frame(read.csv2("DataBase/DB_ROA.csv", sep = ";",stringsAsFactors=F
 ROA_{it+1}=\beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (GP_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
 \label{M4}
 \end{equation}
-
-
 
 where :
 
@@ -75,7 +73,7 @@ phtest(fixed4,random4)
 **Interpretation :** P-Value < 0.05 then Ho is rejected and I have to use the fixed-effect.
 
 
-#### Testing for time and companies fixed effects
+#### Testing for time fixed effects
 
 ```{r}
 

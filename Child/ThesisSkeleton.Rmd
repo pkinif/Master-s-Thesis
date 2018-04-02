@@ -56,7 +56,7 @@ knitr::opts_chunk$set(fig.path = '/figures/',
 
 \newpage
 \fancyhead[CO,CE]{Table of Contents}
-\setcounter{tocdepth}{2}
+\setcounter{tocdepth}{3}
 \tableofcontents
 
 \newpage
@@ -99,7 +99,10 @@ knitr::opts_chunk$set(fig.path = '/figures/',
 ```{r child = 'Methodology.Rmd'} 
 ```
 
-
+\FloatBarrier
+\newpage
+```{r child = 'Analysis/ModelTestSynchro.Rmd'} 
+```
 
 \FloatBarrier
 \newpage

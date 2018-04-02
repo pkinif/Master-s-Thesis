@@ -59,7 +59,7 @@ phtest(fixed,random)
 **Interpretation :** P-Value < 0.05 then Ho is rejected and I have to use the fixed-effect.
 
 
-#### Testing for time and companies fixed effects
+#### Testing for time fixed effects
 
 ```{r}
 fixed <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model = "within")

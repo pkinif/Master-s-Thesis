@@ -1,0 +1,274 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{}
+  \pretitle{\vspace{\droptitle}}
+  \posttitle{}
+  \author{}
+  \preauthor{}\postauthor{}
+  \date{}
+  \predate{}\postdate{}
+
+
+\begin{document}
+
+\section{Methodology}\label{methodology}
+
+Here is my methodology\ldots{}
+
+\subsection{Panel Data}\label{panel-data}
+
+\subsubsection{Definition of panel data}\label{definition-of-panel-data}
+
+Panel data, also called longitudinal data or cross-sectional time-series
+data include observations on N cross section units (i.e., firms) over T
+time-periods.
+
+\subsubsection{Advantages of panel data
+:}\label{advantages-of-panel-data}
+
+As panel data analysis uses variation in both these dimensions, it is
+considered to be one of the most efficient analytical methods for data
+{[}@DimitriosAsteriou2006{]}. It usually contains more degrees of
+freedom, less collinearity among the variables, more efficiency and more
+sample variability than one-dimensional method (i.e.cross-sectional data
+and time series data) giving a more accurate inference of the parameters
+estimated in the model {[}@Hsiao2007, @HsiaoChapitrePanelData2014{]}.
+
+\subsubsection{Fixed or random effect
+model}\label{fixed-or-random-effect-model}
+
+Panel data may have individual (group) effect, time effect, or both,
+which are analyzed by fixed effect and/or random effect models. \emph{A
+fixed effect model} examines if intercepts vary across group or time
+period, whereas a \emph{random effect model} explores differences in
+error variance components across individual or time period.
+{[}@Park2011{]}.
+
+\textbf{!! I need to test the fixed-random effect model of my database
+before moving forward !!}
+
+\begin{itemize}
+\tightlist
+\item
+  @Ng2015 used the two-stage-least-square regressions to estimate its
+  models.
+\end{itemize}
+
+** In case of presence of endogeneyity in an econometric model, OLS is
+not capable of delivering consistent parameter estimates
+{[}@Wooldridge2008{]}.**
+
+Citation from {[}@Wooldridge2008{]} :
+
+\begin{quote}
+The general concept is that of the instrumental variables estimator; a
+popular form of that estimator, often employed in the context of
+endogeneity, is known as two-stage least squares (2SLS)
+\end{quote}
+
+\subsubsection{Endogeneity test}\label{endogeneity-test}
+
+Even if panel data have a lot of advantages\ldots{}
+
+Two issues involved in utilizing panel data, namely heterogeneity bias
+and selectivity bias {[}@HsiaoChapitrePanelData2014{]}.
+
+Citation from @HsiaoChapitrePanelData2014:
+
+\begin{quote}
+It is only by taking proper account of selectivity and heterogeneity
+biases in the panel data that one can have confidence in the results
+obtained.
+\end{quote}
+
+@Dangsearchrobustmethods2015 examine which methods are appropriate for
+estimating dynamic panel data models in empirical corporate
+finance,especially in short panels of company data, in the likely
+presence of (1) unobserved heterogeneity and endogeneity, (2) residual
+serial correlation, or (3) fractional dependent variables. The
+bias-corrected fixed-effects estimators, based on an analytical,
+bootstrap, or indirect inference approach, are found to be the most
+appropriate and robust methods.
+
+But @MiroshnychenkoGreenpracticesfinancial2017 used the OLS regressions
+in micro panel using the Huber-White sand wich estimator, to account for
+the heteroscedasticity problem\ldots{} \textbf{Which method should I
+use?}
+
+Hausmann test to test the random effects model for both dependant
+variables?
+
+\subsection{Econometric Model}\label{econometric-model}
+
+The first hypothesis will be tested with T-tests on the impact of each
+green initiative on green performance.
+
+Both Hypotheses two and three will be tested by regression analysis.
+Econometric models are based on @Delmas2015 and
+@MiroshnychenkoGreenpracticesfinancial2017 and started from the general
+form:
+
+\begin{equation}
+Y_{t+1}=\beta_{0} + \beta_{1} (X_{it}) + + \beta_{2} (C_{it}) + \varepsilon_{it}
+\label{GeneralForm}
+\end{equation}
+
+where \(Y_{t+1}\) is the financial performance of firm \(i\) in year
+\(t+1\), \(\beta\) is the vector of estimated regression coefficients
+for each of the explanatory variables \(X_{it}\), \(C_{it}\) is a vector
+of control variables that include financial leverage, firm size and
+industry sector, \(\varepsilon_{it}\)is the error term.
+
+More precisely I will test six models :
+
+\textbf{Model 1 :} Green Initiatives on Tobin's Q
+
+\begin{equation}
+TobinsQ_{it+1}=\beta_{0} + \beta_{1} (SP_{it}) + \beta_{2} (ST_{it}) + \beta_{3} (AS_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
+\label{M1}
+\end{equation}
+
+\textbf{Model 2 :} Green Initiatives on ROA
+
+\begin{equation}
+ROA_{it+1}=\beta_{0} + \beta_{1} (SP_{it}) + \beta_{2} (ST_{it}) + \beta_{3} (AS_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
+\label{M2}
+\end{equation}
+
+\textbf{Model 3 :} Green Performance on Tobin's Q
+
+\begin{equation}
+TobinsQ_{it+1}=\beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (GP_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
+\label{M3}
+\end{equation}
+
+\textbf{Model 4 :} Green Performance on ROA
+
+\begin{equation}
+ROA_{it+1}=\beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (GP_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
+\label{M4}
+\end{equation}
+
+\textbf{Model 5 :} Both Green Performance and Green Initiative on
+Tobin's Q
+
+\begin{equation}
+TobinsQ_{it+1}=\beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (GP_{it}) + \beta_{6} (SP_{it}) + \beta_{7} (ST_{it}) + \beta_{8} (AS_{it}) + \beta_{9} (C_{it}) + \varepsilon_{it}
+\label{M5}
+\end{equation}
+
+\textbf{Model 6 :} Both Green Performance and Green Initiative on ROA
+
+\begin{equation}
+ROA_{it+1}=\beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (GP_{it}) + \beta_{6} (SP_{it}) + \beta_{7} (ST_{it}) + \beta_{8} (AS_{it})+ (C_{it}) + \varepsilon_{it}
+\label{M6}
+\end{equation}
+
+where :
+
+\begin{itemize}
+\tightlist
+\item
+  \(TobinsQ_{it+1}\) = a proxy for a firm's financial performance
+\item
+  \(ROA_{it+1}\) = a proxy for a firm's financial performance
+\item
+  \(EP_{it}\) = a proxy for a firm's energy productivity
+\item
+  \(CP_{it}\) = a proxy for a firm's carbon productivity
+\item
+  \(WatP_{it}\) = a proxy for a firm's water productivity
+\item
+  \(WasP_{it}\) = a proxy for a firm's waste productivity
+\item
+  \(GP_{it}\) = a proxy for a firm's green reputation
+\item
+  \(SP_{it}\) = a proxy for a firm's sustainability pay link
+\item
+  \(ST_{it}\) = a proxy for a firm's sustainability themed commitment
+\item
+  \(EP_{it}\) = a proxy for a firm's audit score
+\item
+  \(C_{it}\) = a vector of control variables that include financial
+  leverage, firm size and industry sector
+\item
+  \(\varepsilon_{it}\) = the error term
+\end{itemize}
+
+Dans l'\autoref{M1}, blabla ou dans l'équation \ref{M1}
+
+\subsection{Sensitivity Analysis}\label{sensitivity-analysis}
+
+
+\end{document}

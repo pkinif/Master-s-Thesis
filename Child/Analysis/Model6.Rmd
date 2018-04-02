@@ -74,7 +74,7 @@ phtest(fixed6,random6)
 **Interpretation :** P-Value < 0.05 then Ho is rejected and I have to use the fixed-effect.
 
 
-#### Testing for time and companies fixed effects
+#### Testing for time fixed effects
 
 ```{r}
 
