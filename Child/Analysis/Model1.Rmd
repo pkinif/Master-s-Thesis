@@ -1,6 +1,13 @@
 ---
 output: pdf_document
 ---
+```{r}
+if (!require("plm")) install.packages("plm")
+library(plm)
+
+# I dowload my DataBase with read.csv2
+DB_Tobin<-data.frame(read.csv2("DataBase/DB_Tobin.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+```
 
 
 # Model 1
@@ -23,21 +30,15 @@ Citation from [@Croissant2008] :
 > *pooltest tests the hypothesis that the same coeffcients apply to each individual. It is a standard F test, based on the comparison of a model obtained for the full sample and a model based on the estimation of an equation for each individual. The first argument of pooltest is a plm object. The second argument is a pvcm object obtained with model=within. If the first argument is a pooling model, the test applies to all the coefficients (including the intercepts), if it is a within model, different intercepts are assumed.*
 
 ```{r}
-if (!require("plm")) install.packages("plm")
-library(plm)
-
-# I dowload my DataBase with read.csv2
-DB<-data.frame(read.csv2("DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
-
 # Test of poolability --> error that I cannot understand
 
-# M1_pvcm <- pvcm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data=DB, index=c("Companies", "YearFinancialIndicator"), model="within")
+# M1_pvcm <- pvcm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-# M1_plm<-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data=DB, model="within")
+# M1_plm<-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data=DB_Tobin, model="within")
 
 # pooltest(M1_pvcm,M1_plm)
 
-# pooltest(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB, index=c("Companies", "YearFinancialIndicator"), model = "within")
+# pooltest(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model = "within")
 ```
 
 ### Fixed or Random : Hausman Test 
@@ -48,9 +49,9 @@ Citation from @Torres-Reyna2010 :
 
 
 ```{r}
-fixed <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB, index=c("Companies", "YearFinancialIndicator"), model = "within")
+fixed <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model = "within")
 
-random <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB, index=c("Companies", "YearFinancialIndicator"), model = "random")
+random <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model = "random")
 
 phtest(fixed,random)
 ```
@@ -58,9 +59,52 @@ phtest(fixed,random)
 **Interpretation :** P-Value < 0.05 then Ho is rejected and I have to use the fixed-effect.
 
 
+### Testing for time and companies fixed effects
+
+```{r}
+fixed <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model = "within")
+
+fixed_time <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset) + factor(YearFinancialIndicator), data = DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model = "within")
 
 
+# Testing the time-fixed effects. The null is that no time-fixed effects needed
+pFtest(fixed_time, fixed)
 
 
+```
+**Interpretation Fixed_time effect :** P-Value is < 0.05 meaning that null hypothesis is rejected and that there is a significant time-fixed effect. **So I need to use time fixed effect in my model!!**
 
 
+### Testing for cross-sectional dependence/contemporaneous correlation
+
+
+Citation from @Torres-Reyna2010 :
+
+> According to Baltagi, cross-sectional dependence is a problem in macro panels with long time series. This is not much of a problem in micro panels (few years and large number of cases). The null hypothesis in the B -P/LM and Pasaran CD tests of independence is that residuals across entities are not correlated. B-  P/LM and Pasaran CD (cross-sectional dependence) tests are used to test whether the residuals are correlated across entities*. Cross-sectional dependence can lead to bias in tests results (also called contemporaneous correlation). 
+
+
+```{r}
+pcdtest(fixed_time, test = c("lm"))
+pcdtest(fixed_time, test = c("cd"))
+```
+So HO is rejected meaning that I have cross sectional dependence in my first model. **What should I do?**
+
+
+### Testing for serial correlation
+
+```{r}
+pbgtest(fixed)
+```
+
+**Interpretation:** HO is rejected as p-value < 0.05 then I have serial correlation....
+
+### Testing for stationarity
+
+```{r}
+if (!require("tseries")) install.packages("tseries")
+library(tseries)
+PanelSet <- plm.data(DB_Tobin, index = c("Companies", "YearFinancialIndicator"))
+adf.test(PanelSet$TobinsQ, k=2)
+```
+Ho : Series has stationarity
+**Interpretation :** p-value < 0.05 then ho is rejected and my panel data do not have stationarity
