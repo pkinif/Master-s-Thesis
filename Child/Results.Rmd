@@ -1,3 +1,33 @@
+---
+output:
+  pdf_document
+---
+
 # Results
 
-Some incredible results...
+## Descriptive Statistics
+
+```{r echo = FALSE, message = FALSE, warning = FALSE,  results='asis'}
+if (!require("stargazer")) install.packages("stargazer")
+if (!require("dplyr")) install.packages("dplyr")
+
+library(stargazer)
+library(dplyr)
+
+DB_Roa<-data.frame(read.csv2("Analysis/DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
+StatDes <- stargazer(DB_Roa, type = "latex", title = "Statistic Descriptive", label = "StatDes", header = FALSE)
+```
+##Some boxplots
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6}
+
+boxplot(DB_Roa$TobinsQ,horizontal=T,main="Boxplot TobinsQ")
+boxplot(DB_Roa$ROA,horizontal=T,main="Boxplot ROA")
+boxplot(DB_Roa$Leverage,horizontal=T,main="Boxplot Leverage")
+boxplot(DB_Roa$NetMargin,horizontal=T,main="Boxplot NetMargin")
+boxplot(DB_Roa$FirmSize,horizontal=T,main="Boxplot FirmSize")
+```
+
+
+## ...

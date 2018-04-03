@@ -27,6 +27,28 @@ knitr::opts_chunk$set(fig.path = '/figures/',
 # Code chunks option applied to the whole document
 ```
 
+```{r echo = FALSE, warning = FALSE, message = FALSE}
+rm(list=ls()) #Removes all items in Environment!
+if (!require("utils")) install.packages("utils")
+if (!require("dplyr")) install.packages("dplyr")
+if (!require("plm")) install.packages("plm")
+
+library(plm)
+library(utils)
+library(dplyr)
+# I dowload my database befor knitting
+# The excel file contains several sheets with all my data
+# The csv file contains only variables of my model. Hence I dowload my DB with read.csv2
+DB_Roa<-data.frame(read.csv2("Analysis/DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+write.csv2(DB_Roa, file = "Analysis/DataBase/DB_Roa.csv")
+## This DB will be used for analysis with my dependent variable = ROA
+
+# From DB I select only row where TobinsQ <> zero . This database will be used when my dependent variable = TobinsQ
+
+DB_Tobin <- filter(DB_Roa, !is.na(TobinsQ))
+write.csv2(DB_Tobin, file = "Analysis/DataBase/DB_Tobin.csv")
+```
+
 \pagenumbering{gobble} 
 
 ```{r child = 'Coverpage.Rmd'}

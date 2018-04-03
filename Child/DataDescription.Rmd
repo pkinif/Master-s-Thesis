@@ -41,16 +41,16 @@ To be continued....
 -->
 
 
-The starting point of my data collection was the Newsweek Green Ranking which had assesed the world’s largest publicly-traded companies in the US and in the world since 2009. This ranking had been developed through a collaboration between Newsweek, Corporate Knights Capital, HIP Investor Inc and leading sustainability minds from nongovernmental organizations and the academic and accounting communities. The ranking attribute an overall green score to companies. The score s based on a weighted average of key performance indicators (KPI's). This study uses these KPIs to measure both green initiatives and green performance of the 500 largest publicly-traded companies in the United States. Due to a methodology change in the 2014 Newsweek Green Rankings, only the [2014](www.newsweek.com/green/worlds-greenest-companies-2014), [2015](http://www.newsweek.com/green-2015/top-green-companies-world-2015) and [2016](http://www.newsweek.com/green-2016/top-green-companies-world-2016) ranking were considered. Amongst those three ranking and of the 500 US companies, 405 companies were listed for each years.
+The starting point of my data collection was the Newsweek Green Ranking which had assessed the world’s largest publicly-traded companies in the US and in the world since 2009. This ranking had been developed through a collaboration between Newsweek, Corporate Knights Capital, HIP Investor Inc and leading sustainability minds from nongovernmental organizations and the academic and accounting communities. The ranking attribute an overall green score to companies. The score is based on a weighted average of key performance indicators (KPI's). This study uses these KPIs to measure both green initiatives and green performance of the 500 largest publicly-traded companies in the United States. Due to a methodology change in the 2014 Newsweek Green Rankings, only the [2014](http://www.newsweek.com/green/worlds-greenest-companies-2014), [2015](http://www.newsweek.com/green-2015/top-green-companies-world-2015) and [2016](http://www.newsweek.com/green-2016/top-green-companies-world-2016) ranking were considered. Among those three ranking and of the 500 US companies, 405 companies were listed for each years.
 
 
-Even though green rankings were published in 2014, 2015 and 2016, each company is evaluated based on the 2012, 2013 and 2014 data. Therefore, measures for financial performance of companies will be based on the 2012, 2013 and 2014 fundamental data. Financial data have been mainly collected on [stockpup](http://www.stockpup.com/) and in case of missing values I have completed with data coming from [morningstar](http://www.morningstar.be/be/default.aspx) and [ycharts](https://ycharts.com/). Of the 405 initial companies, a total of 6 companies were dropped because of missing data. The sample final includes 399 publicly-traded companies in the US covering the preiod from 2012 till 2014 inclusively. 
+Even though green rankings were published in 2014, 2015 and 2016, each company is evaluated based on the 2012, 2013 and 2014 data. Therefore, measures for financial performance of companies will be based on the 2012, 2013 and 2014 fundamental data. Financial data have been mainly collected on [stockpup](http://www.stockpup.com/) and in case of missing values I have completed with data coming from [morningstar](http://www.morningstar.be/be/default.aspx) and [ycharts](https://ycharts.com/). Of the 405 initial companies, a total of 6 companies were dropped because of missing data. The sample final includes 399 publicly-traded companies in the US covering the period from 2012 till 2014 inclusively. 
 
 
-The \autoref{Smpl} contains a sample of my database. The \autoref{VarDef} desribes my variables.You can notice that there are some missing values in the TobinsQ column. Indeed,compared to ROA, calculating Tobin’s q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whther this introduces sample bias. Therefore I will do the same and depending on the robustness of results I will use one or two sample spaces in my study. I still need to figure out how to perform this test in R.
+The \autoref{Smpl} contains a sample of my database. The \autoref{VarDef} describes my variables.You can notice that there are some missing values in the TobinsQ column. Indeed,compared to ROA, calculating Tobin’s q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces sample bias. Therefore I will do the same and depending on the robustness of results I will use one or two sample spaces in my study. I still need to figure out how to perform this test in R.
 
 
-In the meantime, the function *pdim()* extracts the dimensions of both panel data, namely *DB_Roa* and *DB_TobinsQ*, and we can observe that both are caracterized as *unbalanced*. Indeed I had to remove some year obervations due to missing values. 
+In the meantime, the function *pdim()* extracts the dimensions of both panel data, namely *DB_Roa* and *DB_TobinsQ*, and we can observe that both are characterized as *unbalanced*. Indeed I had to remove some year observations due to missing values. 
 
 
 ```{r echo = TRUE}
@@ -74,13 +74,13 @@ stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sam
 
 ```
 
-\newpage
+
 
 \begin{table}[h]
 \centering
 \caption{Variable Definition} 
 \label{VarDef}
-\begin{tabular}{lp{3cm}p{8cm}}
+\begin{tabular}{lp{3cm}p{11cm}}
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
  & Variables & Description \\ 
@@ -89,20 +89,20 @@ stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sam
 2 & Return on Asset & Earnings before interest over total firm assets \\ 
 3 & Energy Productivity & Revenue (\$US) / Total Energy Consumption \\ 
 4 & Carbon Productivity & Revenue (\$US) / Total Greenhouse gas Emissions (CO2) \\ 
-5 & Water Productiviry & Revenue (\$US) / Total water (m3) \\ 
+5 & Water Productivity & Revenue (\$US) / Total water (m3) \\ 
 6 & Waste Productivity & Revenue (\$US) / [Total waste generated (metric tonnes)–waste recycled/reused (tones)] \\ 
 7 & Sustainability Pay Link & A mechanism to link the remuneration of any member of a company's senior executive team with the achievement of environmental performance targets. The existence of such a link is awarded a score of 100\%. A score of 0\% is attributed if there is no such mechanism in place \\ 
 8 & Sustainable Themed Commitment & Refers to the existence of a committee at the Board of Directors level whose mandate is related to the sustainability of the company, including but not limited to environmental matters. A score of 100\% accrues to the company when such link exists and a score of 0\% is attributed if there is no such link in place \\ 
 9 & Audit Score & Refers to the case where a company provides evidence that the latest reported environmental metrics were audited by a third party. Newsweek and their research partners award a score of 100\% if such audit has been performed, and a score of 0\% is given when such audit was not performed. \\ 
-10 & Leverage & Log of the square of the ratio of long-term debt to common shareholders' equity (shareholders equity minus preferred equity) \\ 
-11 & Net Margin & Log of the ratio of earnings to revenue \\ 
+10 & Leverage & The ratio of long-term debt to common shareholders' equity (shareholders equity minus preferred equity) in abolute values \\ 
+11 & Net Margin & The ratio of earnings to revenue \\ 
 12 & Firm Size & Log of total assets \\ 
 13 & Industry & Global Industry Classification Standard (GICS) of the firm. The variable take a value from 1 to 10 where 1 = Consumer Discretionary, 2 = Consumer Staples, 3 = Energy, 4 = Financials, 5 = Health Care, 6 = Industrials, 7 = Information Technology, 8 = Materials, 9 = Pharmaceuticals / Biotechnology, 10 = Telecommunication Services and 11 = Utilities \\ 
 \hline
 \end{tabular}
 \end{table}
 
-\newpage
+
 
 ## Dependent Variables
       
