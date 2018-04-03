@@ -5,25 +5,61 @@ date: "26 mars 2018"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+This document give you an overview of my data base.\\
 
-```{r}
+
+```{r warning = FALSE, message = FALSE}
+rm(list=ls()) #Removes all items in Environment!
 if (!require("utils")) install.packages("utils")
 if (!require("dplyr")) install.packages("dplyr")
+if (!require("plm")) install.packages("plm")
 
+library(plm)
 library(utils)
 library(dplyr)
 
-# The excel file contains several sheets containing all my data
+# The excel file contains several sheets with all my data
 # The csv file contains only variables of my model. Hence I dowload my DB with read.csv2
-DB<-data.frame(read.csv2("DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+DB_Roa<-data.frame(read.csv2("DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+write.csv2(DB_Roa, file = "DB_Roa.csv")
 ## This DB will be used for analysis with my dependent variable = ROA
 
-# I select only row where TobinsQ <> zero . This database will be used when my dependent vairable = TobinsQ
+# From DB I select only row where TobinsQ <> zero . This database will be used when my dependent vairable = TobinsQ
 
-DB_Tobin <- filter(DB, !is.na(TobinsQ))
+DB_Tobin <- filter(DB_Roa, !is.na(TobinsQ))
 write.csv2(DB_Tobin, file = "DB_Tobin.csv")
 ```
+\\
 
+
+The table \ref{Smpl} contains a sample of my data base.\\
+
+
+```{r echo = FALSE, message = FALSE, warning = FALSE,  results='asis'}
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer)
+
+if (!require("plm")) install.packages("plm")
+library(plm)
+
+PanelData <- pdata.frame(DB_Roa, index=c("Companies", "YearFinancialIndicator"))
+smpl <- PanelData[c(1:10),c(1:4)]
+stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sample selection of the data base", label="Smpl", table.placement = "h", digits = 2)
+#(xtable(smpl,caption = "Sample selection of DB_Roa",label = "SampleDB_Roa", digits = 2)
+#align(table) <- rep("r", 8)
+#table
+```
+
+\\
+Function *pdim()* extracts the dimensions of the panel data:\\
+
+
+
+```{r echo = TRUE}
+library(plm)
+pdim(DB_Roa)
+pdim(DB_Tobin)
+```
+
+
+In both case the panel data is unbalanced.

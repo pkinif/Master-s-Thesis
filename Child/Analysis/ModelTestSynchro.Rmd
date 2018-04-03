@@ -18,22 +18,23 @@ Here are the tests :
 6. Test for stationarity
 7. Test for heteroskedasticity
 
-
-\begin{table}[]
+\begin{table}[h]
 \centering
+\begin{tabular}{rrrrrrr}
+\hline
+ & {Model 1} & {Model 2} & {Model 3} & {Model 4} & {Model 5} & {Model 6} \\ 
+\hline
+{Poolability} & NA & NA & NA & NA & NA & NA \\
+{Hausmann} & Fixed & Fixed & Fixed & Fixed & Fixed & Fixed \\
+{Time Fixed Effect} & No & Yes & No & Yes & No & Yes \\
+{Cross Sectional Dependence} & ? & Yes & ? & ? & ? & Yes \\
+{Serial Correlation} & Yes & Yes & Yes & Yes & Yes & Yes \\
+{Stationarity} & None & None & None & None & None & None \\
+{Heteroskedasticity} & Yes & Yes & Yes & Yes & Yes & Yes \\ 
+\hline
+\end{tabular}
 \caption{Test Summary}
 \label{TestSummary}
-\begin{tabular}{lllllll}
-\hline
- & \textbf{Model 1} & \textbf{Model 2} & \textbf{Model 3} & \textbf{Model 4} & \textbf{Model 5} & \textbf{Model 6} \\ \hline
-\textbf{Poolability} & NA & NA & NA & NA & NA & NA \\
-\textbf{Hausmann} & Fixed & Fixed & Fixed & Fixed & Fixed & Fixed \\
-\textbf{Time Fixed Effect} & No & Yes & No & Yes & No & Yes \\
-\textbf{Cross Sectional Dependence} & ? & Yes & ? & ? & ? & Yes \\
-\textbf{Serial Correlation} & Yes & Yes & Yes & Yes & Yes & Yes \\
-\textbf{Stationarity} & None & None & None & None & None & None \\
-\textbf{Heteroskedasticity} & Yes & Yes & Yes & Yes & Yes & Yes \\ \hline
-\end{tabular}
 \end{table}
 
 
@@ -51,27 +52,17 @@ Regarding the poolability test I have an issue with my code that I still need to
 
 4. I have unbalanced panel data
 
-\newpage
-```{r child = 'Model1.Rmd'}
-```
-\newpage
-
-```{r child = 'Model2.Rmd'}
-```
-\newpage
-
-```{r child = 'Model3.Rmd'}
-```
-\newpage
-```{r child = 'Model4.Rmd'}
-```
-\newpage
-```{r child = 'Model5.Rmd'}
-```
-\newpage
-```{r child = 'Model6.Rmd'}
-```
 
 
+```{r echo=FALSE, error=FALSE, message=FALSE, results='asis'}
+if (!require("xtable")) install.packages("xtable")
+library(xtable)
+DB_Tobin<-data.frame(read.csv2("DataBase/DB_Tobin.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
+M1<-lm(TobinsQ~SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data = DB_Tobin)
+xtable(M1, caption = "Linear Regression,
+Dependent Variable: Exam Score",
+label = "BasicXtableSummary",
+digits = 1)
+```
 
