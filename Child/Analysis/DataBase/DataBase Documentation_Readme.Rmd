@@ -5,11 +5,7 @@ date: "26 mars 2018"
 output: pdf_document
 ---
 
-This document give you an overview of my databases.
-
-
-
-```{r warning = FALSE, message = FALSE}
+```{r echo = FALSE, warning = FALSE, message = FALSE}
 rm(list=ls()) #Removes all items in Environment!
 if (!require("utils")) install.packages("utils")
 if (!require("dplyr")) install.packages("dplyr")
@@ -32,8 +28,9 @@ write.csv2(DB_Tobin, file = "DB_Tobin.csv")
 ```
 
 
+This document give you an overview of my database. The table \ref{Smpl} contains a sample of my database. The table \ref{VarDef} desribes my variables. 
 
-The table \ref{Smpl} contains a sample of my database.
+You can notice that there are some missing values in the 
 
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE,  results='asis'}
@@ -62,30 +59,28 @@ pdim(DB_Tobin)
 ```
 
 
-
-
-
-```{r}
-#Create variable vector from column names
-variables <- c("Tobin's Q",
-               "Return on Asset",
-               "Energy Productivity",
-               "Carbon Productivity",
-               "Water Productiviry",
-               "Waste Productivity",
-               "Green Reputation",
-               "Sustainability Pay Link",
-               "Sustainable Themed Commitment",
-               "Audit Score",
-               "Leverage",
-               "Net Margin",
-               "Firm Size",
-               "Industry"
-               )
-
-#create variable vector from column names
-DescriptionVariables <- c("The ratio of a firm’s market value to the replacement cost of its assets",
-                          "Earnings before interest over total firm assets",
-                          "")
-```
-
+\begin{table}[h]
+\centering
+\caption{Variable Definition} 
+\label{VarDef}
+\begin{tabular}{llp{8cm}}
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & Variables & Description \\ 
+\hline
+1 & Tobin's Q & The ratio of a firm’s market value to the replacement cost of its assets \\ 
+2 & Return on Asset & Earnings before interest over total firm assets \\ 
+3 & Energy Productivity & Revenue (\$US) / Total Energy Consumption \\ 
+4 & Carbon Productivity & Revenue (\$US) / Total Greenhouse gas Emissions (CO2) \\ 
+5 & Water Productiviry & Revenue (\$US) / Total water (m3) \\ 
+6 & Waste Productivity & Revenue (\$US) / [Total waste generated (metric tonnes)–waste recycled/reused (tones)] \\ 
+7 & Sustainability Pay Link & A mechanism to link the remuneration of any member of a company's senior executive team with the achievement of environmental performance targets. The existence of such a link is awarded a score of 100\%. A score of 0\% is attributed if there is no such mechanism in place \\ 
+8 & Sustainable Themed Commitment & Refers to the existence of a committee at the Board of Directors level whose mandate is related to the sustainability of the company, including but not limited to environmental matters. A score of 100\% accrues to the company when such link exists and a score of 0\% is attributed if there is no such link in place \\ 
+9 & Audit Score & Refers to the case where a company provides evidence that the latest reported environmental metrics were audited by a third party. Newsweek and their research partners award a score of 100\% if such audit has been performed, and a score of 0\% is given when such audit was not performed. \\ 
+10 & Leverage & Log of the square of the ratio of long-term debt to common shareholders' equity (shareholders equity minus preferred equity) \\ 
+11 & Net Margin & Log of the ratio of earnings to revenue \\ 
+12 & Firm Size & Log of total assets \\ 
+13 & Industry & Global Industry Classification Standard (GICS) of the firm. The variable take a value from 1 to 10 where 1 = Consumer Discretionary, 2 = Consumer Staples, 3 = Energy, 4 = Financials, 5 = Health Care, 6 = Industrials, 7 = Information Technology, 8 = Materials, 9 = Pharmaceuticals / Biotechnology, 10 = Telecommunication Services and 11 = Utilities \\ 
+\hline
+\end{tabular}
+\end{table}
