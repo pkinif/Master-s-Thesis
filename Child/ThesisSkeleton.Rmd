@@ -99,10 +99,6 @@ knitr::opts_chunk$set(fig.path = '/figures/',
 ```{r child = 'Methodology.Rmd'} 
 ```
 
-\FloatBarrier
-\newpage
-```{r child = 'Analysis/ModelTestSynchro.Rmd'} 
-```
 
 \FloatBarrier
 \newpage

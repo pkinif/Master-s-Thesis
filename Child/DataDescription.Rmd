@@ -40,18 +40,6 @@ To be continued....
 ** Definition of ROA and TobinsQ
 -->
 
-```{r echo = FALSE, message = FALSE, warning = FALSE,  results='asis'}
-if (!require("stargazer")) install.packages("stargazer")
-library(stargazer)
-
-if (!require("plm")) install.packages("plm")
-library(plm)
-
-PanelData <- pdata.frame(DB_Roa, index=c("Companies", "YearFinancialIndicator"))
-smpl <- PanelData[c(1:10),c(1:4)]
-stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sample selection of the data base", label="Smpl", table.placement = "b", digits = 2, header = FALSE) # the agument 'header = FALSE" is really important to remove the citation info of stargazer package"
-
-```
 
 The starting point of my data collection was the Newsweek Green Ranking which had assesed the world’s largest publicly-traded companies in the US and in the world since 2009. This ranking had been developed through a collaboration between Newsweek, Corporate Knights Capital, HIP Investor Inc and leading sustainability minds from nongovernmental organizations and the academic and accounting communities. The ranking attribute an overall green score to companies. The score s based on a weighted average of key performance indicators (KPI's). This study uses these KPIs to measure both green initiatives and green performance of the 500 largest publicly-traded companies in the United States. Due to a methodology change in the 2014 Newsweek Green Rankings, only the [2014](www.newsweek.com/green/worlds-greenest-companies-2014), [2015](http://www.newsweek.com/green-2015/top-green-companies-world-2015) and [2016](http://www.newsweek.com/green-2016/top-green-companies-world-2016) ranking were considered. Amongst those three ranking and of the 500 US companies, 405 companies were listed for each years.
 
@@ -62,7 +50,7 @@ Even though green rankings were published in 2014, 2015 and 2016, each company i
 The \autoref{Smpl} contains a sample of my database. The \autoref{VarDef} desribes my variables.You can notice that there are some missing values in the TobinsQ column. Indeed,compared to ROA, calculating Tobin’s q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whther this introduces sample bias. Therefore I will do the same and depending on the robustness of results I will use one or two sample spaces in my study. I still need to figure out how to perform this test in R.
 
 
-In the meantime, the function *pdim()* extracts the dimensions of both panel data, namely `r DB_Roa` and `r DB_TobinsQ`, and we can observe that both are caracterized as *unbalanced*. Indeed I had to remove some year obervations due to missing values. 
+In the meantime, the function *pdim()* extracts the dimensions of both panel data, namely *DB_Roa* and *DB_TobinsQ*, and we can observe that both are caracterized as *unbalanced*. Indeed I had to remove some year obervations due to missing values. 
 
 
 ```{r echo = TRUE}
@@ -73,13 +61,26 @@ pdim(DB_Roa)
 pdim(DB_Tobin)
 ```
 
+```{r echo = FALSE, message = FALSE, warning = FALSE,  results='asis'}
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer)
+
+if (!require("plm")) install.packages("plm")
+library(plm)
+
+PanelData <- pdata.frame(DB_Roa, index=c("Companies", "YearFinancialIndicator"))
+smpl <- PanelData[c(1:10),c(1:4)]
+stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sample selection of the data base", label="Smpl", table.placement = "h", digits = 2, header = FALSE) # the agument 'header = FALSE" is really important to remove the citation info of stargazer package"
+
+```
+
 \newpage
 
 \begin{table}[h]
 \centering
 \caption{Variable Definition} 
 \label{VarDef}
-\begin{tabular}{llp{8cm}}
+\begin{tabular}{lp{3cm}p{8cm}}
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
  & Variables & Description \\ 
