@@ -28,9 +28,10 @@ write.csv2(DB_Tobin, file = "DB_Tobin.csv")
 ```
 
 
-This document give you an overview of my database. The table \ref{Smpl} contains a sample of my database. The table \ref{VarDef} desribes my variables. 
 
-You can notice that there are some missing values in the 
+This section give you an overview of my database. The \autoref{Smpl} contains a sample of my database. The \autoref{VarDef} desribes my variables.  
+
+
 
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE,  results='asis'}
