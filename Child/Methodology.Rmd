@@ -150,7 +150,7 @@ DB_Tobin <- filter(DB_Roa, !is.na(TobinsQ))
 ```
 
 
-This section will not be in the final document. It is only to report the result of the bunch of tests I carried out in order to define which panel data methotolodies I will use for each one of my 6 models.
+This section will not be in the final document but in appendix. It is only to report the result of the bunch of tests I carried out in order to define which panel data methotolodies I will use for each one of my 6 models.
 
 @Croissant2008a and @Torres-Reyna2010 really helped me.
 
@@ -166,7 +166,7 @@ Here are the tests :
 
 The table \ref{TestSummary} summaries the result of each test for each model. You can find details below.
 
-Regarding the poolability test I have an issue with my code that I still need to solve. This is why it is written *NA* in the table \ref{TestSummary}. I have also an issue with the test for cross-sectionnal dependence. Indeed depending the method I use with the test syntax (i.e. Pesaran's CD test (test="cd") or Breusch and Pagan's LM test (test="lm"), I got divergent results. **Do you know why? Which one suit the best my model?**
+Regarding the poolability test I have an issue with my code that I still need to solve. This is why it is written *NA* in the table \ref{TestSummary}. 
 
 
 \begin{table}[h]
@@ -178,7 +178,7 @@ Regarding the poolability test I have an issue with my code that I still need to
 {Poolability} & NA & NA & NA & NA & NA & NA \\
 {Hausmann} & Fixed & Fixed & Fixed & Fixed & Fixed & Fixed \\
 {Time Fixed Effect} & No & Yes & No & Yes & No & Yes \\
-{Cross Sectional Dependence} & ? & Yes & ? & ? & ? & Yes \\
+{Cross Sectional Dependence} & Yes & Yes & Yes & No & No & No \\
 {Serial Correlation} & Yes & Yes & Yes & Yes & Yes & Yes \\
 {Stationarity} & None & None & None & None & None & None \\
 {Heteroskedasticity} & Yes & Yes & Yes & Yes & Yes & Yes \\ 
@@ -195,7 +195,7 @@ Citation from [@Croissant2008] :
 
 > *Pooltest tests the hypothesis that the same coefficients apply to each individual. It is a standard F test, based on the comparison of a model obtained for the full sample and a model based on the estimation of an equation for each individual. The first argument of pooltest is a plm object. The second argument is a pvcm object obtained with model=within. If the first argument is a pooling model, the test applies to all the coefficients (including the intercepts), if it is a within model, different intercepts are assumed.*
 
-The null hypothesis of poolability assumes homogeneous slope coefficients.
+To carry out the of poolabiloty I have used the *pooltest* function. The null hypothesis of poolability assumes homogeneous slope coefficients.
 
 When running my code I got this error : Error in FUN(X[[i]], ...) : insufficient number of observations
 
@@ -251,7 +251,7 @@ Citation from @Torres-Reyna2010 :
 
 > *To decide between fixed or random effects you can run a Hausman test where the null hypothesis is that the preferred model is random effects vs. the alternative the fixed effects (see Green, 2008, chapter 9).  It basically tests whether the unique errors (ui) are correlated with the regressors, the null hypothesis is they are not.*
 
-The \autoref{Hausman} summarizes results of the Hausman Test of each model. We can observe that all p-values are < 0.05 meaning that HO is not verified and all models are caraterized by a fixed effect.
+The \autoref{Hausman} summarizes results of the Hausman Test of each model. I hae used the *phtest* function to carry out this test. We can observe that all p-values are < 0.05 meaning that HO is not verified and my models are caraterized by a fixed effect.
 
 ```{r echo = FALSE, error = FALSE, message = FALSE, results = 'asis'}
 if (!require("stargazer")) install.packages("stargazer")
@@ -312,7 +312,7 @@ stargazer(HausmanTable, summary = FALSE, table.placement = "h", type="latex", la
 \newpage
 ### Test for time fixed effect
 
-The \autoref{pFtest} summarizes results of the test for each model.
+The \autoref{pFtest} summarizes results of the test for each model. I have used the *pFtest* function to carry out this test.
 
 P-Value is > 0.05 for model 1, model 3 and model 5 meaning that null hypothesis is verified and that there is not a significant time-fixed effect. However for model 2,model 4 and model 6 P-Value is < 0.05 meaning that null hypothesis is rejected and that there is a significant time-fixed effect.
 
@@ -361,9 +361,9 @@ stargazer(PfTable, summary = FALSE, table.placement = "h", type="latex", label =
 
 Citation from @Torres-Reyna2010 :
 
-> "According to Baltagi, cross-sectional dependence is a problem in macro panels with long time series. This is not much of a problem in micro panels (few years and large number of cases). The null hypothesis in the B -P/LM and Pasaran CD tests of independence is that residuals across entities are not correlated. B-  P/LM and Pasaran CD (cross-sectional dependence) tests are used to test whether the residuals are correlated across entities*. Cross-sectional dependence can lead to bias in tests results (also called contemporaneous correlation)."
+> *According to Baltagi, cross-sectional dependence is a problem in macro panels with long time series. This is not much of a problem in micro panels (few years and large number of cases). The null hypothesis in the B -P/LM and Pasaran CD tests of independence is that residuals across entities are not correlated. B-  P/LM and Pasaran CD (cross-sectional dependence) tests are used to test whether the residuals are correlated across entities. Cross-sectional dependence can lead to bias in tests results (also called contemporaneous correlation).*
 
-The \autoref{pcd} show results of the test for cross-sectional dependence. We can observe that I have cross-sectional dependence in my model 1,2 and 3. However for model 4, 5 and 6, the P-Value is superior to 0.05 meaning that HO is verified and these models do not have cross-sectional dependence.
+I have used the *pcdtest* function to carry out this test. The \autoref{pcd} show results of the test for cross-sectional dependence. We can observe that I have cross-sectional dependence in my model 1,2 and 3. However for model 4, 5 and 6, the P-Value is superior to 0.05 meaning that HO is verified and these models do not have cross-sectional dependence.
 
 ```{r echo = FALSE, error = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
 
@@ -396,4 +396,126 @@ stargazer(pcdTable, summary = FALSE, table.placement = "h", type="latex", label 
 ```
  
 
+
+\newpage
+### Test for serial correlation
+
+I used the Wooldridge's test for serial correlation in FE panels with the *pwartest* function to test the serial correlation of my models. According to @Croissant2008 this test is applicable to any fixed effect panel model, and in particular to short panels with small T and large n, which is my case. The null hypothese is that there is no serial correlation in the model. According to the P_Value of my models, I can conclude that I have serial correlation in all models.
+
+
+```{r echo = FALSE, error = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
+
+
+
+pwartest1 <- cbind("Model 1", pwartest(Fixed1)$p.value)
+pwartest2 <- cbind("Model 2", pwartest(Fixed2)$p.value)
+pwartest3 <- cbind("Model 3", pwartest(Fixed3)$p.value)
+pwartest4 <- cbind("Model 4", pwartest(Fixed4)$p.value)
+pwartest5 <- cbind("Model 5", pwartest(Fixed5)$p.value)
+pwartest6 <- cbind("Model 6", pwartest(Fixed6)$p.value)
+
+
+
+PwartestTable <- rbind(pwartest1, pwartest2, pwartest3, pwartest4, pwartest5, pwartest6)
+colnames(PwartestTable) <- c("Model","P-Value")
+
+
+stargazer(PwartestTable, summary = FALSE, table.placement = "h", type="latex", label = "pwartest", title = "Wooldridge's test - PValue", header = FALSE)
+```
+
+\newpage
+###  Test for stationarity
+
+The Dickey-Fuller test to check for stochastic trends with the *adf.test* function. The null hypothesis is that the series has a unit root (i.e. non-stationary). In my case HO is rejected for both databases meaning that they do not have stationarity.
+
+```{r echo = FALSE, error = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
+if (!require("tseries")) install.packages("tseries")
+library(tseries)
+
+
+PanelSet_Roa <- plm.data(DB_Roa, index = c("Companies", "YearFinancialIndicator"))
+StatTestRoa <- cbind("Roa",adf.test(PanelSet_Roa$ROA, k=2)$p.value)
+
+PanelSet_Tobin <- plm.data(DB_Tobin, index = c("Companies", "YearFinancialIndicator"))
+StatTestTobin <- cbind("TobinsQ",adf.test(PanelSet_Tobin$TobinsQ, k=2)$p.value)
+
+StatTable <- rbind(StatTestRoa,StatTestTobin)
+colnames(StatTable) <- c("Database", "P_Value")
+
+stargazer(StatTable, summary = FALSE, table.placement = "h", type="latex", label = "Stationarity", title = "Dickey-Fuller test - PValue", header = FALSE)
+
+```
+
+\newpage
+
+### Test for heteroskedasticity
+
+
+I have used the *Bptest* function to test the presence of heteroskedasticity of my model. The \autoref{Hetero} summarizes the p-value of each model. I find strange that all p-value equals zero. By meaning a p-value cannot be null, right? **What do you think?**
+
+```{r echo = FALSE, error = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
+if (!require("lmtest")) install.packages("lmtest")
+library(lmtest)
+
+
+Bptest1 <- cbind("Model 1",bptest(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Tobin, studentize = F )$p.value)
+
+Bptest2 <- cbind("Model 2", bptest(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Roa, studentize = F)$p.value)
+
+Bptest3 <- cbind("Model 3", bptest(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Tobin, studentize = F)$p.value)
+
+Bptest4 <- cbind("Model 4", bptest(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Roa, studentize = F)$p.value)
+
+Bptest5 <- cbind("Model 5", bptest(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Tobin, studentize = F)$p.value)
+
+Bptest6 <- cbind("Model 6", bptest(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Roa, studentize = F)$p.value)
+
+BptestTable <- rbind(Bptest1, Bptest2, Bptest3, Bptest4, Bptest5, Bptest6)
+colnames(BptestTable) <- c("Model","P_Value")
+
+stargazer(BptestTable, summary = FALSE, table.placement = "h", type="latex", label = "Hetero", title = "Heteroskedasticity Test - PValue", header = FALSE)
+```
+
+
+Starting from the premise that I have heteroskedasiticy I will compute the **sandwich estimators** of my models. The \autoref{Sand} summarizes the sandwich estimators for each model. **What should I do with that?**
+
+```{r echo = FALSE, error = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
+if (!require("lmtest")) install.packages("lmtest")
+library(lmtest)
+if (!require("plm")) install.packages("plm")
+library(plm)
+
+coeftest1 <- coeftest(Fixed1, vcovHC(Fixed1, method = "arellano", type = "HC3"))
+coeftest2 <- coeftest(Fixed2, vcovHC(Fixed2, method = "arellano", type = "HC3"))
+coeftest3 <- coeftest(Fixed3, vcovHC(Fixed3, method = "arellano", type = "HC3"))
+coeftest4 <- coeftest(Fixed4, vcovHC(Fixed4, method = "arellano", type = "HC3"))
+coeftest5 <- coeftest(Fixed5, vcovHC(Fixed5, method = "arellano", type = "HC3"))
+coeftest6 <- coeftest(Fixed6, vcovHC(Fixed6, method = "arellano", type = "HC3"))
+
+stargazer(coeftest1, coeftest2, coeftest3, coeftest4, coeftest5, coeftest6, type = "latex", title = "Sandwich Estimators", label = "Sand", table.placement = "h", header = FALSE )
+
+```
+
+See @MiroshnychenkoGreenpracticesfinancial2017 and @Stock2008
+
+*If hetersokedaticity is detected you can use the sandwich estimaror* [@Torres-Reyna2010]
+
+vcovHC is a function for estimating a robust covariance matrix of parameters for a fixed effects or random effects panel model according to the White method (White 1980, 1984; Arellano 1987). The --vcovHC– function estimates three heteroskedasticity-consistent covariance estimators:
+
+* "white1" - for general heteroskedasticity but no serial correlation. Recommended for random effects.
+
+* "white2" - is "white1" restricted to a common variance within groups. Recommended for random effects.
+
+* "arellano" - both heteroskedasticity and serial correlation. Recommended for fixed effects.
+
+
+The following options apply*:
+
+* HC0 - heteroskedasticity consistent. The default.
+* HC1,HC2, HC3 – Recommended for small samples. HC3 gives less weight to influential observations.
+* HC4 - small samples with influential observations 
+* HAC - heteroskedasticity and autocorrelation consistent (type ?vcovHAC for more details)
+
+
+\newpage
 ## Sensitivity Analysis
