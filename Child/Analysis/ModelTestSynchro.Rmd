@@ -18,7 +18,7 @@ Here are the tests :
 6. Test for stationarity
 7. Test for heteroskedasticity
 
-\begin{table}[h]
+\begin{table}[b]
 \centering
 \begin{tabular}{rrrrrrr}
 \hline
