@@ -139,14 +139,171 @@ where :
 
 \newpage
 ## Panel Data Tests
-###
+
+```{r echo =FALSE, message = FALSE, error = FALSE}
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr)
+# I download my database for each Dependent Variable
+DB_Roa<-data.frame(read.csv2("Analysis/DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+DB_Tobin <- filter(DB_Roa, !is.na(TobinsQ))
+
+```
 
 
+This section will not be in the final document. It is only to report the result of the bunch of tests I carried out in order to define which panel data methotolodies I will use for each one of my 6 models.
+
+@Croissant2008a and @Torres-Reyna2010 really helped me.
+
+Here are the tests : 
+
+1. Test of poolability 
+2. Hausmann Test to determine the fixed or random effect
+3. Test for time fixed effect
+4. Test for cross-sectional dependence
+5. Test for serial correlation
+6. Test for stationarity
+7. Test for heteroskedasticity
+
+The table \ref{TestSummary} summaries the result of each test for each model. You can find details below.
+
+Regarding the poolability test I have an issue with my code that I still need to solve. This is why it is written *NA* in the table \ref{TestSummary}. I have also an issue with the test for cross-sectionnal dependence. Indeed depending the method I use with the test syntax (i.e. Pesaran's CD test (test="cd") or Breusch and Pagan's LM test (test="lm"), I got divergent results. **Do you know why? Which one suit the best my model?**
 
 
+\begin{table}[h]
+\centering
+\begin{tabular}{rrrrrrr}
+\hline
+ & {Model 1} & {Model 2} & {Model 3} & {Model 4} & {Model 5} & {Model 6} \\ 
+\hline
+{Poolability} & NA & NA & NA & NA & NA & NA \\
+{Hausmann} & Fixed & Fixed & Fixed & Fixed & Fixed & Fixed \\
+{Time Fixed Effect} & No & Yes & No & Yes & No & Yes \\
+{Cross Sectional Dependence} & ? & Yes & ? & ? & ? & Yes \\
+{Serial Correlation} & Yes & Yes & Yes & Yes & Yes & Yes \\
+{Stationarity} & None & None & None & None & None & None \\
+{Heteroskedasticity} & Yes & Yes & Yes & Yes & Yes & Yes \\ 
+\hline
+\end{tabular}
+\caption{Test Summary}
+\label{TestSummary}
+\end{table}
+
+\newpage
+### Test of poolability 
+
+Citation from [@Croissant2008] :
+
+> *Pooltest tests the hypothesis that the same coefficients apply to each individual. It is a standard F test, based on the comparison of a model obtained for the full sample and a model based on the estimation of an equation for each individual. The first argument of pooltest is a plm object. The second argument is a pvcm object obtained with model=within. If the first argument is a pooling model, the test applies to all the coefficients (including the intercepts), if it is a within model, different intercepts are assumed.*
+
+The null hypothesis of poolability assumes homogeneous slope coefficients.
+
+When running my code I got this error : Error in FUN(X[[i]], ...) : insufficient number of observations
+
+I still need to understand the origin of this error.
 
 
+```{r echo = FALSE, message = FALSE, error = FALSE}
+if (!require("plm")) install.packages("plm")
+library(plm)
 
+# Test of poolability --> error that I cannot understand
+
+# PVCM regression
+#M1_pvcm <- pvcm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+#M2_pvcm <- pvcm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+#M3_pvcm <- pvcm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+#M4_pvcm <- pvcm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+#M5_pvcm <- pvcm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+#M6_pvcm <- pvcm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+# PLM regression
+M1_plm <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+M2_plm <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+M3_plm <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+M4_plm <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+M5_plm <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+M6_plm <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+#PoolTest
+
+#pooltest(M1_pvcm,M1_plm)
+#pooltest(M2_pvcm,M2_plm)
+#pooltest(M3_pvcm,M3_plm)
+#pooltest(M4_pvcm,M4_plm)
+#pooltest(M5_pvcm,M5_plm)
+#pooltest(M6_pvcm,M6_plm)
+
+```
+
+### Hausmann Test to determine the fixed or random effect
+
+Citation from @Torres-Reyna2010 :
+
+> *To decide between fixed or random effects you can run a Hausman test where the null hypothesis is that the preferred model is random effects vs. the alternative the fixed effects (see Green, 2008, chapter 9).  It basically tests whether the unique errors (ui) are correlated with the regressors, the null hypothesis is they are not.*
+
+```{r echo = FALSE, error = FALSE, message = FALSE, results = 'asis'}
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer)
+
+if (!require("xtable")) install.packages("xtable")
+library(xtable)
+
+# Fixed Model
+
+Fixed1 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+Fixed2 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+Fixed3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+Fixed4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+Fixed5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+Fixed6 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+# Random Model
+
+Random1 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="random")
+
+Random2 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="random")
+
+Random3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="random")
+
+Random4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="random")
+
+Random5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="random")
+
+Random6 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="random")
+
+# Hausmann Test
+
+ColNames <- cbind("Model", "P_Value")
+Hausman1 <- cbind("Model 1",phtest(Fixed1,Random1)$p.value)
+Hausman2 <- cbind("Model 2",phtest(Fixed2,Random2)$p.value)
+Hausman3 <- cbind("Model 3",phtest(Fixed3,Random3)$p.value)
+Hausman4 <- cbind("Model 4",phtest(Fixed4,Random4)$p.value)
+Hausman5 <- cbind("Model 5",phtest(Fixed5,Random5)$p.value)
+Hausman6 <- cbind("Model 6",phtest(Fixed6,Random6)$p.value)
+
+HausmanTable <- rbind(Hausman1, Hausman2, Hausman3, Hausman4, Hausman5, Hausman6)
+colnames(HausmanTable) <- c("Model","P-Value")
+
+#xtable(HausmanTable, caption = "Hausman Test Result", label = "Hausman", align = "rrr")
+
+stargazer(HausmanTable, summary = FALSE, table.placement = "h", type="latex", label = "Hausman", title = "Hausman Test PValue", header = FALSE)
+
+```
 
 \newpage
 ## Sensitivity Analysis
