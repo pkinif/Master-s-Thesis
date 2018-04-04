@@ -27,9 +27,14 @@ TobinsQ_{it+1}=\beta_{0} + \beta_{1} (SP_{it}) + \beta_{2} (ST_{it}) + \beta_{3}
 
 Citation from [@Croissant2008] :
 
-> *pooltest tests the hypothesis that the same coeffcients apply to each individual. It is a standard F test, based on the comparison of a model obtained for the full sample and a model based on the estimation of an equation for each individual. The first argument of pooltest is a plm object. The second argument is a pvcm object obtained with model=within. If the first argument is a pooling model, the test applies to all the coefficients (including the intercepts), if it is a within model, different intercepts are assumed.*
+> *Pooltest tests the hypothesis that the same coefficients apply to each individual. It is a standard F test, based on the comparison of a model obtained for the full sample and a model based on the estimation of an equation for each individual. The first argument of pooltest is a plm object. The second argument is a pvcm object obtained with model=within. If the first argument is a pooling model, the test applies to all the coefficients (including the intercepts), if it is a within model, different intercepts are assumed.*
 
-```{r}
+The null hypothesis of poolability assumes homogeneous slope coefficients.
+
+When running this code I got this error : Error in FUN(X[[i]], ...) : insufficient number of observations
+I still need to understand the origin.
+
+```{r echo = FALSE, message = FALSE, error = FALSE}
 # Test of poolability --> error that I cannot understand
 
 # M1_pvcm <- pvcm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtRatio^2 + NetMargin + log(Asset), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")

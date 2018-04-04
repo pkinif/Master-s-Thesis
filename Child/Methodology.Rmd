@@ -251,6 +251,8 @@ Citation from @Torres-Reyna2010 :
 
 > *To decide between fixed or random effects you can run a Hausman test where the null hypothesis is that the preferred model is random effects vs. the alternative the fixed effects (see Green, 2008, chapter 9).  It basically tests whether the unique errors (ui) are correlated with the regressors, the null hypothesis is they are not.*
 
+The \autoref{Hausman} summarizes results of the Hausman Test of each model. We can observe that all p-values are < 0.05 meaning that HO is not verified and all models are caraterized by a fixed effect.
+
 ```{r echo = FALSE, error = FALSE, message = FALSE, results = 'asis'}
 if (!require("stargazer")) install.packages("stargazer")
 library(stargazer)
@@ -306,4 +308,92 @@ stargazer(HausmanTable, summary = FALSE, table.placement = "h", type="latex", la
 ```
 
 \newpage
+
+\newpage
+### Test for time fixed effect
+
+The \autoref{pFtest} summarizes results of the test for each model.
+
+P-Value is > 0.05 for model 1, model 3 and model 5 meaning that null hypothesis is verified and that there is not a significant time-fixed effect. However for model 2,model 4 and model 6 P-Value is < 0.05 meaning that null hypothesis is rejected and that there is a significant time-fixed effect.
+
+**Does this mean that for model 2,4 and 6 I have to add the time fixed effect in my model?**
+```{r echo = FALSE, error = FALSE, message = FALSE, results = 'asis'}
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer)
+
+# Fixed_Time Model
+
+Fixed_Time1 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+Fixed_Time2 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+Fixed_Time3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+Fixed_Time4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+Fixed_Time5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+Fixed_Time6 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+
+#Testing the time fixed effect
+
+pFtest1 <- cbind("Model 1", pFtest(Fixed_Time1, Fixed1)$p.value)
+pFtest2 <- cbind("Model 2", pFtest(Fixed_Time2, Fixed2)$p.value)
+pFtest3 <- cbind("Model 3", pFtest(Fixed_Time3, Fixed3)$p.value)
+pFtest4 <- cbind("Model 4", pFtest(Fixed_Time4, Fixed4)$p.value)
+pFtest5 <- cbind("Model 5", pFtest(Fixed_Time5, Fixed5)$p.value)
+pFtest6 <- cbind("Model 6", pFtest(Fixed_Time6, Fixed6)$p.value)
+
+
+PfTable <- rbind(pFtest1, pFtest2, pFtest3, pFtest4, pFtest5, pFtest6)
+colnames(PfTable) <- c("Model","P-Value")
+
+
+stargazer(PfTable, summary = FALSE, table.placement = "h", type="latex", label = "pFtest", title = "Fixed Time Effect Test PValue", header = FALSE)
+
+```
+
+
+
+
+\newpage
+### Test for cross-sectional dependence
+
+Citation from @Torres-Reyna2010 :
+
+> "According to Baltagi, cross-sectional dependence is a problem in macro panels with long time series. This is not much of a problem in micro panels (few years and large number of cases). The null hypothesis in the B -P/LM and Pasaran CD tests of independence is that residuals across entities are not correlated. B-  P/LM and Pasaran CD (cross-sectional dependence) tests are used to test whether the residuals are correlated across entities*. Cross-sectional dependence can lead to bias in tests results (also called contemporaneous correlation)."
+
+The \autoref{pcd} show results of the test for cross-sectional dependence. We can observe that I have cross-sectional dependence in my model 1,2 and 3. However for model 4, 5 and 6, the P-Value is superior to 0.05 meaning that HO is verified and these models do not have cross-sectional dependence.
+
+```{r echo = FALSE, error = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
+
+#Test for Fixed model
+TestCrossLm1 <- cbind("Model 1","lm", pcdtest(Fixed1, test = c("lm"))$p.value)
+TestCrossCd1 <- cbind("Model 1", "cd",pcdtest(Fixed1, test = c("cd"))$p.value)
+
+TestCrossLm2 <- cbind("Model 2","lm", pcdtest(Fixed2, test = c("lm"))$p.value)
+TestCrossCd2 <- cbind("Model 2", "cd",pcdtest(Fixed2, test = c("cd"))$p.value)
+
+TestCrossLm3 <- cbind("Model 3","lm", pcdtest(Fixed3, test = c("lm"))$p.value)
+TestCrossCd3 <- cbind("Model 3", "cd",pcdtest(Fixed3, test = c("cd"))$p.value)
+
+TestCrossLm4 <- cbind("Model 4","lm", pcdtest(Fixed4, test = c("lm"))$p.value)
+TestCrossCd4 <- cbind("Model 4", "cd",pcdtest(Fixed4, test = c("cd"))$p.value)
+
+TestCrossLm5 <- cbind("Model 5","lm", pcdtest(Fixed5, test = c("lm"))$p.value)
+TestCrossCd5 <- cbind("Model 5", "cd",pcdtest(Fixed5, test = c("cd"))$p.value)
+
+TestCrossLm6 <- cbind("Model 6","lm", pcdtest(Fixed6, test = c("lm"))$p.value)
+TestCrossCd6 <- cbind("Model 6", "cd",pcdtest(Fixed6, test = c("cd"))$p.value)
+
+
+pcdTable <- rbind(TestCrossCd1, TestCrossCd2, TestCrossCd3, TestCrossCd4, TestCrossCd5,         TestCrossCd6)
+colnames(pcdTable) <- c("Model", "Method", "P-Value")
+
+
+stargazer(pcdTable, summary = FALSE, table.placement = "h", type="latex", label = "pcd", title = "Cross-sectional dependence's test - PValue", notes = "Note :'cd' stands for Pesaran's CD Statistic",header = FALSE)
+
+```
+ 
+
 ## Sensitivity Analysis
