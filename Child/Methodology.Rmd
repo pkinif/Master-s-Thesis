@@ -492,7 +492,7 @@ coeftest4 <- coeftest(Fixed4, vcovHC(Fixed4, method = "arellano", type = "HC3"))
 coeftest5 <- coeftest(Fixed5, vcovHC(Fixed5, method = "arellano", type = "HC3"))
 coeftest6 <- coeftest(Fixed6, vcovHC(Fixed6, method = "arellano", type = "HC3"))
 
-stargazer(coeftest1, coeftest2, coeftest3, coeftest4, coeftest5, coeftest6, type = "latex", title = "Sandwich Estimators", label = "Sand", table.placement = "h", header = FALSE )
+stargazer(coeftest1, coeftest2, coeftest3, coeftest4, coeftest5, coeftest6, type = "latex", title = "Sandwich Estimators", label = "Sand", table.placement = "h", column.sep.width = "1pt",header = FALSE )
 
 ```
 
@@ -517,5 +517,4 @@ The following options apply*:
 * HAC - heteroskedasticity and autocorrelation consistent (type ?vcovHAC for more details)
 
 
-\newpage
 ## Sensitivity Analysis
