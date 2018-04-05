@@ -5,6 +5,28 @@ date: "5 avril 2018"
 output: pdf_document
 ---
 
+```{r echo = FALSE, message = FALSE, errors = FALSE}
+if (!require("utils")) install.packages("utils")
+if (!require("dplyr")) install.packages("dplyr")
+if (!require("plm")) install.packages("plm")
+
+library(plm)
+library(utils)
+library(dplyr)
+# I dowload my database befor knitting
+# The excel file contains several sheets with all my data
+# The csv file contains only variables of my model. Hence I dowload my DB with read.csv2
+DB_Roa<-data.frame(read.csv2("Child/Analysis/DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+write.csv2(DB_Roa, file = "Child/Analysis/DataBase/DB_Roa.csv")
+## This DB will be used for analysis with my dependent variable = ROA
+
+# From DB I select only row where TobinsQ <> zero . This database will be used when my dependent variable = TobinsQ
+
+DB_Tobin <- filter(DB_Roa, !is.na(TobinsQ))
+write.csv2(DB_Tobin, file = "Child/Analysis/DataBase/DB_Tobin.csv")
+```
+
+
 #Récapitulatif
 
 * La première méthode *Mediating Effect* lui semble une bonne piste. Provient de la psychologie mais pourrait très bien être appliquée à mon modèle.La méthodo est très technique mais elle me confirme que le package *mediation* pourrait être très utile et me faciliter la tâche. Par rapport à cela elle m'a conseilllé le paper de @Tingley2014 et celui de @Imai2017. Elle m'a également envoyé des slides d'un webinar du mâma auteur que @Imai2017. **Cela pourrait être intérèssant d'analyser le mediating effect de mon modèle? Une hypothèse 4 ?**
@@ -14,13 +36,19 @@ output: pdf_document
 
 * Par rapport à ma variable laggée, c'est en effet pour contrer le problème d'endogénéité présent dans les panel data. Cependant, il n'existe pas de test pour tester la présence d'endogénéité. @Dixon-Fowler2013 have shown that thera are no significant difference in outcome regardless of wheter the dependent variable was lagged or was measured simultaneously. @SongCanenvironmentalmanagement2017 ont eux utilisé deux modèles de régression pour leur étude. La première ne laggait pas la VD alors que le deuxième la laggait. Il en ressort que corporate environmental management has a significant positive correlation with future financial performance (t+1), however it has no significant correlation with current financial performance (t). **Il faut que je me renseigne davantage sur l'emploi d'une dv lagged in micro panel data. See [@Keele2005] and [@Bond2002].
 
-* Concernant les (un)balanced panel data. Pas de soucis, maintenant vu que mon panel est unbalances à cause d'une entreprise, c'est peut être pas mal de soit supprimer l'ensemble de l'info soit traiter la valeur manquante par imputation.
+```{r echo = FALSE, errors = FALSE, message = FALSE}
+DB_Tobin_Balanced = unique(DB_Tobin)
+```
+
+* Concernant les (un)balanced panel data. Pas de soucis, maintenant vu que mon panel est unbalances à cause d'une entreprise, c'est peut être pas mal de soit supprimer l'ensemble de l'info soit traiter la valeur manquante par imputation --> J'ai décidé de remove les observations ou il y avait des lignes manquantes. In fine, j'ai `r pdim(DB_Roa)$n` companies pour ROA. Cependant, pour TobinsQ, en unbalanced on a n = `r pdim(DB_Tobin)$n` et en balanced on a n = `r pdim(DB_Tobin_Balanced)$n`
+
+
 
 * Par rapport aux outliers, il est préférable de les supprimer ou alors faire régression avec et sans, observer la différence. Si différence significative alors on les delete. On identifie les outleirs une seul fois car sinon c'est un process infini.
 
 * Par rapport à mes modèles, les modèles 1-4 ne sont pas bon mais model 5 et 6 oui!
 
-* L'utilisation de ABS(Leverage) n'est pas idéale, ça lui semble aussi étonnant que j'ai des ratios négatif. Essayer de voir avec la méthodologie utilisée si pertinent ou pas.Car des dettes négatives deviennent des créances...**A creuser. Peut être comparer les ratios négatif de stockpup à ceux de morningstar et ycharts?**
+* L'utilisation de ABS(Leverage) n'est pas idéale, ça lui semble aussi étonnant que j'ai des ratios négatif. Essayer de voir avec la méthodologie utilisée si pertinent ou pas.Car des dettes négatives deviennent des créances...**A creuser. Peut être comparer les ratios négatif de stockpup à ceux de morningstar et ycharts?** Après comparaison, j'ai opté pour ABD idem pour TobinsQ car par définition pas négatif.
 
 * Par rapport aux tests que j'ai mené, pour elle je ne dois pas me soucier de serial correlation, heteroskedasiticy et stationarité. En cas de micro panel (i.e. n>T) ce n'est pas grave. La serial correlation correspond à la correlation entre i=1 et t=1, t=2 et t=3 comme T est petit, aucun soucis. Pour les autres tests, justifié et à mettre en annexe. Pour le test de poolabilité, l'erreur doit provenir du faite que j'ai un unbalanbces panel data. Maintenant je peux refaire le test quand j'aurai balanced panel data mais dans mon cas je dois utiliser fixed effect. Le test me le confirmera certainement.
 
