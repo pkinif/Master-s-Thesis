@@ -14,14 +14,13 @@ output:
 \vspace{1.5cm}
 
 \Large
-KINIF Pierrick
+Pierrick Kinif
 
 \vspace{1.5cm}
 
 
 \normalsize
-A thesis submitted for the Master's Degree in Business Management and Administration,\\
-Finance Specialisation
+A thesis submitted for the Master's Degree in Business Management and Administration,Finance Specialisation
 
 
 \vspace{0.5cm}
@@ -34,9 +33,9 @@ Finance Specialisation
 \normalsize
 Supervised by:\\
 \vspace{0.5cm}
-Professor BEREAU Sopie\\
-Professor GNABO Koudou Jean-Yves
 
+Prof. Sophie Béreau\\
+Prof. Jean-Yves Gnabo
 \vspace{1.5cm}
 
 
