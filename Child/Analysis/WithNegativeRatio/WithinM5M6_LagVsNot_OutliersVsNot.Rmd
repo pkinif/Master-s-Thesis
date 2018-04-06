@@ -34,6 +34,10 @@ DB_Tobin_NotLagged <- filter(DB_Roa_NotLagged, !is.na(TobinsQ))
 
 # From DB I select only row where TobinsQ <> zero . This database will be used when my dependent variable = TobinsQ
 
+pdata.frame(DB_Roa_Lagged, index = c("Companies", "YearFinancialIndicator"))
+pdata.frame(DB_Tobin_Lagged, index = c("Companies", "YearFinancialIndicator"))
+pdata.frame(DB_Roa_NotLagged, index = c("Companies", "YearFinancialIndicator"))
+pdata.frame(DB_Tobin_NotLagged, index = c("Companies", "YearFinancialIndicator"))
 ```
 
 
@@ -45,17 +49,19 @@ DB_Tobin_NotLagged <- filter(DB_Roa_NotLagged, !is.na(TobinsQ))
 if (!require("stargazer")) install.packages("stargazer")
 library(stargazer)
 
-M5_Lagged <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Roa_Lagged, index = c("Companies", "YearFinancialIndicator"))
+M5_Lagged <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + ROE + Industry , model = "within", data = DB_Roa_Lagged, index = c("Companies", "YearFinancialIndicator"))
 
-M6_Lagged <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Tobin_Lagged, index = c("Companies", "YearFinancialIndicator"))
+M6_Lagged <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + ROE + Industry , model = "within", data = DB_Tobin_Lagged, index = c("Companies", "YearFinancialIndicator"))
 
-M5_NotLagged <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Roa_NotLagged, index = c("Companies", "YearFinancialIndicator"))
+GreenScore <- plm(ROA ~ GreenScore+ Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Roa_Lagged, index = c("Companies", "YearFinancialIndicator"))
 
-M6_NotLagged <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Tobin_NotLagged, index = c("Companies", "YearFinancialIndicator"))
+#M5_NotLagged <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + ROE + Industry , model = "within", data = DB_Roa_NotLagged, index = c("Companies", "YearFinancialIndicator"))
 
-stargazer(M5_Lagged, M6_Lagged,  table.placement = "h", type="latex", label = "Plm", title = "Within Model M5 et M6 with one lag", header = FALSE)
+#M6_NotLagged <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + ROE + Industry , model = "within", data = DB_Tobin_NotLagged, index = c("Companies", "YearFinancialIndicator"))
 
-stargazer(M5_NotLagged, M6_NotLagged, table.placement = "h", type="latex", label = "Plm", title = "Within Model M5 et M6 withoutlag", header = FALSE)
+stargazer(M5_Lagged, M6_Lagged, GreenScore, table.placement = "h", type="latex", label = "Plm", title = "Within Model M5 M6, Roe with one lag", header = FALSE)
+
+#stargazer(M5_NotLagged, M6_NotLagged, table.placement = "h", type="latex", label = "Plm", title = "Within Model M5 et M6 withoutlag", header = FALSE)
 
 
 
