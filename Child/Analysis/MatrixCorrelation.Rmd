@@ -1,0 +1,126 @@
+---
+output: 
+  pdf_document 
+header-includes:
+   - \usepackage{rotating}
+   -  \usepackage{dcolumn}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, error = FALSE, results = 'asis')
+```
+```{r}
+#Download package and database
+rm(list=ls()) #Removes all items in Environment!
+if (!require("plm")) install.packages("plm")
+library(plm)
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr)
+if (!require("utils")) install.packages("utils")
+library(utils)
+if (!require("Hmisc")) install.packages("Hmisc")
+library(Hmisc)
+if (!require("corrplot")) install.packages("corrplot")
+library(corrplot)
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer)
+if (!require("xtable")) install.packages("xtable")
+library(xtable)
+
+# I dowload my database befor knitting
+# I dowload my DB with read.csv2
+DB_Lag0<-data.frame(read.csv2("DataBase/Lag_0.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
+DB_Lag1<-data.frame(read.csv2("DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
+DB_Lag2<-data.frame(read.csv2("DataBase/Lag_2.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
+#I select only variables of my model
+
+DB_Lag1_Model <- select(DB_Lag1, ROA, ROE, TobinsQ, EnergyProductivity,
+                        CarbonProductivity, WaterProductivity, WasteProductivity,
+                        SustainabilityPayLink, SustainableThemedCommitment, 
+                        AuditScore, FirmSize, Leverage, NetMargin, Industry)
+
+
+
+```
+
+The \autoref{corr} is the matrix correlation.
+
+
+
+```{r}
+corstars <-function(x, method=c("pearson", "spearman"), removeTriangle=c("upper", "lower"), result=c("none", "html", "latex")){
+  
+    #Compute correlation matrix
+    require(Hmisc)
+    x <- as.matrix(x)
+    correlation_matrix<-rcorr(x, type=method[1])
+    R <- correlation_matrix$r # Matrix of correlation coeficients
+    p <- correlation_matrix$P # Matrix of p-value 
+    
+    ## Define notions for significance levels; spacing is important.
+    mystars <- ifelse(p < .01, "*** ", ifelse(p < .05, "**  ", ifelse(p < .1, "*   ", "    ")))
+    
+    ## trunctuate the correlation matrix to two decimal
+    R <- format(round(cbind(rep(-1.11, ncol(x)), R), 2))[,-1]
+    
+    ## build a new matrix that includes the correlations with their apropriate stars
+    Rnew <- matrix(paste(R, mystars, sep=""), ncol=ncol(x))
+    diag(Rnew) <- paste(diag(R), " ", sep="")
+    rownames(Rnew) <- colnames(x)
+    colnames(Rnew) <- paste(colnames(x), "", sep="")
+    
+    ## remove upper triangle of correlation matrix
+    if(removeTriangle[1]=="upper"){
+      Rnew <- as.matrix(Rnew)
+      Rnew[upper.tri(Rnew, diag = TRUE)] <- ""
+      Rnew <- as.data.frame(Rnew)
+    }
+    
+    ## remove lower triangle of correlation matrix
+    else if(removeTriangle[1]=="lower"){
+      Rnew <- as.matrix(Rnew)
+      Rnew[lower.tri(Rnew, diag = TRUE)] <- ""
+      Rnew <- as.data.frame(Rnew)
+    }
+    
+    ## remove last column and return the correlation matrix
+    Rnew <- cbind(Rnew[1:length(Rnew)-1])
+    if (result[1]=="none") return(Rnew)
+    else{
+      if(result[1]=="html") print(xtable(Rnew), type="html")
+      else print(xtable(Rnew), type="latex") 
+    }
+} 
+
+
+CorMatrix <- corstars(DB_Lag1_Model, method = "pearson",removeTriangle = "upper",  result = "none")
+
+upper<-CorMatrix
+upper[upper.tri(CorMatrix)]<-""
+upper<-as.data.frame(upper)
+
+old_names <- upper[,1]
+number<-as.character(cbind(1:14))
+number_bis<-as.character(cbind(1:13))
+
+colnames(upper)<-number_bis
+variables <- as.character(rownames(upper))
+NewName <- paste(number, variables, sep = ". ")
+rownames(upper) <- NewName
+
+options(xtable.comment = FALSE)
+
+
+#table <- xtable(upper, caption = "Correlation Matrix", label = "corr")
+table<-stargazer(upper, summary = FALSE, type = "latex", title = "Correlation Matrix" , label = "Corr", float=TRUE, float.env = "sidewaystable", header = FALSE, note = c("*p<0.1, **p<0.05, ***p<0.1"))
+
+#print(table, type = "latex", floating = TRUE, floating.environment = 'sidewaystable', caption.placement = "top", table.placement = "h", add.to.row = comment,hline.after = c(-1,0))
+
+
+```
+
+
+This is a sweet table
