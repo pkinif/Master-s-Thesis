@@ -29,11 +29,10 @@ library(xtable)
 
 # I dowload my database befor knitting
 # I dowload my DB with read.csv2
-DB_Lag0<-data.frame(read.csv2("DataBase/Lag_0.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
 
 DB_Lag1<-data.frame(read.csv2("DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
-DB_Lag2<-data.frame(read.csv2("DataBase/Lag_2.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
 #I select only variables of my model
 
@@ -42,11 +41,47 @@ DB_Lag1_Model <- select(DB_Lag1, ROA, ROE, TobinsQ, EnergyProductivity,
                         SustainabilityPayLink, SustainableThemedCommitment, 
                         FirmSize, Leverage, NetMargin)
 
+#DataBase without outliers for VIF calculation
+Lag1_Roa_NoOutliers<-data.frame(read.csv2("DataBase/NoOutliers/Lag1_Roa_NoOutliers.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
+Lag1_Roe_NoOutliers<-data.frame(read.csv2("DataBase/NoOutliers/Lag1_Roa_NoOutliers.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
+#For Tobin I have decided to use the database with outliers. So I will use the DB_Lag1 database
 
 
 ```
 
 The \autoref{Matrix} is the matrix correlation.
+
+According to Miroschynenko blabla :
+
+> *The authors observe statistically significant correlations between green practices’ measures suggesting that multicollinearity might be a problem. The variance inflation factors (VIF) of all the independent and control variables were calculated to test the effects of multicollinearity in the regression analysis. The mean VIF values in all the models (with a minimum of 2.76 and maximum of 2.82) indicate the absence of the multicollinearity (O’Brien, 2007).*
+
+Let's calculate the VIF of my models. For this process I need to use the pool model to caclculate the VIF of each variable. The \autoref{VIF} summarizes the VIF of my models. We can observe that the mean VIF values of my models are ... meaning the absence of multicollinearity [@Obrien2007]
+
+```{r results = 'asis'}
+if (!require("car")) install.packages("car")
+library(car)
+
+#The vif function can not be used with within model. I need to estimate my models with the pooling model.
+
+Roa1_NoOut <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = Lag1_Roa_NoOutliers, index = c("Companies", "YearFinancialIndicator"))
+
+Tobin1_Out <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"))
+
+Roe1_NoOut <- plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = Lag1_Roa_NoOutliers, index = c("Companies", "YearFinancialIndicator"))
+
+#VIF Calculation and summary in a table
+
+VifRoa <- car::vif(Roa1_NoOut)
+VifRoe <- car::vif(Roe1_NoOut)
+VifTobin <- car::vif(Tobin1_Out)
+
+VifTable <- cbind(VifRoa, VifRoe, VifTobin)
+colnames(VifTable) <- c("Roa", "Roe", "Tobin's Q")
+
+stargazer(VifTable, summary = TRUE, title = "The Variance Inflation Factors - Measure of Multicollinearity", label = "VIF", header = FALSE)
+```
 
 
 
