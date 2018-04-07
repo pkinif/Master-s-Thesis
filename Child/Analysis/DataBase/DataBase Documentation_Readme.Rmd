@@ -7,29 +7,25 @@ output: pdf_document
 
 ```{r echo = FALSE, warning = FALSE, message = FALSE}
 rm(list=ls()) #Removes all items in Environment!
-if (!require("utils")) install.packages("utils")
-if (!require("dplyr")) install.packages("dplyr")
 if (!require("plm")) install.packages("plm")
-
 library(plm)
-library(utils)
+if (!require("dplyr")) install.packages("dplyr")
 library(dplyr)
+if (!require("utils")) install.packages("utils")
+library(utils)
 
-# The excel file contains several sheets with all my data
-# The csv file contains only variables of my model. Hence I dowload my DB with read.csv2
-DB_Roa<-data.frame(read.csv2("DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
-write.csv2(DB_Roa, file = "DB_Roa.csv")
-## This DB will be used for analysis with my dependent variable = ROA
+# I dowload my database befor knitting
+# I dowload my DB with read.csv2
+DB_Lag0<-data.frame(read.csv2("DataBase/Lag_0.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
-# From DB I select only row where TobinsQ <> zero . This database will be used when my dependent variable = TobinsQ
+DB_Lag1<-data.frame(read.csv2("DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
-DB_Tobin <- filter(DB_Roa, !is.na(TobinsQ))
-write.csv2(DB_Tobin, file = "DB_Tobin.csv")
+DB_Lag2<-data.frame(read.csv2("DataBase/Lag_2.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 ```
 
 
 
-This section give you an overview of my database. The \autoref{Smpl} contains a sample of my database. The \autoref{VarDef} desribes my variables.  
+This section give you an overview of my database. The \autoref{Smpl} contains a sample of my database. The \autoref{VarDef} describes my variables.  
 
 
 
@@ -41,23 +37,13 @@ library(stargazer)
 if (!require("plm")) install.packages("plm")
 library(plm)
 
-PanelData <- pdata.frame(DB_Roa, index=c("Companies", "YearFinancialIndicator"))
-smpl <- PanelData[c(1:10),c(1:4)]
+PanelData <- pdata.frame(DB_Lag1, index=c("Companies", "YearFinancialIndicator"))
 stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sample selection of the data base", label="Smpl", table.placement = "h", digits = 2, header = FALSE) # the agument 'header = FALSE" is really important to remove the citation info of stargazer package"
 
 ```
 
 
 
-Function *pdim()* extracts the dimensions of the panel data:
-
-
-
-```{r echo = TRUE}
-library(plm)
-pdim(DB_Roa)
-pdim(DB_Tobin)
-```
 
 
 \begin{table}[h]

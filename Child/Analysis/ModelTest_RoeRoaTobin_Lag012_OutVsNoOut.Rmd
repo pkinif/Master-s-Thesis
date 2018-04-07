@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, error = FALSE, results = 'a
 
 ```{r}
 #Download package and database
-
+rm(list=ls()) #Removes all items in Environment!
 if (!require("plm")) install.packages("plm")
 library(plm)
 if (!require("dplyr")) install.packages("dplyr")
@@ -30,7 +30,6 @@ DB_Lag1<-data.frame(read.csv2("DataBase/Lag_1.csv", sep = ";",stringsAsFactors=F
 
 DB_Lag2<-data.frame(read.csv2("DataBase/Lag_2.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
-#DB_Tobin_NotLagged <- filter(DB_Roa_NotLagged, !is.na(TobinsQ))
 ```
 
 
@@ -127,6 +126,19 @@ DB_Lag2_Roa <- DB_Lag2[-c(429, 786, 8, 525, 272, 1168, 558, 787, 955, 771),]
 DB_Lag2_Tobin <- DB_Lag2[-c(771, 1168, 1102, 705, 817, 716, 374, 981),]
 DB_Lag2_Roe <- DB_Lag2[-c(636, 85, 232, 207, 1033, 479),]
 
+#Let's save these database
+
+write.csv2(DB_Lag0_Roa, file = "DataBase/NoOutliers/Lag0_Roa_NoOutliers.csv")
+write.csv2(DB_Lag0_Tobin, file = "DataBase/NoOutliers/Lag0_Tobin_NoOutliers.csv")
+write.csv2(DB_Lag0_Roe, file = "DataBase/NoOutliers/Lag0_Roe_NoOutliers.csv")
+
+write.csv2(DB_Lag1_Roa, file = "DataBase/NoOutliers/Lag1_Roa_NoOutliers.csv")
+write.csv2(DB_Lag1_Tobin, file = "DataBase/NoOutliers/Lag1_Tobin_NoOutliers.csv")
+write.csv2(DB_Lag1_Roe, file = "DataBase/NoOutliers/Lag1_Roe_NoOutliers.csv")
+
+write.csv2(DB_Lag2_Roa, file = "DataBase/NoOutliers/Lag2_Roa_NoOutliers.csv")
+write.csv2(DB_Lag2_Tobin, file = "DataBase/NoOutliers/Lag2_Tobin_NoOutliers.csv")
+write.csv2(DB_Lag2_Roe, file = "DataBase/NoOutliers/Lag2_Roe_NoOutliers.csv")
 
 ```
 
