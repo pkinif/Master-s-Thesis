@@ -10,6 +10,11 @@ output: pdf_document
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, error = FALSE, results = 'asis')
 ```
 
+
+10-04-18: D'après les résultats, pas de miateur effect.... maintenant je ne pense pas que mon code soit correct.
+
+
+
 ```{r}
 #Download package and database
 rm(list=ls()) #Removes all items in Environment!
@@ -37,6 +42,18 @@ According to [@Baron1986], there is a mediating effect if :
 
 i) Green initiatives show statistical significance in both model 1 et ii) In model 3, green initiatives have to be non significant whereas Green Performance need to be significant
 
+
+```{r}
+Xnames <- c("SustainabilityPayLink", "AuditScore")
+
+m.med_Energy <- multimed(outcome = "ROA", treat = "SustainableThemedCommitment", med.main = "EnergyProductivity", med.alt = c("CarbonProductivity", "WaterProductivity", "WasteProductivity"), covariates = Xnames, data = DB_Lag1, sims = 1000 )
+
+m.med_Carbon <- multimed(outcome = "ROA", treat = "SustainableThemedCommitment", med.main = "CarbonProductivity", med.alt = c("EnergyProductivity", "WaterProductivity", "WasteProductivity"), covariates = Xnames, data = DB_Lag1, sims = 1000 )
+
+summary(m.med_Energy)
+summary(m.med_Carbon)
+
+```
 
 ```{r}
 

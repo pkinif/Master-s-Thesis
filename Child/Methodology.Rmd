@@ -143,9 +143,9 @@ where :
 ```{r echo =FALSE, message = FALSE, error = FALSE}
 if (!require("dplyr")) install.packages("dplyr")
 library(dplyr)
-# I download my database for each Dependent Variable
-DB_Roa<-data.frame(read.csv2("Analysis/DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
-DB_Tobin <- filter(DB_Roa, !is.na(TobinsQ))
+# I download my database 
+
+DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
 ```
 
@@ -209,30 +209,30 @@ library(plm)
 # Test of poolability --> error that I cannot understand
 
 # PVCM regression
-#M1_pvcm <- pvcm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+#M1_pvcm <- pvcm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-#M2_pvcm <- pvcm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+#M2_pvcm <- pvcm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-#M3_pvcm <- pvcm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+#M3_pvcm <- pvcm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-#M4_pvcm <- pvcm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+#M4_pvcm <- pvcm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-#M5_pvcm <- pvcm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+#M5_pvcm <- pvcm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-#M6_pvcm <- pvcm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+#M6_pvcm <- pvcm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
 # PLM regression
-M1_plm <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+M1_plm <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-M2_plm <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+M2_plm <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-M3_plm <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+M3_plm <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-M4_plm <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+M4_plm <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-M5_plm <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+M5_plm <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-M6_plm <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+M6_plm <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
 #PoolTest
 
@@ -262,31 +262,31 @@ library(xtable)
 
 # Fixed Model
 
-Fixed1 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+Fixed1 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-Fixed2 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+Fixed2 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-Fixed3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+Fixed3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-Fixed4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+Fixed4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-Fixed5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+Fixed5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-Fixed6 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+Fixed6 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
 # Random Model
 
-Random1 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="random")
+Random1 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
 
-Random2 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="random")
+Random2 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
 
-Random3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="random")
+Random3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
 
-Random4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="random")
+Random4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
 
-Random5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="random")
+Random5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
 
-Random6 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="random")
+Random6 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
 
 # Hausmann Test
 
@@ -323,17 +323,17 @@ library(stargazer)
 
 # Fixed_Time Model
 
-Fixed_Time1 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+Fixed_Time1 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-Fixed_Time2 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+Fixed_Time2 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-Fixed_Time3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+Fixed_Time3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-Fixed_Time4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+Fixed_Time4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-Fixed_Time5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Tobin, index=c("Companies", "YearFinancialIndicator"), model="within")
+Fixed_Time5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-Fixed_Time6 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Roa, index=c("Companies", "YearFinancialIndicator"), model="within")
+Fixed_Time6 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
 #Testing the time fixed effect
 
@@ -433,10 +433,10 @@ if (!require("tseries")) install.packages("tseries")
 library(tseries)
 
 
-PanelSet_Roa <- plm.data(DB_Roa, index = c("Companies", "YearFinancialIndicator"))
+PanelSet_Roa <- plm.data(DB_Lag1, index = c("Companies", "YearFinancialIndicator"))
 StatTestRoa <- cbind("Roa",adf.test(PanelSet_Roa$ROA, k=2)$p.value)
 
-PanelSet_Tobin <- plm.data(DB_Tobin, index = c("Companies", "YearFinancialIndicator"))
+PanelSet_Tobin <- plm.data(DB_Lag1, index = c("Companies", "YearFinancialIndicator"))
 StatTestTobin <- cbind("TobinsQ",adf.test(PanelSet_Tobin$TobinsQ, k=2)$p.value)
 
 StatTable <- rbind(StatTestRoa,StatTestTobin)
@@ -458,17 +458,17 @@ if (!require("lmtest")) install.packages("lmtest")
 library(lmtest)
 
 
-Bptest1 <- cbind("Model 1",bptest(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Tobin, studentize = F )$p.value)
+Bptest1 <- cbind("Model 1",bptest(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Lag1, studentize = F )$p.value)
 
-Bptest2 <- cbind("Model 2", bptest(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Roa, studentize = F)$p.value)
+Bptest2 <- cbind("Model 2", bptest(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Lag1, studentize = F)$p.value)
 
-Bptest3 <- cbind("Model 3", bptest(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Tobin, studentize = F)$p.value)
+Bptest3 <- cbind("Model 3", bptest(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Lag1, studentize = F)$p.value)
 
-Bptest4 <- cbind("Model 4", bptest(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Roa, studentize = F)$p.value)
+Bptest4 <- cbind("Model 4", bptest(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Lag1, studentize = F)$p.value)
 
-Bptest5 <- cbind("Model 5", bptest(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Tobin, studentize = F)$p.value)
+Bptest5 <- cbind("Model 5", bptest(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Lag1, studentize = F)$p.value)
 
-Bptest6 <- cbind("Model 6", bptest(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Roa, studentize = F)$p.value)
+Bptest6 <- cbind("Model 6", bptest(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Lag1, studentize = F)$p.value)
 
 BptestTable <- rbind(Bptest1, Bptest2, Bptest3, Bptest4, Bptest5, Bptest6)
 colnames(BptestTable) <- c("Model","P_Value")
