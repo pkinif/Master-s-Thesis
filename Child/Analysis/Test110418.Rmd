@@ -1,0 +1,180 @@
+---
+title: "Model Test"
+author: "Kinif Pierrick"
+date: "5 avril 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, error = FALSE, results = 'asis')
+```
+
+**Conclusion** Roa one lag avec outliers + TobinsQ sans outliers sans lag + Roe one lag without outliers
+
+
+```{r}
+#Download package and database
+rm(list=ls()) #Removes all items in Environment!
+if (!require("plm")) install.packages("plm")
+library(plm)
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr)
+if (!require("utils")) install.packages("utils")
+library(utils)
+
+# I dowload my database befor knitting
+# I dowload my DB with read.csv2
+DB_Lag0<-data.frame(read.csv2("DataBase/Lag_0.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
+DB_Lag1<-data.frame(read.csv2("DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
+DB_Lag2<-data.frame(read.csv2("DataBase/Lag_2.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
+```
+
+
+# Model Within with outliers
+
+```{r}
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer)
+
+#Lag 0
+Roa0 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag0, index = c("Companies", "YearFinancialIndicator"))
+
+Tobin0 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag0, index = c("Companies", "YearFinancialIndicator"))
+
+Roe0 <- plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag0, index = c("Companies", "YearFinancialIndicator"))
+
+#Lag 1
+Roa1 <- plm(ROA ~ GreenScore + Green.Revenue + SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"))
+
+Tobin1 <- plm(TobinsQ ~ GreenScore + Green.Revenue + SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"))
+
+Roe1 <- plm(ROE ~ GreenScore + Green.Revenue + SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"))
+
+#Lag 2
+Roa2 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag2, index = c("Companies", "YearFinancialIndicator"))
+
+Tobin2 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag2, index = c("Companies", "YearFinancialIndicator"))
+
+Roe2 <- plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag2, index = c("Companies", "YearFinancialIndicator"))
+
+#Stargazer
+
+stargazer(Roa0, Tobin0, Roe0, table.placement = "h", type="latex", label = "ZeroLag", title = "Within Model without lag", header = FALSE)
+
+stargazer(Roa1, Tobin1, Roe1,  table.placement = "h", type="latex", label = "OneLag", title = "Within Model with one lag", header = FALSE)
+
+stargazer(Roa2, Tobin2, Roe2,  table.placement = "h", type="latex", label = "TwoLag", title = "Within Model with two lag", header = FALSE)
+
+```
+
+
+```{r}
+#Let's remove outliers
+if (!require("car")) install.packages("car")
+library(car)
+
+#OutliersTest ne peut être appliquer sur des objets plm dont redo avec lm
+
+
+#Lag 0
+Roa0_lm <- lm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag0)
+
+Tobin0_lm <- lm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Lag0)
+
+Roe0_lm <- lm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Lag0)
+
+#Lag 1
+Roa1_lm <- lm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Lag1)
+
+Tobin1_lm <- lm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Lag1)
+
+Roe1_lm <- lm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Lag1)
+
+#Lag 2
+Roa2_lm <- lm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Lag2)
+
+Tobin2_lm <- lm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Lag2)
+
+Roe2_lm <- lm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag2)
+
+#Mesure cooksdistance
+Outliers_Roa0 <- car::outlierTest(Roa0_lm)
+Outliers_Tobin0 <- car::outlierTest(Tobin0_lm)
+Outliers_Roe0 <- car::outlierTest(Roe0_lm)
+
+Outliers_Roa1 <- car::outlierTest(Roa1_lm)
+Outliers_Tobin1 <- car::outlierTest(Tobin1_lm)
+Outliers_Roe1 <- car::outlierTest(Roe1_lm)
+
+Outliers_Roa2 <- car::outlierTest(Roa2_lm)
+Outliers_Tobin2 <- car::outlierTest(Tobin2_lm)
+Outliers_Roe2 <- car::outlierTest(Roe2_lm)
+
+#remove outliers
+DB_Lag0_Roa <- DB_Lag0[-c(225, 353, 308, 955, 379, 1168, 585, 4),]
+DB_Lag0_Tobin <- DB_Lag0[-c(982,585,1168,776,1102,379,627,705,546,817),]
+DB_Lag0_Roe <- DB_Lag0[-c(297, 87, 1033, 220, 222, 244, 484, 1016, 373, 881),]
+
+DB_Lag1_Roa <- DB_Lag1[-c(1167, 96, 384, 483, 1121, 1170, 482, 562, 1122),]
+DB_Lag1_Tobin <- DB_Lag1[-c(564, 563, 562, 1122, 1135, 1121, 923, 688, 924),]
+DB_Lag1_Roe <- DB_Lag1[-c(717, 716, 246, 259, 665, 261),]
+
+DB_Lag2_Roa <- DB_Lag2[-c(429, 786, 8, 525, 272, 1168, 558, 787, 955, 771),]
+DB_Lag2_Tobin <- DB_Lag2[-c(771, 1168, 1102, 705, 817, 716, 374, 981),]
+DB_Lag2_Roe <- DB_Lag2[-c(636, 85, 232, 207, 1033, 479),]
+
+#Let's save these database
+
+write.csv2(DB_Lag0_Roa, file = "DataBase/NoOutliers/Lag0_Roa_NoOutliers.csv")
+write.csv2(DB_Lag0_Tobin, file = "DataBase/NoOutliers/Lag0_Tobin_NoOutliers.csv")
+write.csv2(DB_Lag0_Roe, file = "DataBase/NoOutliers/Lag0_Roe_NoOutliers.csv")
+
+write.csv2(DB_Lag1_Roa, file = "DataBase/NoOutliers/Lag1_Roa_NoOutliers.csv")
+write.csv2(DB_Lag1_Tobin, file = "DataBase/NoOutliers/Lag1_Tobin_NoOutliers.csv")
+write.csv2(DB_Lag1_Roe, file = "DataBase/NoOutliers/Lag1_Roe_NoOutliers.csv")
+
+write.csv2(DB_Lag2_Roa, file = "DataBase/NoOutliers/Lag2_Roa_NoOutliers.csv")
+write.csv2(DB_Lag2_Tobin, file = "DataBase/NoOutliers/Lag2_Tobin_NoOutliers.csv")
+write.csv2(DB_Lag2_Roe, file = "DataBase/NoOutliers/Lag2_Roe_NoOutliers.csv")
+
+```
+
+```{r}
+#Redo plm with new database without outliers
+
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer)
+
+#Lag 0
+Roa0_NoOut <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag0_Roa, index = c("Companies", "YearFinancialIndicator"))
+
+Tobin0_NoOut <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag0_Tobin, index = c("Companies", "YearFinancialIndicator"))
+
+Roe0_NoOut <- plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag0_Roe, index = c("Companies", "YearFinancialIndicator"))
+
+#Lag 1
+Roa1_NoOut <- plm(ROA ~ GreenScore + Green.Revenue + SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag1_Roa, index = c("Companies", "YearFinancialIndicator"))
+
+Tobin1_NoOut <- plm(TobinsQ ~ GreenScore + Green.Revenue + SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag1_Tobin, index = c("Companies", "YearFinancialIndicator"))
+
+Roe1_NoOut <- plm(ROE ~ GreenScore + Green.Revenue + SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag1_Roe, index = c("Companies", "YearFinancialIndicator"))
+
+#Lag 2
+Roa2_NoOut <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag2_Roa, index = c("Companies", "YearFinancialIndicator"))
+
+Tobin2_NoOut <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag2_Tobin, index = c("Companies", "YearFinancialIndicator"))
+
+Roe2_NoOut <- plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "within", data = DB_Lag2_Roe, index = c("Companies", "YearFinancialIndicator"))
+
+#Stargazer
+
+stargazer(Roa0_NoOut, Tobin0_NoOut, Roe0_NoOut, table.placement = "h", type="latex", label = "ZeroLag_NoOut", title = "Within Model withoutla without outliers", header = FALSE)
+
+stargazer(Roa1_NoOut, Tobin1_NoOut, Roe1_NoOut,  table.placement = "h", type="latex", label = "OneLag_NoOut", title = "Within Model with one lag without outliers", header = FALSE)
+
+stargazer(Roa2_NoOut, Tobin2_NoOut, Roe2_NoOut,  table.placement = "h", type="latex", label = "TwoLag_NoOut", title = "Within Model with two lag without outliers", header = FALSE)
+```
+

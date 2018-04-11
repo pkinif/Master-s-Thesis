@@ -14,16 +14,9 @@ library(plm)
 library(utils)
 library(dplyr)
 
-# The excel file contains several sheets with all my data
-# The csv file contains only variables of my model. Hence I dowload my DB with read.csv2
-DB_Roa<-data.frame(read.csv2("Analysis/DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
-write.csv2(DB_Roa, file = "Analysis/DataBase/DB_Roa.csv")
-## This DB will be used for analysis with my dependent variable = ROA
+# I dowload my DB with read.csv2
+DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
-# From DB I select only row where TobinsQ <> zero . This database will be used when my dependent variable = TobinsQ
-
-DB_Tobin <- filter(DB_Roa, !is.na(TobinsQ))
-write.csv2(DB_Tobin, file = "Analysis/DataBase/DB_Tobin.csv")
 ```
 
 
@@ -50,15 +43,15 @@ Even though green rankings were published in 2014, 2015 and 2016, each company i
 The \autoref{Smpl} contains a sample of my database. The \autoref{VarDef} describes my variables.You can notice that there are some missing values in the TobinsQ column. Indeed,compared to ROA, calculating Tobin’s q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces sample bias. Therefore I will do the same and depending on the robustness of results I will use one or two sample spaces in my study. I still need to figure out how to perform this test in R.
 
 
-In the meantime, the function *pdim()* extracts the dimensions of both panel data, namely *DB_Roa* and *DB_TobinsQ*, and we can observe that both are characterized as *unbalanced*. Indeed I had to remove some year observations due to missing values. 
+In the meantime, the function *pdim()* extracts the dimensions of both panel data, namely *DB_Lag1* and *DB_Lag1sQ*, and we can observe that both are characterized as *unbalanced*. Indeed I had to remove some year observations due to missing values. 
 
 
 ```{r echo = TRUE}
 library(plm)
 # Apply pdim on the full panel data 
-pdim(DB_Roa)
+pdim(DB_Lag1)
 # Apply pdim on the panel data without missing values of TobinsQ
-pdim(DB_Tobin)
+pdim(DB_Lag1)
 ```
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE,  results='asis'}
@@ -68,7 +61,7 @@ library(stargazer)
 if (!require("plm")) install.packages("plm")
 library(plm)
 
-PanelData <- pdata.frame(DB_Roa, index=c("Companies", "YearFinancialIndicator"))
+PanelData <- pdata.frame(DB_Lag1, index=c("Companies", "YearFinancialIndicator"))
 smpl <- PanelData[c(1:10),c(1:4)]
 stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sample selection of the data base", label="Smpl", table.placement = "h", digits = 2, header = FALSE) # the agument 'header = FALSE" is really important to remove the citation info of stargazer package"
 

@@ -5,87 +5,30 @@ output: pdf_document
 
 # Literature Review
 
-The profit maximisation paradigm of @MiltonFriedman1970 have been widely challenged these last decades. More and more the literature is showing evidences that improving a company’s environmental performance can lead to better economic or financial performance, and not necessarily to an increase in cost. @Ambec2008 have desmonstrated that the expenses incurred to reduce pollution can be partly or completely offset by gains made elsewhere. @Porter1995 argued that rather than simply adding to cost, properly crafted environmental standards can trigger innovation offsets, allowing companies to improve their resource productivity. He even redefined the self concept of value creation in adcovating that the solution lies in the principle of shared value which involves creating economic value in a way that also creates value for society by addressing its needs and challenges, , namely a win-win situation, [@Porter2018]. The emergence of this new paradigm have gained interests amongst scolars and since they have sought to empirically answer the question, *‘‘Does it pay to be green?’’*. The large quantity of studies on the nexus between Corporate Environmental Performance (i.e. CEP) and Corporate Financial Performance (i.e. CFP) in the last two decades allowed the appearance of meta-analyses[^1]  [@Orlitzky2001, @Orlitzky2003, @Wu2006, @Albertini2013, @Dixon-Fowler2013, @EndrikatMakingsenseconflicting2014, @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016, @Busch2018] and all suggest that indeed a positive and bideractionnal relationship does exist between CEP and CFP. 
+The paradigm of profit maximization of @MiltonFriedman1970 have been widely challenged these last decades. More and more the literature is showing evidences that improving a company’s environmental performance can lead to better economic or financial performance, and not necessarily to an increase in cost. @Ambec2008 have demonstrated that the expenses incurred to reduce pollution can be partly or completely offset by gains made elsewhere. @Porter1995 argued that rather than simply adding to cost, properly crafted environmental standards can trigger innovation offsets, allowing companies to improve their resource productivity. He even redefined the self concept of value creation in advocating that the solution lies in the principle of shared value which involves creating economic value in a way that also creates value for society by addressing its needs and challenges [@Porter2011b, @Porter2018]. While more and more companies are embracing this new paradigm and develop profitable business strategies that deliver tangible social benefits, others keep the old way. This dichotomy have interested scholars and since they have sought to empirically answer the question, *‘‘Does it pay to be green?’’*. In a competitive business world, answering this question is crucial to provide a genuine economic justification to the new paradigm [@Ludecadedebatenexus2014]. Although results are mixed, the large quantity of studies on the nexus between Corporate Environmental Performance (i.e. CEP) and Corporate Financial Performance (i.e. CFP) in the last two decades allowed the appearance of recent meta-analyses [^1]  [@Orlitzky2001, @Orlitzky2003, @Wu2006, @Albertini2013, @Dixon-Fowler2013, @EndrikatMakingsenseconflicting2014, @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016, @Busch2018] and all suggest that indeed a positive and bidirectional relationship does exist between CEP and CFP.
 
-According to the literature, the indicators used to measure Financial performance strongly influence the relation. Scholars have mainly adopted two broad subdivisions of CFP: market-based and accounting-based indicators. The latter have a stronger relation to CEP than market-based CFP measures [@Orlitzky2003, @Wu2006, @Albertini2013, @Busch2018]. The indicators used to measure Environmental performance also strongly influence the relation...
+
+CFP is a broad meta-constructs and the current literature have shown that each construct play a moderator role in the relationship between CEP and CFP [@Orlitzky2003, @Ludecadedebatenexus2014, @Busch2018].Scholars have mainly adopted three broad subdivisions of CFP: market-based (investor returns), accounting-based (accounting returns), and perceptual (survey) measures. Market-based measures (e.g. Tobin's Q, market capitalization, price per share) consider that returns should be measured from the perspective of the shareholders [@Cochran1984a]. Accounting-based measures require profitability and asset utilization indicators such as Return on Asset (i.e. ROA), Return on Equity (i.e. ROE) or still the Price to Book ratio [@Cochran1984a, @Wu2006]. Finally perceptual measures of CFP is a more subjective approach based on the perception of survey respondents [@Ludecadedebatenexus2014]. A general consensus have shown that accounting-based CFP are characterized by a stronger relation to CEP than market-based and perceptual indicators [@Orlitzky2003, @Wu2006, @Albertini2013, @Ludecadedebatenexus2014, @Busch2018].
+
+CEP is also a broad meta-constructs and no common definition exist in the literature [@Albertini2013]. Scholars have used a wide variety of indicators as proxies for approaching the green performance of companies. @Albertini2013 use a three-group classification to summarize CEP measures : (i) Environmental Management Measures (i.e. EMV) which mostly refer to environmental strategy, integration of environmental issues into strategic planning processes, environmental practices, process-driven initiatives, product-driven management systems, ISO 14001 certification, environmental management system adoption, and participation in voluntary programs [@Molina-Azorin2009, @Schultze2012]. (ii) Environmental Performance Variables (i.e. EPV) which are mostly measures quantified in physical units (carbon dioxide emissions, physical waste, water consumption, toxic release) that can be positive (emission reduction) or negative (emission generated) [@Albertini2013]. (iii) Environmental Disclosure Variables (i.e. EDV) such as information releases regarding toxic emission [@Hamilton1995], environmental awards [@Chencrosscountrycomparisongreen2018], environmental accidents and crises [@Blacconiere1994], and environmental investment announcements [@Gilley2000]. @Dixon-Fowler2013 have shown that the choice of environmental performance measure does not make a difference in the link between CEP and CFP.
+
 
 
 Also, some others moderators influence the relation...
 
 
 
+[@Dixon-Fowler2013] have demonstrated that small firms seem to benefit from environmental performance as much or more than large firms. US-based firms do appear to benefit more than international counterparts
+
+
+Short vs Long term.....
 
 
 
 
 
+[^1]: Initially, the literature focused on the link between Corporate Social Performance (i.e. CSP) and Corporate Financial Performance (i.e. CFP). @Orlitzky2001 were the first to consider CEP as apart from CSP. Given that @Busch2018 could not detect statistically significant differences between the effects of environmental CEP and social-related CSP on CFP and concludes that good CSP pays off, whether social or environmental related, this study considers CSP equals to CEP. 
 
 
 
 
-
-
-@Dixon-Fowler2013small have desmonstrated tha small firms seem to benefit from environmental performance as much or more than large firms. US-based firms do appear to benefit more than international counterparts
-
-
-
-
-
-
-
-[^1] Initially, the literrature focused on the link between Corporate Social Performance (i.e. CSP) and Corporate Financial Performance (i.e. CFP). @Orlitzky2001 were the first to consider CEP as apart from CSP. Given that @Busch2018 could not detect statistically significant differences between the effects of environmental CEP and social-related CSP on CFP and concludes that good CSP pays off, whether social or environmental related, this study considers CSP equals to CEP. 
-
-
-
-
-
-This relation varies in magnitude depending on different CFP categories. Accounting-based CFP demonstrates a stronger relation to CSP than growth-, risk-, and market-based CFP [@Busch2018]
-
-
-[@Orlitzky2003] : CSP appears to be more highly correlated with accounting-based measures of CFP than with market-based indicators, and CSP reputation indices are more highly correlated with CFP than are other indicators of CSP
-
-[@Wu2006] : accounting-based CFP measures have a stronger relation to CSP than market-based CFP measures 
-
-
-The nexus between Corporate Environmental Performance (i.e. CEP) and Corporate Financial Performance (i.e. CFP) have been studied in the literuture for quite s
-
-## What is my contribution to the literature?
-
-## How is measured CEP?
-
-- No common definition
-- 
-  
-## How is measured CFP?
-
-- Maket 
-- Accounting
-- Risk 
-- Perceptual [@Ludecadedebatenexus2014]
-
-## The link between CEP and CFP
-
-### CSP and CFP mutually afect each other
-### Positive
-### Negative
-### Neutral
-
-But conclusion : It pays to be green [@AmbecDoesitpay2008]
-
-## when does it pays to be green : shrot vs long term
-
-According to...
-
-
-* The link between CEP and CFP. Literrature have shown that it pays to be green. However answering the question "When an how does it pay to be green?" remains unclear. 
-
-* Citation from [@EndrikatMakingsenseconflicting2014]
-
-> Over the last four decades, myriad studies have sought to identify the relationship
-between these performance constructs. In this context, one of the most fundamental issues shaping research on the focal relationship refers to the direction of causality (i.e., whether CEP influences CFP, whether CFP influences CEP, or whether there is a
-bidirectional relationship)
-## Subsection 1
-
-* 
-
-## Subsection 2

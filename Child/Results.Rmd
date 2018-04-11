@@ -14,34 +14,34 @@ if (!require("dplyr")) install.packages("dplyr")
 library(stargazer)
 library(dplyr)
 
-DB_Roa<-data.frame(read.csv2("Analysis/DataBase/DataBase_010418.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
-DB_Tobin <- filter(DB_Roa, !is.na(TobinsQ))
+DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
-StatDes <- stargazer(DB_Roa[,-c(1:2)], type = "latex", title = "Statistic Descriptive", label = "StatDes", header = FALSE)
+
+
 ```
 ##Some boxplots and histogram
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6}
 
 par(mfrow=c(2,1))
-boxplot(DB_Tobin$TobinsQ,horizontal=T,main="Boxplot TobinsQ")
-hist(DB_Tobin$TobinsQ,horizontal=T,main="Hist TobinsQ")
+boxplot(DB_Lag1$TobinsQ,horizontal=T,main="Boxplot TobinsQ")
+hist(DB_Lag1$TobinsQ,horizontal=T,main="Hist TobinsQ")
 
 par(mfrow=c(2,1))
-boxplot(DB_Roa$ROA,horizontal=T,main="Boxplot ROA")
-hist(DB_Roa$ROA,horizontal=T,main="Hist ROA")
+boxplot(DB_Lag1$ROA,horizontal=T,main="Boxplot ROA")
+hist(DB_Lag1$ROA,horizontal=T,main="Hist ROA")
 
 par(mfrow=c(2,1))
-boxplot(DB_Roa$Leverage,horizontal=T,main="Boxplot Leverage")
-hist(DB_Roa$Leverage,horizontal=T,main="Hist Leverage")
+boxplot(DB_Lag1$Leverage,horizontal=T,main="Boxplot Leverage")
+hist(DB_Lag1$Leverage,horizontal=T,main="Hist Leverage")
 
 par(mfrow=c(2,1))
-boxplot(DB_Roa$NetMargin,horizontal=T,main="Boxplot NetMargin")
-hist(DB_Roa$NetMargin,horizontal=T,main="Hist NetMargin")
+boxplot(DB_Lag1$NetMargin,horizontal=T,main="Boxplot NetMargin")
+hist(DB_Lag1$NetMargin,horizontal=T,main="Hist NetMargin")
 
 par(mfrow=c(2,1))
-boxplot(DB_Roa$FirmSize,horizontal=T,main="Boxplot FirmSize")
-hist(DB_Roa$FirmSize,horizontal=T,main="Hist FirmSize")
+boxplot(DB_Lag1$FirmSize,horizontal=T,main="Boxplot FirmSize")
+hist(DB_Lag1$FirmSize,horizontal=T,main="Hist FirmSize")
 ```
 
 \newpage
@@ -64,8 +64,8 @@ library(dplyr)
 # Let's measure the cook distance
 
 ## My models
-M6 <-lm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Roa)
-M5 <-lm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Tobin)
+M6 <-lm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1)
+M5 <-lm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1)
 
 ## I calculate my cooks distance. Cook’s distance is a measure computed with respect to a given regression model and therefore is impacted only by the X variables included in the model. Cook’s distance computes the influence exerted by each data point (row) on the predicted outcome.
 

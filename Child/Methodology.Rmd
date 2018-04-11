@@ -136,6 +136,10 @@ where :
 * \(\varepsilon_{it}\) = the error term
 
 
+Motivations to use one time lag - citation from [@Albertini2013]: 
+
+> Hart and Ahuja (1996) argue that there is a time lag between the initiation of emission reduction efforts and the realization of bottom line benefits. First, pollution prevention requires up-front investment in training and equipment. Second, it takes time to gain reduction because internal reorganization and renegotiation of supply and waste disposal contracts may be required (Hart & Ahuja, 1996). Evidence also suggests that in the early stages of pollution prevention there is a great deal of “low-hanging fruit”—easy and inexpensive behavioural and material changes that result in large emission reductions relative to costs (Hart, 1994; Rooney, 1993). As the firm’s environmental performance improves, further reductions in emissions become progressively more difficult, requiring more significant change in processes or even entirely new production technology (Russo & Fouts, 1997). Some studies have collected data on a longitudinal perspective (more than 1 year) in order to take into account the long-term payback of environmental management strategies, while others have collected data on a short period of time (1 year and less). Analysing the relationship between CEM and CFP during a short period of time implies that the researcher intends to prove that the environmental management influences regularly and at any time the financial profitability of the firm. Yet the natural and organizational environments are different because of the time markers of their respective materialities, such as short term for the financial profitability and very long term for the environmental issue (Bansal & Knox-Hayes, 2013). Thus, we can argue that the longitudinal characteristic of the studies might explain part of the variation in the results regarding the relationship between CEM and CFP. **NB: the hypothese had been verified : The relationship between CEM and CFP is significantly stronger for non-longitudinal studies (0.13) than for longitudinal studies (0.07)**
+
 
 \newpage
 ## Panel Data Tests
@@ -436,7 +440,11 @@ library(tseries)
 PanelSet_Roa <- plm.data(DB_Lag1, index = c("Companies", "YearFinancialIndicator"))
 StatTestRoa <- cbind("Roa",adf.test(PanelSet_Roa$ROA, k=2)$p.value)
 
-PanelSet_Tobin <- plm.data(DB_Lag1, index = c("Companies", "YearFinancialIndicator"))
+# select only value where Tobin <> 0
+
+DB_Tobin <- filter(DB_Lag1, !is.na(TobinsQ))
+                   
+PanelSet_Tobin <- plm.data(DB_Tobin, index = c("Companies", "YearFinancialIndicator"))
 StatTestTobin <- cbind("TobinsQ",adf.test(PanelSet_Tobin$TobinsQ, k=2)$p.value)
 
 StatTable <- rbind(StatTestRoa,StatTestTobin)
