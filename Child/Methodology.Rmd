@@ -37,6 +37,13 @@ Citation from [@Wooldridge2008] :
 
 ### Endogeneity test
 
+Problem of endogeneity in the CFP-CEP nexus : 
+
+Citation from [@EndrikatMakingsenseconflicting2014]
+
+> Endogeneity occurs in cases where the independent variable in a regression model is correlated with the error term, or due to simultaneous causality between the dependent and the independent variable (Sánchez-Ballesta & García-Meca, 2007; van Essen et al., in press). As outlined earlier, the relationship between CEP and CFP may involve bidirectional causality. Therefore, the fact of controlling or not controlling for endogeneity can be conceived as a kind of methodological artifact, which may have a moderation effect on the study findings.
+
+
 Even if panel data have a lot of advantages...
 
 

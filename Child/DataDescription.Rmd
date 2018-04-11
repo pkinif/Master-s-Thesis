@@ -102,3 +102,21 @@ stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sam
 ## Independent Variables
       
 ## Control Variables
+
+
+Several scholars [@Telle2006, @McWilliams2006, @Surroca2010] have argued that misspecified models may be the reason for the inconsistency of the empirical results in the CEP-CFP nexus. In order to improve the construct and to avoid the endogeneity issue due to ommited variables [@Roberts2013], @EndrikatMakingsenseconflicting2014 have highlighted potential determinants of the relationship between CEP and CFP : firm size, industry sector, financial risk, R&D activities, advertising intensity and capital intensity.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

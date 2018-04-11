@@ -21,7 +21,20 @@ Also, some others moderators influence the relation...
 [@Dixon-Fowler2013] have demonstrated that small firms seem to benefit from environmental performance as much or more than large firms. US-based firms do appear to benefit more than international counterparts
 
 
-Short vs Long term.....
+**Short vs Long term.....**
+
+- @Griffin1997 have already called for research that looks at the CSP-CFP relation over time. To date, it is still an open question as to whether this is a time-independent relation [@Busch2018]
+
+- @Zhang2017 have shown that CEP has a negative relationship with short-term financial performance and a positive relationship with long-term CFP. The author used ROA as a measure of short term financial performance and the Sustainable Growth Rate (i.e SGR) as a measure of long term financial performance. 
+
+- @Albertini2013 demonstrated that the relationship between CEP and CFP is significantly stronger for non-longitudinal studies than for longitudinal studies.
+
+- Using Tobin's Q as a proxy for long term financial performance and ROA as a proxy for short term financial performance, @Delmas2015 observed that the more a firm decreases carbon emissions the more positive the investors’ perceptions of future market performance and the lower its short term financial performance.
+
+- Using ROA as a proxy for CFP, @SongCanenvironmentalmanagement2017 have shown that corporate environmental management has a significant positive correlation with future financial performance (i.e. t+1), however it has no significant correlation with current financial performance (i.e. t).
+
+
+
 
 
 
