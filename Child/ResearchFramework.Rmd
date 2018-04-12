@@ -1,0 +1,19 @@
+---
+output:
+  pdf_document
+---
+
+# Research Framework
+
+Based on the literature review I have developed four hypotheses. My research framework is summarized in the \autoref{ResearchFramework}. The latter, inspired by @LiSuhong2017 and @Chencrosscountrycomparisongreen2018, aims at answering three calls. Firstly @EndrikatMakingsenseconflicting2014 have highlight the need for a better understanding of the multidimensionality of both CEP and CFP constructs. To do that I will examine both the combined effects of process-based and output-based CEP on both accounting-based and market-based measures of CFP. Secondly, to the best of my knowledge, @LiSuhong2017 and @Chencrosscountrycomparisongreen2018 were the first scholars to use the NewsWeek Green Ranking as a proxy for both process-based and output-based CEP and performed their analysis with a time frame of one year. Therefore apply a longitudinal study on this new database can help to provide a better understanding of the CEP-CFP nexus. Lastly, @Busch2018 claimed that to date and at a meta-research level, the call of @Griffin1997 regarding the research that looks at the CEP-CFP relation over time remains unanswered and confused. Therefore capturing the short term vs long term CFP through the use of accounting-based and market-based measures could help to collect data for future meta-analysis.
+
+
+\begin{figure}[!b]
+\centering
+\includegraphics{figures/ResearchFramework.jpg}
+\caption{Research Framework}
+\label{ResearchFramework}
+\end{figure}
+
+
+
