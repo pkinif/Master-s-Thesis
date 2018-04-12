@@ -40,8 +40,7 @@ The starting point of my data collection was the Newsweek Green Ranking which ha
 
 Even though green rankings were published in 2014, 2015 and 2016, each company is evaluated based on the 2012, 2013 and 2014 data. Therefore, measures for financial performance of companies will be based on the 2012, 2013 and 2014 fundamental data. Financial data have been mainly collected on [Stockpup](http://www.stockpup.com/) and in case of missing values I have completed with [Morningstar](http://www.morningstar.be/be/default.aspx) and [Ycharts](https://ycharts.com/). Of the 405 initial companies, a total of 8 companies were dropped because of missing data. The final sample includes 397 publicly-traded companies in the US covering the period from 2012 till 2014 inclusively. 
 
-
-The \autoref{VarDef} describes my variables and following sections deeply explained each variables.
+\autoref{VarDef} describes my variables and following sections deeply explained each variables.
 
 
 
@@ -78,7 +77,7 @@ pdim(DB_Lag1)
 7 & Sustainability Pay Link & A mechanism to link the remuneration of any member of a company's senior executive team with the achievement of environmental performance targets. The existence of such a link is awarded a score of 100\%. A score of 0\% is attributed if there is no such mechanism in place \\ 
 8 & Sustainable Themed Commitment & Refers to the existence of a committee at the Board of Directors level whose mandate is related to the sustainability of the company, including but not limited to environmental matters. A score of 100\% accrues to the company when such link exists and a score of 0\% is attributed if there is no such link in place \\ 
 9 & Audit Score & Refers to the case where a company provides evidence that the latest reported environmental metrics were audited by a third party. Newsweek and their research partners award a score of 100\% if such audit has been performed, and a score of 0\% is given when such audit was not performed. \\ 
-10 & Leverage & The ratio of long-term debt to common shareholders' equity (shareholders equity minus preferred equity) in abolute values \\ 
+10 & Leverage & The ratio of long-term debt to common shareholders' equity (shareholders equity minus preferred equity) in absolute values \\ 
 11 & Net Margin & The ratio of earnings to revenue \\ 
 12 & Firm Size & Log of total assets \\ 
 13 & Industry & Global Industry Classification Standard (GICS) of the firm. The variable take a value from 1 to 10 where 1 = Consumer Discretionary, 2 = Consumer Staples, 3 = Energy, 4 = Financials, 5 = Health Care, 6 = Industrials, 7 = Information Technology, 8 = Materials, 9 = Pharmaceuticals / Biotechnology, 10 = Telecommunication Services and 11 = Utilities \\ 
@@ -86,29 +85,22 @@ pdim(DB_Lag1)
 \end{tabular}
 \end{table}
 
-
-
 ## Dependent Variables
 
-Regarding dependent variables, @EndrikatMakingsenseconflicting2014 claim that accounting-based measures (e.g. ROA, ROE, Return on Sales) capture immediate impacts and can be used as a proxy to measure short-term CFP while market-based measures (e.g. Tobin's Q, market capitalisation, market to book value) integrate estimations of a firm’s future prospects and can be better used as a proxy for long-term CFP. Amongst scholars that used both measures simultaneously, ROA and Tobin's Q are the ones that have been used the most frequently [@Lioui2012, @Cavaco2014, @Muhammadrelationshipenvironmentalperformance2015, @Delmas2015, @Semenova2016, @ManriqueAnalyzingEffectCorporate2017]. Therefore I have decided to use ROA and Tobin's Q as a proxy of both short and long-term CFP.
+Regarding dependent variables, @EndrikatMakingsenseconflicting2014 claim that accounting-based measures (e.g. ROA, ROE, Return on Sales) capture immediate impacts and can be used as a proxy to measure short-term CFP while market-based measures (e.g. Tobin's Q, market capitalization, market to book value) integrate estimations of a firm’s future prospects and can be better used as a proxy for long-term CFP. Among scholars that used both measures simultaneously, ROA and Tobin's Q are the ones that have been used the most frequently [@Lioui2012, @Cavaco2014, @Muhammadrelationshipenvironmentalperformance2015, @Delmas2015, @Semenova2016, @ManriqueAnalyzingEffectCorporate2017]. Therefore I have decided to use ROA and Tobin's Q as a proxy for both short and long-term CFP.
 
-Tobin's Q is defined as the ratio of the market value of a firm to the replacement cost of its assets [@Chung1994]. Broadly speaking firms displaying Tobin’s Q greater than one are judged as using scarce resources effectively and those with Tobin’s Q less than one as using resources poorly [@Lewellen1997]. In other words investors prefers companies with Tobin's Q superior to one. Due to the complexity of calculating the replacement cost of a firm, the literature have seen several attempts to approcimate Tobin's Q. Tobin's Q value had been directly collected on Ycharts and this platform use the simple approximation of @Chung1994 wich is summarized in \autoref{Chung}.
+ROA is a standard accounting measure of financial performance, which is calculated by dividing earnings before interest by total firm assets. Tobin's Q is defined as the ratio of the market value of a firm to the replacement cost of its assets [@Chung1994]. Broadly speaking, firms displaying Tobin’s Q greater than one are judged as using scarce resources effectively and those with Tobin’s Q less than one as using resources poorly [@Lewellen1997]. In other words investors prefers companies with Tobin's Q superior to one. Due to the complexity of calculating the replacement cost of a firm, the literature have seen several attempts to approximate Tobin's Q [@Perfect1994]. Tobin's Q value had been directly collected on Ycharts and this platform use the simple approximation of @Chung1994 which is summarized in \autoref{Chung}.
 
 \begin{equation}
-Tobin's Q = (MVE + PS + DEBT)/TA
+Tobin's Q = \frac{MVE + PS + DEBT}{TA}
 \label{Chung}
 \end{equation}
 
 
-where \(MVE\) is the product of a firm's shares prices and the number of common stock shares outstanding, \(PS\) is the liquidating value of the firm's outstanding preferred stock, \(DEBT\) is the value of the firm's short term liabilities net of its short-term assers, plus the book value of the firm's long-term debt and \(\)
+where \(MVE\) is the product of a firm's shares prices and the number of common stock shares outstanding, \(PS\) is the liquidating value of the firm's outstanding preferred stock, \(DEBT\) is the value of the firm's short term liabilities net of its short-term assets, plus the book value of the firm's long-term debt and \(TA\) is the book value of the total assets of the firms.
 
 
-
-
-
-
-
-The \autoref{Smpl} contains a sample of my database. Some missing values appears in the TobinsQ column. Indeed,compared to ROA, calculating Tobin’s q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces sample bias. Therefore I will do the same and depending on the robustness of results I will use one or two sample spaces in my study. I still need to figure out how to perform this test in R.
+\autoref{Smpl} contains a sample of my database. Some missing values appears in the TobinsQ column. Compared to ROA, calculating Tobin’s q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces sample bias. **Therefore I will do the same and depending on the robustness of results I will use one or two sample spaces in my study. I still need to figure out how to perform this test in R.**
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE,  results='asis'}
 if (!require("stargazer")) install.packages("stargazer")
@@ -124,11 +116,15 @@ stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sam
 ```
 
 ## Independent Variables
-      
+
+
+
+
+
 ## Control Variables
 
 
-Several scholars [@Telle2006, @McWilliams2006, @Surroca2010] have argued that misspecified models may be the reason for the inconsistency of the empirical results in the CEP-CFP nexus. In order to improve the construct and to avoid the endogeneity issue due to ommited variables [@Roberts2013], @EndrikatMakingsenseconflicting2014 have highlighted potential determinants of the relationship between CEP and CFP : firm size, industry sector, financial risk, R&D activities, advertising intensity and capital intensity.
+Several scholars [@Telle2006, @McWilliams2006, @Surroca2010] have argued that misspecified models may be the reason for the inconsistency of the empirical results in the CEP-CFP nexus. In order to improve the construct and to avoid the endogeneity issue due to omitted variables [@Roberts2013], @EndrikatMakingsenseconflicting2014 have highlighted potential determinants of the relationship between CEP and CFP : firm size, industry sector, financial risk, R&D activities, advertising intensity and capital intensity.
 
 
 
