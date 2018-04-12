@@ -533,3 +533,5 @@ The following options apply*:
 
 
 ## Sensitivity Analysis
+
+For the sensitivity analysis, let's make as [@MiroshnychenkoGreenpracticesfinancial2017], namely take ROE as an other accounting based indicators and I need to find an other market based indicator.
