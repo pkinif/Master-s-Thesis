@@ -34,14 +34,19 @@ To be continued....
 -->
 
 
-The starting point of my data collection was the Newsweek Green Ranking which had assessed the world’s largest publicly-traded companies in the US and in the world since 2009. This ranking had been developed through a collaboration between Newsweek, Corporate Knights Capital, HIP Investor Inc and leading sustainability minds from nongovernmental organizations and the academic and accounting communities. The ranking attribute an overall green score to companies. The score is based on a weighted average of key performance indicators (KPI's). This study uses these KPIs to measure both green initiatives and green performance of the 500 largest publicly-traded companies in the United States. Due to a methodology change in the 2014 Newsweek Green Rankings, only the [2014](http://www.newsweek.com/green/worlds-greenest-companies-2014), [2015](http://www.newsweek.com/green-2015/top-green-companies-world-2015) and [2016](http://www.newsweek.com/green-2016/top-green-companies-world-2016) ranking were considered. Among those three ranking and of the 500 US companies, 405 companies were listed for each years.
+The starting point of my data collection was the Newsweek Green Ranking which had assessed the world’s largest publicly-traded companies in the US and in the world since 2009. This ranking had been developed through a collaboration between Newsweek, Corporate Knights Capital, HIP Investor Inc and leading sustainability minds from nongovernmental organizations and the academic and accounting communities. The ranking attribute an overall green score to companies. The score is based on a weighted average of key performance indicators (KPI's). This study uses these KPIs to measure both process-based and outcome-based of the 500 largest publicly-traded companies in the United States. Due to a methodology change [^1] in the 2014 Newsweek Green Rankings, only the [2014](http://www.newsweek.com/green/worlds-greenest-companies-2014), [2015](http://www.newsweek.com/green-2015/top-green-companies-world-2015) and [2016](http://www.newsweek.com/green-2016/top-green-companies-world-2016) ranking were considered. Among those three ranking and of the 500 US companies, 405 companies were listed for each years.
+
+[^1]: As a result of making a transition to a 100% rules-based approach, the methodology for the 2014 Newsweek Green Rankings differs considerably from the framework used in the 2012 Newsweek Green Rankings. Therefore ranking results prior to 2014 and ones subsequent can not be compared.
+
+Even though green rankings were published in 2014, 2015 and 2016, each company is evaluated based on the 2012, 2013 and 2014 data. Therefore, measures for financial performance of companies will be based on the 2012, 2013 and 2014 fundamental data. Financial data have been mainly collected on [Stockpup](http://www.stockpup.com/) and in case of missing values I have completed with [Morningstar](http://www.morningstar.be/be/default.aspx) and [Ycharts](https://ycharts.com/). Of the 405 initial companies, a total of 8 companies were dropped because of missing data. The final sample includes 397 publicly-traded companies in the US covering the period from 2012 till 2014 inclusively. 
 
 
-Even though green rankings were published in 2014, 2015 and 2016, each company is evaluated based on the 2012, 2013 and 2014 data. Therefore, measures for financial performance of companies will be based on the 2012, 2013 and 2014 fundamental data. Financial data have been mainly collected on [Stockpup](http://www.stockpup.com/) and in case of missing values I have completed with data coming from [Morningstar](http://www.morningstar.be/be/default.aspx) and [Ycharts](https://ycharts.com/). Of the 405 initial companies, a total of 8 companies were dropped because of missing data. The final sample includes 397 publicly-traded companies in the US covering the period from 2012 till 2014 inclusively. 
+The \autoref{VarDef} describes my variables and following sections deeply explained each variables.
 
 
-The \autoref{Smpl} contains a sample of my database. The \autoref{VarDef} describes my variables.You can notice that there are some missing values in the TobinsQ column. Indeed,compared to ROA, calculating Tobin’s q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces sample bias. Therefore I will do the same and depending on the robustness of results I will use one or two sample spaces in my study. I still need to figure out how to perform this test in R.
 
+
+<!--
 
 In the meantime, the function *pdim()* extracts the dimensions of both panel data, namely *DB_Lag1* and *DB_Lag1sQ*, and we can observe that both are characterized as *unbalanced*. Indeed I had to remove some year observations due to missing values. 
 
@@ -54,21 +59,7 @@ pdim(DB_Lag1)
 pdim(DB_Lag1)
 ```
 
-```{r echo = FALSE, message = FALSE, warning = FALSE,  results='asis'}
-if (!require("stargazer")) install.packages("stargazer")
-library(stargazer)
-
-if (!require("plm")) install.packages("plm")
-library(plm)
-
-PanelData <- pdata.frame(DB_Lag1, index=c("Companies", "YearFinancialIndicator"))
-smpl <- PanelData[c(1:10),c(1:4)]
-stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sample selection of the data base", label="Smpl", table.placement = "h", digits = 2, header = FALSE) # the agument 'header = FALSE" is really important to remove the citation info of stargazer package"
-
-```
-
-
-
+-->
 \begin{table}[h]
 \centering
 \caption{Variable Definition} 
@@ -98,7 +89,40 @@ stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sam
 
 
 ## Dependent Variables
-      
+
+Regarding dependent variables, @EndrikatMakingsenseconflicting2014 claim that accounting-based measures (e.g. ROA, ROE, Return on Sales) capture immediate impacts and can be used as a proxy to measure short-term CFP while market-based measures (e.g. Tobin's Q, market capitalisation, market to book value) integrate estimations of a firm’s future prospects and can be better used as a proxy for long-term CFP. Amongst scholars that used both measures simultaneously, ROA and Tobin's Q are the ones that have been used the most frequently [@Lioui2012, @Cavaco2014, @Muhammadrelationshipenvironmentalperformance2015, @Delmas2015, @Semenova2016, @ManriqueAnalyzingEffectCorporate2017]. Therefore I have decided to use ROA and Tobin's Q as a proxy of both short and long-term CFP.
+
+Tobin's Q is defined as the ratio of the market value of a firm to the replacement cost of its assets [@Chung1994]. Broadly speaking firms displaying Tobin’s Q greater than one are judged as using scarce resources effectively and those with Tobin’s Q less than one as using resources poorly [@Lewellen1997]. In other words investors prefers companies with Tobin's Q superior to one. Due to the complexity of calculating the replacement cost of a firm, the literature have seen several attempts to approcimate Tobin's Q. Tobin's Q value had been directly collected on Ycharts and this platform use the simple approximation of @Chung1994 wich is summarized in \autoref{Chung}.
+
+\begin{equation}
+Tobin's Q = (MVE + PS + DEBT)/TA
+\label{Chung}
+\end{equation}
+
+
+where \(MVE\) is the product of a firm's shares prices and the number of common stock shares outstanding, \(PS\) is the liquidating value of the firm's outstanding preferred stock, \(DEBT\) is the value of the firm's short term liabilities net of its short-term assers, plus the book value of the firm's long-term debt and \(\)
+
+
+
+
+
+
+
+The \autoref{Smpl} contains a sample of my database. Some missing values appears in the TobinsQ column. Indeed,compared to ROA, calculating Tobin’s q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces sample bias. Therefore I will do the same and depending on the robustness of results I will use one or two sample spaces in my study. I still need to figure out how to perform this test in R.
+
+```{r echo = FALSE, message = FALSE, warning = FALSE,  results='asis'}
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer)
+
+if (!require("plm")) install.packages("plm")
+library(plm)
+
+PanelData <- pdata.frame(DB_Lag1, index=c("Companies", "YearFinancialIndicator"))
+smpl <- PanelData[c(1:10),c(1:4)]
+stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sample selection of the data base", label="Smpl", table.placement = "h", digits = 2, header = FALSE) # the agument 'header = FALSE" is really important to remove the citation info of stargazer package"
+
+```
+
 ## Independent Variables
       
 ## Control Variables
