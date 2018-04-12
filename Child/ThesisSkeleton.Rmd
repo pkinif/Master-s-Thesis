@@ -5,7 +5,7 @@ output:
     number_sections: yes
 bibliography: References.bib
 #csl:
-fontsize: 12pt
+fontsize: 11pt
 geometry: margin = 1.2in
 urlcolor: blue
 linkcolor: blue
@@ -39,7 +39,6 @@ library(dplyr)
 
 # I dowload my DB with read.csv2
 DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
-
 ```
 
 \pagenumbering{gobble} 
@@ -98,8 +97,8 @@ DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag_1.csv", sep = ";",stringsAs
 
 \FloatBarrier
 \newpage
-\fancyhead[CO,CE]{Hypotheses}
-```{r child = 'Hypotheses.Rmd'} 
+\fancyhead[CO,CE]{Research Framework}
+```{r child = 'ResearchFramework.Rmd'} 
 ```
 
 \FloatBarrier
