@@ -1,0 +1,288 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{}
+  \pretitle{\vspace{\droptitle}}
+  \posttitle{}
+  \author{}
+  \preauthor{}\postauthor{}
+  \date{}
+  \predate{}\postdate{}
+
+
+\begin{document}
+
+\section{Literature Review}\label{literature-review}
+
+\subsection{Two perspectives on Corporate Environmental
+Performance}\label{two-perspectives-on-corporate-environmental-performance}
+
+The paradigm of profit maximization of @MiltonFriedman1970 have been
+widely challenged these last decades. Whereas @MiltonFriedman1970
+considers investment in pollution efficient technology as deviation from
+the wealth maximization goal, the literature is showing growing
+evidences that improving a company's environmental performance can lead
+to better economic or financial performance, and not necessarily to an
+increase in cost. @Ambec2008 have demonstrated that the expenses
+incurred to reduce pollution can be partly or completely offset by gains
+made elsewhere. @Porter1995 argued that rather than simply adding to
+cost, properly crafted environmental standards can trigger innovation
+offsets, allowing companies to improve their resource productivity. He
+even redefined the self concept of value creation in advocating that the
+solution lies in the principle of shared value which involves creating
+economic value in a way that also creates value for society by
+addressing its needs and challenges {[}@Porter2011b, @Porter2018{]}.
+@Freeman1984 call to a radical rethinking of our model of the firm.
+According to him, companies have to consider their stakeholder, namely
+\emph{``any group or individual who can affect or is affected by the
+achievement of an organisation's objectives''} (p.25) or else face
+negative confrontation from non-shareholder groups, which can lead to
+diminished shareholder value, through boycotts, lawsuits and protests
+etc. In other words, @Freeman1984 summarizes the idea that companies
+should consider corporate environmental performance as unavoidable cost
+of doing business.
+
+\subsection{Does it pay to be green?}\label{does-it-pay-to-be-green}
+
+While more and more companies are embracing this new paradigm and
+develop profitable business strategies that deliver tangible social
+benefits, others keep the old fashion way of @MiltonFriedman1970. This
+dichotomy have interested scholars and since they have sought to
+empirically answer the question, \emph{``Does it pay to be green?''}. In
+a competitive business world, answering this question is crucial to
+provide a genuine economic justification to the new paradigm
+{[}@Ludecadedebatenexus2014{]}. Although results are mixed, the large
+quantity of studies on the nexus between Corporate Environmental
+Performance (i.e.~CEP) and Corporate Financial Performance (i.e.~CFP) in
+the last two decades allowed the appearance of recent meta-analyses
+\footnote{Initially, the literature focused on the link between
+  Corporate Social Performance (i.e.~CSP) and Corporate Financial
+  Performance (i.e.~CFP). @Orlitzky2001 were the first to consider CEP
+  as apart from CSP. Given that @Busch2018 could not detect
+  statistically significant differences between the effects of
+  environmental CEP and social-related CSP on CFP and concludes that
+  good CSP pays off, whether social or environmental related, this study
+  considers CSP equals to CEP.} {[}@Orlitzky2001, @Orlitzky2003,
+@Wu2006, @Albertini2013, @Dixon-Fowler2013,
+@EndrikatMakingsenseconflicting2014, @Ludecadedebatenexus2014,
+@WangMetaAnalyticReviewCorporate2016, @Busch2018{]} and all suggest that
+indeed it pays to be green. More precisely, a positive and bidirectional
+relationship does exist between CEP and CFP meaning that successful
+firms may have the resources necessary to improve their environmental
+performance, which in turn increases financial benefits that again can
+be invested back into further improvements of CEP
+{[}@EndrikatMakingsenseconflicting2014{]}.
+
+\subsection{CEP and CFP as a broad
+meta-construct}\label{cep-and-cfp-as-a-broad-meta-construct}
+
+CFP is a broad meta-constructs and the current literature have shown
+that each construct play a moderator role in the relationship between
+CEP and CFP {[}@Orlitzky2003, @Ludecadedebatenexus2014,
+@Busch2018{]}.Scholars have mainly adopted three broad subdivisions of
+CFP: market-based (investor returns), accounting-based (accounting
+returns), and perceptual (survey) measures. Market-based measures
+(e.g.~price-earning ratio, Tobin's Q, or share price appreciation)
+consider that returns should be measured from the perspective of the
+shareholders {[}@Cochran1984a{]}. Accounting-based measures require
+profitability and asset utilization indicators such as Return on Asset
+(i.e.~ROA) or Return on Equity (i.e.~ROE) {[}@Cochran1984a, @Wu2006{]}.
+Finally perceptual measures of CFP is a more subjective approach based
+on the perception of survey respondents {[}@Ludecadedebatenexus2014{]}.
+
+CEP is also a broad meta-constructs and no common definition exist in
+the literature {[}@Albertini2013,
+@EndrikatMakingsenseconflicting2014{]}. Scholars have used a wide
+variety of indicators as proxies for approaching the green performance
+of companies. @Albertini2013 use a three-group classification to
+summarize CEP measures : (i) Environmental Management Measures
+(i.e.~EMV) which mostly refer to environmental strategy, integration of
+environmental issues into strategic planning processes, environmental
+practices, process-driven initiatives, product-driven management
+systems, ISO 14001 certification, environmental management system
+adoption, and participation in voluntary programs {[}@Molina-Azorin2009,
+@Schultze2012{]}. (ii) Environmental Performance Variables (i.e.~EPV)
+which are mostly measures quantified in physical units (carbon dioxide
+emissions, physical waste, water consumption, toxic release) that can be
+positive (emission reduction) or negative (emission generated)
+{[}@Albertini2013{]}. (iii) Environmental Disclosure Variables
+(i.e.~EDV) such as information releases regarding toxic emission
+{[}@Hamilton1995{]}, environmental awards
+{[}@Chencrosscountrycomparisongreen2018{]}, environmental accidents and
+crises {[}@Blacconiere1994{]}, and environmental investment
+announcements {[}@Gilley2000{]}. @EndrikatMakingsenseconflicting2014
+split up CEP into two sub-dimensions, namely (i) process-based CEP which
+can be linked to the EMV approach of @Albertini2013 and (ii)
+outcome-based CEP which can be linked to the EPV dimension. According to
+@Xie2007, process-based CEP can be considered as a preliminary step of
+outcome-based CEP. Scholars demonstrated that the first approach have a
+positive impact on the second one which in turn has a positive impact on
+financial performance {[}@Li2017,
+@Chencrosscountrycomparisongreen2018{]}.
+
+Although recent recent meta-analyses {[}@Orlitzky2001, @Orlitzky2003,
+@Wu2006, @Albertini2013, @Dixon-Fowler2013,
+@EndrikatMakingsenseconflicting2014, @Ludecadedebatenexus2014,
+@WangMetaAnalyticReviewCorporate2016, @Busch2018{]} have demonstrated
+the positive link between CEP and CFP, some scholars advanced that the
+multidimensionality of both CEP and CFP constructs are one reason why
+the conclusion of the relationship between CEP and CFP have been so
+mixed {[}@Albertini2013, @EndrikatMakingsenseconflicting2014,
+@MiroshnychenkoGreenpracticesfinancial2017{]}. For instance, @Busch2011a
+found that process-based CEP (in terms of carbon management) negatively
+affects CFP, while outcome-based CEP (in terms of carbon emissions) has
+a positive influence on CFP. @Cavaco2014 and
+@Muhammadrelationshipenvironmentalperformance2015 have used both
+accounting-based indicators (i.e.~ROA) and market-based indicators
+(i.e.~Tobin's Q) as a proxy for CFP and got a positive relation between
+ROA and CEP while no relation between Tobin's Q and CEP. A general
+consensus have shown that accounting-based CFP are characterized by a
+stronger relation to CEP than market-based and perceptual indicators
+{[}@Orlitzky2003, @Wu2006, @Albertini2013, @Ludecadedebatenexus2014,
+@Busch2018{]}.
+
+Considering the varying findings with regards to process-based CEP and
+outcome-based CEP and with a motivation to answer the call of
+@EndrikatMakingsenseconflicting2014, I hypothesize the following :
+
+\textbf{Hypothesis 1.} Process-based CEP have a positive impact on
+Outcome-based CEP
+
+\textbf{Hypothesis 2.} Outcome-based CEP have a positive impact on CFP
+
+\textbf{Hypothesis 3.} Process-based CEP have a positive impact on CFP
+
+\subsection{When does it pay to be
+green?}\label{when-does-it-pay-to-be-green}
+
+@Griffin1997 was the first to call for research that looks at the
+CEP-CFP relation over time. While scholars had been mainly answering the
+question \emph{``Does it pay to be green?''} some have recently tried to
+move forward and gained interest in answering the call of @Griffin1997
+with the following question : \emph{``When does it pay to be green?''}
+{[}@ManriqueAnalyzingEffectCorporate2017{]}.
+
+@Zhang2017 have shown that CEP has a negative relationship with
+short-term financial performance and a positive relationship with
+long-term CFP. @Delmas2015 observed that the more a firm decreases
+carbon emissions the more positive the investors perceptions of future
+market performance and the lower its short term financial performance.
+@SongCanenvironmentalmanagement2017 have shown that corporate
+environmental management has a significant positive correlation with
+future financial performance, however it has no significant correlation
+with current financial performance.
+@ManriqueAnalyzingEffectCorporate2017 demonstrated that in times of
+economic crisis firms which improve their corporate environmental
+performance improve their corporate financial performance, this effect
+being weaker for firms in developed countries, where only the short-term
+corporate financial performance improves, than for firms in emerging and
+developing countries, where the short- and long-term corporate financial
+performance improve. @Chencrosscountrycomparisongreen2018 have shown
+that a firms green performance not only impact an organization's
+financial performance in that particular year but also impact the year
+that follows.
+
+Those empirical results provide evidences that no common consensus have
+be found yet to answer the question \emph{``When does it pay to be
+green?''}. @Busch2018 demonstrated that at a meta-research level, the
+evidence of a time dependency on the CEP-CFP link is not significant and
+that the call of @Griffin1997 remains to date unanswered.
+
+To capture the time dimension in the CFP-CEP nexus, scholars consider
+accounting-based measures as a proxy for short term CFP and market-based
+measures as a proxy for long term CFP
+{[}@EndrikatMakingsenseconflicting2014, @Delmas2015, @Zhang2017,
+@ManriqueAnalyzingEffectCorporate2017,
+@MiroshnychenkoGreenpracticesfinancial2017{]}. According to
+@EndrikatMakingsenseconflicting2014 :
+
+\begin{quote}
+\emph{``While accounting-based measures may capture immediate impacts,
+they may not appropriately account for intangible and long-term effects
+which are likely to be involved in the CEP-CFP link. Market-based
+measures, on the other hand, integrate estimations of a firm's future
+prospects and reflect the notion of external stakeholders (primarily
+investors) {[}@Orlitzky2003, @Peloza2009, @Delmas2011{]}. Thus,
+market-based measures may better to capture the long-term value of
+certain environmental activities.''}
+\end{quote}
+
+Taking into account theoretical arguments and empirical findings and in
+order to move forward in answering the call of @Griffin1997, I
+hypothesize the following :
+
+\textbf{Hypothesis 4.} CEP have a stronger impact on short term CFP than
+on long term CFP
+
+
+\end{document}
