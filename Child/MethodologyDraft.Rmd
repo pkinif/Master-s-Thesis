@@ -5,32 +5,17 @@ output:
 
 # Methodology
 
-## Econometric model
+Here is my methodology...
 
-<!--
-... Deal with methodology to test H1 ..... **To be defined**
+## Panel Data
 
--->
+### Definition of panel data
 
+Panel data, also called longitudinal data or cross-sectional time-series data include observations on N cross section units (i.e., firms) over T time-periods. 
 
-Panel data is a common approach to adress the CFP-CEP nexus [@Albertini2013]. Panel data, also called longitudinal data or cross-sectional time-series data include observations on N cross section units (i.e., firms) over T time-periods [@Hsiao2007a]. As panel data analysis use variation in both these dimensions, it is considered to be one of the most efficient analytical methods for data [@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007, @HsiaoChapitrePanelData2014]. @Roberts2013 also argued that using panel data offer a partial, but by no means complete and costless, solution to the problem of omitted variables in model, namely the most common causes of endogeneity in empirical corporate finance. Consequently this study use \autoref{EconometricModel} to test the combined effect of process and outcome-based CEP on CFP.
+### Advantages of panel data :
 
-\begin{equation}
-Y_{it+1} = \beta_{0} + \beta_{1} (SPL_{it}) + \beta_{2} (STC_{it}) + \beta_{3} (A_{it}) + \beta_{4} (EnP_{it})  + \beta_{5} (CaP_{it}) + \beta_{6} (WatP_{it}) + \beta_{7} (WastP_{it})+ (Controls_{it}) + \varepsilon_{it}
-\label{EconometricModel}
-\end{equation}
-
-
-where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(EP_{it}\) is a proxy for a firm's energy productivity, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that include firm size, industry sector, financial risk, R&D activities, advertising intensity and capital structure and lastly \(\varepsilon_{it}\) which is the error term.
-
-Unlike one-dimensional method, panel data setting implies that endogeneity occurs in cases where the independent variable in a regression model is correlated with the error term, or due to simultaneous causality between the dependent and the independent variable [@Sanchez-Ballesta2007, @Biorn2008, @Roberts2013]. Recent meta-analysis review provided evidences that the CFP-CEP nexus is characterized by a bidirectional causality [@Orlitzky2001, @Orlitzky2003, @Wu2006, @Albertini2013, @Dixon-Fowler2013, @EndrikatMakingsenseconflicting2014, @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016, @Busch2018]. In order to adress potential endogeneity problems in my model, firstly, I reduce the simultaneity bias in lagging observations in dependent and control variables one year behind financial performance. This method allows to increase the confidence of the direction of the relationship [@Hart1996, @Delmas2015, @MiroshnychenkoGreenpracticesfinancial2017]. Secondly, 
-
-
-
-citation from [@Biorn2008]
-
-> As mentioned before, the problem of regressors correlated with the error term (whatever component of it) results in inconsistent/biased OLS/GLS estimates and one has to resort to IV/GMM methods. When data are in a one-dimensional form, there is no room for confusion. However in a panel data setting, the same terminology of ‘endogeneity of regressors’ may be used whether it concerns correlation with specific effects or with the residual disturbance term.  Though it is correct to use the same name in both cases, the researcher has to check what type of endogeneity she is faced with before adopting a solution.
-
+As panel data analysis uses variation in both these dimensions, it is considered to be one of the most efficient analytical methods for data [@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007, @HsiaoChapitrePanelData2014].
 
 ### Fixed or random effect model
 
@@ -81,7 +66,81 @@ Hausmann test to test the random effects model for both dependent variables?
 
 ## Econometric Model
 
-> Hart and Ahuja (1996) argue that there is a time lag between the initiation of emission reduction efforts and the realization of bottom line benefits.
+The first hypothesis will be tested with T-tests on the impact of each green initiative on green performance.
+
+Hypotheses two and three will be tested by regression analysis using the *plm* package. Econometric models are based on @Delmas2015 and @MiroshnychenkoGreenpracticesfinancial2017 and started from the general form:
+
+\begin{equation}
+Y_{t+1}=\beta_{0} + \beta_{1} (X_{it}) + + \beta_{2} (C_{it}) + \varepsilon_{it}
+\label{GeneralForm}
+\end{equation}
+
+where \(Y_{t+1}\) is the financial performance of firm \(i\) in year \(t+1\), \(\beta\) is the vector of estimated regression coefficients for each of the explanatory variables \(X_{it}\), \(C_{it}\) is a vector of control variables , \(\varepsilon_{it}\) is the error term.
+
+More precisely I will regress six models :
+
+
+**Model 1 :** Green Initiatives on Tobin's Q
+
+\begin{equation}
+TobinsQ_{it+1} = \beta_{0} + \beta_{1} (SP_{it}) + \beta_{2} (ST_{it}) + \beta_{3} (AS_{it}) + \beta_{4} (C_{it}) + \varepsilon_{it}
+\label{M1}
+\end{equation}
+
+
+**Model 2 :** Green Initiatives on ROA
+
+\begin{equation}
+ROA_{it+1} = \beta_{0} + \beta_{1} (SP_{it}) + \beta_{2} (ST_{it}) + \beta_{3} (AS_{it}) + \beta_{4} (C_{it}) + \varepsilon_{it}
+\label{M2}
+\end{equation}
+
+
+**Model 3 :** Green Performance on Tobin's Q
+
+\begin{equation}
+TobinsQ_{it+1} = \beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (C_{it}) + \varepsilon_{it}
+\label{M3}
+\end{equation}
+
+
+**Model 4 :** Green Performance on ROA
+
+\begin{equation}
+ROA_{it+1} = \beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it}) + \beta_{5} (C_{it}) + \varepsilon_{it}
+\label{M4}
+\end{equation}
+
+
+**Model 5 :** Both Green Performance and Green Initiative on Tobin's Q
+
+\begin{equation}
+TobinsQ_{it+1} = \beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it})  + \beta_{5} (SP_{it}) + \beta_{6} (ST_{it}) + \beta_{7} (AS_{it})+ (C_{it}) + \varepsilon_{it}
+\label{M5}
+\end{equation}
+
+
+**Model 6 :** Both Green Performance and Green Initiative on ROA
+
+\begin{equation}
+ROA_{it+1} = \beta_{0} + \beta_{1} (EP_{it}) + \beta_{2} (CP_{it}) + \beta_{3} (WatP_{it}) + \beta_{4} (WasP_{it})  + \beta_{5} (SP_{it}) + \beta_{6} (ST_{it}) + \beta_{7} (AS_{it})+ (C_{it}) + \varepsilon_{it}
+\label{M6}
+\end{equation}
+
+
+where :
+
+* \(TobinsQ_{it+1}\) = a proxy for a firm's financial performance
+* \(ROA_{it+1}\) = a proxy for a firm's financial performance
+* \(EP_{it}\) = a proxy for a firm's energy productivity
+* \(CP_{it}\) = a proxy for a firm's carbon productivity
+* \(WatP_{it}\) = a proxy for a firm's water productivity
+* \(WasP_{it}\) = a proxy for a firm's waste productivity
+* \(SP_{it}\) = a proxy for a firm's sustainability pay link
+* \(ST_{it}\) = a proxy for a firm's sustainability themed commitment
+* \(EP_{it}\) = a proxy for a firm's audit score
+* \(C_{it}\) = a vector of control variables that include financial leverage, firm size, net margin and industry sector
+* \(\varepsilon_{it}\) = the error term
 
 
 Motivations to use one time lag - citation from [@Albertini2013]: 

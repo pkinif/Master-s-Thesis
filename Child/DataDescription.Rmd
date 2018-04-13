@@ -111,7 +111,7 @@ library(plm)
 
 PanelData <- pdata.frame(DB_Lag1, index=c("Companies", "YearFinancialIndicator"))
 smpl <- PanelData[c(1:10),c(1:4)]
-stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sample selection of the data base", label="Smpl", table.placement = "h", digits = 2, header = FALSE) # the agument 'header = FALSE" is really important to remove the citation info of stargazer package"
+stargazer(PanelData[c(1:10),c(1:4)], summary = FALSE, type="latex", title = "Sample selection of the database", label="Smpl", table.placement = "h", digits = 2, header = FALSE) # the agument 'header = FALSE" is really important to remove the citation info of stargazer package"
 
 ```
 
