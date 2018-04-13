@@ -1,7 +1,21 @@
 ---
 output:
   pdf_document
+header-includes:
+- \usepackage{amsmath}
 ---
+```{r echo =FALSE, message = FALSE, error = FALSE}
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr)
+if (!require("plm")) install.packages("plm")
+library(plm)
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer)
+# I download my database 
+
+DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
+```
 
 # Methodology
 
@@ -13,199 +27,40 @@ output:
 -->
 
 
-Panel data is a common approach to adress the CFP-CEP nexus [@Albertini2013]. Panel data, also called longitudinal data or cross-sectional time-series data include observations on N cross section units (i.e., firms) over T time-periods [@Hsiao2007a]. As panel data analysis use variation in both these dimensions, it is considered to be one of the most efficient analytical methods for data [@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007, @HsiaoChapitrePanelData2014]. @Roberts2013 also argued that using panel data offer a partial, but by no means complete and costless, solution to the problem of omitted variables in model, namely the most common causes of endogeneity in empirical corporate finance. Consequently this study use \autoref{EconometricModel} to test the combined effect of process and outcome-based CEP on CFP.
+Panel data is a common approach to adress the CFP-CEP nexus [@Albertini2013]. Panel data, also called longitudinal data or cross-sectional time-series data include observations on N cross section units (i.e., firms) over T time-periods [@Hsiao2007a]. As panel data analysis use variation in both these dimensions, it is considered to be one of the most efficient analytical methods for data [@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007, @HsiaoChapitrePanelData2014]. @Roberts2013 also argued that using panel data offer a partial, but by no means complete and costless, solution to the problem of omitted variables in model, namely the most common causes of endogeneity in empirical corporate finance. Consequently this study use equation \ref{EconometricModel} to test the combined effect of process and outcome-based CEP on CFP.
 
 \begin{equation}
-Y_{it+1} = \beta_{0} + \beta_{1} (SPL_{it}) + \beta_{2} (STC_{it}) + \beta_{3} (A_{it}) + \beta_{4} (EnP_{it})  + \beta_{5} (CaP_{it}) + \beta_{6} (WatP_{it}) + \beta_{7} (WastP_{it})+ (Controls_{it}) + \varepsilon_{it}
+\centering
+\begin{aligned}
+Y_{it+1} & = & \beta_{0} + \beta_{1} (SPL_{it}) \\
+&& + {} \beta_{2} (STC_{it}) + \beta_{3} (A_{it}) \\
+&& + {} \beta_{4} (EnP_{it})  + \beta_{5} (CaP_{it}) \\
+&& + {} \beta_{6} (WatP_{it}) + \beta_{7} (WastP_{it}) \\ 
+&& + {} (Controls_{it}) + \varepsilon_{it}
 \label{EconometricModel}
+\end{aligned}
 \end{equation}
 
 
-where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(EP_{it}\) is a proxy for a firm's energy productivity, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that include firm size, industry sector, financial risk, R&D activities, advertising intensity and capital structure and lastly \(\varepsilon_{it}\) which is the error term.
+where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(EP_{it}\) is a proxy for a firm's energy productivity, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial risk, R&D activities, advertising intensity and capital structure and lastly \(\varepsilon_{it}\) which is the error term.
 
-Unlike one-dimensional method, panel data setting implies that endogeneity occurs in cases where the independent variable in a regression model is correlated with the error term, or due to simultaneous causality between the dependent and the independent variable [@Sanchez-Ballesta2007, @Biorn2008, @Roberts2013]. Recent meta-analysis review provided evidences that the CFP-CEP nexus is characterized by a bidirectional causality [@Orlitzky2001, @Orlitzky2003, @Wu2006, @Albertini2013, @Dixon-Fowler2013, @EndrikatMakingsenseconflicting2014, @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016, @Busch2018]. In order to adress potential endogeneity problems in my model, firstly, I reduce the simultaneity bias in lagging observations in dependent and control variables one year behind financial performance. This method allows to increase the confidence of the direction of the relationship [@Hart1996, @Delmas2015, @MiroshnychenkoGreenpracticesfinancial2017]. Secondly, 
-
-
-
-citation from [@Biorn2008]
-
-> As mentioned before, the problem of regressors correlated with the error term (whatever component of it) results in inconsistent/biased OLS/GLS estimates and one has to resort to IV/GMM methods. When data are in a one-dimensional form, there is no room for confusion. However in a panel data setting, the same terminology of ‘endogeneity of regressors’ may be used whether it concerns correlation with specific effects or with the residual disturbance term.  Though it is correct to use the same name in both cases, the researcher has to check what type of endogeneity she is faced with before adopting a solution.
-
-
-### Fixed or random effect model
-
-Panel data may have individual (group) effect, time effect, or both, which are analyzed by fixed effect and/or random effect models. *A fixed effect model* examines if intercepts vary across group or time period, whereas a *random effect model* explores differences in error variance components across individual or time period. [@Park2011].
+Panel data setting implies that endogeneity occurs in cases where the independent variable in a regression model is correlated with the error term, or due to simultaneous causality between the dependent and the independent variable [@Sanchez-Ballesta2007, @Biorn2008, @Roberts2013]. Consequently, the presence of endogeneity implies that the fourth and fifth assumptions of OLS[^Five assumptions are required to produce consistent estimators with OLS : (i) a random sample of observations on \(y\) and \((x_{1},...., x_{n})\), (ii) a mean zero error term, (iii) no linear relationship among the explanatory variables, (iv) an error term that is uncorrelated with each explanatory variables and (v) an error term with zero mean conditional on the explanatory variables.] are violated and scholars have to used a different method to produce consistent estimators [@Wooldridge2008, @Roberts2013]. Recent meta-analysis provided evidences that the CFP-CEP nexus is characterized by a bidirectional causality [@Orlitzky2001, @Orlitzky2003, @Wu2006, @Albertini2013, @Dixon-Fowler2013, @EndrikatMakingsenseconflicting2014, @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016, @Busch2018]. In order to adress potential endogeneity problems in my model, firstly, I have lagged observations in dependent and control variables one year behind financial performance. This method allows to increase the confidence of the direction of the relationship [@Hart1996, @Delmas2015, @MiroshnychenkoGreenpracticesfinancial2017] and *in fine* reduce the simultaneity bias. Secondly, given that the standard Hausman test had rejected the null hypothesis of random effect (see Annex... for results of the test) I use a fixed effect model to regress \ref{EconometricModel}. According to @Roberts2013, fixed effect model ameliorate endogeneity concerns. 
 
 
 
-**!! I need to test the fixed-random effect model of my database before moving forward !!**
 
-<!----> 
-* @Ng2015 used the two-stage-least-square regressions to estimate its models. 
+<!--
 
-** In case of presence of endogeneyity in an econometric model,  OLS is not capable of delivering consistent parameter estimates [@Wooldridge2008].**
-
-Citation from [@Wooldridge2008] :
-
-> The general concept is that of the instrumental variables estimator;  a  popular  form  of  that  estimator, often employed in the context of endogeneity, is known as two-stage least squares (2SLS)
-
-
-### Endogeneity test
-
-Problem of endogeneity in the CFP-CEP nexus : 
-
-Citation from [@EndrikatMakingsenseconflicting2014]
-
-> Endogeneity occurs in cases where the independent variable in a regression model is correlated with the error term, or due to simultaneous causality between the dependent and the independent variable (Sánchez-Ballesta & García-Meca, 2007; van Essen et al., in press). As outlined earlier, the relationship between CEP and CFP may involve bidirectional causality. Therefore, the fact of controlling or not controlling for endogeneity can be conceived as a kind of methodological artifact, which may have a moderation effect on the study findings.
-
-
-Even if panel data have a lot of advantages...
-
-
-Two issues involved in utilizing panel data, namely heterogeneity bias and selectivity bias [@HsiaoChapitrePanelData2014].
-
-Citation from @HsiaoChapitrePanelData2014:
-
-> It is only by taking proper account of selectivity and heterogeneity biases in the panel data that one can have confidence in the results obtained.
-
-@Dangsearchrobustmethods2015 examine which methods are appropriate for estimating dynamic panel data models in empirical corporate finance,especially in short panels of company data, in the likely presence of (1) unobserved heterogeneity and endogeneity, (2) residual serial correlation, or (3) fractional dependent variables. The bias-corrected fixed-effects estimators, based on an analytical, bootstrap, or indirect inference approach, are found to be the most appropriate and robust methods. 
-
-But @MiroshnychenkoGreenpracticesfinancial2017 used the OLS regressions in micro panel using the Huber-White sand
-which estimator, to account for the heteroscedasticity problem... **Which method should I use?**
-
-
-Hausmann test to test the random effects model for both dependent variables?
-
-
-\newpage
-
-## Econometric Model
-
-> Hart and Ahuja (1996) argue that there is a time lag between the initiation of emission reduction efforts and the realization of bottom line benefits.
-
+Five assumptions are required to produce consistent estimators with OLS : (i) a random sample of observations on \(y\) and \((x_{1},...., x_{n})\), (ii) a mean zero error term, (iii) no linear relationship among the explanatory variables, (iv) an error term that is uncorrelated with each explanatory variables and (v) an error term with zero mean conditional on the explanatory variables.
 
 Motivations to use one time lag - citation from [@Albertini2013]: 
 
 > Hart and Ahuja (1996) argue that there is a time lag between the initiation of emission reduction efforts and the realization of bottom line benefits. First, pollution prevention requires up-front investment in training and equipment. Second, it takes time to gain reduction because internal reorganization and renegotiation of supply and waste disposal contracts may be required (Hart & Ahuja, 1996). Evidence also suggests that in the early stages of pollution prevention there is a great deal of “low-hanging fruit”—easy and inexpensive behavioural and material changes that result in large emission reductions relative to costs (Hart, 1994; Rooney, 1993). As the firm’s environmental performance improves, further reductions in emissions become progressively more difficult, requiring more significant change in processes or even entirely new production technology (Russo & Fouts, 1997). Some studies have collected data on a longitudinal perspective (more than 1 year) in order to take into account the long-term payback of environmental management strategies, while others have collected data on a short period of time (1 year and less). Analysing the relationship between CEM and CFP during a short period of time implies that the researcher intends to prove that the environmental management influences regularly and at any time the financial profitability of the firm. Yet the natural and organizational environments are different because of the time markers of their respective materialities, such as short term for the financial profitability and very long term for the environmental issue (Bansal & Knox-Hayes, 2013). Thus, we can argue that the longitudinal characteristic of the studies might explain part of the variation in the results regarding the relationship between CEM and CFP. **NB: the hypothese had been verified : The relationship between CEM and CFP is significantly stronger for non-longitudinal studies (0.13) than for longitudinal studies (0.07)**
 
-
-\newpage
-## Panel Data Tests
-
-```{r echo =FALSE, message = FALSE, error = FALSE}
-if (!require("dplyr")) install.packages("dplyr")
-library(dplyr)
-# I download my database 
-
-DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
-
-```
+-->
 
 
-This section will not be in the final document but in appendix. It is only to report the result of the bunch of tests I carried out in order to define which panel data methotolodies I will use for each one of my 6 models.
-
-@Croissant2008a and @Torres-Reyna2010 really helped me.
-
-Here are the tests : 
-
-1. Test of poolability 
-2. Hausmann Test to determine the fixed or random effect
-3. Test for time fixed effect
-4. Test for cross-sectional dependence
-5. Test for serial correlation
-6. Test for stationarity
-7. Test for heteroskedasticity
-
-The table \ref{TestSummary} summaries the result of each test for each model. You can find details below.
-
-Regarding the poolability test I have an issue with my code that I still need to solve. This is why it is written *NA* in the table \ref{TestSummary}. 
-
-
-\begin{table}[h]
-\centering
-\begin{tabular}{rrrrrrr}
-\hline
- & {Model 1} & {Model 2} & {Model 3} & {Model 4} & {Model 5} & {Model 6} \\ 
-\hline
-{Poolability} & NA & NA & NA & NA & NA & NA \\
-{Hausmann} & Fixed & Fixed & Fixed & Fixed & Fixed & Fixed \\
-{Time Fixed Effect} & No & Yes & No & Yes & No & Yes \\
-{Cross Sectional Dependence} & Yes & Yes & Yes & No & No & No \\
-{Serial Correlation} & Yes & Yes & Yes & Yes & Yes & Yes \\
-{Stationarity} & None & None & None & None & None & None \\
-{Heteroskedasticity} & Yes & Yes & Yes & Yes & Yes & Yes \\ 
-\hline
-\end{tabular}
-\caption{Test Summary}
-\label{TestSummary}
-\end{table}
-
-\newpage
-### Test of poolability 
-
-Citation from [@Croissant2008] :
-
-> *Pooltest tests the hypothesis that the same coefficients apply to each individual. It is a standard F test, based on the comparison of a model obtained for the full sample and a model based on the estimation of an equation for each individual. The first argument of pooltest is a plm object. The second argument is a pvcm object obtained with model=within. If the first argument is a pooling model, the test applies to all the coefficients (including the intercepts), if it is a within model, different intercepts are assumed.*
-
-To carry out the of poolabiloty I have used the *pooltest* function. The null hypothesis of poolability assumes homogeneous slope coefficients.
-
-When running my code I got this error : Error in FUN(X[[i]], ...) : insufficient number of observations
-
-I still need to understand the origin of this error.
-
-
-```{r echo = FALSE, message = FALSE, error = FALSE}
-if (!require("plm")) install.packages("plm")
-library(plm)
-
-# Test of poolability --> error that I cannot understand
-
-# PVCM regression
-#M1_pvcm <- pvcm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-#M2_pvcm <- pvcm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-#M3_pvcm <- pvcm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-#M4_pvcm <- pvcm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-#M5_pvcm <- pvcm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-#M6_pvcm <- pvcm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-# PLM regression
-M1_plm <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-M2_plm <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-M3_plm <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-M4_plm <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-M5_plm <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-M6_plm <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-#PoolTest
-
-#pooltest(M1_pvcm,M1_plm)
-#pooltest(M2_pvcm,M2_plm)
-#pooltest(M3_pvcm,M3_plm)
-#pooltest(M4_pvcm,M4_plm)
-#pooltest(M5_pvcm,M5_plm)
-#pooltest(M6_pvcm,M6_plm)
-
-```
-
-### Hausmann Test to determine the fixed or random effect
-
-Citation from @Torres-Reyna2010 :
-
-> *To decide between fixed or random effects you can run a Hausman test where the null hypothesis is that the preferred model is random effects vs. the alternative the fixed effects (see Green, 2008, chapter 9).  It basically tests whether the unique errors (ui) are correlated with the regressors, the null hypothesis is they are not.*
-
-The \autoref{Hausman} summarizes results of the Hausman Test of each model. I hae used the *phtest* function to carry out this test. We can observe that all p-values are < 0.05 meaning that HO is not verified and my models are caraterized by a fixed effect.
-
-```{r echo = FALSE, error = FALSE, message = FALSE, results = 'asis'}
+```{r echo = FALSE, error = FALSE, message = FALSE, results = 'hide'}
 if (!require("stargazer")) install.packages("stargazer")
 library(stargazer)
 
@@ -214,264 +69,35 @@ library(xtable)
 
 # Fixed Model
 
-Fixed1 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
+FixedTobinsQ <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
-Fixed2 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-Fixed3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-Fixed4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-Fixed5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-Fixed6 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
+FixedRoa <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
 
 # Random Model
 
-Random1 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
+RandomTobinsQ <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
 
-Random2 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
-
-Random3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
-
-Random4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
-
-Random5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
-
-Random6 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
+RandomRoa <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="random")
 
 # Hausmann Test
 
-ColNames <- cbind("Model", "P_Value")
-Hausman1 <- cbind("Model 1",phtest(Fixed1,Random1)$p.value)
-Hausman2 <- cbind("Model 2",phtest(Fixed2,Random2)$p.value)
-Hausman3 <- cbind("Model 3",phtest(Fixed3,Random3)$p.value)
-Hausman4 <- cbind("Model 4",phtest(Fixed4,Random4)$p.value)
-Hausman5 <- cbind("Model 5",phtest(Fixed5,Random5)$p.value)
-Hausman6 <- cbind("Model 6",phtest(Fixed6,Random6)$p.value)
+PvalRoa <- round(phtest(FixedTobinsQ,RandomTobinsQ)$p.value, digits = 4)
+HausmanTobinsQ <- cbind("Model 5",PvalRoa)
 
-HausmanTable <- rbind(Hausman1, Hausman2, Hausman3, Hausman4, Hausman5, Hausman6)
-colnames(HausmanTable) <- c("Model","P-Value")
+PvalTobinsQ <- round(phtest(FixedRoa,RandomRoa)$p.value, digits = 4)
+HausmanRoa <- cbind("Model 6",PvalTobinsQ)
+
+
+#summary in table
+
+HausmanTable <- rbind(HausmanRoa, HausmanTobinsQ)
+colnames(HausmanTable) <- c("Model","p-value")
 
 #xtable(HausmanTable, caption = "Hausman Test Result", label = "Hausman", align = "rrr")
 
-stargazer(HausmanTable, summary = FALSE, table.placement = "h", type="latex", label = "Hausman", title = "Hausman Test PValue", header = FALSE)
+stargazer(HausmanTable, summary = FALSE, table.placement = "h", type="latex", label = "Hausman", title = "Hausman Test p-value", header = FALSE)
 
 ```
-
-\newpage
-
-\newpage
-### Test for time fixed effect
-
-The \autoref{pFtest} summarizes results of the test for each model. I have used the *pFtest* function to carry out this test.
-
-P-Value is > 0.05 for model 1, model 3 and model 5 meaning that null hypothesis is verified and that there is not a significant time-fixed effect. However for model 2,model 4 and model 6 P-Value is < 0.05 meaning that null hypothesis is rejected and that there is a significant time-fixed effect.
-
-**Does this mean that for model 2,4 and 6 I have to add the time fixed effect in my model?**
-```{r echo = FALSE, error = FALSE, message = FALSE, results = 'asis'}
-if (!require("stargazer")) install.packages("stargazer")
-library(stargazer)
-
-# Fixed_Time Model
-
-Fixed_Time1 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-Fixed_Time2 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-Fixed_Time3 <- plm(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-Fixed_Time4 <- plm(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-Fixed_Time5 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-Fixed_Time6 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(YearFinancialIndicator), data=DB_Lag1, index=c("Companies", "YearFinancialIndicator"), model="within")
-
-#Testing the time fixed effect
-
-pFtest1 <- cbind("Model 1", pFtest(Fixed_Time1, Fixed1)$p.value)
-pFtest2 <- cbind("Model 2", pFtest(Fixed_Time2, Fixed2)$p.value)
-pFtest3 <- cbind("Model 3", pFtest(Fixed_Time3, Fixed3)$p.value)
-pFtest4 <- cbind("Model 4", pFtest(Fixed_Time4, Fixed4)$p.value)
-pFtest5 <- cbind("Model 5", pFtest(Fixed_Time5, Fixed5)$p.value)
-pFtest6 <- cbind("Model 6", pFtest(Fixed_Time6, Fixed6)$p.value)
-
-
-PfTable <- rbind(pFtest1, pFtest2, pFtest3, pFtest4, pFtest5, pFtest6)
-colnames(PfTable) <- c("Model","P-Value")
-
-
-stargazer(PfTable, summary = FALSE, table.placement = "h", type="latex", label = "pFtest", title = "Fixed Time Effect Test PValue", header = FALSE)
-
-```
-
-
-
-
-\newpage
-### Test for cross-sectional dependence
-
-Citation from @Torres-Reyna2010 :
-
-> *According to Baltagi, cross-sectional dependence is a problem in macro panels with long time series. This is not much of a problem in micro panels (few years and large number of cases). The null hypothesis in the B -P/LM and Pasaran CD tests of independence is that residuals across entities are not correlated. B-  P/LM and Pasaran CD (cross-sectional dependence) tests are used to test whether the residuals are correlated across entities. Cross-sectional dependence can lead to bias in tests results (also called contemporaneous correlation).*
-
-I have used the *pcdtest* function to carry out this test. The \autoref{pcd} show results of the test for cross-sectional dependence. We can observe that I have cross-sectional dependence in my model 1,2 and 3. However for model 4, 5 and 6, the P-Value is superior to 0.05 meaning that HO is verified and these models do not have cross-sectional dependence.
-
-```{r echo = FALSE, error = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
-
-#Test for Fixed model
-TestCrossLm1 <- cbind("Model 1","lm", pcdtest(Fixed1, test = c("lm"))$p.value)
-TestCrossCd1 <- cbind("Model 1", "cd",pcdtest(Fixed1, test = c("cd"))$p.value)
-
-TestCrossLm2 <- cbind("Model 2","lm", pcdtest(Fixed2, test = c("lm"))$p.value)
-TestCrossCd2 <- cbind("Model 2", "cd",pcdtest(Fixed2, test = c("cd"))$p.value)
-
-TestCrossLm3 <- cbind("Model 3","lm", pcdtest(Fixed3, test = c("lm"))$p.value)
-TestCrossCd3 <- cbind("Model 3", "cd",pcdtest(Fixed3, test = c("cd"))$p.value)
-
-TestCrossLm4 <- cbind("Model 4","lm", pcdtest(Fixed4, test = c("lm"))$p.value)
-TestCrossCd4 <- cbind("Model 4", "cd",pcdtest(Fixed4, test = c("cd"))$p.value)
-
-TestCrossLm5 <- cbind("Model 5","lm", pcdtest(Fixed5, test = c("lm"))$p.value)
-TestCrossCd5 <- cbind("Model 5", "cd",pcdtest(Fixed5, test = c("cd"))$p.value)
-
-TestCrossLm6 <- cbind("Model 6","lm", pcdtest(Fixed6, test = c("lm"))$p.value)
-TestCrossCd6 <- cbind("Model 6", "cd",pcdtest(Fixed6, test = c("cd"))$p.value)
-
-
-pcdTable <- rbind(TestCrossCd1, TestCrossCd2, TestCrossCd3, TestCrossCd4, TestCrossCd5,         TestCrossCd6)
-colnames(pcdTable) <- c("Model", "Method", "P-Value")
-
-
-stargazer(pcdTable, summary = FALSE, table.placement = "h", type="latex", label = "pcd", title = "Cross-sectional dependence's test - PValue", notes = "Note :'cd' stands for Pesaran's CD Statistic",header = FALSE)
-
-```
- 
-
-
-\newpage
-### Test for serial correlation
-
-I used the Wooldridge's test for serial correlation in FE panels with the *pwartest* function to test the serial correlation of my models. According to @Croissant2008 this test is applicable to any fixed effect panel model, and in particular to short panels with small T and large n, which is my case. The null hypothese is that there is no serial correlation in the model. According to the P_Value of my models, I can conclude that I have serial correlation in all models.
-
-
-```{r echo = FALSE, error = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
-
-
-
-pwartest1 <- cbind("Model 1", pwartest(Fixed1)$p.value)
-pwartest2 <- cbind("Model 2", pwartest(Fixed2)$p.value)
-pwartest3 <- cbind("Model 3", pwartest(Fixed3)$p.value)
-pwartest4 <- cbind("Model 4", pwartest(Fixed4)$p.value)
-pwartest5 <- cbind("Model 5", pwartest(Fixed5)$p.value)
-pwartest6 <- cbind("Model 6", pwartest(Fixed6)$p.value)
-
-
-
-PwartestTable <- rbind(pwartest1, pwartest2, pwartest3, pwartest4, pwartest5, pwartest6)
-colnames(PwartestTable) <- c("Model","P-Value")
-
-
-stargazer(PwartestTable, summary = FALSE, table.placement = "h", type="latex", label = "pwartest", title = "Wooldridge's test - PValue", header = FALSE)
-```
-
-\newpage
-###  Test for stationarity
-
-The Dickey-Fuller test to check for stochastic trends with the *adf.test* function. The null hypothesis is that the series has a unit root (i.e. non-stationary). In my case HO is rejected for both databases meaning that they do not have stationarity.
-
-```{r echo = FALSE, error = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
-if (!require("tseries")) install.packages("tseries")
-library(tseries)
-
-
-PanelSet_Roa <- plm.data(DB_Lag1, index = c("Companies", "YearFinancialIndicator"))
-StatTestRoa <- cbind("Roa",adf.test(PanelSet_Roa$ROA, k=2)$p.value)
-
-# select only value where Tobin <> 0
-
-DB_Tobin <- filter(DB_Lag1, !is.na(TobinsQ))
-                   
-PanelSet_Tobin <- plm.data(DB_Tobin, index = c("Companies", "YearFinancialIndicator"))
-StatTestTobin <- cbind("TobinsQ",adf.test(PanelSet_Tobin$TobinsQ, k=2)$p.value)
-
-StatTable <- rbind(StatTestRoa,StatTestTobin)
-colnames(StatTable) <- c("Database", "P_Value")
-
-stargazer(StatTable, summary = FALSE, table.placement = "h", type="latex", label = "Stationarity", title = "Dickey-Fuller test - PValue", header = FALSE)
-
-```
-
-\newpage
-
-### Test for heteroskedasticity
-
-
-I have used the *Bptest* function to test the presence of heteroskedasticity of my model. The \autoref{Hetero} summarizes the p-value of each model. I find strange that all p-value equals zero. By meaning a p-value cannot be null, right? **What do you think?**
-
-```{r echo = FALSE, error = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
-if (!require("lmtest")) install.packages("lmtest")
-library(lmtest)
-
-
-Bptest1 <- cbind("Model 1",bptest(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Lag1, studentize = F )$p.value)
-
-Bptest2 <- cbind("Model 2", bptest(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Lag1, studentize = F)$p.value)
-
-Bptest3 <- cbind("Model 3", bptest(TobinsQ ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Lag1, studentize = F)$p.value)
-
-Bptest4 <- cbind("Model 4", bptest(ROA ~ EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Lag1, studentize = F)$p.value)
-
-Bptest5 <- cbind("Model 5", bptest(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Lag1, studentize = F)$p.value)
-
-Bptest6 <- cbind("Model 6", bptest(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + factor(Companies), data=DB_Lag1, studentize = F)$p.value)
-
-BptestTable <- rbind(Bptest1, Bptest2, Bptest3, Bptest4, Bptest5, Bptest6)
-colnames(BptestTable) <- c("Model","P_Value")
-
-stargazer(BptestTable, summary = FALSE, table.placement = "h", type="latex", label = "Hetero", title = "Heteroskedasticity Test - PValue", header = FALSE)
-```
-
-
-Starting from the premise that I have heteroskedasiticy I will compute the **sandwich estimators** of my models. The \autoref{Sand} summarizes the sandwich estimators for each model. **What should I do with that?**
-
-```{r echo = FALSE, error = FALSE, message = FALSE, warning = FALSE, results = 'asis'}
-if (!require("lmtest")) install.packages("lmtest")
-library(lmtest)
-if (!require("plm")) install.packages("plm")
-library(plm)
-
-coeftest1 <- coeftest(Fixed1, vcovHC(Fixed1, method = "arellano", type = "HC3"))
-coeftest2 <- coeftest(Fixed2, vcovHC(Fixed2, method = "arellano", type = "HC3"))
-coeftest3 <- coeftest(Fixed3, vcovHC(Fixed3, method = "arellano", type = "HC3"))
-coeftest4 <- coeftest(Fixed4, vcovHC(Fixed4, method = "arellano", type = "HC3"))
-coeftest5 <- coeftest(Fixed5, vcovHC(Fixed5, method = "arellano", type = "HC3"))
-coeftest6 <- coeftest(Fixed6, vcovHC(Fixed6, method = "arellano", type = "HC3"))
-
-stargazer(coeftest1, coeftest2, coeftest3, coeftest4, coeftest5, coeftest6, type = "latex", title = "Sandwich Estimators", label = "Sand", table.placement = "h", column.sep.width = "1pt",header = FALSE )
-
-```
-
-See @MiroshnychenkoGreenpracticesfinancial2017 and @Stock2008
-
-*If hetersokedaticity is detected you can use the sandwich estimaror* [@Torres-Reyna2010]
-
-vcovHC is a function for estimating a robust covariance matrix of parameters for a fixed effects or random effects panel model according to the White method (White 1980, 1984; Arellano 1987). The --vcovHC– function estimates three heteroskedasticity-consistent covariance estimators:
-
-* "white1" - for general heteroskedasticity but no serial correlation. Recommended for random effects.
-
-* "white2" - is "white1" restricted to a common variance within groups. Recommended for random effects.
-
-* "arellano" - both heteroskedasticity and serial correlation. Recommended for fixed effects.
-
-
-The following options apply*:
-
-* HC0 - heteroskedasticity consistent. The default.
-* HC1,HC2, HC3 – Recommended for small samples. HC3 gives less weight to influential observations.
-* HC4 - small samples with influential observations 
-* HAC - heteroskedasticity and autocorrelation consistent (type ?vcovHAC for more details)
-
 
 ## Sensitivity Analysis
 
