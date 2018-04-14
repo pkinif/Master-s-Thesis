@@ -31,23 +31,17 @@ library(xtable)
 # I dowload my DB with read.csv2
 
 
-DB_Lag1<-data.frame(read.csv2("DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+Lag1_Roa_Outliers<-data.frame(read.csv2("DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE )) #ROA
+Lag1_Roe_NoOutliers<-data.frame(read.csv2("DataBase/NoOutliers/Lag1_Roe_NoOutliers.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+Lag1_Tobin_NoOutliers<-data.frame(read.csv2("DataBase/NoOutliers/Lag1_Tobin_NoOutliers.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
 
 #I select only variables of my model
 
-DB_Lag1_Model <- select(DB_Lag1, ROA, ROE, TobinsQ, EnergyProductivity,
-                        CarbonProductivity, WaterProductivity, WasteProductivity,
-                        SustainabilityPayLink, SustainableThemedCommitment, 
-                        FirmSize, Leverage, NetMargin)
-
-#DataBase without outliers for VIF calculation
-Lag1_Roa_NoOutliers<-data.frame(read.csv2("DataBase/NoOutliers/Lag1_Roa_NoOutliers.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
-
-Lag1_Roe_NoOutliers<-data.frame(read.csv2("DataBase/NoOutliers/Lag1_Roa_NoOutliers.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
-
-#For Tobin I have decided to use the database with outliers. So I will use the DB_Lag1 database
-
+DB_Lag1_Model <- Lag1_Roa_Outliers [,c("ROA", "ROE", "TobinsQ", "EnergyProductivity",
+                        "CarbonProductivity", "WaterProductivity", "WasteProductivity",
+                        "SustainabilityPayLink", "SustainableThemedCommitment", 
+                        "FirmSize", "Leverage", "NetMargin")]
 
 ```
 
@@ -65,17 +59,17 @@ library(car)
 
 #The vif function can not be used with within model. I need to estimate my models with the pooling model.
 
-Roa1_NoOut <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = Lag1_Roa_NoOutliers, index = c("Companies", "YearFinancialIndicator"))
+Roa <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = Lag1_Roa_Outliers, index = c("Companies", "YearFinancialIndicator"))
 
-Tobin1_Out <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"))
+TobinsQ <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = Lag1_Tobin_NoOutliers, index = c("Companies", "YearFinancialIndicator"))
 
-Roe1_NoOut <- plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = Lag1_Roa_NoOutliers, index = c("Companies", "YearFinancialIndicator"))
+Roe <- plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = Lag1_Roe_NoOutliers, index = c("Companies", "YearFinancialIndicator"))
 
 #VIF Calculation and summary in a table
 
-VifRoa <- car::vif(Roa1_NoOut)
-VifRoe <- car::vif(Roe1_NoOut)
-VifTobin <- car::vif(Tobin1_Out)
+VifRoa <- car::vif(Roa)
+VifRoe <- car::vif(Roe)
+VifTobin <- car::vif(TobinsQ)
 
 VifTable <- cbind(VifRoa, VifRoe, VifTobin)
 colnames(VifTable) <- c("Roa", "Roe", "Tobin's Q")

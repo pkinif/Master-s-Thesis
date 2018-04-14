@@ -1,0 +1,86 @@
+---
+output:
+  pdf_document
+---
+
+## Appendix A : Outliers {-}
+```{r echo = FALSE, message = FALSE, warning = FALSE,  results='asis'}
+#Packages
+if (!require("utils")) install.packages("utils")
+if (!require("car")) install.packages("car")
+if (!require("dplyr")) install.packages("dplyr")
+if (!require("plm")) install.packages("plm")
+library(plm)
+library(utils)
+library(car)
+library(dplyr)
+
+#Database
+DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+
+```
+
+First I measure the cook's distance of my models. Observations that have a cook’s distance greater than 4 times the mean are considered as outliers and are summarized in figures \ref{OutliersRoa} and \ref{OutliersTobinsQ}. Secondly, in order to detect the influence of those outliers, I use the function *outlierTest* from the *car* package [@Fox2012]. This function reports the Bonferroni p-values for Studentized residuals in linear and generalized linear models, based on a t-test for linear models and normal-distribution test for generalized linear models.
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
+
+#I define my models in plm
+RoaPlm <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"), model = "within")
+
+TobinsQPlm <-plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"), model = "within")
+
+BalRoa <- pdim(RoaPlm)
+BalTobinsQ <- pdim(TobinsQPlm)
+
+# I define my models in lm
+Roa <-lm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1)
+
+TobinsQ<-lm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1)
+
+## I calculate my cooks distance.
+cooksdRoa <- cooks.distance(Roa)
+cooksdTobinsQ <- cooks.distance(TobinsQ)
+
+```
+
+```{r echo = FALSE, message = TRUE, error = FALSE }
+outlierTest(Roa)
+outlierTest(TobinsQ)
+```
+
+
+
+
+
+
+
+
+\begin{figure}[ht]
+\caption{Observations considered as outliers in model 1 (i.e. Roa)}
+\label{OutliersRoa}
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
+
+#Model Roa
+## I summarise on a graph, those observations that have a cook’s distance greater than 4 times the mean and which may be considered as outliers
+plot(cooksdRoa, pch="*", cex=2)  # plot cook's distance
+abline(h = 4*mean(cooksdRoa, na.rm=T), col="red")  # add cutoff line
+text(x=1:length(cooksdRoa)+1, y=cooksdRoa, labels=ifelse(cooksdRoa>4*mean(cooksdRoa, na.rm=T),names(cooksdRoa),""), col="red")  # add labels
+```
+\end{figure}
+
+
+
+\begin{figure}[ht]
+\caption{Observations considered as outliers in model 2 (i.e. Tobin's Q)}
+\label{OutliersTobinsQ}
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
+
+
+#Model TobinsQ
+plot(cooksdTobinsQ, pch="*", cex=2)  
+
+abline(h = 4*mean(cooksdTobinsQ, na.rm=T), col="red")  # add cutoff line
+text(x=1:length(cooksdTobinsQ)+1, y=cooksdTobinsQ, labels=ifelse(cooksdTobinsQ>4*mean(cooksdTobinsQ, na.rm=T),names(cooksdTobinsQ),""), col="red")  # add labels
+
+```
+\end{figure}

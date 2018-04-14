@@ -1,7 +1,6 @@
 # Appendix {-}
 
-## Appendix A : This is an appendix a {-}
-
-
+```{r child = 'AppendixOutliers.Rmd'}
+```
 \newpage
-## Appendix B : This is an appendix b {-}
+
