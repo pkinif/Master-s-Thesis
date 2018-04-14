@@ -16,11 +16,16 @@ library(car)
 library(dplyr)
 
 #Database
-DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+DB_Lag1<-as.data.frame(read.csv2("Analysis/DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
 ```
 
-First I measure the cook's distance of my models. Observations that have a cook’s distance greater than 4 times the mean are considered as outliers and are summarized in figures \ref{OutliersRoa} and \ref{OutliersTobinsQ}. Secondly, in order to detect the influence of those outliers, I use the function *outlierTest* from the *car* package [@Fox2012]. This function reports the Bonferroni p-values for Studentized residuals in linear and generalized linear models, based on a t-test for linear models and normal-distribution test for generalized linear models.
+First I measure the cook's distance of my models. Observations that have a cook’s distance greater than 4 times the mean are considered as influential and are summarized in figures \ref{OutliersRoa} and \ref{OutliersTobinsQ}. 
+
+
+
+
+<!--Secondly, in order to detect the influence of those outliers, I use the function *outlierTest* from the *car* package [@Fox2012]. This function reports the Bonferroni p-values for Studentized residuals in linear and generalized linear models, based on a t-test for linear models and normal-distribution test for generalized linear models. -->
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
 
@@ -37,10 +42,39 @@ Roa <-lm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore 
 
 TobinsQ<-lm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1)
 
-## I calculate my cooks distance.
+## I calculate my cooks distance tih LM model as cooks distance can not support plm object
 cooksdRoa <- cooks.distance(Roa)
 cooksdTobinsQ <- cooks.distance(TobinsQ)
 
+## I extract row considered as influential
+
+influentialRoa <- as.numeric(names(cooksdRoa)[(cooksdRoa > 4*mean(cooksdRoa, na.rm=T))])  
+influentialTobin <- as.numeric(names(cooksdTobinsQ)[(cooksdTobinsQ > 4*mean(cooksdTobinsQ, na.rm=T))])  
+
+head(DB_Lag1[influentialRoa, ])  # influential observations.
+head(DB_Lag1[influentialTobin, ])  # influential observations.
+(DB_Lag1[influentialTobin, ])
+(DB_Lag1[influentialRoa, ])
+
+#I remove outliers
+
+DB_Lag1_NoOutliers <- DB_Lag1[-c(influentialTobin,influentialRoa),]
+DB_Roa_NoOut <- DB_Lag1[-c(influentialRoa),]
+
+#Plm regression with new dataset
+
+Roa0<-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"), model = "within")
+
+Roa1 <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Roa_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "within")
+
+Roa2 <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1_NoOutliers, index = c("Companies", "YearFinancialIndicator"), model = "within")
+
+TobinsQPlm_NoOut <-plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  EnergyProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1_NoOutliers, index = c("Companies", "YearFinancialIndicator"), model = "within")
+
+summary(TobinsQPlm_NoOut)
+
+library(stargazer)
+stargazer(Roa0, Roa1, Roa2, summary = FALSE)
 ```
 
 ```{r echo = FALSE, message = TRUE, error = FALSE }
@@ -84,3 +118,6 @@ text(x=1:length(cooksdTobinsQ)+1, y=cooksdTobinsQ, labels=ifelse(cooksdTobinsQ>4
 
 ```
 \end{figure}
+
+
+
