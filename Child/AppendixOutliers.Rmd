@@ -65,7 +65,7 @@ DB_Roa_NoOut <- DB_Lag1[-c(influentialRoa),]
 
 Roa0<-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"), model = "within")
 
-Roa1 <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Roa_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "within")
+Roa1 <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Roa_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "within")
 
 Roa2 <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1_NoOutliers, index = c("Companies", "YearFinancialIndicator"), model = "within")
 
