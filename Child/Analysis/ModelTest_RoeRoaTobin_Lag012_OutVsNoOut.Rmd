@@ -100,7 +100,7 @@ Tobin2_lm <- lm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + 
 
 Roe2_lm <- lm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag2)
 
-#Mesure cooksdistance
+#Detect outliers with influence
 Outliers_Roa0 <- car::outlierTest(Roa0_lm)
 Outliers_Tobin0 <- car::outlierTest(Tobin0_lm)
 Outliers_Roe0 <- car::outlierTest(Roe0_lm)
