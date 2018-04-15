@@ -65,7 +65,6 @@ head(DB_Lag1[influentialRoa, ])  # influential observations - number = 2
 head(DB_Lag1[influentialTobin, ])  # influential observations - number = 40
 head(DB_Lag1[influentialRoe, ])  # influential observations - number = 38
 
-
 #I remove outliers and create three new data frames
 
 DB_TobinsQ_NoOut <- DB_Lag1[-c(influentialTobin),]

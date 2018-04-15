@@ -19,7 +19,7 @@ library(car)
 library(dplyr)
 
 #Database
-DB_Lag1<-as.data.frame(read.csv2("DataBase/Lag_0.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+DB_Lag1<-as.data.frame(read.csv2("DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
 ```
 
@@ -46,9 +46,9 @@ First I measure the cook's distance of my models. Observations that have a cookâ
 # I define my models in lm as cooks.distance do not support plm object
 Roa <-lm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1)
 
-TobinsQ<-lm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1)
+TobinsQ<-lm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1)
 
-Roe <- lm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1)
+Roe <- lm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1)
 
 ## I calculate my cooks distance (i.e. D)
 cooksdRoa <- cooks.distance(Roa)
@@ -106,10 +106,10 @@ Roa6 <- plm(ROA ~ CarbonProductivity + WaterProductivity + WasteProductivity + L
 #############################
 
 #Mode2 with outliers
-Tobins1 <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"), model = "random")
+Tobins1 <- plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"), model = "random")
 
 #Mode2 without the 40 outliers from Tobin's Q
-Tobins3 <-plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_TobinsQ_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "random")
+Tobins3 <-plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_TobinsQ_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "random")
 
 #############################
 ###### Model 3 : ROE ########
@@ -153,7 +153,7 @@ TableRoe <- stargazer(Roe1, Roe2, type="latex", label = "Roe", title = "Model 3 
 Roa2_Fixed <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Roa_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "within") 
 
 #Mode2 without the 40 outliers from Tobin's Q
-Tobins3_Fixed <-plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_TobinsQ_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "within")
+Tobins3_Fixed <-plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_TobinsQ_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "within")
 
 #Model3 without the 38 outliers from ROE
 Roe2_Fixed <-plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Roe_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "within") 
@@ -194,7 +194,7 @@ stargazer(Roa2_Fixed, Tobins3_Fixed, Roe2_Fixed, summary = FALSE, table.placemen
 Roa2_Pooling <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Roa_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "pooling") 
 
 #Mode2 without the 40 outliers from Tobin's Q
-Tobins3_Pooling <-plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_TobinsQ_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "pooling")
+Tobins3_Pooling <-plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_TobinsQ_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "pooling")
 
 #Model3 without the 38 outliers from ROE
 Roe2_Pooling <-plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Roe_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "pooling") 
