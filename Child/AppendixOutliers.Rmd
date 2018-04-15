@@ -80,15 +80,25 @@ DB_Roe_NoOut <- DB_Lag1[-c(influentialRoe),]
 ###### Model 1 : ROA ########
 #############################
 
-#Model with outliers
-Roa1<-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"), model = "random") 
+#Model 1 with outliers with EnergyProductivity
+Roa1<-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + EnergyProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"), model = "random") 
 
-#Model without the 2 outliers from ROA
-Roa2 <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Roa_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "random") 
+#Model 1 without outliers with EnergyProductivity
+Roa2 <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + EnergyProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Roa_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "random") 
 
-#Model without the 42 outliers from both Tobin's Q and ROA
-Roa3 <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1_NoOutliers, index = c("Companies", "YearFinancialIndicator"), model = "random") 
+#Model 1 with outliers without EnergyProductivity
+Roa3 <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1, index = c("Companies", "YearFinancialIndicator"), model = "random") 
 
+#Model 1 without outliers without EnergyProductivity
+Roa4 <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Roa_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "random") 
+
+#Model process-based CEP without outliers
+
+Roa5 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry , data = DB_Roa_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "random") 
+
+#Model outcome-based CEP without outliers
+
+Roa6 <- plm(ROA ~ CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Roa_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "random")
 
 #############################
 #### Model 2 : Tobin's Q ####
@@ -116,18 +126,48 @@ Roe2 <-plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScor
 #########################################################
 
 
-TableRoa <- stargazer(Roa1, Roa2, Roa3, type="latex", label = "Roa", title = "Model 1 - Comparaison with and without outliers", header = FALSE)
+TableRoaEn <- stargazer(Roa1, Roa2, type="latex", label = "Roa1", title = "Model 1 - Energy", header = FALSE)
+
+TableRoaNoEn <- stargazer(Roa3, Roa4, type="latex", label = "Roa2", title = "Model 1 - No Energy", header = FALSE)
+
+TableRoaShort1 <- stargazer(Roa5, type="latex", label = "Roa3", title = "Model 1 - Short Version", header = FALSE)
+
+TableRoaShort2 <- stargazer(Roa6, type="latex", label = "Roa4", title = "Model 1 - Short Version", header = FALSE)
 
 TableTobinsQ <- stargazer(Tobins1, Tobins3, type="latex", label = "Tobin", title = "Model 2 - Comparaison with and without outliers", header = FALSE)
 
-TableRoa <- stargazer(Roe1, Roe2, type="latex", label = "Roe", title = "Model 3 - Comparaison with and without outliers", header = FALSE)
+TableRoe <- stargazer(Roe1, Roe2, type="latex", label = "Roe", title = "Model 3 - Comparaison with and without outliers", header = FALSE)
 ```
 
-```{r echo = FALSE, message = TRUE, error = FALSE }
-outlierTest(Roa)
-outlierTest(TobinsQ)
-```
 
+
+```{r}
+####################################
+######### Hausman Test #############
+####################################
+
+
+
+#Model without the 2 outliers from ROA
+Roa2_Fixed <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Roa_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "within") 
+
+#Mode2 without the 40 outliers from Tobin's Q
+Tobins3_Fixed <-plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data = DB_Lag1_NoOutliers, index = c("Companies", "YearFinancialIndicator"), model = "within")
+
+#Model3 without the 38 outliers from ROE
+Roe2_Fixed <-plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + Leverage + NetMargin + FirmSize + Industry , data = DB_Roe_NoOut, index = c("Companies", "YearFinancialIndicator"), model = "within") 
+
+
+HausmannRoa <-  cbind("Model 1 without outliers",phtest(Roa2_Fixed,Roa2)$p.value)
+HausmannTobinsQ <-  cbind("Model 2 without outliers",phtest(Tobins3_Fixed,Tobins3)$p.value)
+HausmannRoe <-  cbind("Model 3 without outliers",phtest(Roe2_Fixed,Roe2)$p.value)
+
+HausmanTable <- rbind(HausmannRoa, HausmannTobinsQ, HausmannRoe)
+colnames(HausmanTable) <- c("Model","P-Value")
+
+stargazer(HausmanTable, summary = FALSE, table.placement = "h", type="latex", label = "Hausman", title = "Hausman Test PValue", header = FALSE)
+
+```
 
 
 
