@@ -1,0 +1,139 @@
+---
+title: "Extraction Stock Price"
+author: "Kinif Pierrick"
+date: "16 avril 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+
+#############################################################
+#############################################################
+############## Package and DataBase loading #################
+#############################################################
+#############################################################
+
+
+rm(list=ls()) #Removes all items in Environment!
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr) # to play with data
+if (!require("utils")) install.packages("utils")
+library(utils) #to dowload db
+
+
+# I dowload my ticker's list
+
+Companies <- read.csv2("DataBase/Companies.csv", sep = ";", header = TRUE, stringsAsFactors = FALSE)
+
+Ticker <- Companies$Ticker
+
+
+################################
+####### Option 1 ###############
+################################
+
+install.packages("alphavantager")
+library(alphavantager)
+
+#Set API key - I had to claimed it on the site
+av_api_key("3ATNNTVDV4K2KIOB")
+
+#get time series data
+av_get(symbol = "AAPL", av_fun = "TIME_SERIES_MONTHLY", datatype = "csv")
+
+################################
+####### Option 2 ###############
+################################
+
+install.packages("tidyquant")
+library(tidyquant)
+
+#Set API key - I had to claimed it on the site
+av_api_key("3ATNNTVDV4K2KIOB")
+
+#Pipe multiple symbols to tq_get()
+
+test <- Ticker %>%
+    tq_get(get = "alphavantager", av_fun = "TIME_SERIES_MONTHLY",  outputsize = "compact")
+
+View(test)
+
+################################
+####### Option 3 ###############
+################################
+
+if (!require("pdfetch")) install.packages("pdfetch")
+library(pdfetch) # to web scrap from yahoo
+
+Yahoo<- pdfetch_YAHOO(Ticker, fields = c("close","volume"), from = as.Date("2011-12-31"), interval = "1mo")
+
+# BCR, BHI, CAM, DD, COW, HLT, INCY, MGM, RAI, SNDK, TWC and Yahoo are not listed in the Yahoo dataframe. I will have to find another platform to get those data
+
+# I select only data that I want
+Date <- c("2012-12-01","2013-12-01","2014-12-01","2015-12-01","2016-12-01")
+YahooSample<-as.data.frame(Yahoo[Date,])
+
+#Tidy my data
+if (!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse) 
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr) 
+
+YahooSample <- t(YahooSample) #transpose row into colums and vice versa
+colnames(YahooSample)<-c("2012","2013","2014","2015","2016") #renames my colnames
+
+YahooSample1 <- as.data.frame(YahooSample)
+YahooSample2 <- rownames_to_column(YahooSample1, var = "test")
+write.csv2(YahooSample2,"DataBase/StockPrice/YahooSample2.csv")
+
+#From here I had to split the first column 'test' with excel because the separate function below do not work.... So I will makje an other chunk an restart the process in doowloading the csv file where changes were made manually.
+
+#YahooSample3 <- separate(data = YahooSample2, col = test, into = c("Ticker","Variable"), sep = ".", fill = "left")
+```
+
+
+```{r}
+
+# doowloading the csv file where changes were made manually
+YahooSample4 <- read.csv2(file = "DataBase/StockPrice/YahooSample4.csv", header = TRUE, stringsAsFactors = FALSE )
+
+View(YahooSample4)
+colnames(YahooSample4)<-c("Ticker","Variables","2012","2013","2014","2015","2016") #renames my colnames
+
+
+#I only need the close price and volume. I make two dataset that I will merger after. It is only to make more easy the use of 'gather'
+CriteriumA <- "close"
+CriteriumB <- "volume"
+
+YahooSample5A <- filter(YahooSample4, Variables %in% CriteriumA)
+YahooSample5B <- filter(YahooSample4, Variables %in% CriteriumB)
+
+#Use of gather
+
+YahooSample6A <- YahooSample5A %>%
+  gather(`2012`, `2013`, `2014`, `2015`,`2016`, key = "year", value = "Close")
+
+YahooSample6B <- YahooSample5B %>%
+  gather(`2012`, `2013`, `2014`, `2015`,`2016`, key = "year", value = "volume")
+
+
+#I merge both data
+
+YahooSample7 <-  merge(YahooSample6A, YahooSample6B, by.x = "Ticker", by.y = "Ticker")
+
+#I keep only some columns to avoid dupplicates
+
+YahooSample8 <- YahooSample7[,c("Ticker", "year.x", "Close", "volume")]
+
+#I rename colnames one last time
+colnames(YahooSample8) <- c("Ticker", "Year", "Close", "Volume")
+View(YahooSample8)
+
+#I write YahooSample 8 as csv file
+```
+

@@ -45,6 +45,7 @@ Roe_Lag1_NoOut<-data.frame(read.csv2("DataBase/NoOutliers/Roe_Lag1_NoOut.csv", s
 Tobins_Lag1_NoOut<-data.frame(read.csv2("DataBase/NoOutliers/Tobins_Lag1_NoOut.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
 
+
 #I select only important variables of my model
 
 Model <- Roa_Lag1_NoOut [,c("ROA", "ROE", "TobinsQ", 
