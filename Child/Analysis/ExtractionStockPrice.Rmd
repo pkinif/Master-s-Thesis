@@ -33,46 +33,16 @@ Companies <- read.csv2("DataBase/Companies.csv", sep = ";", header = TRUE, strin
 Ticker <- Companies$Ticker
 
 
-################################
-####### Option 1 ###############
-################################
-
-install.packages("alphavantager")
-library(alphavantager)
-
-#Set API key - I had to claimed it on the site
-av_api_key("3ATNNTVDV4K2KIOB")
-
-#get time series data
-av_get(symbol = "AAPL", av_fun = "TIME_SERIES_MONTHLY", datatype = "csv")
-
-################################
-####### Option 2 ###############
-################################
-
-install.packages("tidyquant")
-library(tidyquant)
-
-#Set API key - I had to claimed it on the site
-av_api_key("3ATNNTVDV4K2KIOB")
-
-#Pipe multiple symbols to tq_get()
-
-test <- Ticker %>%
-    tq_get(get = "alphavantager", av_fun = "TIME_SERIES_MONTHLY",  outputsize = "compact")
-
-View(test)
-
-################################
-####### Option 3 ###############
-################################
+##################################
+####### Extraction ###############
+##################################
 
 if (!require("pdfetch")) install.packages("pdfetch")
 library(pdfetch) # to web scrap from yahoo
 
-Yahoo<- pdfetch_YAHOO(Ticker, fields = c("close","volume"), from = as.Date("2011-12-31"), interval = "1mo")
+Yahoo<- pdfetch_YAHOO(Ticker, fields = c("close","volume"), from = as.Date("2012-12-01"), interval = "1mo")
 
-# BCR, BHI, CAM, DD, COW, HLT, INCY, MGM, RAI, SNDK, TWC and Yahoo are not listed in the Yahoo dataframe. I will have to find another platform to get those data
+# BCR, BHI, CAM, DD, DOW, HLT, INCY, MGM, RAI, SNDK, TWC and YHOO are not listed in the Yahoo dataframe. I will have to find another platform to get those data
 
 # I select only data that I want
 Date <- c("2012-12-01","2013-12-01","2014-12-01","2015-12-01","2016-12-01")
@@ -84,14 +54,14 @@ library(tidyverse)
 if (!require("dplyr")) install.packages("dplyr")
 library(dplyr) 
 
-YahooSample <- t(YahooSample) #transpose row into colums and vice versa
-colnames(YahooSample)<-c("2012","2013","2014","2015","2016") #renames my colnames
+YahooSample0 <- t(YahooSample) #transpose row into colums and vice versa
+colnames(YahooSample0)<-c("2012","2013","2014","2015","2016") #renames my colnames
 
-YahooSample1 <- as.data.frame(YahooSample)
+YahooSample1 <- as.data.frame(YahooSample0)
 YahooSample2 <- rownames_to_column(YahooSample1, var = "test")
 write.csv2(YahooSample2,"DataBase/StockPrice/YahooSample2.csv")
 
-#From here I had to split the first column 'test' with excel because the separate function below do not work.... So I will makje an other chunk an restart the process in doowloading the csv file where changes were made manually.
+#From here I had to split the first column 'test' with excel because the separate function below do not work.... So I will makje an other chunk an restart the process in dowloading the csv file where changes were made manually. Basicaly I write YahooSample 2 as YahooSample2.csv. Then I open it in excel, I split test into c("Ticker", "Variable"). I format columns in number and then I save in YahooSample4.csv
 
 #YahooSample3 <- separate(data = YahooSample2, col = test, into = c("Ticker","Variable"), sep = ".", fill = "left")
 ```
@@ -99,14 +69,14 @@ write.csv2(YahooSample2,"DataBase/StockPrice/YahooSample2.csv")
 
 ```{r}
 
-# doowloading the csv file where changes were made manually
+# doowloading the csv file where changes were made manually, namely YahooSample 2 became YahooSample4. I open YahooSample4.
 YahooSample4 <- read.csv2(file = "DataBase/StockPrice/YahooSample4.csv", header = TRUE, stringsAsFactors = FALSE )
 
 View(YahooSample4)
 colnames(YahooSample4)<-c("Ticker","Variables","2012","2013","2014","2015","2016") #renames my colnames
 
 
-#I only need the close price and volume. I make two dataset that I will merger after. It is only to make more easy the use of 'gather'
+# I make two dataset that I will merger after. It is only to make the use of 'gather'  more easy
 CriteriumA <- "close"
 CriteriumB <- "volume"
 
@@ -124,16 +94,19 @@ YahooSample6B <- YahooSample5B %>%
 
 #I merge both data
 
-YahooSample7 <-  merge(YahooSample6A, YahooSample6B, by.x = "Ticker", by.y = "Ticker")
+YahooSample7 <-  merge(YahooSample6A, YahooSample6B, by = c("Ticker", "year"))
 
 #I keep only some columns to avoid dupplicates
 
-YahooSample8 <- YahooSample7[,c("Ticker", "year.x", "Close", "volume")]
+YahooSample8 <- YahooSample7[,c("Ticker", "year", "Close", "volume")]
 
 #I rename colnames one last time
 colnames(YahooSample8) <- c("Ticker", "Year", "Close", "Volume")
 View(YahooSample8)
+str(YahooSample8)#I check if close and volume are as.numeric format
 
 #I write YahooSample 8 as csv file
+
+write.csv2(YahooSample8, "DataBase/StockPrice/YahooSample8.csv")
 ```
 
