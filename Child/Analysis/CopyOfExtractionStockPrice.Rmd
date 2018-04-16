@@ -1,0 +1,101 @@
+---
+title: "Extraction Stock Price"
+author: "Kinif Pierrick"
+date: "16 avril 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+
+#############################################################
+#############################################################
+############## Package and DataBase loading #################
+#############################################################
+#############################################################
+
+
+rm(list=ls()) #Removes all items in Environment!
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr) # to play with data
+if (!require("utils")) install.packages("utils")
+library(utils) #to dowload db
+if (!require("xts")) install.packages("xts")
+library(xts) 
+if (!require("PerformanceAnalytics")) install.packages("PerformanceAnalytics")
+library(PerformanceAnalytics) 
+
+# I dowload my ticker's list
+
+Companies <- read.csv2("DataBase/Companies.csv", sep = ";", header = TRUE, stringsAsFactors = FALSE)
+
+Ticker <- Companies$Ticker
+
+
+##################################
+####### Extraction ###############
+##################################
+
+if (!require("pdfetch")) install.packages("pdfetch")
+library(pdfetch) # to web scrap from yahoo
+
+Yahoo_AdjClose<- pdfetch_YAHOO(Ticker, fields = "adjclose", from = as.Date("2011-12-01"), interval = "1mo")
+
+Yahoo_Volume<- pdfetch_YAHOO(Ticker, fields = "volume", from = as.Date("2011-12-01"), interval = "1mo")
+
+# BCR, BHI, CAM, DD, DOW, HLT, INCY, MGM, RAI, SNDK, TWC and YHOO are not listed in both Yahoo (i.e. ajdclose and volume) dataframe. I will have to find another platform to get those data
+
+
+#############################################
+########### Compounded Return ###############
+#############################################
+
+CompoundedReturn <- Return.calculate(Yahoo_AdjClose, method = "log")
+
+#############################################
+########### Jensen's Alpha ##################
+#############################################
+
+#I dowload the FamaAndFrench DataBase that I get on http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/f-f_factors.html
+
+
+
+FF <- read.table("DataBase/StockPrice/F-F_Research_Data_Factors.txt", header = TRUE, sep = "", stringsAsFactors = FALSE, row.names = NULL, col.names = c("Date","Mkt-RF", "SMB", "HML", "RF"))
+
+#The date colone is not well written so I remove it
+FF1 <- FF[,-c(1)]
+
+#I create a monthly date vector
+Date <- seq(as.Date("1926/7/1"), as.Date("2018/02/1"), by = "month")
+
+#I cbind date vector and FF dataframe
+FF2 <- cbind(Date,FF1)
+
+#Fama and French give us Rm-Rf in the Mkt.Rf. I crfeate a column which is Rm
+
+FF2["Rm"] <- FF2$Mkt.RF + FF2$RF
+
+#I takle rm rf and date in a data frame which I transform into xts object
+
+FF3 <- FF2[,c("Date", "Rm", "RF")]
+rownames(FF3) <- FF2[,1] #rownames need to be date for converting into xts
+FF4 <- FF3[,c(2,3)]
+
+FF5 <- as.xts(FF4)
+
+# I merge FF5 with CompoundedReturn 
+
+CAPM <- merge.xts(FF5, CompoundedReturn)
+
+#I subset the XTS object considering only the period I want
+
+CAPM1 <- CAPM["2011-12-01/2018-04-01"]  
+
+
+
+```
+
