@@ -71,6 +71,7 @@ FF1 <- FF[,-c(1)]
 
 #I create a monthly date vector
 Date <- seq(as.Date("1926/7/1"), as.Date("2018/02/1"), by = "month")
+D <- seq(ISOdate(1910,1,1), ISOdate(1999,1,1), by = "month")
 
 #I cbind date vector and FF dataframe
 FF2 <- cbind(Date,FF1)
@@ -95,6 +96,19 @@ CAPM <- merge.xts(FF5, CompoundedReturn)
 
 CAPM1 <- CAPM["2011-12-01/2018-04-01"]  
 
+Rm <- FF2[,c("Rm","Date")]
+rownames(Rm) <- Rm[,2] #rownames need to be date for converting into xts
+RmBis <- Rm[,1]
+
+RmBisBis <- data[]
+Rm1 <- as.xts(Rm)
+Rm2 <- Rm1["2011-12-01/2018-04-01"]
+
+
+
+CompoundedReturn1 <- CompoundedReturn["2011-12-01/2018-02-01"]
+
+Alpha <- CAPM.jensenAlpha(Ra = "CompoundedReturn1", Rb = "Rm1", Rf = 0.2752)
 
 
 ```
