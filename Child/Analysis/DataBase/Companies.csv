@@ -1,0 +1,1587 @@
+Ticker;Companies;GisSector;GicsClassification;FichierSTCKP;CompanyGR2014;CompanyGR2015;CompanyGR2016
+A;1;Health Care;5;A_quarterly_financial_data.xls;agilent technologies;agilent technologies inc;agilent technologies inc
+AAL;2;Industrials;6;AMR_quarterly_financial_data.xls;american airlines group;american airlines group inc;american airlines group inc
+AAP;3;Consumer Discretionary;1;AAP_quarterly_financial_data.xls;advance auto parts;advance auto parts inc;advance auto parts inc
+AAPL;4;Information Technology;7;AAPL_quarterly_financial_data.xls;apple;apple inc;apple inc
+ABBV;5;Health Care;5;ABBV_quarterly_financial_data.xls;abbvie;abbvie inc;abbvie inc
+ABC;6;Health Care;5;ABC_quarterly_financial_data.xls;amerisourcebergen;amerisourcebergen corporation;amerisourcebergen corp
+ABT;7;Health Care;5;ABT_quarterly_financial_data.xls;abbott laboratories;abbott laboratories;abbott laboratories
+ACIW;8;Industrials;6;ACIW_quarterly_financial_data.xls;union pacific;union pacific corporation;union pacific corp
+ADBE;9;Information Technology;7;ADBE_quarterly_financial_data.xls;adobe systems;adobe systems incorporated;adobe systems inc
+ADI;10;Information Technology;7;ADI_quarterly_financial_data.xls;analog devices;analog devices inc;analog devices inc
+ADM;11;Consumer Staples;2;ADM_quarterly_financial_data.xls;archer-daniels-midland;archer-daniels-midland company;archer-daniels-midland co
+ADP;12;Information Technology;7;ADP_quarterly_financial_data.xls;automatic data processing;automatic data processing inc;automatic data processing inc
+ADS;13;Information Technology;7;ADS_quarterly_financial_data.xls;alliance data systems;alliance data systems corporation;alliance data systems corp
+ADSK;14;Information Technology;7;ADSK_quarterly_financial_data.xls;autodesk;autodesk inc;autodesk inc
+AEE;15;Utilities;11;AEE_quarterly_financial_data.xls;ameren;ameren corporation;ameren corp
+AEP;16;Utilities;11;AEP_quarterly_financial_data.xls;american electric power;american electric power company inc;american electric power co inc
+AET;17;Health Care;5;AET_quarterly_financial_data.xls;aetna;aetna inc;aetna inc
+AFL;18;Financials;4;AFL_quarterly_financial_data.xls;aflac;aflac incorporated;aflac inc
+AGN;19;Health Care;5;AGN_quarterly_financial_data.xls;allergan;allergan inc;allergan inc
+AIG;20;Financials;4;AIG_quarterly_financial_data.xls;american international group;american international group inc;american international group inc
+AKAM;21;Information Technology;7;AKAM_quarterly_financial_data.xls;akamai technologies;akamai technologies inc;akamai technologies inc
+ALL;22;Financials;4;ALL_quarterly_financial_data.xls;allstate;the allstate corporation;allstate corp
+ALXN;23;Health Care;5;ALXN_quarterly_financial_data.xls;alexion pharmaceuticals;alexion pharmaceuticals inc;alexion pharmaceuticals inc
+AMAT;24;Information Technology;7;AMAT_quarterly_financial_data.xls;applied materials;applied materials inc;applied materials inc
+AME;25;Industrials;6;AME_quarterly_financial_data.xls;ametek;ametek inc;ametek inc
+AMG;26;Financials;4;AMG_quarterly_financial_data.xls;affiliated managers group;affiliated managers group inc;affiliated managers group inc
+AMGN;27;Health Care;5;AMGN_quarterly_financial_data.xls;amgen;amgen inc;amgen inc
+AMP;28;Financials;4;AMP_quarterly_financial_data.xls;ameriprise financial;ameriprise financial inc;ameriprise financial inc
+AMT;29;Financials;4;AMT_quarterly_financial_data.xls;american tower;american tower corporation;american tower corp
+AMZN;30;Consumer Discretionary;1;AMZN_quarterly_financial_data.xls;amazoncom;amazoncom inc;amazoncom inc
+ANDV;31;Energy;3;NA;tesoro;tesoro corporation;tesoro corp
+APA;32;Energy;3;APA_quarterly_financial_data.xls;apache;apache corporation;apache corp
+APC;33;Energy;3;APC_quarterly_financial_data.xls;anadarko petroleum;anadarko petroleum corporation;anadarko petroleum corp
+APD;34;Materials;8;APD_quarterly_financial_data.xls;air products & chemicals;air products and chemicals inc;air products & chemicals inc
+APH;35;Information Technology;7;APH_quarterly_financial_data.xls;amphenol;amphenol corporation;amphenol corp
+ATVI;36;Information Technology;7;ATVI_quarterly_financial_data.xls;activision blizzard;activision blizzard inc;activision blizzard inc
+AVB;37;Financials;4;AVB_quarterly_financial_data.xls;avalonbay communities;avalonbay communities inc;avalonbay communities inc
+AWK;38;Utilities;11;AWK_quarterly_financial_data.xls;american water works;american water works company inc;american water works co inc
+AXP;39;Financials;4;AXP_quarterly_financial_data.xls;american express;american express company;american express co
+AZO;40;Consumer Discretionary;1;AZO_quarterly_financial_data.xls;autozone;autozone inc;autozone inc
+BA;41;Industrials;6;BA_quarterly_financial_data.xls;boeing;the boeing company;boeing co
+BAC;42;Financials;4;BAC_quarterly_financial_data.xls;bank of america;bank of america corporation;bank of america corp
+BAX;43;Health Care;5;BAX_quarterly_financial_data.xls;baxter international;baxter international inc;baxter international inc
+BBBY;44;Consumer Discretionary;1;BBBY_quarterly_financial_data.xls;bed bath & beyond;bed bath & beyond inc;bed bath & beyond inc
+BBT;45;Financials;4;BBT_quarterly_financial_data.xls;bb&t;bb&t corporation;bb&t corp
+BBY;46;Consumer Discretionary;1;BBY_quarterly_financial_data.xls;best buy;best buy co inc;best buy co inc
+BCR;47;Health Care;5;BCR_quarterly_financial_data.xls;cr bard;cr bard inc;cr bard inc
+BDX;48;Health Care;5;BDX_quarterly_financial_data.xls;becton dickinson;becton dickinson and company;becton dickinson and co
+BEN;49;Financials;4;BEN_quarterly_financial_data.xls;franklin resources;franklin resources inc;franklin resources inc
+BF.A;50;Consumer Staples;2;BF.B_quarterly_financial_data.xls;brown-forman;brown-forman corporation;brown-forman corp
+BG;51;Consumer Staples;2;NA;bunge;bunge limited;bunge ltd
+BHI;52;Energy;3;BHI_quarterly_financial_data.xls;baker hughes;baker hughes incorporated;baker hughes inc
+BIIB;53;Health Care;5;BIIB_quarterly_financial_data.xls;biogen idec;biogen inc;biogen inc
+BK;54;Financials;4;BK_quarterly_financial_data.xls;bank of new york mellon;the bank of new york mellon corporation;bank of new york mellon corp
+BKE;55;Energy;3;BKE_quarterly_financial_data.xls;buckeye partners;buckeye partners lp;buckeye partners lp
+BLK;56;Financials;4;BLK_quarterly_financial_data.xls;blackrock;blackrock inc;blackrock inc
+BLL;57;Materials;8;BLL_quarterly_financial_data.xls;ball corporation;ball corporation;ball corp
+BMRN;58;Health Care;5;NA;biomarin pharmaceutical;biomarin pharmaceutical inc;biomarin pharmaceutical inc
+BMY;59;Health Care;5;BMY_quarterly_financial_data.xls;bristol-myers squibb;bristol-myers squibb company;bristol-myers squibb co
+BRK.A;60;Financials;4;BRK.A_quarterly_financial_data.xls;berkshire hathaway;berkshire hathaway inc;berkshire hathaway inc
+BSX;61;Health Care;5;BSX_quarterly_financial_data.xls;boston scientific;boston scientific corporation;boston scientific corp
+BWA;62;Consumer Discretionary;1;BWA_quarterly_financial_data.xls;borgwarner;borgwarner inc;borgwarner inc
+BX;63;Financials;4;NA;blackstone group;the blackstone group lp;blackstone group lp
+BXP;64;Financials;4;BXP_quarterly_financial_data.xls;boston properties;boston properties inc;boston properties inc
+C;65;Financials;4;C_quarterly_financial_data.xls;citigroup;citigroup inc;citigroup inc
+CA;66;Information Technology;7;CA_quarterly_financial_data.xls;ca incorporated;ca inc;ca inc
+CAG;67;Consumer Staples;2;CAG_quarterly_financial_data.xls;conagra foods;conagra foods inc;conagra foods inc
+CAH;68;Health Care;5;CAH_quarterly_financial_data.xls;cardinal health;cardinal health inc;cardinal health inc
+CAM;69;Energy;3;CAM_quarterly_financial_data.xls;cameron international;cameron international corporation;cameron international corp
+CAT;70;Industrials;6;CAT_quarterly_financial_data.xls;caterpillar;caterpillar inc;caterpillar inc
+CBG;71;Financials;4;CBG_quarterly_financial_data.xls;cbre group;cbre group inc;cbre group inc
+CBS;72;Consumer Discretionary;1;CBS_quarterly_financial_data.xls;cbs;cbs corporation;cbs corp
+CCE;73;Consumer Staples;2;CCE_quarterly_financial_data.xls;coca-cola enterprises;coca-cola enterprises inc;coca-cola enterprises inc
+CCI;74;Financials;4;CCI_quarterly_financial_data.xls;crown castle international;crown castle international corp;crown castle international corp
+CCL;75;Consumer Discretionary;1;CCL_quarterly_financial_data.xls;carnival;carnival corporation;carnival plc
+CE;76;Materials;8;NA;celanese;celanese corporation;celanese corp
+CELG;77;Health Care;5;CELG_quarterly_financial_data.xls;celgene;celgene corporation;celgene corp
+CERN;78;Health Care;5;CERN_quarterly_financial_data.xls;cerner;cerner corporation;cerner corp
+CF;79;Materials;8;CF_quarterly_financial_data.xls;cf industries holdings;cf industries holdings inc;cf industries holdings inc
+CHD;80;Consumer Staples;2;CHD_quarterly_financial_data.xls;church & dwight;church & dwight co inc;church & dwight co inc
+CHRW;81;Industrials;6;NA;ch robinson worldwide;ch robinson worldwide inc;ch robinson worldwide inc
+CHTR;82;Consumer Discretionary;1;NA;charter communications;charter communications inc;charter communications inc
+CI;83;Health Care;5;CI_quarterly_financial_data.xls;cigna;cigna corporation;cigna corp
+CIT;84;Financials;4;CIT_quarterly_financial_data.xls;cit group;cit group inc;cit group inc
+CL;85;Consumer Staples;2;CL_quarterly_financial_data.xls;colgate-palmolive;colgate-palmolive company;colgate-palmolive co
+CLR;86;Energy;3;NA;continental resources;continental resources inc;continental resources inc
+CLX;87;Consumer Staples;2;CLX_quarterly_financial_data.xls;clorox;the clorox company;clorox co
+CMCSA;88;Consumer Discretionary;1;CMCSA_quarterly_financial_data.xls;comcast;comcast corporation;comcast corp
+CME;89;Financials;4;CME_quarterly_financial_data.xls;cme group;cme group inc;cme group inc
+CMG;90;Consumer Discretionary;1;CMG_quarterly_financial_data.xls;chipotle mexican grill;chipotle mexican grill inc;chipotle mexican grill inc
+CMI;91;Industrials;6;CMI_quarterly_financial_data.xls;cummins;cummins inc;cummins inc
+CNO;92;Financials;4;CNO_quarterly_financial_data.xls;cna financial;cna financial corporation;cna financial corp
+CNP;93;Utilities;11;CNP_quarterly_financial_data.xls;centerpoint energy;centerpoint energy inc;centerpoint energy inc
+CNX;94;Utilities;11;CNX_quarterly_financial_data.xls;consolidated edison;consolidated edison inc;consolidated edison inc
+COF;95;Financials;4;COF_quarterly_financial_data.xls;capital one financial;capital one financial corporation;capital one financial corp
+COH;96;Consumer Discretionary;1;COH_quarterly_financial_data.xls;coach;coach inc;coach inc
+COL;97;Industrials;6;COL_quarterly_financial_data.xls;rockwell collins;rockwell collins inc;rockwell collins inc
+COP;98;Energy;3;COP_quarterly_financial_data.xls;conocophillips;conocophillips;conocophillips
+COST;99;Consumer Staples;2;COST_quarterly_financial_data.xls;costco wholesale;costco wholesale corporation;costco wholesale corp
+CPB;100;Consumer Staples;2;CPB_quarterly_financial_data.xls;campbell soup;campbell soup company;campbell soup co
+CRM;101;Information Technology;7;CRM_quarterly_financial_data.xls;salesforcecom;salesforcecom inc;salesforcecom inc
+CSCO;102;Information Technology;7;CSCO_quarterly_financial_data.xls;cisco systems;cisco systems inc;cisco systems inc
+CSX;103;Industrials;6;CSX_quarterly_financial_data.xls;csx;csx corporation;csx corp
+CTL;104;Telecommunication Services;10;CTL_quarterly_financial_data.xls;centurylink;centurylink inc;centurylink inc
+CTSH;105;Information Technology;7;CTSH_quarterly_financial_data.xls;cognizant technology solutions;cognizant technology solutions corporation;cognizant technology solutions corp
+CTXS;106;Information Technology;7;CTXS_quarterly_financial_data.xls;citrix systems;citrix systems inc;citrix systems inc
+CVS;107;Consumer Staples;2;CVS_quarterly_financial_data.xls;cvs caremark;cvs health corporation;cvs health corp
+CVX;108;Energy;3;CVX_quarterly_financial_data.xls;chevron;chevron corporation;chevron corp
+CXO;109;Energy;3;CXO_quarterly_financial_data.xls;concho resources;concho resources inc;concho resources inc
+D;110;Utilities;11;D_quarterly_financial_data.xls;dominion resources;dominion resources inc;dominion resources inc
+DAL;111;Industrials;6;DAL_quarterly_financial_data.xls;delta air lines;delta air lines inc;delta air lines inc
+DD;112;Materials;8;DD_quarterly_financial_data.xls;ei du pont de nemours;e i du pont de nemours and company;ei du pont de nemours & co
+DE;113;Industrials;6;DE_quarterly_financial_data.xls;deere;deere & company;deere & co
+DFS;114;Financials;4;DFS_quarterly_financial_data.xls;discover financial services;discover financial services;discover financial services
+DG;115;Consumer Discretionary;1;DG_1_quarterly_financial_data.xls;dollar general;dollar general corporation;dollar general corp
+DGX;116;Health Care;5;DGX_quarterly_financial_data.xls;quest diagnostics;quest diagnostics inc;quest diagnostics inc
+DHR;117;Industrials;6;DHR_quarterly_financial_data.xls;danaher;danaher corporation;danaher corp
+DIS;118;Consumer Discretionary;1;DIS_quarterly_financial_data.xls;walt disney;the walt disney company;walt disney co
+DISCA;119;Consumer Discretionary;1;DISCA_quarterly_financial_data.xls;discovery communications;discovery communications inc;discovery communications inc
+DISH ;120;Consumer Discretionary;1;DISH_quarterly_financial_data.xls;dish network;dish network corporation;dish network corp
+DLTR;121;Consumer Discretionary;1;DLTR_quarterly_financial_data.xls;dollar tree;dollar tree inc;dollar tree inc
+DOV;122;Industrials;6;DOV_quarterly_financial_data.xls;dover;dover corporation;dover corp
+DOW;123;Materials;8;DOW_quarterly_financial_data.xls;dow chemical;the dow chemical company;dow chemical co
+DPS;124;Consumer Staples;2;DPS_quarterly_financial_data.xls;dr pepper snapple group;dr pepper snapple group inc;dr pepper snapple group inc
+DTE;125;Utilities;11;DTE_quarterly_financial_data.xls;dte energy;dte energy company;dte energy co
+DUK;126;Utilities;11;DUK_quarterly_financial_data.xls;duke energy;duke energy corporation;duke energy corp
+DVA;127;Health Care;5;DVA_quarterly_financial_data.xls;davita healthcare partners;davita healthcare partners inc;davita healthcare partners inc
+DVN;128;Energy;3;DVN_quarterly_financial_data.xls;devon energy;devon energy corporation;devon energy corp
+EBAY;129;Information Technology;7;EBAY_quarterly_financial_data.xls;ebay;ebay inc;ebay inc
+ECL;130;Materials;8;ECL_quarterly_financial_data.xls;ecolab;ecolab inc;ecolab inc
+EFX;131;Industrials;6;EFX_quarterly_financial_data.xls;equifax;equifax inc;equifax inc
+EIX;132;Utilities;11;EIX_quarterly_financial_data.xls;edison international;edison international;edison international
+EMC;133;Information Technology;7;EMC_quarterly_financial_data.xls;emc;emc corporation;emc corp
+EMN;134;Materials;8;EMN_quarterly_financial_data.xls;eastman chemical;eastman chemical company;eastman chemical co
+EMR;135;Industrials;6;EMR_quarterly_financial_data.xls;emerson electric;emerson electric co;emerson electric co
+EOG;136;Energy;3;EOG_quarterly_financial_data.xls;eog resources;eog resources inc;eog resources inc
+EPD;137;Energy;3;NA;enterprise products partners;enterprise products partners lp;enterprise products partners lp
+EQIX;138;Information Technology;7;EQIX_quarterly_financial_data.xls;equinix;equinix inc;equinix inc
+EQR;139;Financials;4;EQR_quarterly_financial_data.xls;equity residential;equity residential;equity residential
+EQT;140;Energy;3;EQT_quarterly_financial_data.xls;eqt;eqt corporation;eqt corp
+ESRX;141;Health Care;5;ESRX_quarterly_financial_data.xls;express scripts holding;express scripts holding company;express scripts holding co
+ETP;142;Energy;3;NA;energy transfer partners;energy transfer partners lp;energy transfer partners lp
+ETR;143;Utilities;11;ETR_quarterly_financial_data.xls;entergy;entergy corporation;entergy corp
+EXC;144;Utilities;11;EXC_quarterly_financial_data.xls;exelon;exelon corporation;exelon corp
+EXPE;145;Consumer Discretionary;1;EXPE_quarterly_financial_data.xls;expedia;expedia inc;expedia inc
+EXR;146;Financials;4;EXR_quarterly_financial_data.xls;public storage;public storage;public storage
+F;147;Consumer Discretionary;1;F_quarterly_financial_data.xls;ford motor;ford motor company;ford motor co
+FAST;148;Industrials;6;FAST_quarterly_financial_data.xls;fastenal;fastenal company;fastenal co
+FB;149;Information Technology;7;FB_quarterly_financial_data.xls;facebook;facebook inc;facebook inc
+FDX;150;Industrials;6;FDX_quarterly_financial_data.xls;fedex;fedex corporation;fedex corp
+FE;151;Utilities;11;FE_quarterly_financial_data.xls;firstenergy;firstenergy corp;firstenergy corp
+FIS;152;Information Technology;7;FIS_quarterly_financial_data.xls;fidelity national information services;fidelity national information services inc;fidelity national information services inc
+FISV;153;Information Technology;7;FISV_quarterly_financial_data.xls;fiserv;fiserv inc;fiserv inc
+FITB;154;Financials;4;FITB_quarterly_financial_data.xls;fifth third bancorp;fifth third bancorp;fifth third bancorp
+FLT;155;Information Technology;7;NA;fleetcor technologies;fleetcor technologies inc;fleetcor technologies inc
+FNMA;156;Financials;4;FNM_quarterly_financial_data.xls;federal national mortgage association;federal national mortgage association;federal national mortgage association
+FOX;157;Consumer Discretionary;1;NWS.A_quarterly_financial_data.xls;twenty-first century fox;twenty-first century fox inc;twenty-first century fox inc
+GD;158;Industrials;6;GD_quarterly_financial_data.xls;general dynamics;general dynamics corporation;general dynamics corp
+GE;159;Industrials;6;GE_quarterly_financial_data.xls;general electric;general electric company;general electric co
+GGP;160;Financials;4;GGP_quarterly_financial_data.xls;general growth properties;general growth properties inc;general growth properties inc
+GILD;161;Health Care;5;GILD_quarterly_financial_data.xls;gilead sciences;gilead sciences inc;gilead sciences inc
+GIS;162;Consumer Staples;2;GIS_quarterly_financial_data.xls;general mills;general mills inc;general mills inc
+GLW;163;Information Technology;7;GLW_quarterly_financial_data.xls;corning;corning incorporated;corning inc
+GM;164;Consumer Discretionary;1;GM_quarterly_financial_data.xls;general motors;general motors company;general motors co
+GPC;165;Consumer Discretionary;1;GPC_quarterly_financial_data.xls;genuine parts;genuine parts company;genuine parts co
+GPS;166;Consumer Discretionary;1;GPS_quarterly_financial_data.xls;gap;the gap inc;gap inc
+GS;167;Financials;4;GS_quarterly_financial_data.xls;goldman sachs group;the goldman sachs group inc;goldman sachs group inc
+GWW;168;Industrials;6;GWW_quarterly_financial_data.xls;ww grainger;w w grainger inc;ww grainger inc
+HAL;169;Energy;3;HAL_quarterly_financial_data.xls;halliburton;halliburton company;halliburton co
+HCA;170;Health Care;5;HCA_quarterly_financial_data.xls;hca holdings;hca holdings inc;hca holdings inc
+HCP;171;Financials;4;HCP_quarterly_financial_data.xls;hcp;hcp inc;hcp inc
+HD;172;Consumer Discretionary;1;HD_quarterly_financial_data.xls;home depot;the home depot inc;home depot inc
+HES;173;Energy;3;HES_quarterly_financial_data.xls;hess;hess corporation;hess corp
+HIG;174;Financials;4;HIG_quarterly_financial_data.xls;hartford financial services group;the hartford financial services group inc;hartford financial services group inc
+HLT ;175;Consumer Discretionary;1;HLT_quarterly_financial_data.xls;hilton worldwide holdings;hilton worldwide holdings inc;hilton worldwide holdings inc
+HOG;176;Consumer Discretionary;1;HOG_quarterly_financial_data.xls;harley-davidson;harley-davidson inc;harley-davidson inc
+HON;177;Industrials;6;HON_quarterly_financial_data.xls;honeywell international;honeywell international inc;honeywell international inc
+HOT;178;Consumer Discretionary;1;HOT_quarterly_financial_data.xls;starwood hotels & resorts worldwide;starwood hotels & resorts worldwide inc;starwood hotels & resorts worldwide inc
+HRL;179;Consumer Staples;2;HRL_quarterly_financial_data.xls;hormel foods;hormel foods corporation;hormel foods corp
+HSIC;180;Health Care;5;HSIC_quarterly_financial_data.xls;henry schein;henry schein inc;henry schein inc
+HST;181;Financials;4;HST_quarterly_financial_data.xls;host hotels & resorts;host hotels & resorts inc;host hotels & resorts inc
+HSY;182;Consumer Staples;2;HSY_quarterly_financial_data.xls;hershey;the hershey company;hershey co
+HUM;183;Health Care;5;HUM_quarterly_financial_data.xls;humana;humana inc;humana inc
+IBM;184;Information Technology;7;IBM_quarterly_financial_data.xls;international business machines;international business machines corporation;international business machines corp
+ICE;185;Financials;4;ICE_quarterly_financial_data.xls;intercontinentalexchange group;intercontinental exchange inc;intercontinental exchange inc
+IEP;186;Industrials;6;NA;icahn enterprises;icahn enterprises lp;icahn enterprises lp
+ILMN;187;Health Care;5;ILMN_quarterly_financial_data.xls;illumina;illumina inc;illumina inc
+INCY ;188;Pharmaceuticals, Biotechnology;9;INCY_quarterly_financial_data.xls;incyte;incyte corporation;incyte corp
+INTC;189;Information Technology;7;INTC_quarterly_financial_data.xls;intel;intel corporation;intel corp
+INTU;190;Information Technology;7;INTU_quarterly_financial_data.xls;intuit;intuit inc;intuit inc
+IP;191;Materials;8;IP_quarterly_financial_data.xls;international paper;international paper company;international paper co
+IPG;192;Consumer Discretionary;1;IPG_quarterly_financial_data.xls;interpublic group;the interpublic group of companies inc;interpublic group of cos inc
+ISRG;193;Health Care;5;ISRG_quarterly_financial_data.xls;intuitive surgical;intuitive surgical inc;intuitive surgical inc
+ITT;194;Information Technology;7;ITT_quarterly_financial_data.xls;twitter;twitter inc;twitter inc
+ITW;195;Industrials;6;ITW_quarterly_financial_data.xls;illinois tool works;illinois tool works inc;illinois tool works inc
+IVZ;196;Financials;4;IVZ_quarterly_financial_data.xls;invesco;invesco ltd;invesco ltd
+JBHT;197;Industrials;6;JBHT_quarterly_financial_data.xls;jb hunt transport services;j b hunt transport services inc;jb hunt transport services inc
+JCI;198;Consumer Discretionary;1;JCI_quarterly_financial_data.xls;johnson controls;johnson controls inc;johnson controls inc
+JNJ;199;Health Care;5;JNJ_quarterly_financial_data.xls;johnson & johnson;johnson & johnson;johnson & johnson
+JNPR;200;Information Technology;7;JNPR_quarterly_financial_data.xls;juniper networks;juniper networks inc;juniper networks inc
+JPM;201;Financials;4;JPM_quarterly_financial_data.xls;jpmorgan chase;jpmorgan chase & co;jpmorgan chase & co
+JWN;202;Consumer Discretionary;1;JWN_quarterly_financial_data.xls;nordstrom;nordstrom inc;nordstrom inc
+K;203;Consumer Staples;2;K_quarterly_financial_data.xls;kellogg;kellogg company;kellogg co
+KEY;204;Financials;4;KEY_quarterly_financial_data.xls;key corporation;keycorp;keycorp
+KIM;205;Financials;4;KIM_quarterly_financial_data.xls;kimco realty;kimco realty corporation;kimco realty corp
+KLAC;206;Information Technology;7;KLAC_quarterly_financial_data.xls;kla-tencor;kla-tencor corporation;kla-tencor corp
+KMB;207;Consumer Staples;2;KMB_quarterly_financial_data.xls;kimberly-clark;kimberly-clark corporation;kimberly-clark corp
+KMI;208;Energy;3;KMI_quarterly_financial_data.xls;kinder morgan;kinder morgan inc;kinder morgan inc
+KMX;209;Consumer Discretionary;1;KMX_quarterly_financial_data.xls;carmax;carmax inc;carmax inc
+KO;210;Consumer Staples;2;KO_quarterly_financial_data.xls;coca-cola company;the coca-cola company;coca-cola co
+KR;211;Consumer Staples;2;KR_quarterly_financial_data.xls;kroger;the kroger co;kroger co
+KSS;212;Consumer Discretionary;1;KSS_quarterly_financial_data.xls;kohl's;kohl's corporation;kohl's corp
+KSU;213;Industrials;6;KSU_quarterly_financial_data.xls;kansas city southern;kansas city southern;kansas city southern
+L;214;Financials;4;LTR_quarterly_financial_data.xls;loews;loews corporation;loews corp
+LB;215;Consumer Discretionary;1;LB_quarterly_financial_data.xls;l brands;l brands inc;l brands inc
+LH;216;Health Care;5;LH_quarterly_financial_data.xls;laboratory corp of america holdings;laboratory corporation of america holdings;laboratory corp of america holdings
+LLL;217;Industrials;6;LLL_quarterly_financial_data.xls;l-3 communications holdings;l-3 communications holdings inc;l-3 communications holdings inc
+LLTC;218;Information Technology;7;LLTC_quarterly_financial_data.xls;linear technology;linear technology corporation;linear technology corp
+LLY;219;Health Care;5;LLY_quarterly_financial_data.xls;eli lilly;eli lilly and company;eli lilly & co
+LMT;220;Industrials;6;LMT_quarterly_financial_data.xls;lockheed martin;lockheed martin corporation;lockheed martin corp
+LNC;221;Financials;4;LNC_quarterly_financial_data.xls;lincoln national;lincoln national corporation;lincoln national corp
+LNG;222;Energy;3;NA;cheniere energy;cheniere energy inc;cheniere energy inc
+LOW;223;Consumer Discretionary;1;LOW_quarterly_financial_data.xls;lowe's cos;lowe's companies inc;lowe's cos inc
+LRCX;224;Information Technology;7;LRCX_quarterly_financial_data.xls;lam research;lam research corporation;lam research corp
+LTRPA;225;Consumer Discretionary;1;NA;liberty media;liberty media corporation;liberty media corp
+LUV;226;Industrials;6;LUV_quarterly_financial_data.xls;southwest airlines;southwest airlines co;southwest airlines co
+LVS;227;Consumer Discretionary;1;NA;las vegas sands;las vegas sands corp;las vegas sands corp
+LYB;228;Materials;8;LYB_quarterly_financial_data.xls;lyondellbasell industries;lyondellbasell industries nv;lyondellbasell industries nv
+M;229;Consumer Discretionary;1;M_quarterly_financial_data.xls;macy's;macy's inc;macy's inc
+MA;230;Information Technology;7;MA_quarterly_financial_data.xls;mastercard;mastercard incorporated;mastercard inc
+MAC;231;Financials;4;MAC_quarterly_financial_data.xls;macerich;the macerich company;macerich co
+MAR;232;Consumer Discretionary;1;MAR_quarterly_financial_data.xls;marriott international;marriott international inc;marriott international inc
+MAS;233;Industrials;6;MAS_quarterly_financial_data.xls;masco;masco corporation;masco corp
+MAT;234;Consumer Discretionary;1;MAT_quarterly_financial_data.xls;mattel;mattel inc;mattel inc
+MCD;235;Consumer Discretionary;1;MCD_quarterly_financial_data.xls;mcdonald's;mcdonald's corporation;mcdonald's corp
+MCHP;236;Information Technology;7;MCHP_quarterly_financial_data.xls;microchip technology;microchip technology incorporated;microchip technology inc
+MCK;237;Health Care;5;MCK_quarterly_financial_data.xls;mckesson;mckesson corporation;mckesson corp
+MCO;238;Financials;4;MCO_quarterly_financial_data.xls;moody's;moody's corporation;moody's corp
+MDLZ;239;Consumer Staples;2;KFT_quarterly_financial_data.xls;mondelez international;mondelez international inc;mondelez international inc
+MET;240;Financials;4;MET_quarterly_financial_data.xls;metlife;metlife inc;metlife inc
+MGLN;241;Energy;3;NA;magellan midstream partners;magellan midstream partners lp;magellan midstream partners lp
+MGM ;242;Consumer Discretionary;1;MGM_quarterly_financial_data.xls;mgm resorts international;mgm resorts international;mgm resorts international
+MHK;243;Consumer Discretionary;1;MHK_quarterly_financial_data.xls;mohawk industries;mohawk industries inc;mohawk industries inc
+MJN;244;Consumer Staples;2;MJN_quarterly_financial_data.xls;mead johnson nutrition;mead johnson nutrition company;mead johnson nutrition co
+MKC;245;Consumer Staples;2;MKC_quarterly_financial_data.xls;mccormick;mccormick & company incorporated;mccormick & co inc
+MKL;246;Financials;4;NA;markel;markel corporation;markel corp
+MMC;247;Financials;4;MMC_quarterly_financial_data.xls;marsh & mclennan;marsh & mclennan companies inc;marsh & mclennan cos inc
+MMM;248;Industrials;6;MMM_quarterly_financial_data.xls;3m;3m company;3m company
+MNST;249;Consumer Staples;2;MNST_quarterly_financial_data.xls;monster beverage;monster beverage corporation;monster beverage corp
+MO;250;Consumer Staples;2;MO_quarterly_financial_data.xls;altria group;altria group inc;altria group inc
+MON;251;Materials;8;MON_quarterly_financial_data.xls;monsanto;monsanto company;monsanto co
+MOS;252;Materials;8;MOS_quarterly_financial_data.xls;mosaic;the mosaic company;mosaic co
+MPC;253;Energy;3;MPC_quarterly_financial_data.xls;marathon petroleum;marathon petroleum corporation;marathon petroleum corp
+MRK;254;Health Care;5;MRK_quarterly_financial_data.xls;merck & company;merck & co inc;merck & co inc
+MRO;255;Energy;3;MRO_quarterly_financial_data.xls;marathon oil;marathon oil corporation;marathon oil corp
+MS;256;Financials;4;MS_quarterly_financial_data.xls;morgan stanley;morgan stanley;morgan stanley
+MSFT;257;Information Technology;7;MSFT_quarterly_financial_data.xls;microsoft;microsoft corporation;microsoft corp
+MSI;258;Information Technology;7;MOT_quarterly_financial_data.xls;motorola solutions;motorola solutions inc;motorola solutions inc
+MTB;259;Financials;4;MTB_quarterly_financial_data.xls;m&t bank;m&t bank corporation;m&t bank corp
+MU;260;Information Technology;7;MU_quarterly_financial_data.xls;micron technology;micron technology inc;micron technology inc
+MXIM;261;Information Technology;7;NA;maxim integrated products;maxim integrated products inc;maxim integrated products inc
+MYL;262;Health Care;5;MYL_quarterly_financial_data.xls;mylan;mylan nv;mylan inc
+NBL;263;Energy;3;NBL_quarterly_financial_data.xls;noble energy;noble energy inc;noble energy inc
+NEE;264;Utilities;11;FPL_quarterly_financial_data.xls;nextera energy;nextera energy inc;nextera energy inc
+NEM;265;Materials;8;NEM_quarterly_financial_data.xls;newmont mining;newmont mining corporation;newmont mining corp
+NFLX;266;Consumer Discretionary;1;NFLX_quarterly_financial_data.xls;netflix;netflix inc;netflix inc
+NKE;267;Consumer Discretionary;1;NKE_quarterly_financial_data.xls;nike;nike inc;nike inc
+NLSN;268;Industrials;6;NLSN_quarterly_financial_data.xls;nielsen holdings;nielsen nv;nielsen nv
+NLY;269;Financials;4;NA;annaly capital management;annaly capital management inc;annaly capital management inc
+NOC;270;Industrials;6;NOC_quarterly_financial_data.xls;northrop grumman;northrop grumman corporation;northrop grumman corp
+NOV;271;Energy;3;NOV_quarterly_financial_data.xls;national oilwell varco;national oilwell varco inc;national oilwell varco inc
+NOW;272;Information Technology;7;NA;servicenow;servicenow inc;servicenow inc
+NSC;273;Industrials;6;NSC_quarterly_financial_data.xls;norfolk southern;norfolk southern corporation;norfolk southern corp
+NTRS;274;Financials;4;NTRS_quarterly_financial_data.xls;northern trust;northern trust corporation;northern trust corp
+NUE;275;Materials;8;NUE_quarterly_financial_data.xls;nucor;nucor corporation;nucor corp
+NVDA;276;Information Technology;7;NVDA_quarterly_financial_data.xls;nvidia;nvidia corporation;nvidia corp
+NWL;277;Consumer Discretionary;1;NWL_quarterly_financial_data.xls;newell rubbermaid;newell rubbermaid inc;newell rubbermaid inc
+O;278;Financials;4;O_quarterly_financial_data.xls;realty income;realty income corporation;realty income corp
+OKE;279;Energy;3;OKE_quarterly_financial_data.xls;oneok;oneok inc;oneok partners lp
+OMC;280;Consumer Discretionary;1;OMC_quarterly_financial_data.xls;omnicom group;omnicom group inc;omnicom group inc
+ORCL;281;Information Technology;7;ORCL_quarterly_financial_data.xls;oracle corp;oracle corporation;oracle corp
+ORLY;282;Consumer Discretionary;1;ORLY_quarterly_financial_data.xls;o'reilly automotive;o'reilly automotive inc;o'reilly automotive inc
+OXY;283;Energy;3;OXY_quarterly_financial_data.xls;occidental petroleum;occidental petroleum corporation;occidental petroleum corp
+PAA;284;Energy;3;NA;plains all american pipeline;plains all american pipeline lp;plains all american pipeline lp
+PAYX;285;Information Technology;7;PAYX_quarterly_financial_data.xls;paychex;paychex inc;paychex inc
+PCAR;286;Industrials;6;PCAR_quarterly_financial_data.xls;paccar;paccar inc;paccar inc
+PCG;287;Utilities;11;PCG_quarterly_financial_data.xls;pg&e;pg&e corporation;pg&e corp
+PCLN;288;Consumer Discretionary;1;PCLN_quarterly_financial_data.xls;pricelinecom;the priceline group inc;priceline group inc
+PEG;289;Utilities;11;PEG_quarterly_financial_data.xls;public service enterprise group;public service enterprise group incorporated;public service enterprise group inc
+PEP;290;Consumer Staples;2;PEP_quarterly_financial_data.xls;pepsico;pepsico inc;pepsico inc
+PFE;291;Health Care;5;PFE_quarterly_financial_data.xls;pfizer;pfizer inc;pfizer inc
+PFG;292;Financials;4;PFG_quarterly_financial_data.xls;principal financial group;principal financial group inc;principal financial group inc
+PG;293;Consumer Staples;2;PG_quarterly_financial_data.xls;procter & gamble;the procter & gamble company;procter & gamble co
+PGR;294;Financials;4;PGR_quarterly_financial_data.xls;progressive;the progressive corporation;progressive corp
+PH;295;Industrials;6;PH_quarterly_financial_data.xls;parker hannifin;parker-hannifin corporation;parker-hannifin corp
+PLD;296;Financials;4;PLD_quarterly_financial_data.xls;prologis;prologis inc;prologis inc
+PM;297;Consumer Staples;2;PM_quarterly_financial_data.xls;philip morris international;philip morris international inc;philip morris international inc
+PNC;298;Financials;4;PNC_quarterly_financial_data.xls;pnc financial services group;the pnc financial services group inc;pnc financial services group inc
+PPG;299;Materials;8;PPG_quarterly_financial_data.xls;ppg industries;ppg industries inc;ppg industries inc
+PPL;300;Utilities;11;PPL_quarterly_financial_data.xls;ppl;ppl corporation;ppl corp
+PRU;301;Financials;4;PRU_quarterly_financial_data.xls;prudential financial;prudential financial inc;prudential financial inc
+PSX;302;Energy;3;PSX_quarterly_financial_data.xls;phillips 66;phillips 66;phillips 66
+PX;303;Materials;8;PX_quarterly_financial_data.xls;praxair;praxair inc;praxair inc
+PXD;304;Energy;3;PXD_quarterly_financial_data.xls;pioneer natural resources;pioneer natural resources company;pioneer natural resources co
+QCOM;305;Information Technology;7;QCOM_quarterly_financial_data.xls;qualcomm;qualcomm incorporated;qualcomm inc
+RAI;306;Consumer Staples;2;RAI_quarterly_financial_data.xls;reynolds american;reynolds american inc;reynolds american inc
+RCL;307;Consumer Discretionary;1;RCL_quarterly_financial_data.xls;royal caribbean cruises;royal caribbean cruises ltd;royal caribbean cruises ltd
+REGN;308;Health Care;5;REGN_quarterly_financial_data.xls;regeneron pharmaceuticals;regeneron pharmaceuticals inc;regeneron pharmaceuticals inc
+RF;309;Financials;4;RF_quarterly_financial_data.xls;regions financial;regions financial corporation;regions financial corp
+RHT;310;Information Technology;7;RHT_quarterly_financial_data.xls;red hat;red hat inc;red hat inc
+RL;311;Consumer Discretionary;1;RL_quarterly_financial_data.xls;ralph lauren;ralph lauren corporation;ralph lauren corp
+ROK;312;Industrials;6;ROK_quarterly_financial_data.xls;rockwell automation;rockwell automation inc;rockwell automation inc
+ROP;313;Industrials;6;ROP_quarterly_financial_data.xls;roper industries;roper industries inc;roper industries inc
+ROST;314;Consumer Discretionary;1;ROST_quarterly_financial_data.xls;ross stores;ross stores inc;ross stores inc
+RSG;315;Industrials;6;RSG_quarterly_financial_data.xls;republic services;republic services inc;republic services inc
+RTN;316;Industrials;6;RTN_quarterly_financial_data.xls;raytheon;raytheon company;raytheon co
+S;317;Telecommunication Services;10;S_quarterly_financial_data.xls;sprint;sprint corporation;sprint corp
+SBAC ;318;Telecommunication Services;10;SBAC_quarterly_financial_data.xls;sba communications;sba communications corporation;sba communications corp
+SBUX;319;Consumer Discretionary;1;SBUX_quarterly_financial_data.xls;starbucks;starbucks corporation;starbucks corp
+SCHW;320;Financials;4;SCHW_quarterly_financial_data.xls;charles schwab;the charles schwab corporation;charles schwab corp
+SE;321;Energy;3;SE_quarterly_financial_data.xls;spectra energy;spectra energy corp;spectra energy corp
+SHW;322;Materials;8;SHW_quarterly_financial_data.xls;sherwin-williams;the sherwin-williams company;sherwin-williams co
+SIRI;323;Consumer Discretionary;1;NA;sirius xm holdings;sirius xm holdings inc;sirius xm holdings inc
+SJM;324;Consumer Staples;2;SJM_quarterly_financial_data.xls;jm smucker;the j m smucker company;jm smucker co
+SLB;325;Energy;3;SLB_quarterly_financial_data.xls;schlumberger;schlumberger limited;schlumberger ltd
+SLG;326;Financials;4;SLG_quarterly_financial_data.xls;sl green realty;sl green realty corp;sl green realty corp
+SNDK;327;Information Technology;7;SNDK_quarterly_financial_data.xls;sandisk;sandisk corporation;sandisk corp
+SO;328;Utilities;11;NA;southern;the southern company;southern co
+SPG;329;Financials;4;SPG_quarterly_financial_data.xls;simon property group;simon property group inc;simon property group inc
+SRCL;330;Industrials;6;SRCL_quarterly_financial_data.xls;stericycle;stericycle inc;stericycle inc
+SRE;331;Utilities;11;SRE_quarterly_financial_data.xls;sempra energy;sempra energy;sempra energy
+STI;332;Financials;4;STI_quarterly_financial_data.xls;suntrust banks;suntrust banks inc;suntrust banks inc
+STJ;333;Health Care;5;STJ_quarterly_financial_data.xls;st jude medical;st jude medical inc;st jude medical inc
+STT;334;Financials;4;STT_quarterly_financial_data.xls;state street;state street corporation;state street corp
+STZ;335;Consumer Staples;2;STZ_quarterly_financial_data.xls;constellation brands;constellation brands inc;constellation brands inc
+SWK;336;Industrials;6;SWK_quarterly_financial_data.xls;stanley black & decker;stanley black & decker inc;stanley black & decker inc
+SYK;337;Health Care;5;SYK_quarterly_financial_data.xls;stryker;stryker corporation;stryker corp
+SYMC;338;Information Technology;7;SYMC_quarterly_financial_data.xls;symantec;symantec corporation;symantec corp
+SYY;339;Consumer Staples;2;SYY_quarterly_financial_data.xls;sysco;sysco corporation;sysco corp
+T;340;Telecommunication Services;10;T_quarterly_financial_data.xls;at&t;at&t inc;at&t inc
+TAP;341;Consumer Staples;2;TAP_quarterly_financial_data.xls;molson coors brewing;molson coors brewing company;molson coors brewing co
+TDG;342;Industrials;6;TDG_quarterly_financial_data.xls;transdigm group;transdigm group incorporated;transdigm group inc
+TGT;343;Consumer Discretionary;1;TGT_quarterly_financial_data.xls;target;target corporation;target corp
+TIF;344;Consumer Discretionary;1;TIF_quarterly_financial_data.xls;tiffany;tiffany & co;tiffany & co
+TJX;345;Consumer Discretionary;1;TJX_quarterly_financial_data.xls;tjx;the tjx companies inc;tjx cos inc
+TMO;346;Health Care;5;TMO_quarterly_financial_data.xls;thermo fisher scientific;thermo fisher scientific inc;thermo fisher scientific inc
+TMUS;347;Telecommunication Services;10;NA;t-mobile us;t-mobile us inc;t-mobile us inc
+TRI;348;Consumer Discretionary;1;NA;thomson reuters;thomson reuters corporation;thomson reuters corp
+TRIP;349;Consumer Discretionary;1;TRIP_quarterly_financial_data.xls;tripadvisor;tripadvisor inc;tripadvisor inc
+TROW;350;Financials;4;TROW_quarterly_financial_data.xls;t rowe price group;t rowe price group inc;t rowe price group inc
+TRV;351;Financials;4;TRV_quarterly_financial_data.xls;travelers;the travelers companies inc;travelers cos inc
+TSCO;352;Consumer Discretionary;1;TSCO_quarterly_financial_data.xls;tractor supply;tractor supply company;tractor supply co
+TSLA;353;Consumer Discretionary;1;TSLA_quarterly_financial_data.xls;tesla motors;tesla motors inc;tesla motors inc
+TSN;354;Consumer Staples;2;TSN_quarterly_financial_data.xls;tyson foods;tyson foods inc;tyson foods inc
+TWC;355;Consumer Discretionary;1;TWC_quarterly_financial_data.xls;time warner cable;time warner cable inc;time warner cable inc
+TWX;356;Consumer Discretionary;1;TWX_quarterly_financial_data.xls;time warner;time warner inc;time warner cable inc
+TXN;357;Information Technology;7;TXN_quarterly_financial_data.xls;texas instruments;texas instruments incorporated;texas instruments inc
+TXT;358;Industrials;6;TXT_quarterly_financial_data.xls;textron;textron inc;textron inc
+UA;359;Consumer Discretionary;1;UA_quarterly_financial_data.xls;under armour;under armour inc;under armour inc
+UAL;360;Industrials;6;UAL_quarterly_financial_data.xls;united continental holdings;united continental holdings inc;united continental holdings inc
+UHS;361;Health Care;5;UHS_quarterly_financial_data.xls;universal health services;universal health services inc;universal health services inc
+UNH;362;Health Care;5;UNH_quarterly_financial_data.xls;unitedhealth group;unitedhealth group incorporated;unitedhealth group inc
+UNM;363;Financials;4;UNM_quarterly_financial_data.xls;unum group;unum group;unum group
+UPS;364;Industrials;6;UPS_quarterly_financial_data.xls;united parcel service;united parcel service inc;united parcel service inc
+USB;365;Financials;4;USB_quarterly_financial_data.xls;us bancorp;us bancorp;us bancorp
+UTX;366;Industrials;6;UTX_quarterly_financial_data.xls;united technologies;united technologies corporation;united technologies corp
+V;367;Information Technology;7;V_quarterly_financial_data.xls;visa;visa inc;visa inc
+VFC;368;Consumer Discretionary;1;VFC_quarterly_financial_data.xls;vf;vf corporation;vf corp
+VIA;369;Consumer Discretionary;1;VIA.B_quarterly_financial_data.xls;viacom;viacom inc;viacom inc
+VLO;370;Energy;3;VLO_quarterly_financial_data.xls;valero energy;valero energy corporation;valero energy corp
+VMW;371;Information Technology;7;NA;vmware;vmware inc;vmware inc
+VNO;372;Financials;4;VNO_quarterly_financial_data.xls;vornado realty;vornado realty trust;vornado realty trust
+VRSK;373;Industrials;6;VRSK_quarterly_financial_data.xls;verisk analytics;verisk analytics inc;verisk analytics inc
+VRTX;374;Health Care;5;VRTX_quarterly_financial_data.xls;vertex pharmaceuticals;vertex pharmaceuticals incorporated;vertex pharmaceuticals inc
+VTR;375;Financials;4;VTR_quarterly_financial_data.xls;ventas;ventas inc;ventas inc
+VZ;376;Telecommunication Services;10;VZ_quarterly_financial_data.xls;verizon communications;verizon communications inc;verizon communications inc
+WAT;377;Health Care;5;WAT_quarterly_financial_data.xls;waters;waters corporation;waters corp
+WBA;378;Consumer Staples;2;WAG_quarterly_financial_data.xls;walgreen;walgreens boots alliance inc;walgreens boots alliance inc
+WDAY;379;Information Technology;7;NA;workday;workday inc;workday inc
+WDC;380;Information Technology;7;WDC_quarterly_financial_data.xls;western digital;western digital corporation;western digital corp
+WFC;381;Financials;4;WFC_quarterly_financial_data.xls;wells fargo;wells fargo & company;wells fargo & co
+WFM;382;Consumer Staples;2;WFMI_quarterly_financial_data.xls;whole foods market;whole foods market inc;whole foods market inc
+WHR;383;Consumer Discretionary;1;WHR_quarterly_financial_data.xls;whirlpool;whirlpool corporation;whirlpool corp
+WM;384;Industrials;6;WM_quarterly_financial_data.xls;waste management;waste management inc;waste management inc
+WMB;385;Energy;3;NA;williams;williams partners lp;williams partners lp
+WMT;386;Consumer Staples;2;WMT_quarterly_financial_data.xls;wal-mart stores;wal-mart stores inc;wal-mart stores inc
+WU;387;Information Technology;7;WU_quarterly_financial_data.xls;western union;the western union company;western union co
+WY;388;Financials;4;WY_quarterly_financial_data.xls;weyerhaeuser;weyerhaeuser company;weyerhaeuser co
+WYN;389;Consumer Discretionary;1;WYN_quarterly_financial_data.xls;wyndham worldwide;wyndham worldwide corporation;wyndham worldwide corp
+XEC;390;Energy;3;XEC_quarterly_financial_data.xls;cimarex energy;cimarex energy co;cimarex energy co
+XEL;391;Utilities;11;XEL_quarterly_financial_data.xls;xcel energy;xcel energy inc;xcel energy inc
+XLNX;392;Information Technology;7;XLNX_quarterly_financial_data.xls;xilinx;xilinx inc;xilinx inc
+XOM;393;Energy;3;XOM_quarterly_financial_data.xls;exxon mobil;exxon mobil corporation;exxon mobil corp
+XRX;394;Information Technology;7;XRX_quarterly_financial_data.xls;xerox;xerox corporation;xerox corp
+YHOO;395;Information Technology;7;YHOO_quarterly_financial_data.xls;yahoo!;yahoo! inc;yahoo! inc
+YUM;396;Consumer Discretionary;1;YUM_quarterly_financial_data.xls;yum! brands;yum! brands inc;yum! brands inc
+ZBH;397;Health Care;5;ZMH_quarterly_financial_data.xls;zimmer holdings;zimmer holdings inc;zimmer holdings inc
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;

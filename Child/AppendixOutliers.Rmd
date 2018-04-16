@@ -6,17 +6,24 @@ output:
 ## Appendix A : Outliers {-}
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, error = FALSE,  results='asis'}
+
+#############################################################
+#############################################################
+############## Package and DataBase loading #################
+#############################################################
+#############################################################
+
+rm(list=ls()) #Removes all items in the environment!
+
 #Packages
 if (!require("utils")) install.packages("utils")
-if (!require("car")) install.packages("car")
 if (!require("dplyr")) install.packages("dplyr")
 if (!require("plm")) install.packages("plm")
 if (!require("stargazer")) install.packages("stargazer")
-library(stargazer)
-library(plm)
-library(utils)
-library(car)
-library(dplyr)
+library(stargazer) # to create wonderful tables
+library(plm) #to carry out regression
+library(utils) #to write database in my folders
+library(dplyr) #to play with data
 
 #Database
 DB_Lag1<-as.data.frame(read.csv2("Analysis/DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
@@ -65,11 +72,16 @@ head(DB_Lag1[influentialRoa, ])  # influential observations - number = 2
 head(DB_Lag1[influentialTobin, ])  # influential observations - number = 40
 head(DB_Lag1[influentialRoe, ])  # influential observations - number = 38
 
-#I remove outliers and create three new data frames
+#I remove outliers and create three new data frames that I write in my folders
 
 DB_TobinsQ_NoOut <- DB_Lag1[-c(influentialTobin),]
+write.csv2(DB_TobinsQ_NoOut, file = "Analysis/DataBase/NoOutliers/Tobins_Lag1_NoOut.csv")
+
 DB_Roa_NoOut <- DB_Lag1[-c(influentialRoa),]
+write.csv2(DB_Roa_NoOut, file = "Analysis/DataBase/NoOutliers/Roa_Lag1_NoOut.csv")
+
 DB_Roe_NoOut <- DB_Lag1[-c(influentialRoe),]
+write.csv2(DB_Roe_NoOut, file = "Analysis/DataBase/NoOutliers/Roe_Lag1_NoOut.csv")
 
 
 #########################################################

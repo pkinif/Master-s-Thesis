@@ -9,39 +9,49 @@ header-includes:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, error = FALSE, results = 'hide')
 ```
+
 ```{r}
-#Download package and database
+
+#############################################################
+#############################################################
+############## Package and DataBase loading #################
+#############################################################
+#############################################################
+
+
 rm(list=ls()) #Removes all items in Environment!
 if (!require("plm")) install.packages("plm")
-library(plm)
+library(plm) # to carry outregression
 if (!require("dplyr")) install.packages("dplyr")
-library(dplyr)
-if (!require("utils")) install.packages("utils")
-library(utils)
+library(dplyr) # to play with data
 if (!require("Hmisc")) install.packages("Hmisc")
-library(Hmisc)
+library(Hmisc) 
+if (!require("utils")) install.packages("utils")
+library(utils) #to dowload db
 if (!require("corrplot")) install.packages("corrplot")
-library(corrplot)
+library(corrplot) #correlation matrix
 if (!require("stargazer")) install.packages("stargazer")
-library(stargazer)
+library(stargazer) #beautiful table
 if (!require("xtable")) install.packages("xtable")
-library(xtable)
+library(xtable) #beautiful table
+if (!require("car")) install.packages("car")
+library(car) #VIF calculation
 
-# I dowload my database befor knitting
 # I dowload my DB with read.csv2
 
 
-Lag1_Roa_Outliers<-data.frame(read.csv2("DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE )) #ROA
-Lag1_Roe_NoOutliers<-data.frame(read.csv2("DataBase/NoOutliers/Lag1_Roe_NoOutliers.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
-Lag1_Tobin_NoOutliers<-data.frame(read.csv2("DataBase/NoOutliers/Lag1_Tobin_NoOutliers.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+Roa_Lag1_NoOut<-data.frame(read.csv2("DataBase/NoOutliers/Tobins_Lag1_NoOut.csv", sep = ";",stringsAsFactors = FALSE, header = TRUE )) 
+Roe_Lag1_NoOut<-data.frame(read.csv2("DataBase/NoOutliers/Roe_Lag1_NoOut.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+Tobins_Lag1_NoOut<-data.frame(read.csv2("DataBase/NoOutliers/Tobins_Lag1_NoOut.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
 
-#I select only variables of my model
+#I select only important variables of my model
 
-DB_Lag1_Model <- Lag1_Roa_Outliers [,c("ROA", "ROE", "TobinsQ", "EnergyProductivity",
-                        "CarbonProductivity", "WaterProductivity", "WasteProductivity",
-                        "SustainabilityPayLink", "SustainableThemedCommitment", 
-                        "FirmSize", "Leverage", "NetMargin")]
+Model <- Roa_Lag1_NoOut [,c("ROA", "ROE", "TobinsQ", 
+                                  "CarbonProductivity", "WaterProductivity", 
+                                  "WasteProductivity",
+                                  "SustainabilityPayLink", "SustainableThemedCommitment",
+                                  "FirmSize", "Leverage", "NetMargin")]
 
 ```
 
@@ -54,16 +64,20 @@ According to Miroschynenko blabla :
 Let's calculate the VIF of my models. For this process I need to use the pool model to caclculate the VIF of each variable. The \autoref{VIF} summarizes the VIF of my models. We can observe that the mean VIF values of my models are ... meaning the absence of multicollinearity [@Obrien2007]
 
 ```{r results = 'asis'}
-if (!require("car")) install.packages("car")
-library(car)
+
+#############################################################
+#############################################################
+############## Variance Inflation Factor ####################
+#############################################################
+#############################################################
 
 #The vif function can not be used with within model. I need to estimate my models with the pooling model.
 
-Roa <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = Lag1_Roa_Outliers, index = c("Companies", "YearFinancialIndicator"))
+Roa <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = Roa_Lag1_NoOut, index = c("Companies", "YearFinancialIndicator"))
 
-TobinsQ <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = Lag1_Tobin_NoOutliers, index = c("Companies", "YearFinancialIndicator"))
+TobinsQ <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = Tobins_Lag1_NoOut, index = c("Companies", "YearFinancialIndicator"))
 
-Roe <- plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = Lag1_Roe_NoOutliers, index = c("Companies", "YearFinancialIndicator"))
+Roe <- plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry , model = "pooling", data = Roe_Lag1_NoOut, index = c("Companies", "YearFinancialIndicator"))
 
 #VIF Calculation and summary in a table
 
@@ -71,15 +85,24 @@ VifRoa <- car::vif(Roa)
 VifRoe <- car::vif(Roe)
 VifTobin <- car::vif(TobinsQ)
 
-VifTable <- cbind(VifRoa, VifRoe, VifTobin)
+VifTable <- cbind(VifRoa, VifTobin, VifRoe)
 colnames(VifTable) <- c("Roa", "Roe", "Tobin's Q")
 
-stargazer(VifTable, summary = TRUE, title = "The Variance Inflation Factors - Measure of Multicollinearity", label = "VIF", header = FALSE)
+stargazer(VifTable, summary = FALSE, title = "The Variance Inflation Factors - Measure of Multicollinearity", label = "VIF", header = FALSE)
+
 ```
 
 
 
 ```{r}
+
+
+#############################################################
+#############################################################
+################## Matrix of Correlation ####################
+#############################################################
+#############################################################
+
 corstars <-function(x, method=c("pearson", "spearman"), removeTriangle=c("upper", "lower"), result=c("none", "html", "latex")){
   
     #Compute correlation matrix
@@ -125,15 +148,15 @@ corstars <-function(x, method=c("pearson", "spearman"), removeTriangle=c("upper"
 } 
 
 
-CorMatrix <- corstars(DB_Lag1_Model, method = "pearson",removeTriangle = "upper",  result = "none")
+CorMatrix <- corstars(Model, method = "pearson",removeTriangle = "upper",  result = "none")
 
 upper<-CorMatrix
 upper[upper.tri(CorMatrix)]<-""
 upper<-as.data.frame(upper)
 
 old_names <- upper[,1]
-number<-as.character(cbind(1:12))
-number_bis<-as.character(cbind(1:11))
+number<-as.character(cbind(1:11))
+number_bis<-as.character(cbind(1:10))
 
 colnames(upper)<-number_bis
 variables <- as.character(rownames(upper))
@@ -151,29 +174,28 @@ table <- stargazer(upper, summary = FALSE, type = "latex", title = "Correlation 
 ```
 
 \begin{sidewaystable}[h] \centering  
-  \caption{Correlation Matrix} 
-  \label{Matrix} 
+  \caption{Matrix of correlation} 
+  \label{MatrixCo} 
 \small 
-\begin{tabular}{@{\extracolsep{2pt}} p{4cm}lllllllllll} 
+\begin{tabular}{@{\extracolsep{2pt}} lllllllllll}  
 \\[-1.8ex]\hline 
 \hline \\[-1.8ex] 
- & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\ 
+ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ 
 \hline \\[-1.8ex] 
-1. ROA &  &  &  &  &  &  &  &  &  &  &  \\ 
-2. ROE &  0.23\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  &  &  &  &  &  &  &  &  \\ 
-3. TobinsQ &  0.15\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.03     &  &  &  &  &  &  &  &  &  \\ 
-4. EnergyProductivity &  0.07\textasteriskcentered \textasteriskcentered    &  0.02     & -0.02     &  &  &  &  &  &  &  &  \\ 
-5. CarbonProductivity &  0.07\textasteriskcentered \textasteriskcentered    &  0.02     & -0.02     &  0.88\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  &  &  &  &  &  \\ 
-6. WaterProductivity &  0.08\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.03     & -0.03     &  0.64\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.67\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  &  &  &  &  \\ 
-7. WasteProductivity &  0.05\textasteriskcentered     &  0.02     & -0.04     &  0.49\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.56\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.69\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  &  &  &  \\ 
-8. SustainabilityPayLink & -0.04     &  0.06\textasteriskcentered \textasteriskcentered    & -0.13\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.04     &  0.06\textasteriskcentered \textasteriskcentered    &  0.14\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.15\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  &  &  \\ 
-9. SustainableThemedCommitment & -0.02     &  0.08\textasteriskcentered \textasteriskcentered \textasteriskcentered   & -0.14\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.23\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.22\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.26\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.24\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.48\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  &  \\ 
-10. FirmSize & -0.26\textasteriskcentered \textasteriskcentered \textasteriskcentered   & -0.02     & -0.51\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.04     &  0.07\textasteriskcentered \textasteriskcentered    &  0.08\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.07\textasteriskcentered \textasteriskcentered    &  0.28\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.27\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  \\ 
-11. Leverage & -0.02     &  0.07\textasteriskcentered \textasteriskcentered    & -0.02     & -0.01     & -0.02     & -0.01     & -0.01     & -0.02     & -0.02     &  0.14\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  \\ 
-12. NetMargin &  0.33\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.05\textasteriskcentered     & -0.06\textasteriskcentered \textasteriskcentered    &  0.02     &  0.02     &  0.01     &  0.01     &  0.04     &  0.02     &  0.04     &  0.00     \\ 
+1. ROA &  &  &  &  &  &  &  &  &  &  \\ 
+2. ROE &  0.37\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  &  &  &  &  &  &  &  \\ 
+3. TobinsQ &  0.41\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.19\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  &  &  &  &  &  &  \\ 
+4. CarbonProductivity &  0.04     &  0.05\textasteriskcentered     & -0.04     &  &  &  &  &  &  &  \\ 
+5. WaterProductivity &  0.06\textasteriskcentered \textasteriskcentered    &  0.08\textasteriskcentered \textasteriskcentered \textasteriskcentered   & -0.02     &  0.66\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  &  &  &  &  \\ 
+6. WasteProductivity &  0.03     &  0.09\textasteriskcentered \textasteriskcentered \textasteriskcentered   & -0.03     &  0.56\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.68\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  &  &  &  \\ 
+7. SustainabilityPayLink & -0.05\textasteriskcentered     &  0.07\textasteriskcentered \textasteriskcentered    & -0.08\textasteriskcentered \textasteriskcentered    &  0.07\textasteriskcentered \textasteriskcentered    &  0.14\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.16\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  &  &  \\ 
+8. SustainableThemedCommitment & -0.05\textasteriskcentered     &  0.09\textasteriskcentered \textasteriskcentered \textasteriskcentered   & -0.12\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.24\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.29\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.26\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.49\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  &  \\ 
+9. FirmSize & -0.33\textasteriskcentered \textasteriskcentered \textasteriskcentered   & -0.10\textasteriskcentered \textasteriskcentered \textasteriskcentered   & -0.57\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.07\textasteriskcentered \textasteriskcentered    &  0.08\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.07\textasteriskcentered \textasteriskcentered    &  0.29\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.29\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  &  \\ 
+10. Leverage & -0.06\textasteriskcentered \textasteriskcentered    & -0.13\textasteriskcentered \textasteriskcentered \textasteriskcentered   & -0.02     & -0.01     &  0.00     &  0.00     &  0.00     &  0.00     &  0.03     &  \\ 
+11. NetMargin &  0.39\textasteriskcentered \textasteriskcentered \textasteriskcentered   &  0.07\textasteriskcentered \textasteriskcentered    & -0.02     &  0.02     &  0.00     &  0.00     &  0.03     & -0.05\textasteriskcentered     &  0.08\textasteriskcentered \textasteriskcentered    &  0.02     \\ 
 \hline
 \hline \\[-1.8ex] 
-\textit{Note:}  & \multicolumn{11}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
+\textit{Note:}  & \multicolumn{10}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
 \end{tabular} 
 \end{sidewaystable}
 
