@@ -148,7 +148,7 @@ RaRb <- left_join(Ra, Rb, by = c("date" = "date"))
 CAPM <- RaRb %>%
     tq_performance(Ra = Ra, Rb = Rb, performance_fun = table.CAPM)
 
-
+write.csv2(CAPM, file = "DataBase/StockPrice/AlphaBeta.csv")
 
 ```
 
