@@ -28,6 +28,8 @@ if (!require("xts")) install.packages("xts")
 library(xts) 
 if (!require("PerformanceAnalytics")) install.packages("PerformanceAnalytics")
 library(PerformanceAnalytics) 
+if (!require("tibble")) install.packages("tibble")
+library(tibble) 
 
 # I dowload my ticker's list
 
@@ -47,68 +49,81 @@ Yahoo_AdjClose<- pdfetch_YAHOO(Ticker, fields = "adjclose", from = as.Date("2011
 
 Yahoo_Volume<- pdfetch_YAHOO(Ticker, fields = "volume", from = as.Date("2011-12-01"), interval = "1mo")
 
-# BCR, BHI, CAM, DD, DOW, HLT, INCY, MGM, RAI, SNDK, TWC and YHOO are not listed in both Yahoo (i.e. ajdclose and volume) dataframe. I will have to find another platform to get those data
+# Could not find series 'BF.A'Could not find series 'BRK.A'Could not find series 'DISH�'Could not find series 'HLT�'Could not find series 'INCY�'Could not find series 'MGM�'Could not find series 'SBAC�'
 
+###################################
+####### AdjClose DF ###############
+###################################
+
+StockPrice <- as.data.frame(Yahoo_AdjClose)
+StockPrice1 <- as.data.frame(t(StockPrice))
+StockPrice2 <- rownames_to_column(StockPrice1, var = "Ticker")
+StockPrice3 <- StockPrice2 %>% 
+  gather(Date,AdjClose, 2:81)
+
+###################################
+####### Volume DF #################
+###################################
+
+Volume <- as.data.frame(Yahoo_Volume)
+Volume1 <- as.data.frame(t(Volume))
+Volume2 <- rownames_to_column(Volume1, var = "Ticker")
+
+Volume3 <- Volume2 %>% 
+  gather(Date,Volume, 2:81)
 
 #############################################
 ########### Compounded Return ###############
 #############################################
 
 CompoundedReturn <- Return.calculate(Yahoo_AdjClose, method = "log")
+CompoundedReturn1 <- as.data.frame(t(CompoundedReturn))
+CompoundedReturn2 <- rownames_to_column(CompoundedReturn1, var = "Ticker")
+CompoundedReturn3 <- CompoundedReturn2 %>% 
+  gather(Date,CompoundedReturn, 2:81)
 
-#############################################
-########### Jensen's Alpha ##################
-#############################################
+
+###################################
+####### Merging ###################
+###################################
+
+MarketDb <- cbind(StockPrice3, Volume3, CompoundedReturn3)
+MarketDb1 <- MarketDb[,-c(4,5,7,8)]
+MarketDb1$Date <- as.Date(MarketDb1$Date)
+
+
+#####################################
+####### Rm and Rf ###################
+#####################################
 
 #I dowload the FamaAndFrench DataBase that I get on http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/f-f_factors.html
 
 
 
-FF <- read.table("DataBase/StockPrice/F-F_Research_Data_Factors.txt", header = TRUE, sep = "", stringsAsFactors = FALSE, row.names = NULL, col.names = c("Date","Mkt-RF", "SMB", "HML", "RF"))
+FF <- read.table("DataBase/StockPrice/FF.txt", header = TRUE, sep = "", stringsAsFactors = FALSE, row.names = NULL, col.names = c("Date","Mkt-RF", "SMB", "HML", "RF"))
 
 #The date colone is not well written so I remove it
 FF1 <- FF[,-c(1)]
 
 #I create a monthly date vector
 Date <- seq(as.Date("1926/7/1"), as.Date("2018/02/1"), by = "month")
-D <- seq(ISOdate(1910,1,1), ISOdate(1999,1,1), by = "month")
 
 #I cbind date vector and FF dataframe
 FF2 <- cbind(Date,FF1)
 
-#Fama and French give us Rm-Rf in the Mkt.Rf. I crfeate a column which is Rm
+#Fama and French give us Rm-Rf in the Mkt.Rf. I create a column which is Rm
 
 FF2["Rm"] <- FF2$Mkt.RF + FF2$RF
 
-#I takle rm rf and date in a data frame which I transform into xts object
+#############################################
+########### Jensen's Alpha ##################
+#############################################
 
-FF3 <- FF2[,c("Date", "Rm", "RF")]
-rownames(FF3) <- FF2[,1] #rownames need to be date for converting into xts
-FF4 <- FF3[,c(2,3)]
+#I merge FF2 and MarketDB1 together based on date
 
-FF5 <- as.xts(FF4)
+AlphaJensenData <- merge(MarketDb1, FF2, by = "Date")
 
-# I merge FF5 with CompoundedReturn 
-
-CAPM <- merge.xts(FF5, CompoundedReturn)
-
-#I subset the XTS object considering only the period I want
-
-CAPM1 <- CAPM["2011-12-01/2018-04-01"]  
-
-Rm <- FF2[,c("Rm","Date")]
-rownames(Rm) <- Rm[,2] #rownames need to be date for converting into xts
-RmBis <- Rm[,1]
-
-RmBisBis <- data[]
-Rm1 <- as.xts(Rm)
-Rm2 <- Rm1["2011-12-01/2018-04-01"]
-
-
-
-CompoundedReturn1 <- CompoundedReturn["2011-12-01/2018-02-01"]
-
-Alpha <- CAPM.jensenAlpha(Ra = "CompoundedReturn1", Rb = "Rm1", Rf = 0.2752)
+write.csv2(AlphaJensenData, file = "DataBase/StockPrice/MarketIndicators.csv")
 
 
 ```
