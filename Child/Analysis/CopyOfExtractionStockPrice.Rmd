@@ -25,106 +25,11 @@ if (!require("lubridate")) install.packages("lubridate")
 library(lubridate) 
 
 
-# I dowload my ticker's list
+# I download my ticker's list
 
 Companies <- read.csv2("DataBase/Companies.csv", sep = ";", header = TRUE, stringsAsFactors = FALSE)
 
 Ticker <- Companies$Ticker
-
-
-##################################
-####### Extraction ###############
-##################################
-
-if (!require("pdfetch")) install.packages("pdfetch")
-library(pdfetch) # to web scrap from yahoo
-
-Yahoo_AdjClose<- pdfetch_YAHOO(Ticker, fields = "adjclose", from = as.Date("2011-12-01"), interval = "1mo")
-
-Yahoo_Volume<- pdfetch_YAHOO(Ticker, fields = "volume", from = as.Date("2011-12-01"), interval = "1mo")
-
-# Could not find series 'BF.A'Could not find series 'BRK.A'Could not find series 'DISH�'Could not find series 'HLT�'Could not find series 'INCY�'Could not find series 'MGM�'Could not find series 'SBAC�'
-
-###################################
-####### AdjClose DF ###############
-###################################
-
-StockPrice <- as.data.frame(Yahoo_AdjClose)
-StockPrice1 <- as.data.frame(t(StockPrice))
-StockPrice2 <- rownames_to_column(StockPrice1, var = "Ticker")
-StockPrice3 <- StockPrice2 %>% 
-  gather(Date,AdjClose, 2:81)
-
-###################################
-####### Volume DF #################
-###################################
-
-Volume <- as.data.frame(Yahoo_Volume)
-Volume1 <- as.data.frame(t(Volume))
-Volume2 <- rownames_to_column(Volume1, var = "Ticker")
-
-Volume3 <- Volume2 %>% 
-  gather(Date,Volume, 2:81)
-
-#############################################
-########### Compounded Return ###############
-#############################################
-
-CompoundedReturn <- Return.calculate(Yahoo_AdjClose, method = "log")
-CompoundedReturn1 <- as.data.frame(t(CompoundedReturn))
-CompoundedReturn2 <- rownames_to_column(CompoundedReturn1, var = "Ticker")
-CompoundedReturn3 <- CompoundedReturn2 %>% 
-  gather(Date,CompoundedReturn, 2:81)
-
-
-###################################
-####### Merging ###################
-###################################
-
-MarketDb <- cbind(StockPrice3, Volume3, CompoundedReturn3)
-MarketDb1 <- MarketDb[,-c(4,5,7,8)]
-MarketDb1$Date <- as.Date(MarketDb1$Date)
-
-
-#####################################
-####### Rm and Rf ###################
-#####################################
-
-#I dowload the FamaAndFrench DataBase that I get on http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/f-f_factors.html
-
-
-
-FF <- read.table("DataBase/StockPrice/FF.txt", header = TRUE, sep = "", stringsAsFactors = FALSE, row.names = NULL, col.names = c("Date","Mkt-RF", "SMB", "HML", "RF"))
-
-#The date colone is not well written so I remove it
-FF1 <- FF[,-c(1)]
-
-#I create a monthly date vector
-Date <- seq(as.Date("1926/7/1"), as.Date("2018/02/1"), by = "month")
-
-#I cbind date vector and FF dataframe
-FF2 <- cbind(Date,FF1)
-
-#Fama and French give us Rm-Rf in the Mkt.Rf. I create a column which is Rm
-
-FF2["Rm"] <- FF2$Mkt.RF + FF2$RF
-
-#############################################
-########### Jensen's Alpha ##################
-#############################################
-
-#I merge FF2 and MarketDB1 together based on date
-
-MarketIndicators <- merge(MarketDb1, FF2, by = "Date")
-
-# Now I need to compute the Beta of the CAMP formula which is basically the cov(Ra,Rm)/Var(Rm) with Ra the return of the stock, namely the compounded return and Rm the return of the market. I will use the tidyquant package with the tq_performance function.
-
-
-
-
-
-
-
 
 ###################################################
 ########### TidyQuant Package !! ##################
@@ -289,6 +194,71 @@ colnames(CAPM2) <- c("Ticker", "Date", "Year", "Ra", "Rf", "Rm", "Ra_Rf", "Rm_Rf
 
 CAPM2["AlphaJensen"] <- CAPM2$Ra_Rf - (CAPM2$Beta * CAPM2$Rm_Rf)
 
+write.csv(CAPM2, file = "DataBase/StockPrice/CAPM.csv")
+
+
+#########################################
+####### Mergin with CEP and CFP #########
+#########################################
+
+## Lag 1
+
+# First, I capture the number of the ticker in merging with the companies database
+
+CAPM3 <- merge(CAPM2, Companies, by = "Ticker")
+CAPM4 <- CAPM3[,1:11] 
+
+# Then I merge CEP and the rest of CFP with CAPM
+
+Lag1 <- read.csv2(file = "DataBase/Lag_0.csv", sep = ";", stringsAsFactors = FALSE, header = TRUE)
+Lag1A <- Lag1[,c("Companies",
+                 "YearFinancialIndicator",
+                 "ROA",
+                 "TobinsQ",
+                 "ROE",
+                 "EnergyProductivity",
+                 "CarbonProductivity",
+                 "WaterProductivity",
+                 "WasteProductivity",
+                 "SustainabilityPayLink",
+                 "SustainableThemedCommitment",
+                 "AuditScore",
+                 "FirmSize",
+                 "Leverage",
+                 "NetMargin",
+                 "Industry"
+                 )]
+
+colnames(Lag1A) <- c("Companies",
+                 "Year", #I change the name for merging
+                 "ROA",
+                 "TobinsQ",
+                 "ROE",
+                 "EnergyProductivity",
+                 "CarbonProductivity",
+                 "WaterProductivity",
+                 "WasteProductivity",
+                 "SustainabilityPayLink",
+                 "SustainableThemedCommitment",
+                 "AuditScore",
+                 "FirmSize",
+                 "Leverage",
+                 "NetMargin",
+                 "Industry"
+                 )
+
+CAPM5 <- merge(CAPM4, Lag1A, by = c("Companies", "Year"))
+
+#I reduce the number to the most important variables
+CAPM6 <- CAPM5[,-c(6:9)] #I delete "Rf", "Rm", "Ra_Rf", "Rm_Rf"
+
+write.csv2(CAPM6, file = "DataBase/StockPrice/Lag1_WithCapm.csv")
+
+
+
+####################################################################################
+####################################################################################
+####################################################################################
 
 
 
