@@ -21,6 +21,9 @@ if (!require("tibble")) install.packages("tibble")
 library(tibble) 
 if (!require("tidyquant")) install.packages("tidyquant")
 library(tidyquant) 
+if (!require("lubridate")) install.packages("lubridate")
+library(lubridate) 
+
 
 # I dowload my ticker's list
 
@@ -117,6 +120,12 @@ MarketIndicators <- merge(MarketDb1, FF2, by = "Date")
 # Now I need to compute the Beta of the CAMP formula which is basically the cov(Ra,Rm)/Var(Rm) with Ra the return of the stock, namely the compounded return and Rm the return of the market. I will use the tidyquant package with the tq_performance function.
 
 
+
+
+
+
+
+
 ###################################################
 ########### TidyQuant Package !! ##################
 ###################################################
@@ -124,6 +133,8 @@ MarketIndicators <- merge(MarketDb1, FF2, by = "Date")
 ##################################
 #######Get CompoundedReturn#######
 ##################################
+
+#I extract the monthly compounded return (i.e. r = ln(1+R)) with Ticker = a vector containin my tickers
 
 Ra <- Ticker %>%
   tq_get(get  = "stock.prices",
@@ -136,7 +147,9 @@ Ra <- Ticker %>%
                type       = "log",
                col_rename = "Ra")
 
-# In order to mergeRb with FamaFrench I need to make date column in same format. Here in Ra we have yyyy-mm-dd but dd is not always 01 which is a problem for merging.
+
+# In order to merge Ra with FamaFrench I need to make the date column in the same format. Here in Ra date is like yyyy-mm-dd but dd is not always 01 which is a problem for merging. So I make yyyy-mm-01.
+
 Ra["DayBis"] <- "01"
 
 Ra_1 <- Ra %>%
@@ -148,23 +161,12 @@ Ra_2 <- Ra_1[,c("symbol","date", "Ra")]
 Ra_2$date <- as.Date(Ra_2$date)
 
 
-# Get returns for SP500 as baseline
 
-Rb <- "^GSPC" %>%
-    tq_get(get  = "stock.prices",
-           from = "2010-01-01",
-           to   = "2016-12-31") %>%
-    tq_transmute(select     = adjusted, 
-               mutate_fun = periodReturn, 
-               period     = "monthly",
-               type       = "log",
-               col_rename = "Rb")
+##########################################
+####### Get FAMA FRENCH Database #########
+##########################################
 
-
-##################################
-#######Get FAMA FRENCH Db#########
-##################################
-
+# I dowload the FamaAndFrench DataBase that I get on http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/f-f_factors.html
 
 FF <- read.table("DataBase/StockPrice/FF.txt", header = TRUE, sep = "", stringsAsFactors = FALSE, row.names = NULL, col.names = c("date","Mkt-RF", "SMB", "HML", "RF"))
 
@@ -182,7 +184,6 @@ FF2 <- cbind(date,FF1)
 FamaFrench <- FF2  %>%
     select(date, Mkt.RF, RF)
 
-
 # Value in FamaFrench are in %, I need to divide by 100
 
 FamaFrench1 <- FamaFrench %>%
@@ -191,31 +192,105 @@ FamaFrench1 <- FamaFrench %>%
 
 FamaFrench2 <- FamaFrench1[,c("date", "RF_Base100", "Mkt.RF_Base100")]
 
-#Merge FamaFrench et Ra
+#Merge FamaFrench and Ra
 
 joined_data <- merge(Ra_2, FamaFrench2, by = "date")
 
-#Remembering that the left side of the CAPM formula is stock return minus the risk free rate, I calculate that as well.
+
+#Remembering that the left side of the CAPM formula is stock return minus the risk free rate, I calculate that as well. Besides for comuting my beta, I will need the Rm. I make a Rm column
 
 joined_data["Ra-Rf"] <- joined_data$Ra - joined_data$RF_Base100
+joined_data["Rm"] <- joined_data$Mkt.RF_Base100 + joined_data$RF_Base100
 
-##################################
-####### Rolling CAPM #########
-##################################
-
-
-
+#group and arrange by symbol
+joined_data1 <- joined_data %>% group_by(symbol)
+joined_data2 <- joined_data1 %>% arrange(symbol) %>% group_by(symbol)
 
 
+######################
+####### Beta #########
+######################
 
-# Merge stock returns with baseline
-RaRb <- left_join(Ra, Rb, by = c("date" = "date"))
+# I split joined_data2 by year
+# create a year column
 
-# Compute CAPM
-CAPM <- RaRb %>%
-    tq_performance(Ra = Ra, Rb = Rb, performance_fun = table.CAPM)
+joined_data2$year <- year(joined_data2$date)
 
-write.csv2(CAPM, file = "DataBase/StockPrice/AlphaBeta.csv")
+JoinedData2010 <- subset(joined_data2, joined_data2$year == 2010)
+JoinedData2011 <- subset(joined_data2, joined_data2$year == 2011)
+JoinedData2012 <- subset(joined_data2, joined_data2$year == 2012)
+JoinedData2013 <- subset(joined_data2, joined_data2$year == 2013)
+JoinedData2014 <- subset(joined_data2, joined_data2$year == 2014)
+JoinedData2015 <- subset(joined_data2, joined_data2$year == 2015)
+JoinedData2016 <- subset(joined_data2, joined_data2$year == 2016)
+
+
+#### compute Beta 
+
+Beta2010 <- JoinedData2010 %>%
+  group_by(symbol) %>%
+  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
+Beta2011 <- JoinedData2010 %>%
+  group_by(symbol) %>%
+  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
+Beta2012 <- JoinedData2010 %>%
+  group_by(symbol) %>%
+  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
+Beta2013 <- JoinedData2010 %>%
+  group_by(symbol) %>%
+  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
+Beta2014 <- JoinedData2010 %>%
+  group_by(symbol) %>%
+  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
+Beta2015 <- JoinedData2010 %>%
+  group_by(symbol) %>%
+  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
+Beta2016 <- JoinedData2010 %>%
+  group_by(symbol) %>%
+  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
+
+
+
+# Each BetaYYYY contains two columns : symbol + Beta. I add a year column
+
+Beta2010["year"] <- 2010
+Beta2011["year"] <- 2011
+Beta2012["year"] <- 2012
+Beta2013["year"] <- 2013
+Beta2014["year"] <- 2014
+Beta2015["year"] <- 2015
+Beta2016["year"] <- 2016
+
+# I rbind BetaYYYY (I do not take 2010 because FLT symbol had some missing values)
+
+Beta <- rbind(Beta2011, Beta2012, Beta2013, Beta2014, Beta2015, Beta2016)
+colnames(Beta) <- c("symbol", "Beta", "year")
+
+#I need to merge Beta with joined_data2. As joined_data2 is groupped by symbol, I do the same with Beta
+
+Beta1 <- Beta %>%
+  group_by(symbol)
+
+CAPM <- merge(Beta1, joined_data2, by = c("symbol", "year"))
+write.csv2(CapmMonthly, file = "DataBase/StockPrice/Capm.csv")
+
+# I select date that I need for my sample, namely 2012:2016-01-12
+
+CAPM$month <- month(CAPM$date)
+CAPM1 <- CAPM %>% subset(month == 12)
+
+CAPM2 <- CAPM1[ , c("symbol", "date", "year", "Ra", "RF_Base100", "Rm", "Ra-Rf", "Mkt.RF_Base100", "Beta")]
+colnames(CAPM2) <- c("Ticker", "Date", "Year", "Ra", "Rf", "Rm", "Ra_Rf", "Rm_Rf", "Beta")
+
+
+################################
+####### Jensen's Alpha #########
+################################
+
+CAPM2["AlphaJensen"] <- CAPM2$Ra_Rf - (CAPM2$Beta * CAPM2$Rm_Rf)
+
+
+
 
 ```
 
