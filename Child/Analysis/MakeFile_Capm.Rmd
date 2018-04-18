@@ -121,8 +121,7 @@ joined_data2 <- joined_data1 %>% arrange(symbol) %>% group_by(symbol)
 
 joined_data2$year <- year(joined_data2$date)
 
-JoinedData2010 <- subset(joined_data2, joined_data2$year == 2010)
-JoinedData2011 <- subset(joined_data2, joined_data2$year == 2011)
+
 JoinedData2012 <- subset(joined_data2, joined_data2$year == 2012)
 JoinedData2013 <- subset(joined_data2, joined_data2$year == 2013)
 JoinedData2014 <- subset(joined_data2, joined_data2$year == 2014)
@@ -132,25 +131,20 @@ JoinedData2016 <- subset(joined_data2, joined_data2$year == 2016)
 
 #### compute Beta 
 
-Beta2010 <- JoinedData2010 %>%
+
+Beta2012 <- JoinedData2012 %>%
   group_by(symbol) %>%
   tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
-Beta2011 <- JoinedData2010 %>%
+Beta2013 <- JoinedData2013 %>%
   group_by(symbol) %>%
   tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
-Beta2012 <- JoinedData2010 %>%
+Beta2014 <- JoinedData2014 %>%
   group_by(symbol) %>%
   tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
-Beta2013 <- JoinedData2010 %>%
+Beta2015 <- JoinedData2015 %>%
   group_by(symbol) %>%
   tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
-Beta2014 <- JoinedData2010 %>%
-  group_by(symbol) %>%
-  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
-Beta2015 <- JoinedData2010 %>%
-  group_by(symbol) %>%
-  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
-Beta2016 <- JoinedData2010 %>%
+Beta2016 <- JoinedData2016 %>%
   group_by(symbol) %>%
   tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
 
@@ -158,8 +152,6 @@ Beta2016 <- JoinedData2010 %>%
 
 # Each BetaYYYY contains two columns : symbol + Beta. I add a year column
 
-Beta2010["year"] <- 2010
-Beta2011["year"] <- 2011
 Beta2012["year"] <- 2012
 Beta2013["year"] <- 2013
 Beta2014["year"] <- 2014
@@ -168,7 +160,7 @@ Beta2016["year"] <- 2016
 
 # I rbind BetaYYYY (I do not take 2010 because FLT symbol had some missing values)
 
-Beta <- rbind(Beta2011, Beta2012, Beta2013, Beta2014, Beta2015, Beta2016)
+Beta <- rbind(Beta2012, Beta2013, Beta2014, Beta2015, Beta2016)
 colnames(Beta) <- c("symbol", "Beta", "year")
 
 #I need to merge Beta with joined_data2. As joined_data2 is groupped by symbol, I do the same with Beta
@@ -177,7 +169,6 @@ Beta1 <- Beta %>%
   group_by(symbol)
 
 CAPM <- merge(Beta1, joined_data2, by = c("symbol", "year"))
-write.csv2(CapmMonthly, file = "DataBase/StockPrice/Capm.csv")
 
 # I select date that I need for my sample, namely 2012:2016-01-12
 
@@ -194,7 +185,127 @@ colnames(CAPM2) <- c("Ticker", "Date", "Year", "Ra", "Rf", "Rm", "Ra_Rf", "Rm_Rf
 
 CAPM2["AlphaJensen"] <- CAPM2$Ra_Rf - (CAPM2$Beta * CAPM2$Rm_Rf)
 
-write.csv(CAPM2, file = "DataBase/StockPrice/CAPM.csv")
+
+
+
+
+####################################################################################
+####################################################################################
+####################################################################################
+
+# I have 37 tickers which are missing in CAPM2, I will try to find a way to compltte with an other way. I create a vector called Missing which contains missing tickers
+
+Missing <- setdiff(Ticker, CAPM6$Ticker)
+
+library(quantmod)
+av_api_key("3ATNNTVDV4K2KIOB")
+
+Missing1 <- Missing %>% 
+  tq_get(get = "alphavantager", av_fun = "TIME_SERIES_MONTHLY")
+
+#I create a year columns and select only 2012-2016 
+
+Missing1$year <- year(Missing1$timestamp)
+Missing2 <- Missing1 %>% subset(year >2011)
+
+
+#I compute Compounded Returns
+
+ReturnMissing <- Missing2 %>%
+    group_by(symbol) %>%
+    tq_transmute(select     = close, 
+                 mutate_fun = periodReturn, 
+                 period     = "monthly", 
+                 type = "log",
+                 col_rename = "Ra")
+
+#I create month and year columns to both FamaFrench2 and ReturnMissing
+
+ReturnMissing$year <- year(ReturnMissing$timestamp)
+ReturnMissing$month <- month(ReturnMissing$timestamp)
+
+FamaFrench2$year <- year(FamaFrench2$date)
+FamaFrench2$month <- month(FamaFrench2$date)
+
+#I merge both
+
+Merge <- merge(ReturnMissing, FamaFrench2, by = c("year", "month"))
+Merge["Rm"] <- Merge$Mkt.RF_Base100 + Merge$RF_Base100
+Merge["Ra-Rf"] <- Merge$Ra - Merge$RF_Base100
+#I compute Beta
+
+
+Merge2012 <- subset(Merge, Merge$year == 2012)
+Merge2013 <- subset(Merge, Merge$year == 2013)
+Merge2014 <- subset(Merge, Merge$year == 2014)
+Merge2015 <- subset(Merge, Merge$year == 2015)
+Merge2016 <- subset(Merge, Merge$year == 2016)
+
+
+
+beta2012 <- Merge2012 %>%
+  group_by(symbol) %>%
+  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
+beta2013 <- Merge2013 %>%
+  group_by(symbol) %>%
+  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
+beta2014 <- Merge2014 %>%
+  group_by(symbol) %>%
+  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
+beta2015 <- Merge2015 %>%
+  group_by(symbol) %>%
+  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
+beta2016 <- Merge2016 %>%
+  group_by(symbol) %>%
+  tq_performance(Ra = Ra, Rb = Rm, performance_fun = CAPM.beta)
+
+
+
+# Each BetaYYYY contains two columns : symbol + Beta. I add a year column
+
+beta2012["year"] <- 2012
+beta2013["year"] <- 2013
+beta2014["year"] <- 2014
+beta2015["year"] <- 2015
+beta2016["year"] <- 2016
+
+# I rbind BetaYYYY 
+
+beta <- rbind(beta2012, beta2013, beta2014, beta2015, beta2016)
+colnames(Beta) <- c("symbol", "Beta", "year")
+
+#I merge beta and Merge
+
+beta1 <- beta %>%
+  group_by(symbol)
+
+capm <- merge(beta1, Merge, by = c("symbol", "year"))
+
+
+# I select date that I need for my sample, namely 2012:2016-01-12
+
+capm$month <- month(capm$date)
+capm1 <- capm %>% subset(month == 12)
+
+capm2 <- capm1[ , c("symbol", "date", "year", "Ra", "RF_Base100", "Rm", "Ra-Rf", "Mkt.RF_Base100", "CAPM.beta.1")]
+colnames(capm2) <- c("Ticker", "Date", "Year", "Ra", "Rf", "Rm", "Ra_Rf", "Rm_Rf", "Beta")
+
+
+################################
+####### Jensen's Alpha #########
+################################
+
+capm2["AlphaJensen"] <- capm2$Ra_Rf - (capm2$Beta * capm2$Rm_Rf)
+
+
+#######################################
+####### Rbind capm2 and CAPM2 #########
+#######################################
+
+FinalCapm <- rbind(capm2, CAPM2)
+write.csv(FinalCapm, file = "DataBase/StockPrice/CAPM.csv")
+
+
 
 
 #########################################
@@ -205,8 +316,8 @@ write.csv(CAPM2, file = "DataBase/StockPrice/CAPM.csv")
 
 # First, I capture the number of the ticker in merging with the companies database
 
-CAPM3 <- merge(CAPM2, Companies, by = "Ticker")
-CAPM4 <- CAPM3[,1:11] 
+FinalCapm1 <- merge(FinalCapm, Companies, by = "Ticker")
+FinalCapm2 <- FinalCapm1[,1:11]
 
 # Then I merge CEP and the rest of CFP with CAPM
 
@@ -247,20 +358,22 @@ colnames(Lag1A) <- c("Companies",
                  "Industry"
                  )
 
-CAPM5 <- merge(CAPM4, Lag1A, by = c("Companies", "Year"))
+FinalCapm3 <- merge(FinalCapm2, Lag1A, by = c("Companies", "Year"))
 
 #I reduce the number to the most important variables
-CAPM6 <- CAPM5[,-c(6:9)] #I delete "Rf", "Rm", "Ra_Rf", "Rm_Rf"
+FinalCapm4 <- FinalCapm3[,-c(6:9)] #I delete "Rf", "Rm", "Ra_Rf", "Rm_Rf"
 
-write.csv2(CAPM6, file = "DataBase/Lag1_WithCapm.csv")
-
-
-
-####################################################################################
-####################################################################################
-####################################################################################
+write.csv2(FinalCapm4, file = "DataBase/Lag1_WithCapm.csv")
 
 
 
+
+
+
+
+
+
+#Still 31 missing tickers 
+StillMissing <- setdiff(Missing, Missing2$symbol)
 ```
 
