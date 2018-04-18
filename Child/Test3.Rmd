@@ -1,0 +1,369 @@
+---
+output:
+  pdf_document
+---
+
+## Appendix A : Outliers {-}
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, error = FALSE,  results='asis'}
+
+#############################################################
+#############################################################
+############## Package and DataBase loading #################
+#############################################################
+#############################################################
+
+rm(list=ls()) #Removes all items in the environment!
+
+#Packages
+if (!require("utils")) install.packages("utils")
+if (!require("dplyr")) install.packages("dplyr")
+if (!require("plm")) install.packages("plm")
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer) # to create wonderful tables
+library(plm) #to carry out regression
+library(utils) #to write database in my folders
+library(dplyr) #to play with data
+
+#Database
+DB_Lag1<-as.data.frame(read.csv2("Analysis/DataBase/Lag1_WithCapm.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE , row = NULL))
+
+```
+
+First I measure the cook's distance of my models. Observations that have a cook’s distance greater than 4 times the mean are considered as influential and are summarized in figures \ref{OutliersRoa}, \ref{OutliersTobinsQ} and \ref{OutliersRoe}. 
+
+
+
+
+<!--Secondly, in order to detect the influence of those outliers, I use the function *outlierTest* from the *car* package [@Fox2012]. This function reports the Bonferroni p-values for Studentized residuals in linear and generalized linear models, based on a t-test for linear models and normal-distribution test for generalized linear models. -->
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
+
+#############################################################
+#############################################################
+######## Model without EnergyProductivity as VIF = 5 ########
+#############################################################
+#############################################################
+
+
+#####################################
+######### Cooks Distance ############
+#####################################
+
+# I define my models in lm as cooks.distance do not support plm object
+Roa <-lm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen , data = DB_Lag1)
+
+TobinsQ<-lm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen , data = DB_Lag1)
+
+Roe <- lm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry+ AlphaJensen , data = DB_Lag1)
+
+Jensen <- lm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + Beta , data = DB_Lag1)
+
+Return <- lm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen , data = DB_Lag1)
+
+## I calculate my cooks distance (i.e. D)
+cooksdRoa <- cooks.distance(Roa)
+cooksdTobinsQ <- cooks.distance(TobinsQ)
+cooksdRoe <- cooks.distance(Roe)
+cooksdJensen <- cooks.distance(Jensen)
+cooksdReturn <- cooks.distance(Return)
+
+## I extract rows considered as influential (observations whose D > 4 * means)
+
+influentialRoa <- as.numeric(names(cooksdRoa)[(cooksdRoa > 4*mean(cooksdRoa, na.rm=T))])  
+influentialTobin <- as.numeric(names(cooksdTobinsQ)[(cooksdTobinsQ > 4*mean(cooksdTobinsQ, na.rm=T))])  
+influentialRoe <- as.numeric(names(cooksdRoe)[(cooksdRoe > 4*mean(cooksdRoe, na.rm=T))])  
+influentialJensen <- as.numeric(names(cooksdJensen)[(cooksdJensen > 4*mean(cooksdJensen, na.rm=T))])  
+InfluentialReturn <- as.numeric(names(cooksdReturn)[(cooksdReturn > 4*mean(cooksdReturn, na.rm=T))])  
+
+
+head(DB_Lag1[influentialRoa, ])  # influential observations 
+head(DB_Lag1[influentialTobin, ])  # influential observations 
+head(DB_Lag1[influentialRoe, ])  # influential observations 
+head(DB_Lag1[influentialJensen, ])  # influential observations 
+head(DB_Lag1[InfluentialReturn, ])  # influential observations
+
+#I remove outliers and create three new data frames that I write in my folders
+
+DB_TobinsQ_NoOut <- DB_Lag1[-c(influentialTobin),]
+write.csv2(DB_TobinsQ_NoOut, file = "Analysis/DataBase/NoOutliers/Tobins_Lag1_NoOut.csv")
+
+DB_Roa_NoOut <- DB_Lag1[-c(influentialRoa),]
+write.csv2(DB_Roa_NoOut, file = "Analysis/DataBase/NoOutliers/Roa_Lag1_NoOut.csv")
+
+DB_Roe_NoOut <- DB_Lag1[-c(influentialRoe),]
+write.csv2(DB_Roe_NoOut, file = "Analysis/DataBase/NoOutliers/Roe_Lag1_NoOut.csv")
+
+DB_Jensen_NoOut <- DB_Lag1[-c(influentialJensen),]
+write.csv2(DB_Jensen_NoOut, file = "Analysis/DataBase/NoOutliers/Jensen_Lag1_NoOut.csv")
+
+DB_Return_NoOut <- DB_Lag1[-c(InfluentialReturn),]
+write.csv2(DB_Return_NoOut, file = "Analysis/DataBase/NoOutliers/Return_Lag1_NoOut.csv")
+
+#########################################################
+######### Plm vith new dataset (no outliers) ############
+#########################################################
+
+#############################
+###### Model 1 : ROA ########
+#############################
+
+#Model 1 with outliers with EnergyProductivity
+Roa1<-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + EnergyProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen , data = DB_Lag1, index = c("Companies", "Year"), model = "random") 
+
+#Model 1 without outliers with EnergyProductivity
+Roa2 <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + EnergyProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen  , data = DB_Roa_NoOut, index = c("Companies", "Year"), model = "random") 
+
+#Model 1 with outliers without EnergyProductivity
+Roa3 <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen , data = DB_Lag1, index = c("Companies", "Year"), model = "random") 
+
+#Model 1 without outliers without EnergyProductivity
+Roa4 <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen  , data = DB_Roa_NoOut, index = c("Companies", "Year"), model = "random") 
+
+#Model process-based CEP without outliers
+
+Roa5 <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + Leverage + NetMargin + FirmSize + Industry + AlphaJensen  , data = DB_Roa_NoOut, index = c("Companies", "Year"), model = "random") 
+
+#Model outcome-based CEP without outliers
+
+Roa6 <- plm(ROA ~ CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen  , data = DB_Roa_NoOut, index = c("Companies", "Year"), model = "random")
+
+#############################
+#### Model 2 : Tobin's Q ####
+#############################
+
+#Mode2 with outliers
+Tobins1 <- plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen , data = DB_Lag1, index = c("Companies", "Year"), model = "random")
+
+#Mode2 without the 40 outliers from Tobin's Q
+Tobins3 <-plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen , data = DB_TobinsQ_NoOut, index = c("Companies", "Year"), model = "random")
+
+#############################
+###### Model 3 : ROE ########
+#############################
+
+#Mode3 with outliers
+Roe1<-plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen , data = DB_Lag1, index = c("Companies", "Year"), model = "random") 
+
+#Model3 without the 38 outliers from ROE
+Roe2 <-plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen , data = DB_Roe_NoOut, index = c("Companies", "Year"), model = "random") 
+
+################################
+###### Model 4 : Jensen ########
+################################
+
+#Mode4 with outliers
+Jensen1<-plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + Beta , data = DB_Lag1, index = c("Companies", "Year"), model = "random") 
+
+#Model4 without outliers 
+Jensen2 <-plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + Beta , data = DB_Jensen_NoOut, index = c("Companies", "Year"), model = "random") 
+
+################################
+###### Model 5 : Return ########
+################################
+
+#Model5 with outliers
+Return1<-plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen , data = DB_Lag1, index = c("Companies", "Year"), model = "random") 
+
+#Model5 without outliers 
+Return2 <-plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen , data = DB_Return_NoOut, index = c("Companies", "Year"), model = "random") 
+
+#########################################################
+######### My Stargazer's friend do the rest #############
+#########################################################
+
+
+TableRoaEn <- stargazer(Roa1, Roa2, type="latex", label = "Roa1", title = "Model 1 - Energy", header = FALSE)
+
+TableRoaNoEn <- stargazer(Roa3, Roa4, type="latex", label = "Roa2", title = "Model 1 - No Energy", header = FALSE)
+
+TableRoaShort1 <- stargazer(Roa5, type="latex", label = "Roa3", title = "Model 1 - Short Version", header = FALSE)
+
+TableRoaShort2 <- stargazer(Roa6, type="latex", label = "Roa4", title = "Model 1 - Short Version", header = FALSE)
+
+TableTobinsQ <- stargazer(Tobins1, Tobins3, type="latex", label = "Tobin", title = "Model 2 - Comparaison with and without outliers", header = FALSE)
+
+TableRoe <- stargazer(Roe1, Roe2, type="latex", label = "Roe", title = "Model 3 - Comparaison with and without outliers", header = FALSE)
+
+TableJensen <- stargazer(Jensen1, Jensen2, type="latex", label = "Jensen", title = "Model 4 - Comparaison with and without outliers", header = FALSE)
+
+TablkeReturn <- stargazer(Return1, Return2, type="latex", label = "Return", title = "Model 5 - Comparaison with and without outliers", header = FALSE)
+```
+
+
+
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
+####################################
+######### Hausman Test #############
+####################################
+
+
+
+#Model without the 2 outliers from ROA
+Roa2_Fixed <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen  , data = DB_Roa_NoOut, index = c("Companies", "Year"), model = "within") 
+
+#Mode2 without the 40 outliers from Tobin's Q
+Tobins3_Fixed <-plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen , data = DB_TobinsQ_NoOut, index = c("Companies", "Year"), model = "within")
+
+#Model3 without the 38 outliers from ROE
+Roe2_Fixed <-plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen  , data = DB_Roe_NoOut, index = c("Companies", "Year"), model = "within") 
+
+#Model4 without outliers 
+Jensen2_Fixed <-plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + Beta  , data = DB_Jensen_NoOut, index = c("Companies", "Year"), model = "within") 
+
+#Model5 without outliers 
+Return2_Fixed <-plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen  , data = DB_Return_NoOut, index = c("Companies", "Year"), model = "within") 
+
+
+
+
+HausmannRoa <-  cbind("Model 1 without outliers",round(phtest(Roa2_Fixed,Roa2)$p.value,4))
+HausmannTobinsQ <-  cbind("Model 2 without outliers",round(phtest(Tobins3_Fixed,Tobins3)$p.value,4))
+HausmannRoe <-  cbind("Model 3 without outliers",round(phtest(Roe2_Fixed,Roe2)$p.value,4))
+HausmannJensen <-  cbind("Model 4 without outliers",round(phtest(Jensen2_Fixed,Jensen2)$p.value,4))
+HausmannReturn <-  cbind("Model 5 without outliers",round(phtest(Return2_Fixed,Return2)$p.value,4))
+
+
+
+HausmanTable <- rbind(HausmannRoa, HausmannTobinsQ, HausmannRoe, HausmannJensen, HausmannReturn)
+colnames(HausmanTable) <- c("Model","P-Value")
+
+stargazer(HausmanTable, summary = FALSE, table.placement = "h", type="latex", label = "Hausman", title = "Hausman Test PValue", header = FALSE)
+
+#######################################################
+######### Vizualisation Fixed Effect Test #############
+#######################################################
+
+stargazer(Roa2_Fixed, Tobins3_Fixed, Roe2_Fixed, summary = FALSE, table.placement = "h", type="latex", label = "Fix", title = "Fixed Effect Model - NoOutlier NoEnergy (1/2)", header = FALSE)
+
+stargazer(Jensen2_Fixed, Return2_Fixed, summary = FALSE, table.placement = "h", type="latex", label = "Fix2", title = "Fixed Effect Model - NoOutlier NoEnergy (2/2)", header = FALSE)
+
+
+
+```
+
+
+
+
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'hide'}
+
+#############################################################
+######### Tests for individual and time effects #############
+#############################################################
+
+#I need pooling Model for this test
+
+#Model without the 2 outliers from ROA
+Roa2_Pooling <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen  , data = DB_Roa_NoOut, index = c("Companies", "Year"), model = "pooling") 
+
+#Mode2 without the 40 outliers from Tobin's Q
+Tobins3_Pooling <-plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen , data = DB_TobinsQ_NoOut, index = c("Companies", "Year"), model = "pooling")
+
+#Model3 without the 38 outliers from ROE
+Roe2_Pooling <-plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + AlphaJensen  , data = DB_Roe_NoOut, index = c("Companies", "Year"), model = "pooling") 
+
+# PlmTest
+
+PlmTestRoa <- cbind("Model 1 without outliers",round(plmtest(Roa2_Pooling, effect = "twoways", type = "bp")$p.value,4))
+PlmTestTobinsQ <- cbind("Model 2 without outliers",round(plmtest(Tobins3_Pooling, effect = "twoways", type = "bp")$p.value,4))
+PlmTestRoe <- cbind("Model 3 without outliers",round(plmtest(Roe2_Pooling, effect = "twoways", type = "bp")$p.value,4))
+
+PlmTestTable <- rbind(PlmTestRoa, PlmTestTobinsQ, PlmTestRoe)
+colnames(PlmTestTable) <- c("Model","P-Value")
+
+stargazer(PlmTestTable, summary = FALSE, table.placement = "h", type="latex", label = "PlmTest", title = "Twoways effect Test PValue", header = FALSE)
+
+################################################################
+######### Twoways effect significant - Redo models #############
+################################################################
+
+########Something goes wrong....
+
+#Pvalue < 0.05 then twoway effect is significant and I add twoway effect to my models
+
+#Model without the 2 outliers from ROA
+#Roa2_Twoways <-plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + Beta  , data = DB_Roa_NoOut, index = c("Companies", "Year"), model = "random", effect = "twoways") 
+
+#Mode2 without the 40 outliers from Tobin's Q
+#Tobins3_Twoways <-plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + Beta , data = DB_TobinsQ_NoOut, index = c("Companies", "Year"), model = "random")
+
+#Model3 without the 38 outliers from ROE
+#Roe2_Twoways <-plm(ROE ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry + Beta  , data = DB_Roe_NoOut, index = c("Companies", "Year"), model = "random", effect = "twoways") 
+
+#stargazer(Roa2_Twoways, Tobins3_Twoways, Roe2_Twoways, summary = FALSE, table.placement = "h", type="latex", label = "TwoWays", title = "Model with twoways effect (NoOutliers and NoEnergy)", header = FALSE)
+
+```
+
+
+
+
+\begin{figure}[ht]
+\caption{Observations considered as outliers in model 1 (i.e. Roa)}
+\label{OutliersRoa}
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
+
+#Model Roa
+## I summarise on a graph, those observations that have a cook’s distance greater than 4 times the mean and which may be considered as outliers
+plot(cooksdRoa, pch="*", cex=2)  # plot cook's distance
+abline(h = 4*mean(cooksdRoa, na.rm=T), col="red")  # add cutoff line
+text(x=1:length(cooksdRoa)+1, y=cooksdRoa, labels=ifelse(cooksdRoa>4*mean(cooksdRoa, na.rm=T),names(cooksdRoa),""), col="red")  # add labels
+```
+\end{figure}
+
+
+
+\begin{figure}[ht]
+\caption{Observations considered as outliers in model 2 (i.e. Tobin's Q)}
+\label{OutliersTobinsQ}
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
+
+
+#Model TobinsQ
+plot(cooksdTobinsQ, pch="*", cex=2)  
+
+abline(h = 4*mean(cooksdTobinsQ, na.rm=T), col="red")  # add cutoff line
+text(x=1:length(cooksdTobinsQ)+1, y=cooksdTobinsQ, labels=ifelse(cooksdTobinsQ>4*mean(cooksdTobinsQ, na.rm=T),names(cooksdTobinsQ),""), col="red")  # add labels
+
+```
+\end{figure}
+
+
+\begin{figure}[ht]
+\caption{Observations considered as outliers in model 1 (i.e. Roe)}
+\label{OutliersRoe}
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
+
+#Model Roe
+## I summarise on a graph, those observations that have a cook’s distance greater than 4 times the mean and which may be considered as outliers
+plot(cooksdRoe, pch="*", cex=2)  # plot cook's distance
+abline(h = 4*mean(cooksdRoe, na.rm=T), col="red")  # add cutoff line
+text(x=1:length(cooksdRoe)+1, y=cooksdRoe, labels=ifelse(cooksdRoe>4*mean(cooksdRoe, na.rm=T),names(cooksdRoe),""), col="red")  # add labels
+```
+\end{figure}
+
+
+\begin{figure}[ht]
+\caption{Observations considered as outliers in model 4 (i.e. Jensen's Alpha)}
+\label{OutliersJensen}
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
+
+#Model Jensen
+## I summarise on a graph, those observations that have a cook’s distance greater than 4 times the mean and which may be considered as outliers
+plot(cooksdJensen, pch="*", cex=2)  # plot cook's distance
+abline(h = 4*mean(cooksdJensen, na.rm=T), col="red")  # add cutoff line
+text(x=1:length(cooksdJensen)+1, y=cooksdJensen, labels=ifelse(cooksdJensen>4*mean(cooksdJensen, na.rm=T),names(cooksdJensen),""), col="red")  # add labels
+```
+\end{figure}
+
+\begin{figure}[ht]
+\caption{Observations considered as outliers in model 5 (i.e.Compounded Returns)}
+\label{OutliersReturn}
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
+
+#Model Jensen
+## I summarise on a graph, those observations that have a cook’s distance greater than 4 times the mean and which may be considered as outliers
+plot(cooksdReturn, pch="*", cex=2)  # plot cook's distance
+abline(h = 4*mean(cooksdReturn, na.rm=T), col="red")  # add cutoff line
+text(x=1:length(cooksdReturn)+1, y=cooksdReturn, labels=ifelse(cooksdReturn>4*mean(cooksdReturn, na.rm=T),names(cooksdReturn),""), col="red")  # add labels
+```
+\end{figure}
