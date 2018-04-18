@@ -121,7 +121,10 @@ MarketIndicators <- merge(MarketDb1, FF2, by = "Date")
 ########### TidyQuant Package !! ##################
 ###################################################
 
-# Define Stock Return
+##################################
+#######Get CompoundedReturn#######
+##################################
+
 Ra <- Ticker %>%
   tq_get(get  = "stock.prices",
          from = "2010-01-01",
@@ -129,16 +132,80 @@ Ra <- Ticker %>%
   group_by(symbol) %>%
   tq_transmute(select     = adjusted, 
                mutate_fun = periodReturn, 
-               period     = "monthly", 
+               period     = "monthly",
+               type       = "log",
                col_rename = "Ra")
+
+# In order to mergeRb with FamaFrench I need to make date column in same format. Here in Ra we have yyyy-mm-dd but dd is not always 01 which is a problem for merging.
+Ra["DayBis"] <- "01"
+
+Ra_1 <- Ra %>%
+  separate(col = "date", into = c("Year", "Month", "Day"), sep = "-") %>%
+  unite(col = "date", Year, Month, DayBis, sep = "-")
+
+Ra_2 <- Ra_1[,c("symbol","date", "Ra")]
+
+Ra_2$date <- as.Date(Ra_2$date)
 
 
 # Get returns for SP500 as baseline
+
 Rb <- "^GSPC" %>%
     tq_get(get  = "stock.prices",
            from = "2010-01-01",
            to   = "2016-12-31") %>%
-    tq_transmute(adjusted, periodReturn, period = "monthly", col_rename = "Rb")
+    tq_transmute(select     = adjusted, 
+               mutate_fun = periodReturn, 
+               period     = "monthly",
+               type       = "log",
+               col_rename = "Rb")
+
+
+##################################
+#######Get FAMA FRENCH Db#########
+##################################
+
+
+FF <- read.table("DataBase/StockPrice/FF.txt", header = TRUE, sep = "", stringsAsFactors = FALSE, row.names = NULL, col.names = c("date","Mkt-RF", "SMB", "HML", "RF"))
+
+#The date colone is not well written so I remove it
+FF1 <- FF[,-c(1)]
+
+#I create a monthly date vector
+date <- seq(as.Date("1926/7/1"), as.Date("2018/02/1"), by = "month")
+
+#I cbind date vector and FF dataframe
+FF2 <- cbind(date,FF1)
+
+#I only need two columns for the CAPM analysis, mkt.rf and rf, so let’s select them.
+
+FamaFrench <- FF2  %>%
+    select(date, Mkt.RF, RF)
+
+
+# Value in FamaFrench are in %, I need to divide by 100
+
+FamaFrench1 <- FamaFrench %>%
+  transform(RF_Base100 = RF/100) %>%
+  transform(Mkt.RF_Base100 = Mkt.RF/100)
+
+FamaFrench2 <- FamaFrench1[,c("date", "RF_Base100", "Mkt.RF_Base100")]
+
+#Merge FamaFrench et Ra
+
+joined_data <- merge(Ra_2, FamaFrench2, by = "date")
+
+#Remembering that the left side of the CAPM formula is stock return minus the risk free rate, I calculate that as well.
+
+joined_data["Ra-Rf"] <- joined_data$Ra - joined_data$RF_Base100
+
+##################################
+####### Rolling CAPM #########
+##################################
+
+
+
+
 
 
 # Merge stock returns with baseline
