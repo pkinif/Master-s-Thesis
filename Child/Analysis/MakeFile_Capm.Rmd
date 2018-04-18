@@ -363,7 +363,13 @@ FinalCapm3 <- merge(FinalCapm2, Lag1A, by = c("Companies", "Year"))
 #I reduce the number to the most important variables
 FinalCapm4 <- FinalCapm3[,-c(6:9)] #I delete "Rf", "Rm", "Ra_Rf", "Rm_Rf"
 
-write.csv2(FinalCapm4, file = "DataBase/Lag1_WithCapm.csv")
+ABBV <- FinalCapm4[FinalCapm4$Ticker == "ABBV",]
+ABBV1 <- ABBV[1:3,]
+
+FinalCapm5 <- FinalCapm4[!FinalCapm4$Ticker == "ABBV",]
+FinalCapm6 <- as.data.frame(rbind(FinalCapm5, ABBV1))
+
+write.csv2(FinalCapm6, file = "DataBase/Lag1_WithCapm.csv")
 
 
 
@@ -373,7 +379,7 @@ write.csv2(FinalCapm4, file = "DataBase/Lag1_WithCapm.csv")
 
 
 
-#Still 31 missing tickers 
-StillMissing <- setdiff(Missing, Missing2$symbol)
+#Still 27 missing tickers 
+StillMissing <- setdiff(Ticker, FinalCapm6$Ticker)
 ```
 
