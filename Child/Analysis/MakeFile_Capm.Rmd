@@ -210,7 +210,7 @@ CAPM4 <- CAPM3[,1:11]
 
 # Then I merge CEP and the rest of CFP with CAPM
 
-Lag1 <- read.csv2(file = "DataBase/Lag_0.csv", sep = ";", stringsAsFactors = FALSE, header = TRUE)
+Lag1 <- read.csv2(file = "DataBase/Lag_1.csv", sep = ";", stringsAsFactors = FALSE, header = TRUE)
 Lag1A <- Lag1[,c("Companies",
                  "YearFinancialIndicator",
                  "ROA",
@@ -252,7 +252,7 @@ CAPM5 <- merge(CAPM4, Lag1A, by = c("Companies", "Year"))
 #I reduce the number to the most important variables
 CAPM6 <- CAPM5[,-c(6:9)] #I delete "Rf", "Rm", "Ra_Rf", "Rm_Rf"
 
-write.csv2(CAPM6, file = "DataBase/StockPrice/Lag1_WithCapm.csv")
+write.csv2(CAPM6, file = "DataBase/Lag1_WithCapm.csv")
 
 
 
