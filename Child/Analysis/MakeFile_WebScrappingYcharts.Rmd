@@ -47,7 +47,6 @@ submit_form(pgsession, filled_form)
 #WebScrapping Function###########
 #################################
 
-Ticker <- c("AAPL", "FB", "YHOO", "F")
 Results_List <- lapply(Ticker, possibly(function(x) {
   
   #go to the page
@@ -62,7 +61,7 @@ Results_List <- lapply(Ticker, possibly(function(x) {
       
       page <- jump_to(pgsession, link)
       data <- html_nodes(page, "td")
-      data1 <- html_text(data)#converting the data to text
+      data1 <- data %>% html_text()#converting the data to text
       data2 <- matrix(data1, ncol = 2, byrow = TRUE)
       data3 <- as.data.frame(data2)
   }  
@@ -118,10 +117,21 @@ Results4 <- merge(Results3, table, by = "Month")
 Results5 <- Results4[,c("Day", "month_num", "Year", "Ticker", "R&Dexp")]
 
 Results6 <- subset(Results5, Year %in% c(" 2012", " 2013", " 2014", " 2015", " 2016"))
+Results6$Year <- sub(" ","", Results6$Year,fixed=TRUE) #REmove useless space
 
-Results7 <- unite(Results6, "Date", c("Day", "month_num", "Year"), sep = "-")
+#R&D are indicate in number M or B, i split and then multiply
+colnames(Results6) <- c("Day", "Month", "Year", "Ticker", "RD")
 
-#Remove all spaces
-Results7$Date <-  str_trim(Results7$Date)
+
+#I write
+
+write.table(Results6, file = "DataBase/Ycharts/RD.txt", sep = " ")
+
+
+
+
+
+
+Results7 <- separate(Results6, RD, into = c("T1", "T2"), sep = "/n")
 ```
 

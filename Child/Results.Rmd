@@ -14,7 +14,7 @@ if (!require("dplyr")) install.packages("dplyr")
 library(stargazer)
 library(dplyr)
 
-DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag_1.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
+DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag1_WithCapm.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
 
 
 

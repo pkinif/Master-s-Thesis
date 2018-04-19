@@ -5,6 +5,9 @@ output:
 
 ## Appendix A : Outliers {-}
 
+
+Model sans AlphaJensne ni beta
+
 ```{r echo = FALSE, message = FALSE, warning = FALSE, error = FALSE,  results='asis'}
 
 #############################################################
