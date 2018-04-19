@@ -18,6 +18,8 @@ if (!require("tidyverse")) install.packages("tidyverse")
 library(tidyverse)
 if (!require("RCurl")) install.packages("RCurl")
 library(RCurl)
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr)
 #################################
 # make a vector of ticker########
 #################################
@@ -85,8 +87,41 @@ Results_List <- lapply(Ticker, possibly(function(x) {
 
 Results <- bind_rows(Results_List)
 
+# Tdy data nb: take care to spaces in cells..... very important
 
-View(Results)
+#rename colnames
+colnames(Results) <- c("Date", "R&Dexp", "Ticker")
 
+# Separate date into day month and year
+Results1 <- Results %>% 
+  separate(Date, into = c("Day_Month","Year"), sep = ",") %>%
+  na.omit()
+
+Results2 <- Results1 %>%
+  separate("Day_Month", into = c("Month","Day"), sep = -2) 
+
+#remove dot in column month
+Results2$Month <- sub(".", "", Results2$Month, fixed=TRUE)
+
+
+# subset and take only row that matters
+
+Results3 <- subset(Results2, Month = c("April ", "Aug ", "Dec ", "Feb ", "Jan ", "July ", "June ", "March ", "May ", "Nov ", "Oct ", "Sept "))
+
+# create a matrix of month and numric month and merge in order to get numeric month in my principal df
+table<- data.frame(Month=c("April ", "Aug ", "Dec ", "Feb ", "Jan ", "July ", "June ", "March ", "May ", "Nov ", "Oct ", "Sept "), month_num=c("04","08","12","02","01","07","06","03","05","11","10","09"))
+
+
+Results4 <- merge(Results3, table, by = "Month")
+
+# Take rw and column that matters
+Results5 <- Results4[,c("Day", "month_num", "Year", "Ticker", "R&Dexp")]
+
+Results6 <- subset(Results5, Year %in% c(" 2012", " 2013", " 2014", " 2015", " 2016"))
+
+Results7 <- unite(Results6, "Date", c("Day", "month_num", "Year"), sep = "-")
+
+#Remove all spaces
+Results7$Date <-  str_trim(Results7$Date)
 ```
 
