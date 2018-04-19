@@ -267,6 +267,16 @@ stargazer(Return2_Fixed, summary = FALSE, table.placement = "h", type="latex", l
 
 
 
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
+
+#######################################################
+######### Vizualisation best random Effect ############
+#######################################################
+
+stargazer(Roa4, Roe2, summary = FALSE, table.placement = "h", type="latex", label = "BestRm1", title = "Best RE Model - No out 1/2 ", header = FALSE)
+
+stargazer(Tobins3, Return2, summary = FALSE, table.placement = "h", type="latex", label = "BestRm2", title = "Best RE Model - No out 2/2", header = FALSE)
+```
 
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'hide'}
