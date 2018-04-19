@@ -195,7 +195,7 @@ CAPM2["AlphaJensen"] <- CAPM2$Ra_Rf - (CAPM2$Beta * CAPM2$Rm_Rf)
 
 # I have 37 tickers which are missing in CAPM2, I will try to find a way to compltte with an other way. I create a vector called Missing which contains missing tickers
 
-Missing <- setdiff(Ticker, CAPM6$Ticker)
+Missing <- setdiff(Ticker, CAPM2$Ticker)
 
 library(quantmod)
 av_api_key("3ATNNTVDV4K2KIOB")

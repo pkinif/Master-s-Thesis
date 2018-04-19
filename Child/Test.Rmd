@@ -13,7 +13,7 @@ output:
 #############################################################
 #############################################################
 
-rm(list=ls()) #Removes all items in the environment!
+#rm(list=ls()) #Removes all items in the environment!
 
 #Packages
 if (!require("utils")) install.packages("utils")
@@ -26,7 +26,28 @@ library(utils) #to write database in my folders
 library(dplyr) #to play with data
 
 #Database
-DB_Lag1<-as.data.frame(read.csv2("Analysis/DataBase/Lag1_WithCapm.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE , row = NULL))
+DB <-as.data.frame(read.csv2("Analysis/DataBase/Lag1_WithCapm.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE))
+
+DB_Lag1 <- DB[,c("Companies",
+                 "Year",
+                 "Ra",
+                 "ROA",
+                 "ROE",
+                 "TobinsQ",
+                 "AlphaJensen",
+                 "CarbonProductivity",
+                 "WaterProductivity",
+                 "WasteProductivity",
+                 "EnergyProductivity",
+                 "SustainabilityPayLink",
+                 "SustainableThemedCommitment",
+                 "AuditScore",
+                 "FirmSize",
+                 "Leverage",
+                 "NetMargin",
+                 "Industry",
+                 "Beta"
+                 )]
 
 ```
 

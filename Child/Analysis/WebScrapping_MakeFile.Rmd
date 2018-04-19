@@ -1,0 +1,81 @@
+```{r}
+
+
+#############################################################
+#############################################################
+############## Web Scrapping from Ycharts ###################
+#############################################################
+#############################################################
+
+
+##################################
+########### Packages #############
+##################################
+
+if (!require("rvest")) install.packages("rvest")
+library(rvest) 
+library(tidyverse)
+
+## Problem as Ycharts need sign in
+
+
+# make a vector of ticker
+
+Companies <- read.csv2("DataBase/Companies.csv", sep = ";", header = TRUE, stringsAsFactors = FALSE)
+
+Ticker <- Companies$Ticker
+
+TickerTest <- c("AAPL", "FB")
+
+#Address of the login webpage
+login<-"https://ycharts.com/login?next=%2Fdashboard%2F"
+
+#create a web session with the desired login address
+pgsession<-html_session(login)
+pgform<-html_form(pgsession)[[1]]  #in this case the submit is the 2nd form
+filled_form<-set_values(pgform, username ="joelkinif@msn.com", password="Loana1234")
+submit_form(pgsession, filled_form)
+
+#WebScrapping Function
+
+get_data <- function(ticker) {
+  
+  #go to the page
+  url <- paste("https://ycharts.com/companies/", ticker, "/r_and_d_expense", sep = "")
+  page <- jump_to(pgsession, url)
+  data <- html_nodes(page, "td")
+  
+  #converting the data to text
+  data1 <- html_text(data)
+  
+  #tidy data
+  data2 <- matrix(data1, ncol = 2, byrow = TRUE)
+  data3 <- as.data.frame(data2)
+  return(data3)
+  #save as a file
+  #path <- paste("DataBase/Ycharts/RD_", ticker, ".csv", sep = "")
+  #write.csv2(data3, file = path)
+}
+
+Test <- as.data.frame(sapply(ticker, get_data))
+
+test <- get_data(ticker)
+
+
+
+
+# Loop
+page<-jump_to(pgsession, url)
+
+summary<-html_nodes(page, "td")
+
+#Converting the  data to text
+data <- html_text(summary)
+
+#Tidy data
+data1 <- matrix(data, ncol = 2, byrow = TRUE)
+data2 <- as.data.frame(data1)
+colnames(data2) <- c("Date", "R&D_Exp")
+
+```
+
