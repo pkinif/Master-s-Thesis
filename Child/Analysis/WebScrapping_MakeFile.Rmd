@@ -14,8 +14,10 @@
 
 if (!require("rvest")) install.packages("rvest")
 library(rvest) 
+if (!require("tidyverse")) install.packages("tidyverse")
 library(tidyverse)
-
+if (!require("RCurl")) install.packages("RCurl")
+library(RCurl)
 #################################
 # make a vector of ticker########
 #################################
@@ -24,7 +26,7 @@ Companies <- read.csv2("DataBase/Companies.csv", sep = ";", header = TRUE, strin
 
 Ticker <- Companies$Ticker
 
-TickerTest <- c("AAPL", "FB")
+
 
 #################################
 #Address of the login webpage####
@@ -43,26 +45,25 @@ submit_form(pgsession, filled_form)
 #WebScrapping Function###########
 #################################
 
-
-Results_List <- lapply(TickerTest, function(x) {
+Ticker <- c("AAPL", "FB", "YHOO", "F")
+Results_List <- lapply(Ticker, possibly(function(x) {
   
   #go to the page
   link <- paste("https://ycharts.com/companies/", x, "/r_and_d_expense", sep = "")
   
+  CheckUrl <- url.exists(link)
   
-  getdata <- function(link){
-    
-    page <- jump_to(pgsession, link)
-    data <- html_nodes(page, "td")
   
-    #converting the data to text
-    data1 <- html_text(data)
-  
-    #tidy data
-    data2 <- matrix(data1, ncol = 2, byrow = TRUE)
-    data3 <- as.data.frame(data2)
+  if (CheckUrl == TRUE) {
 
-  }
+  getdata <- function(link){
+      
+      page <- jump_to(pgsession, link)
+      data <- html_nodes(page, "td")
+      data1 <- html_text(data)#converting the data to text
+      data2 <- matrix(data1, ncol = 2, byrow = TRUE)
+      data3 <- as.data.frame(data2)
+  }  
   
    #Map everything into a dataframe
   map_df(link, getdata) -> results
@@ -72,7 +73,9 @@ Results_List <- lapply(TickerTest, function(x) {
 
   return(results)
   
-})
+  }
+  
+}, otherwise = NA_real_))
 
 #################################
 # Results ########################
@@ -83,6 +86,7 @@ Results_List <- lapply(TickerTest, function(x) {
 Results <- bind_rows(Results_List)
 
 
+View(Results)
 
 ```
 
