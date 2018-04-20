@@ -19,6 +19,7 @@ DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag1_WithCapm.csv", sep = ";",s
 
 
 ```
+
 ##Some boxplots and histogram
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6}
