@@ -26,6 +26,8 @@ if (!require("purrr")) install.packages("purrr")
 library(purrr)
 if (!require("rlist")) install.packages("rlist")
 library(rlist)
+if (!require("data.table")) install.packages("data.table")
+library(data.table)
 
 ###############################################
 #### Step 1 : Get ticker and files list #######
@@ -49,10 +51,11 @@ TickerListed1 <- TickerListed[,"Ticker"]
 #I make a vector of 2 col, namely ticker associated with a number 
 NumberTicker <- nrow(TickerListed)
 
-list <- 1:NumberTicker
+list <- as.integer(1:NumberTicker)
 
 TickerId <- cbind(list,TickerListed1)
 colnames(TickerId) <- c("id", "Ticker")
+
 
 # All files come from StockPup. The common format is http://www.stockpup.com/data/A_quarterly_financial_data.csv. So I create a vector containing this format for all Ticker  /// CSV Format :)
 
@@ -66,13 +69,17 @@ LinkFiles1 <- gsub("http://www.stockpup.com/data/LB_quarterly_financial_data.csv
 ##################################################
 #### Step 2 : Dowload Files and rbind them #######
 ##################################################
+Test <- LinkFiles1[1:2]
 
-StockPup_Db <- lapply(LinkFiles1, read.csv)
+StockPup_Db <- lapply(Test, read.csv)
 
 
 # I make StockPup_Db a tidy data and add a column Ticker 
-DataBase <- list.rbind(StockPup_Db) #, .id = "id")
-DataBase1 <- merge(DataBase, TickerId, by = "id")
+DataBase <-rbindlist(StockPup_Db, use.names = TRUE, fill = TRUE, idcol = "id")
+
+DataBase <- list.rbind(StockPup_Db) 
+DataBase$id <- as.character(DataBase$id)
+DataBase1 <- merge(TickerId,DataBase, by = "id")
 
 
 write.csv(StockPup_Db,file = "DataBase/StockPup/StockPup_Db")
