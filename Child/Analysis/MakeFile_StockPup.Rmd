@@ -1,0 +1,82 @@
+---
+title: "MakeFileStockPup"
+author: "Kinif Pierrick"
+date: "21 avril 2018"
+output: pdf_document
+---
+```{r}
+
+
+
+##############################################################
+##############################################################
+####### Make File to rbind csv files from StockPup  ##########
+##############################################################
+##############################################################
+
+#####################################
+############## Packages #############
+#####################################
+
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr)
+if (!require("RCurl")) install.packages("RCurl")
+library(RCurl)
+if (!require("purrr")) install.packages("purrr")
+library(purrr)
+if (!require("rlist")) install.packages("rlist")
+library(rlist)
+
+###############################################
+#### Step 1 : Get ticker and files list #######
+###############################################
+
+# Ticker 
+
+Companies <- read.csv2(file = "DataBase/Companies.csv", header = TRUE, stringsAsFactors = FALSE)
+Ticker <- as.list(Companies$Ticker)
+Files <- Companies[,"FichierSTCKP"] %>% na.omit() #List of excel files // na.omit as Stockpup do not have data for all companies
+
+# I select only Ticker wich are listed in Stockpup
+
+MissingTicker <- subset(Companies, is.na(FichierSTCKP)) 
+MissingTicker1 <- MissingTicker[,"Ticker"]
+
+UnlistedTicker <- MissingTicker1 ## 28 Ticker non repris dans Stockpup
+TickerListed <- Companies[, c("Ticker","FichierSTCKP")] %>% na.omit()
+TickerListed1 <- TickerListed[,"Ticker"]
+
+#I make a vector of 2 col, namely ticker associated with a number 
+NumberTicker <- nrow(TickerListed)
+
+list <- 1:NumberTicker
+
+TickerId <- cbind(list,TickerListed1)
+colnames(TickerId) <- c("id", "Ticker")
+
+# All files come from StockPup. The common format is http://www.stockpup.com/data/A_quarterly_financial_data.csv. So I create a vector containing this format for all Ticker  /// CSV Format :)
+
+Files1 <- gsub("xls", "csv", Files)
+LinkFiles <- paste("http://www.stockpup.com/data/",Files1, sep = "")
+
+#some have a different format so I changfe manually
+
+LinkFiles1 <- gsub("http://www.stockpup.com/data/LB_quarterly_financial_data.csv","http://www.stockpup.com/data/LTD_quarterly_financial_data.csv", LinkFiles)
+
+##################################################
+#### Step 2 : Dowload Files and rbind them #######
+##################################################
+
+StockPup_Db <- lapply(LinkFiles1, read.csv)
+
+
+# I make StockPup_Db a tidy data and add a column Ticker 
+DataBase <- list.rbind(StockPup_Db) #, .id = "id")
+DataBase1 <- merge(DataBase, TickerId, by = "id")
+
+
+write.csv(StockPup_Db,file = "DataBase/StockPup/StockPup_Db")
+
+
+```
+
