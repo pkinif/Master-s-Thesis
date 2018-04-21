@@ -28,6 +28,8 @@ if (!require("rlist")) install.packages("rlist")
 library(rlist)
 if (!require("data.table")) install.packages("data.table")
 library(data.table)
+if (!require("tidyr")) install.packages("tidyr")
+library(tidyr)
 
 ###############################################
 #### Step 1 : Get ticker and files list #######
@@ -69,21 +71,43 @@ LinkFiles1 <- gsub("http://www.stockpup.com/data/LB_quarterly_financial_data.csv
 ##################################################
 #### Step 2 : Dowload Files and rbind them #######
 ##################################################
-Test <- LinkFiles1[1:2]
 
-StockPup_Db <- lapply(Test, read.csv)
+
+StockPup_Db <- lapply(LinkFiles1, read.csv)
 
 
 # I make StockPup_Db a tidy data and add a column Ticker 
-DataBase <-rbindlist(StockPup_Db, use.names = TRUE, fill = TRUE, idcol = "id")
 
-DataBase <- list.rbind(StockPup_Db) 
+DataBase <-rbindlist(StockPup_Db, use.names = TRUE, fill = TRUE, idcol = "id")
 DataBase$id <- as.character(DataBase$id)
 DataBase1 <- merge(TickerId,DataBase, by = "id")
 
 
-write.csv(StockPup_Db,file = "DataBase/StockPup/StockPup_Db")
+write.csv(DataBase1,file = "DataBase/StockPup/StkP_FullPeriod.csv")
 
+##################################################
+#### Step 3 : Select the right time YYYY #######
+##########################################
+
+# Separate the date column into dd mm and yyyy
+
+DataBase2 <- DataBase1 %>% separate(Quarter.end, into = c("Year", "Month","Day"), sep = "-")
+
+# I select only decembre YYYY
+
+DataBase3 <- subset(DataBase2, Month == 12)
+DataBase3$year <- DataBase3$Year
+DataBase4 <- unite(DataBase3, col = "Date", c("year", "Month", "Day"), sep = "-") 
+
+#I remove the id columns and merge with Companies
+
+DataBase5 <- DataBase4[,2:44] 
+DataBase6 <- merge(Companies, DataBase5, by = "Ticker")
+
+# I select only period from 2012 and I save
+
+DataBase7 <- subset(DataBase6, Year > 2011)
+write.csv(DataBase7,file = "DataBase/StockPup/StkP_From2012.csv")
 
 ```
 

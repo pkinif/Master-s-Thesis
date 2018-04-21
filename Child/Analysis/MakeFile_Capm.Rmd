@@ -52,15 +52,6 @@ Ra <- Ticker %>%
                type       = "log",
                col_rename = "Ra")
 
-# Write StockPrice as a csv file
-StockPrice <- Ticker %>%
-  tq_get(get  = "stock.prices",
-         from = "2010-01-01",
-         to   = "2016-12-31") %>%
-  group_by(symbol)
-
-StockPrice1 <- StockP
-write.csv2(StockPrice, file = "DataBase/StockPrice/StockPrice.csv")
 
 # In order to merge Ra with FamaFrench I need to make the date column in the same format. Here in Ra date is like yyyy-mm-dd but dd is not always 01 which is a problem for merging. So I make yyyy-mm-01.
 
@@ -82,7 +73,7 @@ Ra_2$date <- as.Date(Ra_2$date)
 
 # I dowload the FamaAndFrench DataBase that I get on http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/Data_Library/f-f_factors.html
 
-FF <- read.table("DataBase/StockPrice/FF.txt", header = TRUE, sep = "", stringsAsFactors = FALSE, row.names = NULL, col.names = c("date","Mkt-RF", "SMB", "HML", "RF"))
+FF <- read.table("DataBase/CAPM/FF.txt", header = TRUE, sep = "", stringsAsFactors = FALSE, row.names = NULL, col.names = c("date","Mkt-RF", "SMB", "HML", "RF"))
 
 #The date colone is not well written so I remove it
 FF1 <- FF[,-c(1)]
@@ -320,7 +311,7 @@ FinalCapm <- rbind(capm2, CAPM2)
 
 FinalCapm$CostEquity <- FinalCapm$Rf + FinalCapm$Beta * FinalCapm$Rm_Rf
   
-write.csv(FinalCapm, file = "DataBase/StockPrice/CAPM.csv")
+write.csv(FinalCapm, file = "DataBase/CAPM/CAPM.csv")
 
 
 

@@ -1,0 +1,58 @@
+---
+title: "MakeFile_TidyQuant"
+author: "Kinif Pierrick"
+date: "21 avril 2018"
+output: pdf_document
+---
+
+
+```{r}
+
+#############################################################
+#############################################################
+############## Package and DataBase loading #################
+#############################################################
+#############################################################
+
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr) # to play with data
+if (!require("utils")) install.packages("utils")
+library(utils) #to dowload db
+if (!require("xts")) install.packages("xts")
+library(xts) 
+if (!require("PerformanceAnalytics")) install.packages("PerformanceAnalytics")
+library(PerformanceAnalytics) 
+if (!require("tibble")) install.packages("tibble")
+library(tibble) 
+if (!require("tidyquant")) install.packages("tidyquant")
+library(tidyquant) 
+if (!require("lubridate")) install.packages("lubridate")
+library(lubridate) 
+
+
+# I download my ticker's list
+
+Companies <- read.csv2("DataBase/Companies.csv", sep = ";", header = TRUE, stringsAsFactors = FALSE)
+
+Ticker <- Companies$Ticker
+
+#########################################
+########### Stock Price##################
+#########################################
+
+
+
+# I use tidyquant package to get stockprice from yahoo finance
+
+
+StockPrice <- Ticker %>%
+  tq_get(get  = "stock.prices",
+         from = "2010-01-01",
+         to   = "2016-12-31") %>%
+  group_by(symbol)
+
+StockPrice1 <- StockP
+write.csv2(StockPrice, file = "DataBase/StockPrice/StockPrice.csv")
+
+```
+
