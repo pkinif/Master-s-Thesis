@@ -4,7 +4,9 @@ author: "Kinif Pierrick"
 date: "21 avril 2018"
 output: pdf_document
 ---
+I extract data from yahoo finance using the tidyquant package :
 
+https://cran.r-project.org/web/packages/tidyquant/vignettes/TQ01-core-functions-in-tidyquant.html#financial-statements
 
 ```{r}
 
@@ -28,7 +30,8 @@ if (!require("tidyquant")) install.packages("tidyquant")
 library(tidyquant) 
 if (!require("lubridate")) install.packages("lubridate")
 library(lubridate) 
-
+if (!require("tibble")) install.packages("tibble")
+library(tibble)
 
 # I download my ticker's list
 
@@ -40,19 +43,120 @@ Ticker <- Companies$Ticker
 ########### Stock Price##################
 #########################################
 
-
-
 # I use tidyquant package to get stockprice from yahoo finance
 
 
 StockPrice <- Ticker %>%
   tq_get(get  = "stock.prices",
-         from = "2010-01-01",
-         to   = "2016-12-31") %>%
+         from = "2010-01-01"
+         ) %>%
   group_by(symbol)
 
-StockPrice1 <- StockP
-write.csv2(StockPrice, file = "DataBase/StockPrice/StockPrice.csv")
+write.csv(StockPrice, file = "DataBase/TidyQuant/StockPrice.csv")
+
+
+#########################################
+###########  Dividend  ##################
+#########################################
+
+Dividend <- Ticker %>%
+  tq_get(get  = "dividends",
+         from = "2010-01-01"
+         ) %>%
+  group_by(symbol)
+
+write.csv(Dividend, file = "DataBase/TidyQuant/Dividend.csv")
+
+#########################################
+###########  KeyRatios ##################
+#########################################
+
+
+KeyRatios <- Ticker %>%
+  tq_get(get  = "key.ratios") %>%
+  group_by(symbol)
+
+# KeyRatio contains 7 sections that I need to filter and to save separatly
+
+
+    Financials <- KeyRatios %>%
+        filter(section == "Financials") %>%
+        unnest()
+    Profitability <- KeyRatios %>%
+        filter(section == "Profitability") %>%
+        unnest()
+    Growth <- KeyRatios %>%
+        filter(section == "Growth") %>%
+        unnest()
+    CashFlow <- KeyRatios %>%
+        filter(section == "Cash Flow") %>%
+        unnest()
+    FinancialHealth <- KeyRatios %>%
+        filter(section == "Financial Health") %>%
+        unnest()
+    EffificencyRatios <- KeyRatios %>%
+        filter(section == "Efficiency Ratios") %>%
+        unnest()
+    ValuationRatios <- KeyRatios %>%
+        filter(section == "Valuation Ratios") %>%
+        unnest()
+    
+    write.csv(ValuationRatios, file = "DataBase/TidyQuant/ValuationRatios.csv")
+    
+# Each sections contains several ratios which are not in a tidy way. Let's correct that
+    
+    Financials1 <- Financials %>%
+      spread(category, value)
+    Profitability1 <- Profitability %>%
+      spread(category, value)
+    Growth1 <- Growth %>%
+      spread(category, value)
+    CashFlow1 <- CashFlow %>%
+      spread(category, value)
+    FinancialHealth1 <- FinancialHealth %>%
+      spread(category, value)
+    EffificencyRatios1 <- EffificencyRatios %>%
+      spread(category, value)  
+    
+    
+    ValuationRatios1 <- ValuationRatios %>%
+      spread(category, value)
+  
+     write.csv(Financials1, file = "DataBase/TidyQuant/Financials.csv")
+      write.csv(Profitability1, file = "DataBase/TidyQuant/Profitability.csv")
+       write.csv(Growth1, file = "DataBase/TidyQuant/Growth.csv")
+        write.csv(CashFlow1, file = "DataBase/TidyQuant/CashFlow.csv")
+         write.csv(FinancialHealth1, file = "DataBase/TidyQuant/FinancialHealth.csv")
+          write.csv(EffificencyRatios1, file = "DataBase/TidyQuant/EfficiencyRatios.csv")
+# Let's merge them together. I did not find a function that allow to merge several data frame so I will use the merge function to merge 2 df and will repeat :)
+    
+Ratios <- merge(Financials1, Profitability1, by = c("symbol", "date"), all = TRUE)
+Ratios1 <- merge(Ratios, Growth1, by = c("symbol", "date"), all = TRUE)
+Ratios2 <- merge(Ratios1, CashFlow1, by = c("symbol", "date"), all = TRUE)
+Ratios3 <- merge(Ratios2, FinancialHealth1, by = c("symbol", "date"), all = TRUE)
+Ratios4 <- merge(Ratios3, EffificencyRatios1, by = c("symbol", "date"), all = TRUE)
+
+write.csv(Ratios4, file = "DataBase/TidyQuant/KeyRatio.csv")
+
+
+
+RatiosTest <- merge(Financials1, Profitability1, Growth1, CashFlow1, FinancialHealth1, EfficiencyRatios1, by = c("symbol", "date"), all = TRUE)
+
+#########################################
+###########  Statement ##################
+#########################################
+
+FinancialsStatement <- Ticker %>%
+  tq_get(get = "financials") %>%
+  group_by(symbol)
+
+FinancialStatement1 <- FinancialsStatement %>%
+    unnest(quarter) %>% 
+    spread(key = date, value = value)
+
+
+
+write.csv(FinancialStatement1, file = "DataBase/TidyQuant/FinancialsStatement_10Y.csv")
 
 ```
 
