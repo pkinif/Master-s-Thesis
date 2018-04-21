@@ -101,8 +101,6 @@ KeyRatios <- Ticker %>%
         filter(section == "Valuation Ratios") %>%
         unnest()
     
-    write.csv(ValuationRatios, file = "DataBase/TidyQuant/ValuationRatios.csv")
-    
 # Each sections contains several ratios which are not in a tidy way. Let's correct that
     
     Financials1 <- Financials %>%
@@ -117,31 +115,18 @@ KeyRatios <- Ticker %>%
       spread(category, value)
     EffificencyRatios1 <- EffificencyRatios %>%
       spread(category, value)  
-    
-    
-    ValuationRatios1 <- ValuationRatios %>%
-      spread(category, value)
-  
+    ValuationRatios1 <- ValuationRatios %>% spread(category, value) # do not work
+
+
      write.csv(Financials1, file = "DataBase/TidyQuant/Financials.csv")
       write.csv(Profitability1, file = "DataBase/TidyQuant/Profitability.csv")
        write.csv(Growth1, file = "DataBase/TidyQuant/Growth.csv")
         write.csv(CashFlow1, file = "DataBase/TidyQuant/CashFlow.csv")
          write.csv(FinancialHealth1, file = "DataBase/TidyQuant/FinancialHealth.csv")
           write.csv(EffificencyRatios1, file = "DataBase/TidyQuant/EfficiencyRatios.csv")
-# Let's merge them together. I did not find a function that allow to merge several data frame so I will use the merge function to merge 2 df and will repeat :)
-    
-Ratios <- merge(Financials1, Profitability1, by = c("symbol", "date"), all = TRUE)
-Ratios1 <- merge(Ratios, Growth1, by = c("symbol", "date"), all = TRUE)
-Ratios2 <- merge(Ratios1, CashFlow1, by = c("symbol", "date"), all = TRUE)
-Ratios3 <- merge(Ratios2, FinancialHealth1, by = c("symbol", "date"), all = TRUE)
-Ratios4 <- merge(Ratios3, EffificencyRatios1, by = c("symbol", "date"), all = TRUE)
+           write.csv(ValuationRatios1, file = "DataBase/TidyQuant/ValuationRatios.csv")
 
-write.csv(Ratios4, file = "DataBase/TidyQuant/KeyRatio.csv")
-
-
-
-RatiosTest <- merge(Financials1, Profitability1, Growth1, CashFlow1, FinancialHealth1, EfficiencyRatios1, by = c("symbol", "date"), all = TRUE)
-
+           
 #########################################
 ###########  Statement ##################
 #########################################
