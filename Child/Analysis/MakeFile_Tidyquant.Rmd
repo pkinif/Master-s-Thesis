@@ -141,7 +141,7 @@ FinancialStatement1 <- FinancialsStatement %>%
 
 
 
-write.csv(FinancialStatement1, file = "DataBase/TidyQuant/FinancialsStatement_10Y.csv")
+write.csv(FinancialsStatement, file = "DataBase/TidyQuant/FinancialsStatement_10Y.csv")
 
 ```
 
