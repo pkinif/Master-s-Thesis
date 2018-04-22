@@ -27,7 +27,7 @@ The second file contains several variables :
 * AlphaJensen	: Jensen's Alpha which had been calculated using the CAMP 3 factors, namely : AlphaJensen = (Ra - Rf) - Beta * (Rm - Rf) 
 * CostEquity :	Cost of Equity calculated with the CAPM as CostEquity = Rf + Beta * (Rm-Rf)
 
-All data are on a monthly based.
+All data are on a monthly basis.
 
 ## StockPup
 
@@ -78,3 +78,58 @@ Both files contain several variables :
 * Net margin :	The ratio of Earnings (available for common stockholders) TTM to Revenue TTM.
 * Asset turnover :	The ratio of Revenue TTM to TTM average Assets.
 * Free cash flow per share	: Cash from operating activities minus the Capital Expenditures for a quarter.
+
+
+## Tidyquant
+
+This sub-folders contains 10 csv files and are the output of the *MakeFile_Tidyquant.rmd* : 
+
+
+i. Dividends and StockPrice. csv which contains, on a 
+
+
+Continue.......
+
+## NewsWeek 
+
+
+NEWSWEEK	
+	
+More details : 	http://s.newsweek.com/sites/www.newsweek.com/files/newsweek_green_rankings_final_methodology_2016.pdf
+
+EnergyProductivity 	"In the first step, each company's Energy Productivity is calculated for 2015, with Energy Productivity defined as Revenue ($US) / (Total Energy Consumption (GJ) - Renewable Energy Consumption (GJ)). Each company’s Energy Productivity is then percent-ranked against that of all Industry Group peers in the CK research universe and multiplied by 0.75. The Global Industry Classification Standard (GICS) definition of “Industry Group” is used.
+
+In the second step, the change in each company’s Energy Productivity from 2013-2015 is calculated and percent-ranked against that of all same-Industry Group peers within the CK research universe. If the company’s percent-ranked 2015 Energy Productivity is top quartile, their percent-ranked change in Energy Productivity for 2013-2015 is multiplied by 1 and then by 0.25. If the company’s percent-ranked 2015 Energy Productivity is second quartile, their percent-ranked change in Energy Productivity for 2013-2015 is multiplied by 0.75 and then by 0.25. If the company’s percent-ranked 2015 Energy Productivity is third quartile, their percent-ranked change in Energy Productivity for 2013-2015 is multiplied by 0.5 and then by 0.25. If the company’s percent-ranked 2015 Energy Productivity is bottom quartile, their percent-ranked change in Energy Productivity for 2013-2015 is multiplied by 0.25 and then by 0.25.
+
+In the third step, the values from the first and second steps are totaled."
+CarbonProductivity	"In the first step, each company's GHG Productivity is calculated for 2015, with GHG Productivity defined as Revenue ($US) / Total Greenhouse gas (GHG) Emissions (CO2e). Only Scope 1 and Scope 2 emissions are included according to the GHG Protocol. Each company’s GHG Productivity is then percent-ranked against that of all Industry Group peers in the CK research universe and multiplied by 0.75.
+
+In the second step, the change in each company’s GHG Productivity from 2013-2015 is calculated and percent-ranked against that of all same-industry group peers within the CK research universe. If the company’s percent-ranked 2015 GHG Productivity is top quartile, their percent-ranked change in GHG Productivity for 2013-2015 is multiplied by 1 and then by 0.25. If the company’s percent-ranked 2015 GHG Productivity is second quartile, their percent-ranked change in GHG Productivity for 2013-2015 is multiplied by 0.75 and then by 0.25. If the company’s percent-ranked 2015 GHG Productivity is the third quartile, their percent-ranked change in GHG Productivity for 2013-2015 is multiplied by 0.5 and then by 0.25. If the company’s percent-ranked 2015 GHG Productivity is bottom quartile, their percent-ranked change in GHG Productivity for 2013-2015 is multiplied by 0.25 and then by 0.25.
+
+In the third step, the values from the first and second steps are totaled and then multiplied by 0.9.
+
+In the fourth step, if the company disclosed Scope 3 GHG emissions in 2015, a score of 100% is attributed and then multiplied by 0.1. Otherwise, a score of 0% is given.
+
+In the final step, the scores from the third and fourth steps are added."
+WaterProductivity	"In the first step, each company's Water Productivity is calculated for 2015. Water Productivity is defined as Revenue ($US) / Total water use (m3). Each company’s Water Productivity is then percent-ranked against that of all Industry Group peers in the CK research universe and multiplied by 0.75.
+
+In the second step, the change in each company’s Water Productivity from 2013-2015 is calculated and percent-ranked against that of all same-industry group peers within the CK research universe. If the company’s percent-ranked 2015 Water Productivity is top quartile, their percent-ranked change in Water Productivity for 2013-2015 is multiplied by 1 and then by 0.25. If the company’s percent-ranked 2015 Water Productivity is second quartile, their percent-ranked change in Water Productivity for 2013-2015 is multiplied by 0.75 and then by 0.25. If the company’s percent-ranked 2015 Water Productivity is the third quartile, their percent-ranked change in Water Productivity for 2013-2015 is multiplied by 0.5 and then by 0.25. If the company’s percent-ranked 2015 Water Productivity is bottom quartile, their percent-ranked change in Water Productivity for 2013-2015 is multiplied by 0.25 and then by 0.25.
+
+In the third step, the values from the first and second steps are totaled."
+WasteProductivity	"In the first step, each company's Waste Productivity is calculated for 2015. Waste Productivity is defined as Revenue ($US) / [Total waste generated (metric tonnes) – waste recycled/reused/composted (tonnes)]. Each company’s Waste Productivity is then percent-ranked against that of all Industry Group peers in the CK research universe and multiplied by 0.75.
+
+In the second step, the change in each company’s Waste Productivity from 2013-2015 is calculated and percent-ranked against that of all same-industry group peers within the CK research universe. If the company’s percent-ranked 2015 Waste Productivity is top quartile, their percent-ranked change in Waste Productivity for 2013-2015 is multiplied by 1 and then by 0.25. If the company’s percent-ranked 2015 Waste Productivity is second quartile, their percent-ranked change in Waste Productivity for 2013-2015 is multiplied by 0.75 and then by 0.25. If the company’s percent-ranked 2015 Waste Productivity is third quartile, their percent-ranked change in Waste Productivity for 2013-2015 is multiplied by 0.5 and then by 0.25. If the company’s percent-ranked 2015 Waste Productivity is bottom quartile, their percent-ranked change in Waste Productivity for 2013-2015 is multiplied by 0.25 and then by 0.25.
+
+In the third step, the values from the first and second steps are totaled."
+GreenRevenue	In the first step, each company's total revenue for 2015 is broken into its RBICS sub-industry segments as provided by FactSet Data; the percent revenue from each RBICS sub-industry segment is obtained. In the second step, each RBICS sub-industry segment is assigned a green revenue percent based on a taxonomy derived from by (1) Statistics Canada Clean Technology taxonomy, (2) Eurostat, (3) U.S. Bureau of Labor Statistics Green Goods & Services and (4) Climate Bonds Taxonomy. This enables the calculation of a green revenue potential. The annual and sustainability reports of all companies with potential green revenues greater than 10 percent are manually inspected to verify the actual green revenue percent, which then classified in one of five ranges (0-20%, 21-40%, 41-60%, 61-80%, 81-100%).
+SustainabilityPayLink	A mechanism to link the remuneration of any member of a company's senior executive team with the achievement of environmental performance targets. The existence of such a link is awarded a score of 100%. A score of 0% is attributed if there is no such mechanism in place.
+SustainableThemedCommitment	The existence of a committee at the Board of Directors level whose mandate is related to the sustainability of the company, including but not limited to environmental matters. A score of 100% is awarded if such a committee exists, and a score of 0% is given in cases where such a committee is absent.
+AuditScore	The company provides evidence that the latest reported environmental metrics are audited by a third party. A score of 100% is awarded if such an audit has been performed, and a score of 0% is given in cases where such an audit was not performed.
+RankNewsWeekGR	Ranking of the companies in the NewsWeek Green Ranking of the year
+YearNewsWeekGR	Year of the NewsWeek Green Ranking
+GreenScore	The green score of the company which is a weighted average of the eight KPI score
+
+
+
+
+

@@ -103,7 +103,6 @@ library(data.table)
 
     OldNames <- c("Shares.split.adjusted", 
                   "Split.factor", 
-                  "Currents.Assets", 
                   "Current.Assets",	
                   "Liabilities",	
                   "Current.Liabilities",	
@@ -141,9 +140,47 @@ library(data.table)
                   "Free.cash.flow.per.share",	
                   "Current.ratio")
 
-    NewNames <- c()
+        NewNames <- c("SharesSplitAdjusted", 
+                  "SplitFactor", 
+                  "CurrentsAssets", 
+                  "Liabilities",	
+                  "CurrentLiabilities",	
+                  "ShareholdersEquity",	
+                  "NonControllingInterest",	
+                  "PreferreEquity",	
+                  "GoodwillIntangibles",	
+                  "LongTermDebt",	
+                  "Revenue",	
+                  "Earnings",	
+                  "EarningsAvailableForCommonStockholders",	
+                  "EPS_Basic",	
+                  "EPS_Diluted",	
+                  "DividendPerShare",	
+                  "Cash_OperatingActivities",	
+                  "Cash_InvestingActivities",	
+                  "Cash_FinancingActivities",	
+                  "CashChangeDuringPeriod",	
+                  "CashEndPeriod",	
+                  "CapitalExpenditures",	
+                  "Price",	
+                  "PriceHigh",	
+                  "PriceLow",	
+                  "Roe",	
+                  "Roa",	
+                  "BookValue_EquityPerShare",	
+                  "PB_ratio",	
+                  "PE_ratio",	
+                  "CumulativeDividendsPerShare",	
+                  "DividendPayoutRatio",	
+                  "LongTermDebtToEquityRatio",	
+                  "EquityToAssetsRatio",	
+                  "NetMargin",	
+                  "AssetTurnover",	
+                  "FreeCashFlowPerShare",	
+                  "CurrentRatio")
 
-    Syncro3 <- Syncro2 %>% setnames(old = c("Shares.split.adjusted", "Split.factor"), new = c("SharesSplitAdjusted", "SplitFactor"))
+
+    Syncro3 <- Syncro2 %>% setnames(old = OldNames, new = NewNames)
     
 # Then I merge with NewsWeek for each lag  
     
@@ -151,7 +188,7 @@ library(data.table)
     
       ### Lag 0
 
-        SyncroLag0 <- Syncro2 %>% 
+        SyncroLag0 <- Syncro3 %>% 
           subset( Year > 2011) %>%
           subset(Year < 2015)
     
@@ -159,7 +196,7 @@ library(data.table)
         
       ### Lag 1
 
-        SyncroLag1 <- Syncro2 %>% 
+        SyncroLag1 <- Syncro3 %>% 
           subset( Year > 2012) %>%
           subset(Year < 2016)
     
@@ -167,7 +204,7 @@ library(data.table)
         
       ### Lag 2
 
-        SyncroLag2 <- Syncro2 %>% 
+        SyncroLag2 <- Syncro3 %>% 
           subset( Year > 2013) %>%
           subset(Year < 2017)
     
@@ -175,7 +212,7 @@ library(data.table)
 
       ### Lag 3
 
-        SyncroLag3 <- Syncro2 %>% 
+        SyncroLag3 <- Syncro3 %>% 
           subset( Year > 2014) %>%
           subset(Year < 2018)
     
@@ -186,10 +223,10 @@ library(data.table)
 
 # Finaly I write as csv :)
     
-    write.csv(FullDb_Lag0, file = "DataBase/FullDb_Lag0.csv")
-    write.csv(FullDb_Lag1, file = "DataBase/FullDb_Lag1.csv")
-    write.csv(FullDb_Lag2, file = "DataBase/FullDb_Lag2.csv")
-    write.csv(FullDb_Lag3, file = "DataBase/FullDb_Lag3.csv")
+    write.csv(FullDb_Lag0, file = "DataBase/SyncroRawData/FullDb_Lag0.csv")
+    write.csv(FullDb_Lag1, file = "DataBase/SyncroRawData/FullDb_Lag1.csv")
+    write.csv(FullDb_Lag2, file = "DataBase/SyncroRawData/FullDb_Lag2.csv")
+    write.csv(FullDb_Lag3, file = "DataBase/SyncroRawData/FullDb_Lag3.csv")
 
 ```
 

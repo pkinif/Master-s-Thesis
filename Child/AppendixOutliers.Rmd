@@ -1,12 +1,16 @@
 ---
-output:
-  pdf_document
+output : pdf_document
 ---
-
 ## Appendix A : Outliers {-}
 
-```{r echo = FALSE, message = FALSE, warning = FALSE, error = FALSE,  results='asis'}
+```{r include = FALSE}
 
+knitr :: opts_chunk$set(echo = FALSE, error = FALSE, message = FALSE, results = 'asis')
+
+```
+
+
+```{r}
 #############################################################
 #############################################################
 ############## Package and DataBase loading #################
@@ -50,18 +54,14 @@ DB_Lag1 <- DB[,c("Companies",
                  "CostEquity"
                  )]
 
-
-
 ```
 
-First I measure the cook's distance of my models. Observations that have a cook’s distance greater than 4 times the mean are considered as influential and are summarized in figures \ref{OutliersRoa}, \ref{OutliersTobinsQ} and \ref{OutliersRoe}. 
 
 
 
+First I measure the cook's distance of my models. Observations that have a cook’s distance greater than 4 times the mean are considered as influential and are summarized in figures \ref{OutliersRoa}, \ref{OutliersTobinsQ} and \ref{OutliersRoe}.
 
-<!--Secondly, in order to detect the influence of those outliers, I use the function *outlierTest* from the *car* package [@Fox2012]. This function reports the Bonferroni p-values for Studentized residuals in linear and generalized linear models, based on a t-test for linear models and normal-distribution test for generalized linear models. -->
-
-```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
+```{r}
 
 #############################################################
 #############################################################
@@ -123,6 +123,10 @@ write.csv2(DB_Jensen_NoOut, file = "Analysis/DataBase/NoOutliers/Jensen_Lag1_NoO
 
 DB_Return_NoOut <- DB_Lag1[-c(InfluentialReturn),]
 write.csv2(DB_Return_NoOut, file = "Analysis/DataBase/NoOutliers/Return_Lag1_NoOut.csv")
+```
+
+
+```{r}
 
 #########################################################
 ######### Plm vith new dataset (no outliers) ############
@@ -212,11 +216,12 @@ TableRoe <- stargazer(Roe1, Roe2, type="latex", label = "Roe", title = "Model 3 
 TableJensen <- stargazer(Jensen1, Jensen2, type="latex", label = "Jensen", title = "Model 4 - Comparaison with and without outliers", header = FALSE)
 
 TablkeReturn <- stargazer(Return1, Return2, type="latex", label = "Return", title = "Model 5 - Comparaison with and without outliers", header = FALSE)
+
 ```
 
 
+```{r}
 
-```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ####################################
 ######### Hausman Test #############
 ####################################
@@ -263,11 +268,6 @@ stargazer(Return2_Fixed, summary = FALSE, table.placement = "h", type="latex", l
 
 
 
-```
-
-
-
-```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 
 #######################################################
 ######### Vizualisation best random Effect ############
@@ -276,10 +276,10 @@ stargazer(Return2_Fixed, summary = FALSE, table.placement = "h", type="latex", l
 stargazer(Roa4, Roe2, summary = FALSE, table.placement = "h", type="latex", label = "BestRm1", title = "Best RE Model - No out 1/2 ", header = FALSE)
 
 stargazer(Tobins3, Return2, summary = FALSE, table.placement = "h", type="latex", label = "BestRm2", title = "Best RE Model - No out 2/2", header = FALSE)
+
 ```
 
-
-```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'hide'}
+```{r}
 
 #############################################################
 ######### Tests for individual and time effects #############
@@ -306,6 +306,10 @@ PlmTestTable <- rbind(PlmTestRoa, PlmTestTobinsQ, PlmTestRoe)
 colnames(PlmTestTable) <- c("Model","P-Value")
 
 stargazer(PlmTestTable, summary = FALSE, table.placement = "h", type="latex", label = "PlmTest", title = "Twoways effect Test PValue", header = FALSE)
+```
+
+
+```{r}
 
 ################################################################
 ######### Twoways effect significant - Redo models #############
@@ -328,44 +332,33 @@ stargazer(PlmTestTable, summary = FALSE, table.placement = "h", type="latex", la
 
 ```
 
-
-
-
-\begin{figure}[ht]
-\caption{Observations considered as outliers in model 1 (i.e. Roa)}
-\label{OutliersRoa}
-```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
+\begin{figure}[ht] \caption{Observations considered as outliers in model 1 (i.e. Roa)} \label{OutliersRoa}
+```{r}
 
 #Model Roa
 ## I summarise on a graph, those observations that have a cook’s distance greater than 4 times the mean and which may be considered as outliers
 plot(cooksdRoa, pch="*", cex=2)  # plot cook's distance
 abline(h = 4*mean(cooksdRoa, na.rm=T), col="red")  # add cutoff line
 text(x=1:length(cooksdRoa)+1, y=cooksdRoa, labels=ifelse(cooksdRoa>4*mean(cooksdRoa, na.rm=T),names(cooksdRoa),""), col="red")  # add labels
+
 ```
+
 \end{figure}
 
+\begin{figure}[ht] \caption{Observations considered as outliers in model 2 (i.e. Tobin's Q)} \label{OutliersTobinsQ}
 
-
-\begin{figure}[ht]
-\caption{Observations considered as outliers in model 2 (i.e. Tobin's Q)}
-\label{OutliersTobinsQ}
-```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
-
-
+```{r}
 #Model TobinsQ
 plot(cooksdTobinsQ, pch="*", cex=2)  
 
 abline(h = 4*mean(cooksdTobinsQ, na.rm=T), col="red")  # add cutoff line
 text(x=1:length(cooksdTobinsQ)+1, y=cooksdTobinsQ, labels=ifelse(cooksdTobinsQ>4*mean(cooksdTobinsQ, na.rm=T),names(cooksdTobinsQ),""), col="red")  # add labels
-
 ```
+
 \end{figure}
 
-
-\begin{figure}[ht]
-\caption{Observations considered as outliers in model 1 (i.e. Roe)}
-\label{OutliersRoe}
-```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
+\begin{figure}[ht] \caption{Observations considered as outliers in model 1 (i.e. Roe)} \label{OutliersRoe}
+```{r}
 
 #Model Roe
 ## I summarise on a graph, those observations that have a cook’s distance greater than 4 times the mean and which may be considered as outliers
@@ -373,27 +366,22 @@ plot(cooksdRoe, pch="*", cex=2)  # plot cook's distance
 abline(h = 4*mean(cooksdRoe, na.rm=T), col="red")  # add cutoff line
 text(x=1:length(cooksdRoe)+1, y=cooksdRoe, labels=ifelse(cooksdRoe>4*mean(cooksdRoe, na.rm=T),names(cooksdRoe),""), col="red")  # add labels
 ```
+
 \end{figure}
 
-
-\begin{figure}[ht]
-\caption{Observations considered as outliers in model 4 (i.e. Jensen's Alpha)}
-\label{OutliersJensen}
-```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
-
+\begin{figure}[ht] \caption{Observations considered as outliers in model 4 (i.e. Jensen's Alpha)} \label{OutliersJensen}
+```{r}
 #Model Jensen
 ## I summarise on a graph, those observations that have a cook’s distance greater than 4 times the mean and which may be considered as outliers
 plot(cooksdJensen, pch="*", cex=2)  # plot cook's distance
 abline(h = 4*mean(cooksdJensen, na.rm=T), col="red")  # add cutoff line
 text(x=1:length(cooksdJensen)+1, y=cooksdJensen, labels=ifelse(cooksdJensen>4*mean(cooksdJensen, na.rm=T),names(cooksdJensen),""), col="red")  # add labels
 ```
+
 \end{figure}
 
-\begin{figure}[ht]
-\caption{Observations considered as outliers in model 5 (i.e.Compounded Returns)}
-\label{OutliersReturn}
-```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6, results = 'asis'}
-
+\begin{figure}[ht] \caption{Observations considered as outliers in model 5 (i.e.Compounded Returns)} \label{OutliersReturn}
+```{r}
 #Model Jensen
 ## I summarise on a graph, those observations that have a cook’s distance greater than 4 times the mean and which may be considered as outliers
 plot(cooksdReturn, pch="*", cex=2)  # plot cook's distance
