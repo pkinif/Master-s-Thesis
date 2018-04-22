@@ -1,0 +1,92 @@
+
+```{r}
+
+#############################################################
+#############################################################
+############## Merging all data together ####################
+#############################################################
+#############################################################
+
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr) # to play with data
+if (!require("utils")) install.packages("utils")
+library(utils) #to dowload db
+if (!require("tibble")) install.packages("tibble")
+library(tibble) 
+if (!require("lubridate")) install.packages("lubridate")
+library(lubridate) 
+if (!require("tidyr")) install.packages("tidyr")
+library(tidyr)
+
+
+
+# This file syncronize data from from StockPup, NewsWeekGreen Ranking and Tobin'sQ from Ycharts. 
+
+# I download each DataBase
+
+  StockPup <- read.csv(file = "DataBase/StockPup/StkP_From2012.csv", header = TRUE, stringsAsFactors = FALSE) # NB : StockPup is already merged with the file Companies.
+  
+  CAPM <- read.csv(file = "DataBase/CAPM/CAPM.csv", header = TRUE, stringsAsFactors = FALSE)
+  
+  NewsWeek <- read.csv2( file = "DataBase/NewsWeekGreenRanking_1416.csv", header = TRUE, stringsAsFactors = FALSE)
+  
+  TobinsQ <-  read.csv2( file = "DataBase/TobinsQ_1216.csv", header = TRUE, stringsAsFactors = FALSE)
+
+# All Database contains a column Ticket and Year except Newsweek. I create one for each lag. 
+  
+  ## For lag(0) --> - 2 as newsweek GR ranking 2014,2015, 2016 are calculated based on companies data in 2012,2013,2014
+  
+    NewsWeek_Lag0 <- NewsWeek
+    NewsWeek_Lag0$Year <- NewsWeek_Lag0$YearNewsWeekGR - 2
+  
+    ## Lag 1
+    
+    NewsWeek_Lag1 <- NewsWeek
+    NewsWeek_Lag1$Year <- NewsWeek_Lag1$YearNewsWeekGR - 1
+    
+    ## Lag 2
+    
+    NewsWeek_Lag2 <- NewsWeek
+    NewsWeek_Lag2$Year <- NewsWeek_Lag2$YearNewsWeekGR 
+    
+    ## Lag 3
+    
+    NewsWeek_Lag3 <- NewsWeek
+    NewsWeek_Lag3$Year <- NewsWeek_Lag3$YearNewsWeekGR + 1
+    
+    ## Lag 4
+    
+    NewsWeek_Lag4 <- NewsWeek
+    NewsWeek_Lag4$Year <- NewsWeek_Lag4$YearNewsWeekGR + 2
+    
+
+##########################################
+############### Merging ##################
+##########################################
+
+# First I merge StockPup, CAPM and TobinsQ together
+    
+    
+    Syncro <- merge(StockPup, TobinsQ, by = c("Ticker", "Year"), all = TRUE)
+    Syncro1 <- merge(Syncro, CAPM, by = c("Ticker", "Year"), all = TRUE)
+
+    
+# Then I merge with NewsWeek for each lag  
+    
+    
+    FullDb_Lag0 <- merge(Syncro1, NewsWeek_Lag0, by = c("Ticker", "Year"), all = TRUE)
+    FullDb_Lag1 <- merge(Syncro1, NewsWeek_Lag1, by = c("Ticker", "Year"), all = TRUE)
+    FullDb_Lag2 <- merge(Syncro1, NewsWeek_Lag2, by = c("Ticker", "Year"), all = TRUE)
+    FullDb_Lag3 <- merge(Syncro1, NewsWeek_Lag3, by = c("Ticker", "Year"), all = TRUE)
+    FullDb_Lag4 <- merge(Syncro1, NewsWeek_Lag4, by = c("Ticker", "Year"), all = TRUE)
+
+# Finaly I write as csv :)
+    
+    write.csv(FullDb_Lag0, file = "DataBase/FullDb_Lag0.csv")
+    write.csv(FullDb_Lag1, file = "DataBase/FullDb_Lag1.csv")
+    write.csv(FullDb_Lag2, file = "DataBase/FullDb_Lag2.csv")
+    write.csv(FullDb_Lag3, file = "DataBase/FullDb_Lag3.csv")
+    write.csv(FullDb_Lag4, file = "DataBase/FullDb_Lag4.csv")
+    
+```
+
