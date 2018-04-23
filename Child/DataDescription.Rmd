@@ -93,6 +93,10 @@ stargazer(PanelData[c(1:10),c("Companies", "Year", "ROA", "TobinsQ")], summary =
 \newpage
 ## Independent Variables
 
+Citation from [@Honaker2011a] to justify the use of log(TobinsQ) :
+
+> If one of your variables is heavily skewed or has outliers that may alter the imputation in an unwanted way, you can use a natural logarithm transformation of that variable in order to normalize its distribution. 
+
 Concerning independent variables, both process-based and outcome-based CEP had been approached with the KPI's of the Newsweek Green Ranking. More precisely, I have used “Sustainability Pay Link”, “Sustainability Themed Committee”, and “Audit” as a proxies for process-based CEP and "Energy Productivity", "Carbon Productivity", "Water Productivity" and "Waste Productivity" as a proxies for outcome-based CEP \footnote{Newsweek Green Ranking have another KPI that capture outcome-based CEP, namely Energy Productivity. Inserting this variable into my models create multicollinearity (Variance Inflaction Factor superior to 5 for both Energy and Carbon Productivity). Consequently I do not consider this KPI in my models.}. 
 
 *A Sustainability Pay Link* is a mechanism to link the remuneration of any member of a company’s senior executive team with the achievement of environmental performance targets. A score of 1 accrues to the company when such a link exists and a score of 0 is attributed if there is no such link in place.

@@ -1,0 +1,149 @@
+---
+title: "Multiple Imputation"
+author: "Kinif Pierrick"
+date: "23 avril 2018"
+output: pdf_document
+---
+```{r}
+## Using the Amelia Package I perform a multiple imputation of the missing values of the database. For more information about the amelia package, see : 
+
+#HONAKER, James, KING, Gary, BLACKWELL, Matthew, et al. Amelia II: A program for missing data. Journal of statistical software, 2011, vol. 45, no 7, p. 1-47. Available at https://r.iq.harvard.edu/docs/amelia/amelia.pdf
+
+
+#####################################
+# Package
+#####################################
+
+if (!require("Amelia")) install.packages("Amelia")
+if (!require("data.table")) install.packages("data.table")
+
+library(Amelia) # to handle na's with mutliple imputation
+library(data.table)
+
+#####################################
+#DataBase
+#####################################
+
+  DB <- read.csv("DataBase/SyncroRawData/FullDb_Lag1.csv", stringsAsFactors = FALSE, header = TRUE)
+
+
+# According to Honaker et al (2011), "When performing multiple imputation, the first step is to identify the variables to include in the imputation model. It is crucial to include at least as much information as will be used in the analysis model. That is, any variable that will be in the analysis model should also be in the imputation model. This includes any transformations or interactions of variables that will appear in the analysis model. In fact, it is often useful to add more information to the imputation model than will be present when the analysis is run. Since imputation is predictive, any variables that would increase predictive power should be included in the model, even if including them in the analysis model would produce bias in estimating a causal effect (such as for post-treatment variables) or collinearity would preclude determining which variable had a relationship with the dependent variable (such as including multiple alternate measures of GDP)"
+
+# Then I include all variables that are of interest for my regression analysis
+
+  ImputationModel <- DB[,c("Roa",
+                         "TobinsQ",
+                         "Roe",
+                         "PB_ratio",
+                         "PE_ratio",
+                         "BookValue_EquityPerShare",
+                    "CarbonProductivity",
+                    "WaterProductivity",
+                    "WasteProductivity",
+                    "EnergyProductivity",
+                    "GreenScore",
+                    "SustainableThemedCommitment",
+                    "SustainabilityPayLink",
+                    "AuditScore",
+                    "LongTermDebtToEquityRatio",
+                    "NetMargin",
+                    "Assets",
+                    "Beta",
+                    "AlphaJensen",
+                    "Year",
+                    "Companies")]
+
+  ImputationModel$FirmSize <- log(ImputationModel$Assets)
+  ImputationModel$LogTobinsQ <- log(ImputationModel$TobinsQ)
+  
+  setnames(ImputationModel, old = "LongTermDebtToEquityRatio", new = "Leverage")
+
+#Before starting, let's count the number of missing value in the dataset. (n = 3072)
+  
+  Count_na <- sum(is.na(ImputationModel)) 
+
+#####################################
+# ImpuationModel
+#####################################
+
+# Let's start the imputation model. The advantage of Amelia is the fact that we include parameters to specify that the dataset is a panel data with two index (time and companies). According to Honaker et al.(2011), "With this input, Amelia will add covariates to the model that correspond to time and its polynomials. These covariates will help better predict the missing values.""
+
+
+  a.out <- amelia(ImputationModel, m = 5, ts = "Year", cs = "Companies", polytime = 2, interc = TRUE)
+
+# Each of the imputed datasets is now in the list a.out$imputations. Tus, I could plot a histogram of the Roa variable from the 3rd imputation :
+
+  hist(a.out$imputations[[3]]$Roa, col="grey", border="white")
+
+  
+#####################################
+# Combining Multiple Amelia Runs
+#####################################
+
+  a.out.more <- amelia(ImputationModel, m = 10, ts = "Year", cs = "Companies", polytime = 2)
+  
+#combine this output with the original output using the ameliabind function
+
+  a.out.more1 <- ameliabind(a.out, a.out.more) 
+
+#print ouput
+  
+  a.out.more1
+  
+#####################################
+# Saving imputed datasets
+#####################################
+
+  
+## In a aggregated form
+  save(a.out.more1, file = "DataBase/ImputationDataBase/imputations.RData")
+  
+## Or save each of the imputed datasets to its own file. This will create one comma-separated value file for each imputed dataset
+  write.amelia(obj=a.out.more1, file.stem = "DataBase/ImputationDataBase/outdata")
+
+  
+#####################################
+#plausibility check : Diagnostic
+#####################################
+
+  ## 1. Comparing Densities
+  
+#According to Honaker et al. : "One check on the plausibility of the imputation model is check the distribution of imputed values to the distribution of observed values. Obviously we cannot expect, a priori , that these distribution will be identical as the missing values may differ systematically from the observed value–this is fundamental reason to impute to begin with!The plot method works on output from amelia and, by default, shows for each variable a plot of the relative frequencies of the observed data with an overlay of the relative frequency of the imputed values...We can also use the function compare.density directly to make these plots for an individual variable"
+  
+plot(a.out.more1, which.vars = 1:4)
+  
+compare.density(a.out.more1, var = "Roa")
+compare.density(a.out.more1, var = "Roe")
+compare.density(a.out.more1, var = "TobinsQ")
+compare.density(a.out.more1, var = "LogTobinsQ")
+compare.density(a.out.more1, var = "PB_ratio")
+compare.density(a.out.more1, var = "PE_ratio")
+compare.density(a.out.more1, var = "BookValue_EquityPerShare")
+compare.density(a.out.more1, var = "NetMargin")
+compare.density(a.out.more1, var = "Beta")
+compare.density(a.out.more1, var = "AlphaJensen")
+compare.density(a.out.more1, var = "Leverage")
+compare.density(a.out.more1, var = "FirmSize")
+
+
+  ## 2. Overimpute
+
+# Overimputing involves sequentially treating each of the observed values as if they had actually been missing. For each observed value in turn we then generate several hundred imputed values of that observed value, as if it had been missing . While m = 5 imputations are sufficient for most analysis models, this large number of imputations allows us to construct a confidence interval of what the imputed value would have been, had any of the observed data been missing. We can then graphically inspect whether our observed data tends to fall within the region where it would have been imputed had it been missing. On this graph, a y = x line indicates the line of perfect agreement; that is, if the imputation model was a perfect predictor of the true value, all the imputations would fall on this line. For each observation, Amelia also plots 90% confidence intervals that allows the user to visually inspect the behavior of the imputation model. By checking how many of the confidence intervals cover the y = x line, we can tell how often the imputation model can confidently predict the true value of the observation.
+
+overimpute(a.out.more1, var = "Roa")
+overimpute(a.out.more1, var = "Roa")
+overimpute(a.out.more1, var = "Roe")
+overimpute(a.out.more1, var = "TobinsQ")
+overimpute(a.out.more1, var = "LogTobinsQ")
+overimpute(a.out.more1, var = "PB_ratio")
+overimpute(a.out.more1, var =  "PE_ratio")
+overimpute(a.out.more1, var =  "Roa")
+overimpute(a.out.more1, var = "NetMargin")
+overimpute(a.out.more1, var = "Beta")
+overimpute(a.out.more1, var = "AlphaJensen")
+overimpute(a.out.more1, var = "Leverage")
+overimpute(a.out.more1, var = "FirmSize")
+
+#Explanation of graphics : Here ninety percent confidence intervals are constructed that detail where an observed value would have been imputed had it been missing from the dataset, given the imputation model. The dots represent the mean imputation. Around ninety percent of these confidence intervals contain the y = x line, which means that the true observed value falls within this range.  The color of the line (as coded in the legend) represents the fraction of missing observations in the pattern of missingness for that observation.
+```
+

@@ -16,7 +16,6 @@ knitr :: opts_chunk$set(echo = FALSE, error = FALSE, message = FALSE, results = 
 ############## Package and DataBase loading #################
 #############################################################
 #############################################################
-
 rm(list=ls()) #Removes all items in the environment!
 
 #Packages
