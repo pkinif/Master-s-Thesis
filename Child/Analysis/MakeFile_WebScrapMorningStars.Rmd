@@ -1,0 +1,91 @@
+---
+title: "MakeFile_WebScrapMorningStars"
+author: "Kinif Pierrick"
+date: "24 avril 2018"
+output: pdf_document
+---
+
+
+```{r}
+
+###############################################################
+###############################################################
+############## WebScrap Data From Morningtsar #################
+###############################################################
+###############################################################
+
+#More details : https://gist.github.com/hahnicity/45323026693cdde6a116#file-morningstar-api-md
+
+#####################################
+############## Packages #############
+#####################################
+
+require(dplyr)
+require(tidyr)
+require(utils)
+require(data.table)
+
+#################################
+#### Step 1 : Get ticker  #######
+#################################
+
+# Ticker 
+
+Companies <- read.csv2(file = "DataBase/Companies.csv", header = TRUE, stringsAsFactors = FALSE)
+Ticker <- as.list(Companies$Ticker)
+
+
+# All files come from Morningstar. The common format is http://financials.morningstar.com/ajax/exportKR2CSV.html?t=FB So I create a vector containing this format for all Ticker  /// CSV Format :)
+
+LinkFiles <- paste("http://financials.morningstar.com/ajax/exportKR2CSV.html?t=",Ticker, sep = "")
+
+##################################################
+#### Step 2 : Dowload Files and rbind them #######
+##################################################
+
+#NB: in the list of path file, some csv do not contain any row. In running the function, it cause some errors so adding tryCatch is a good way to solve the problem.
+
+StockPup_Db <- lapply(LinkFiles, function(x){
+  
+  tryCatch(read.csv2(file = x, sep = ",", header = FALSE, stringsAsFactors = FALSE), error=function(e) NULL)
+  
+})
+
+MorningStar <- StockPup_Db 
+
+# I make MorningStar a tidy data and add a column Ticker 
+
+DataBase <-rbindlist(MorningStar, use.names = TRUE, fill = TRUE, idcol = "id")
+DataBase$id <- as.character(DataBase$id)
+DataBase1 <- merge(TickerId,DataBase, by = "id")
+
+
+write.csv(DataBase1,file = "DataBase/StockPup/StkP_FullPeriod.csv")
+
+##################################################
+#### Step 3 : Select the right time YYYY #######
+##########################################
+
+# Separate the date column into dd mm and yyyy
+
+DataBase2 <- DataBase1 %>% separate(Quarter.end, into = c("Year", "Month","Day"), sep = "-")
+
+# I select only decembre YYYY
+
+DataBase3 <- subset(DataBase2, Month == 12)
+DataBase3$year <- DataBase3$Year
+DataBase4 <- unite(DataBase3, col = "Date", c("year", "Month", "Day"), sep = "-") 
+
+#I remove the id columns and merge with Companies
+
+DataBase5 <- DataBase4[,2:44] 
+DataBase6 <- merge(Companies, DataBase5, by = "Ticker")
+
+# I select only period from 2012 and I save
+
+DataBase7 <- subset(DataBase6, Year > 2011)
+write.csv(DataBase7,file = "DataBase/StockPup/StkP_From2012.csv")
+
+
+```
+
