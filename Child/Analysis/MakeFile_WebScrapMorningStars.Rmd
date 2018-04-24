@@ -30,96 +30,91 @@ require(purrr)
 #### Step 1 : Get ticker  #######
 #################################
 
-# Ticker 
-
 Companies <- read.csv2(file = "DataBase/Companies.csv", header = TRUE, stringsAsFactors = FALSE)
-Ticker <- as.list(Companies$Ticker)
+Ticker <- Companies$Ticker
+Ticker1 <- Ticker[-395] #I remove the "YHOO" Ticker because this one is not on MorningStar 
 
-
-# All files come from Morningstar. The common format is http://financials.morningstar.com/ajax/exportKR2CSV.html?t=FB So I create a vector containing this format for all Ticker  /// CSV Format :)
-
-LinkFiles <- paste("http://financials.morningstar.com/ajax/exportKR2CSV.html?t=",Ticker, sep = "")
 
 ##################################################
 #### Step 2 : Dowload Files and rbind them #######
 ##################################################
 
-
-Ticker <- c("AAPL", "FB")
-
-MorningStar <- lapply(Ticker, function(x){
+MorningStar <- lapply(Ticker1, function(x){
   
   # Get path file --> All files come from Morningstar. The common format is http://financials.morningstar.com/ajax/exportKR2CSV.html?t=FB So I create a vector containing this format for all Ticker  /// CSV Format :)
   
-  LinkFiles <- paste("http://financials.morningstar.com/ajax/exportKR2CSV.html?t=",x, sep = "")
+    LinkFiles <- paste("http://financials.morningstar.com/ajax/exportKR2CSV.html?t=",x, sep = "")
   
-  # GetData --> NB: in the list of path file, some csv do not contain any rows. Tt causes some errors when running the function. Adding tryCatch is a good way to solve the problem.
+    # GetData --> NB: in the list of path file, some csv do not contain any rows. Tt causes some errors when running the function. Adding tryCatch is a good way to solve the problem.
   
-  GetData <- function(LinkFiles){
-    data <- tryCatch(read.csv2(file = LinkFiles, sep = ",", header = FALSE, stringsAsFactors = FALSE), error=function(e) NULL)
-    data1 <- as.data.frame(data[-c(1,2,19,20,26,39,40,61,62,68,69,90,95,96),]) #remove useless rows
-    data2 <- t(data1) #transpose data, i.e. make row columns and vice versa
-    data3 <- data2[-12,] #remove row 12, i.e. TTM column. I do not need it.
-    ColNames <- data3[1,] #Make first row the colnames
-    colnames(data3) <- ColNames
-    rownames(data3) <- c() #remove rownames
-    data4 <- data3[-1,] %>% as.data.frame() %>% setnames(old = "V1", new = "Year") # remove first row and adjust colnames
-    
-    return(data4)
-  }
+    GetData <- function(LinkFiles){
+      data <- tryCatch(read.csv2(file = LinkFiles, sep = ",", header = FALSE, stringsAsFactors = FALSE), error=function(e) NULL)
+      
+      data1 <- as.data.frame(data[-c(1,2,19,20,26,39,40,61,62,68,69,90,95,96),]) #remove useless rows
+      data2 <- t(data1) #transpose data, i.e. make row columns and vice versa
+      data3 <- data2[-12,] #remove row 12, i.e. TTM column. I do not need it.
+      ColNames <- data3[1,] #Make first row the colnames
+      colnames(data3) <- ColNames
+      rownames(data3) <- c() #remove rownames
+      data4 <- data3[-1,] %>% as.data.frame() %>% setnames(old = "V1", new = "Date") # remove first row and adjust colnames
+      data5 <- as.data.frame(data4)
+      return(data5)
+      
+      
+      }
   
-
    #Map everything into a dataframe
-  map_df(LinkFiles, GetData) -> results
+    map_df(LinkFiles, GetData) -> results
 
-  # add an id column indicating which ticker
-  results$Ticker <- x
+    # add an id column indicating which ticker
+    results$Ticker <- x
 
-  return(results)
+    return(results)
 
 })
 
+# I rbind  
+
+DataBase <-rbindlist(MorningStar, use.names = TRUE, fill = TRUE)
+
+# I got a file of 112 columns which is not normal as I have only 79 columns in most of my files. After check, CBG have some column in THB currency and idem for CCE which has some column in €. For both, different currencies are applied only for some columns and the most of the rest are also in $. Columns in different currencies are not variables that I need.  Consequently i remove all column > 79.
+
+DataBase1 <- DataBase[,1:79]
+
+
+########################################
+#### Step 3 : Clean the DataBase #######
+########################################
+
+# First I remove space in column names
+
+require(stringr)
+names(DataBase1)<-str_replace_all(names(DataBase1), pattern = " " , replacement = "." )
+
+# Secondly I split the date column into "month" and "year". I also add a "Day" column. I dupplicate the new Year column and finally I unite month, year and day into Date
+
+DataBase2 <- DataBase1 %>% separate(col = "Date", into = c("year","Month"), sep = "-")
+DataBase2$Year <- DataBase2$year
+DataBase2$Day <- "01"
+DataBase3 <- DataBase2 %>% unite(col = "Date", year, Month, Day, sep = "-") 
+DataBase3$Date <- as.Date(DataBase3$Date)
+DataBase3$Year <- as.numeric(DataBase3$Year)
+
+# Finally I put all columns as.numeric, except the date and tickers ones.
+
+
+DataBase3[,2:78] <- lapply(DataBase3[,2:78],as.numeric)
 
 
 
+########################################
+#### Step 4 : Write the DataBase #######
+########################################
 
+write.csv(DataBase, file = "DataBase/MorningStar/FullDataBase.csv")
+THB <- subset(DataBase)
 
-
-
-
-
-# I make MorningStar a tidy data and add a column Ticker 
-
-DataBase <-rbindlist(MorningStar, use.names = TRUE, fill = TRUE, idcol = "id")
-DataBase$id <- as.character(DataBase$id)
-DataBase1 <- merge(TickerId,DataBase, by = "id")
-
-
-write.csv(DataBase1,file = "DataBase/StockPup/StkP_FullPeriod.csv")
-
-##################################################
-#### Step 3 : Select the right time YYYY #######
-##########################################
-
-# Separate the date column into dd mm and yyyy
-
-DataBase2 <- DataBase1 %>% separate(Quarter.end, into = c("Year", "Month","Day"), sep = "-")
-
-# I select only decembre YYYY
-
-DataBase3 <- subset(DataBase2, Month == 12)
-DataBase3$year <- DataBase3$Year
-DataBase4 <- unite(DataBase3, col = "Date", c("year", "Month", "Day"), sep = "-") 
-
-#I remove the id columns and merge with Companies
-
-DataBase5 <- DataBase4[,2:44] 
-DataBase6 <- merge(Companies, DataBase5, by = "Ticker")
-
-# I select only period from 2012 and I save
-
-DataBase7 <- subset(DataBase6, Year > 2011)
-write.csv(DataBase7,file = "DataBase/StockPup/StkP_From2012.csv")
+write.csv(DataBase,file = "DataBase/MorningStar/MorningStar_FullPeriod.csv")
 
 
 ```

@@ -118,7 +118,7 @@ DGX;116;Health Care;5;DGX_quarterly_financial_data.xls;quest diagnostics;quest d
 DHR;117;Industrials;6;DHR_quarterly_financial_data.xls;danaher;danaher corporation;danaher corp
 DIS;118;Consumer Discretionary;1;DIS_quarterly_financial_data.xls;walt disney;the walt disney company;walt disney co
 DISCA;119;Consumer Discretionary;1;DISCA_quarterly_financial_data.xls;discovery communications;discovery communications inc;discovery communications inc
-DISH ;120;Consumer Discretionary;1;DISH_quarterly_financial_data.xls;dish network;dish network corporation;dish network corp
+DISH;120;Consumer Discretionary;1;DISH_quarterly_financial_data.xls;dish network;dish network corporation;dish network corp
 DLTR;121;Consumer Discretionary;1;DLTR_quarterly_financial_data.xls;dollar tree;dollar tree inc;dollar tree inc
 DOV;122;Industrials;6;DOV_quarterly_financial_data.xls;dover;dover corporation;dover corp
 DOW;123;Materials;8;DOW_quarterly_financial_data.xls;dow chemical;the dow chemical company;dow chemical co
@@ -173,7 +173,7 @@ HCP;171;Financials;4;HCP_quarterly_financial_data.xls;hcp;hcp inc;hcp inc
 HD;172;Consumer Discretionary;1;HD_quarterly_financial_data.xls;home depot;the home depot inc;home depot inc
 HES;173;Energy;3;HES_quarterly_financial_data.xls;hess;hess corporation;hess corp
 HIG;174;Financials;4;HIG_quarterly_financial_data.xls;hartford financial services group;the hartford financial services group inc;hartford financial services group inc
-HLT ;175;Consumer Discretionary;1;HLT_quarterly_financial_data.xls;hilton worldwide holdings;hilton worldwide holdings inc;hilton worldwide holdings inc
+HLT;175;Consumer Discretionary;1;HLT_quarterly_financial_data.xls;hilton worldwide holdings;hilton worldwide holdings inc;hilton worldwide holdings inc
 HOG;176;Consumer Discretionary;1;HOG_quarterly_financial_data.xls;harley-davidson;harley-davidson inc;harley-davidson inc
 HON;177;Industrials;6;HON_quarterly_financial_data.xls;honeywell international;honeywell international inc;honeywell international inc
 HOT;178;Consumer Discretionary;1;HOT_quarterly_financial_data.xls;starwood hotels & resorts worldwide;starwood hotels & resorts worldwide inc;starwood hotels & resorts worldwide inc
@@ -186,7 +186,7 @@ IBM;184;Information Technology;7;IBM_quarterly_financial_data.xls;international 
 ICE;185;Financials;4;ICE_quarterly_financial_data.xls;intercontinentalexchange group;intercontinental exchange inc;intercontinental exchange inc
 IEP;186;Industrials;6;NA;icahn enterprises;icahn enterprises lp;icahn enterprises lp
 ILMN;187;Health Care;5;ILMN_quarterly_financial_data.xls;illumina;illumina inc;illumina inc
-INCY ;188;Pharmaceuticals, Biotechnology;9;INCY_quarterly_financial_data.xls;incyte;incyte corporation;incyte corp
+INCY;188;Pharmaceuticals, Biotechnology;9;INCY_quarterly_financial_data.xls;incyte;incyte corporation;incyte corp
 INTC;189;Information Technology;7;INTC_quarterly_financial_data.xls;intel;intel corporation;intel corp
 INTU;190;Information Technology;7;INTU_quarterly_financial_data.xls;intuit;intuit inc;intuit inc
 IP;191;Materials;8;IP_quarterly_financial_data.xls;international paper;international paper company;international paper co
@@ -240,7 +240,7 @@ MCO;238;Financials;4;MCO_quarterly_financial_data.xls;moody's;moody's corporatio
 MDLZ;239;Consumer Staples;2;KFT_quarterly_financial_data.xls;mondelez international;mondelez international inc;mondelez international inc
 MET;240;Financials;4;MET_quarterly_financial_data.xls;metlife;metlife inc;metlife inc
 MGLN;241;Energy;3;NA;magellan midstream partners;magellan midstream partners lp;magellan midstream partners lp
-MGM ;242;Consumer Discretionary;1;MGM_quarterly_financial_data.xls;mgm resorts international;mgm resorts international;mgm resorts international
+MGM;242;Consumer Discretionary;1;MGM_quarterly_financial_data.xls;mgm resorts international;mgm resorts international;mgm resorts international
 MHK;243;Consumer Discretionary;1;MHK_quarterly_financial_data.xls;mohawk industries;mohawk industries inc;mohawk industries inc
 MJN;244;Consumer Staples;2;MJN_quarterly_financial_data.xls;mead johnson nutrition;mead johnson nutrition company;mead johnson nutrition co
 MKC;245;Consumer Staples;2;MKC_quarterly_financial_data.xls;mccormick;mccormick & company incorporated;mccormick & co inc
@@ -316,7 +316,7 @@ ROST;314;Consumer Discretionary;1;ROST_quarterly_financial_data.xls;ross stores;
 RSG;315;Industrials;6;RSG_quarterly_financial_data.xls;republic services;republic services inc;republic services inc
 RTN;316;Industrials;6;RTN_quarterly_financial_data.xls;raytheon;raytheon company;raytheon co
 S;317;Telecommunication Services;10;S_quarterly_financial_data.xls;sprint;sprint corporation;sprint corp
-SBAC ;318;Telecommunication Services;10;SBAC_quarterly_financial_data.xls;sba communications;sba communications corporation;sba communications corp
+SBAC;318;Telecommunication Services;10;SBAC_quarterly_financial_data.xls;sba communications;sba communications corporation;sba communications corp
 SBUX;319;Consumer Discretionary;1;SBUX_quarterly_financial_data.xls;starbucks;starbucks corporation;starbucks corp
 SCHW;320;Financials;4;SCHW_quarterly_financial_data.xls;charles schwab;the charles schwab corporation;charles schwab corp
 SE;321;Energy;3;SE_quarterly_financial_data.xls;spectra energy;spectra energy corp;spectra energy corp
