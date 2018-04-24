@@ -10,6 +10,17 @@ output: pdf_document
 
 This document aims at giving you an overview of my DataBase folders. This one is split up into several sub-folders :
 
+## MorningStar
+
+This sub-folders contains :
+
+i. "FullDataBase.csv" which are key Ratios of 396 Tickers. Data are in USD and on a yearly basis. It covers the time frame from 2008 till 2017. 
+
+
+
+
+
+
 ## CAPM
 
 This sub-folders contains :

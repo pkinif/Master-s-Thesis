@@ -15,6 +15,9 @@ output: pdf_document
 ###############################################################
 
 #More details : https://gist.github.com/hahnicity/45323026693cdde6a116#file-morningstar-api-md
+#Variable Definitions: http://financials.morningstar.com/ratios/r.html#c
+
+#This makefile web scrap key ratios of companies (i), Income Statement (ii) and balance sheet (iii) information
 
 #####################################
 ############## Packages #############
@@ -25,6 +28,13 @@ require(tidyr)
 require(utils)
 require(data.table)
 require(purrr)
+
+
+###############################################################
+###############################################################
+############## Key Ratio - Web Scrap MorningStar ##############
+###############################################################
+###############################################################
 
 #################################
 #### Step 1 : Get ticker  #######
@@ -104,9 +114,9 @@ DataBase3 <- DataBase2 %>% unite(col = "Date", year, Month, Day, sep = "-")
 DataBase3$Date <- as.Date(DataBase3$Date)
 DataBase3$Year <- as.numeric(DataBase3$Year)
 
-# Finally I put all columns as.numeric, except the date and tickers ones. Apply as.numeric(x) with x which is as.factor will not work. Before I need transfrom x into character and then into numeric.
+# Thirdly I put all columns as.numeric, except the date and tickers ones. Apply as.numeric(x) with x which is as.factor will not work. Before I need transfrom x into character and then into numeric.
 
-  # And before doing that, I need to make some changes. Currently if x = 5,365 (i.e. meaning 5365) and I transform as character and then as numeric, it gives NA. 
+  # And before doing that, I need to make some changes. Currently if x = 5,365 (i.e. meaning 5365) and I transform as character and then as numeric, it gives NA. So I need to remove all ",". Morningstar used "." to indicate decimal then no problem to remove ","?
 
 DataBase3[,2:78] <- lapply(DataBase3[,2:78],function(x){
   as.character(x) %>%
@@ -114,15 +124,72 @@ DataBase3[,2:78] <- lapply(DataBase3[,2:78],function(x){
     as.numeric(x)
 })
 
+#Then I still need to remove some useless columns. Indeed some columns correspond to header in the original database. Others are variables of the balance sheet in % which I do not need or still some are double (i.e. Financial Leverage)
+
+DataBase4 <- DataBase3 %>% subset(select = -c(17:25,30,34:41,47:66))
+
+# I organize to put Ticker, Year, Date in first columns
+DataBase5 <- DataBase4[,c(41,1,42,2:40)]
+                                
+          
+
+# Then, I need to make a standardisation of the unity of measurement of each variables. Indeed currently some variables are in million and other are in %. Let's correct that.
+
+DataBase5$Base100 <- 0.01
+DataBase5$Million <- 1000000
+
+  ##Column_In_Percentage 
+
+  DataBase5[,5] <- DataBase5[,5] * DataBase5$Base100
+  DataBase5[,7] <- DataBase5[,7] * DataBase5$Base100
+  DataBase5[,11] <- DataBase5[,11] * DataBase5$Base100
+  DataBase5[,19] <- DataBase5[,19] * DataBase5$Base100
+  DataBase5[,20] <- DataBase5[,20] * DataBase5$Base100
+  DataBase5[,22] <- DataBase5[,22] * DataBase5$Base100
+  DataBase5[,23] <- DataBase5[,23] * DataBase5$Base100
+  DataBase5[,24] <- DataBase5[,24] * DataBase5$Base100
+  DataBase5[,26] <- DataBase5[,26] * DataBase5$Base100
+  DataBase5[,27] <- DataBase5[,27] * DataBase5$Base100
+  DataBase5[,28] <- DataBase5[,28] * DataBase5$Base100
+  DataBase5[,29] <- DataBase5[,29] * DataBase5$Base100
+
+  ## Column in Million
+
+  DataBase5[,4] <- DataBase5[,4] * DataBase5$Million
+  DataBase5[,6] <- DataBase5[,6] * DataBase5$Million
+  DataBase5[,8] <- DataBase5[,8] * DataBase5$Million
+  DataBase5[,12] <- DataBase5[,12] * DataBase5$Million
+  DataBase5[,14] <- DataBase5[,14] * DataBase5$Million
+  DataBase5[,15] <- DataBase5[,15] * DataBase5$Million
+  DataBase5[,16] <- DataBase5[,16] * DataBase5$Million
+  DataBase5[,18] <- DataBase5[,18] * DataBase5$Million
+
+DataBase6 <- subset(DataBase5,select = -c(43,44)) #I remove Base100 and Million
+
+
+# Now, I have standardized the unity of measurement, I rename colnames one last time
+
+names(DataBase6)<-str_replace_all(names(DataBase6), pattern = "USD.Mil", replacement = "")
+names(DataBase6)<-str_replace_all(names(DataBase6), pattern = "%", replacement = "")
+names(DataBase6)<-str_replace_all(names(DataBase6), pattern = "USD", replacement = "")
+names(DataBase6)<-str_replace_all(names(DataBase6), pattern = "'.'", replacement = "")
+names(DataBase6)<-str_replace_all(names(DataBase6), pattern = "", replacement = "")
+
+
+colnames(DataBase6) <- c("Ticker", "Date", "Year", "Revenue", "GrossMargin", "OperatingIncome", "OperatingMargin", "NetIncome", "EarningsPerShare", "Dividends", "PayoutRatio", "Shares", "BookValuePerShare", "OperatingCashFlow","CapSpending", "FreeCashFlow", "FreeCashFlowPerShare", "WorkingCapital", "TaxRate", "NetMargin", "AssetTurnover_Average", "Roa", "Roe", "Roic", "InterestCoverage", "OperatingCashFlowGrowth_YOY", "FreeCashFlowGrowth_YOY", "CapEAsPercentageOfSales", "FreeCashFlowSales", "FreeCashFlowNetIncome", "CurrentRatio", "QuickRatio", "FinancialLeverage", "DebtEquity", "DaysSalesOutstanding", "DaysInventory", "PayablesPeriod", "CashConversionCycle", "ReceivablesTurnover", "InventoryTurnover", "FixedAssetsTurnover", "AssetTurnover")
+
 
 ########################################
 #### Step 4 : Write the DataBase #######
 ########################################
 
-write.csv(DataBase, file = "DataBase/MorningStar/FullDataBase.csv")
-THB <- subset(DataBase)
+write.csv(DataBase6, file = "DataBase/MorningStar/KeyRatios.csv")
 
-write.csv(DataBase,file = "DataBase/MorningStar/MorningStar_FullPeriod.csv")
+###############################################################
+###############################################################
+############## Income Stat -Web Scrap MorningStar #############
+###############################################################
+###############################################################
 
 
 ```
