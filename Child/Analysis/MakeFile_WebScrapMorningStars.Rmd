@@ -17,7 +17,7 @@ output: pdf_document
 #More details : https://gist.github.com/hahnicity/45323026693cdde6a116#file-morningstar-api-md
 #Variable Definitions: http://financials.morningstar.com/ratios/r.html#c
 
-#This makefile web scrap key ratios of companies (i), Income Statement (ii) and balance sheet (iii) information
+#This makefile web scrap key ratios of companies (i), Income Statement (ii) and balance sheet (just asset) (iii) information
 
 #####################################
 ############## Packages #############
@@ -246,14 +246,111 @@ TidyData2 <- map_dfr(TidyData, as.data.frame)
 TidyData3 <- subset(TidyData2, Year != "TTM")
 
 
+###########################################
+#### Step 3 : clean the database   #######
+###########################################
+
+#colnames
+
+colnames(TidyData3) <- c("Ticker", "Year", "NetIncome", "ResearchAndDevelopment","Revenue")
+
+# As.numeric
+
+TidyData3$NetIncome <- as.numeric(TidyData3$NetIncome)
+TidyData3$Year <- as.numeric(TidyData3$Year)
+
+TidyData3$ResearchAndDevelopment <- as.numeric(TidyData3$ResearchAndDevelopment)
+TidyData3$Revenue <- as.numeric(TidyData3$Revenue)
+
+#Data are in million I need to multiply by 10^6
+
+TidyData3$NetIncome <- TidyData3$NetIncome * 10^6
+TidyData3$ResearchAndDevelopment <- TidyData3$ResearchAndDevelopment * 10^6
+TidyData3$Revenue <- TidyData3$Revenue * 10^6
 
 ###########################################
-#### Step 3 : Save and write as.csv #######
+#### Step 4 : Save and write as.csv #######
 ###########################################
 
+write.csv(TidyData3, file = "DataBase/MorningStar/NetIncome_R&R_Revenue.csv")
 
 
+###############################################################
+###############################################################
+############## Total Asset -Web Scrap MorningStar #############
+###############################################################
+###############################################################
 
+
+#################################
+#### Step 1 : Get ticker  #######
+#################################
+
+Ticker <- unique(DataBase6$Ticker) 
+
+##################################################
+#### Step 2 : Dowload Files and rbind them #######
+##################################################
+
+
+    TotAsset <- lapply(Ticker, function(x){
+  
+      LinkFiles <- paste("http://financials.morningstar.com/ajax/ReportProcess4CSV.html?t=",x, "&reportType=bs&period=12&dataType=A&order=asc&columnYear=5&number=3", sep = "")
+      
+      data <- tryCatch(read.csv2(file = LinkFiles, sep = ",", header = FALSE, stringsAsFactors = FALSE), error=function(e) NULL)
+      
+
+    })
+
+#I assign the name of the ticker to each list
+names(TotAsset) <- Ticker
+
+#I add a column ticker to each composant of the list GetData
+
+TotAsset1 <-  mapply(cbind, TotAsset, "Ticker"=Ticker, SIMPLIFY=F)
+
+#I make the list in a tidy way
+
+TotAsset2 <- lapply(Ticker, function(x){
+  
+  if(ncol(TotAsset1[[x]]) == 7) {
+    
+    TidyData1 <- TotAsset1[[x]] %>% subset(V1 == "Total assets")
+    colnames(TidyData1) <- c("Variables","2013","2014","2015","2016","2017", "Ticker")
+    TidyData2 <- TidyData1 %>% gather("Year", "variables", 2:6)
+    TidyData3 <- TidyData2 %>% spread(Variables, variables)
+  }
+})
+
+names(TotAsset2) <- Ticker
+
+#I mapTidyData in a dataframe
+
+TotAsset3 <- map_dfr(TotAsset2, as.data.frame)
+
+###########################################
+#### Step 3 : clean the database   #######
+###########################################
+
+#colnames
+
+colnames(TotAsset3) <- c("Ticker", "Year", "TotalAsset")
+
+# As.numeric
+
+TotAsset3$TotalAsset <- as.numeric(TotAsset3$TotalAsset)
+TotAsset3$Year <- as.numeric(TotAsset3$Year)
+
+#Data are in million I need to multiply by 10^6
+
+TotAsset3$TotalAsset <- TotAsset3$TotalAsset * 10^6
+
+
+###########################################
+#### Step 4 : Save and write as.csv #######
+###########################################
+
+write.csv(TotAsset3, file = "DataBase/MorningStar/TotalAsset.csv")
 
 
 
