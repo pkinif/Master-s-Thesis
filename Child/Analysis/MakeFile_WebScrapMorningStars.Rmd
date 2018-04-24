@@ -191,6 +191,71 @@ write.csv(DataBase6, file = "DataBase/MorningStar/KeyRatios.csv")
 ###############################################################
 ###############################################################
 
+#################################
+#### Step 1 : Get ticker  #######
+#################################
+
+Ticker <- unique(DataBase6$Ticker) 
+
+##################################################
+#### Step 2 : Dowload Files and rbind them #######
+##################################################
+
+require(DataCombine)
+
+# Get path file --> All files come from Morningstar. The common format is http://financials.morningstar.com/ajax/exportKR2CSV.html?t=FB So I create a vector containing this format for all Ticker  /// CSV Format :)
+  
+# GetData --> NB: in the list of path file, some csv do not contain any rows. Tt causes some errors when running the function. Adding tryCatch is a good way to solve the problem.
+  
+    GetData <- lapply(Ticker, function(x){
+  
+      LinkFiles <- paste("http://financials.morningstar.com/ajax/ReportProcess4CSV.html?t=",x, "&reportType=is&period=12&dataType=A&order=asc&columnYear=5&number=3", sep = "")
+      
+      data <- tryCatch(read.csv2(file = LinkFiles, sep = ",", header = FALSE, stringsAsFactors = FALSE), error=function(e) NULL)
+      
+
+    })
+
+#I assign the name of the ticker to each list
+names(GetData) <- Ticker
+
+#I add a column ticker to each composant of the list GetData
+
+GetData1 <-  mapply(cbind, GetData, "Ticker"=Ticker, SIMPLIFY=F)
+
+#I make the list in a tidy way
+
+TidyData <- lapply(Ticker, function(x){
+  
+  if(ncol(GetData1[[x]]) == 8) {
+    
+    TidyData1 <- GetData1[[x]] %>% subset(V1 %in% c("Research and development", "Net income", "Revenue"))
+    colnames(TidyData1) <- c("Variables","2013","2014","2015","2016","2017","TTM", "Ticker")
+    TidyData2 <- TidyData1 %>% gather("Year", "variables", 2:7)
+    TidyData3 <- TidyData2 %>% spread(Variables, variables)
+  }
+})
+
+names(TidyData) <- Ticker
+
+#I mapTidyData in a dataframe
+
+TidyData2 <- map_dfr(TidyData, as.data.frame)
+
+#I remove ttm data
+TidyData3 <- subset(TidyData2, Year != "TTM")
+
+
+
+###########################################
+#### Step 3 : Save and write as.csv #######
+###########################################
+
+
+
+
+
+
 
 ```
 
