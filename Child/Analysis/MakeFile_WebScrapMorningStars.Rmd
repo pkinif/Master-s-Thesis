@@ -89,7 +89,11 @@ DataBase1 <- DataBase[,1:79]
 # First I remove space in column names
 
 require(stringr)
-names(DataBase1)<-str_replace_all(names(DataBase1), pattern = " " , replacement = "." )
+names(DataBase1)<-str_replace_all(names(DataBase1), pattern = " ", replacement = ".")
+names(DataBase1)<-str_replace_all(names(DataBase1), pattern = "-", replacement = ".")
+names(DataBase1)<-str_replace_all(names(DataBase1), pattern = "&", replacement = "")
+names(DataBase1)<-str_replace_all(names(DataBase1), pattern = "/", replacement = ".")
+
 
 # Secondly I split the date column into "month" and "year". I also add a "Day" column. I dupplicate the new Year column and finally I unite month, year and day into Date
 
@@ -100,11 +104,15 @@ DataBase3 <- DataBase2 %>% unite(col = "Date", year, Month, Day, sep = "-")
 DataBase3$Date <- as.Date(DataBase3$Date)
 DataBase3$Year <- as.numeric(DataBase3$Year)
 
-# Finally I put all columns as.numeric, except the date and tickers ones.
+# Finally I put all columns as.numeric, except the date and tickers ones. Apply as.numeric(x) with x which is as.factor will not work. Before I need transfrom x into character and then into numeric.
 
+  # And before doing that, I need to make some changes. Currently if x = 5,365 (i.e. meaning 5365) and I transform as character and then as numeric, it gives NA. 
 
-DataBase3[,2:78] <- lapply(DataBase3[,2:78],as.numeric)
-
+DataBase3[,2:78] <- lapply(DataBase3[,2:78],function(x){
+  as.character(x) %>%
+    gsub(pattern = ",", replacement = "") %>%
+    as.numeric(x)
+})
 
 
 ########################################
