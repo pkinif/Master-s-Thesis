@@ -15,6 +15,7 @@ output: pdf_document
 #####################################
 # Package
 #####################################
+rm(list=ls()) #Removes all items in Environment!
 
 if (!require("Amelia")) install.packages("Amelia")
 if (!require("data.table")) install.packages("data.table")
@@ -79,7 +80,7 @@ library(data.table)
 # Let's start the imputation model. The advantage of Amelia is the fact that we include parameters to specify that the dataset is a panel data with two index (time and companies). According to Honaker et al.(2011), "With this input, Amelia will add covariates to the model that correspond to time and its polynomials. These covariates will help better predict the missing values.""
 
 
-  a.out <- amelia(ImputationModel1, m = 5, ts = "Year", cs = "Companies", polytime = 2)
+  a.out <- amelia(ImputationModel1, m = 100, ts = "Year", cs = "Companies", polytime = 2)
 
 # Each of the imputed datasets is now in the list a.out$imputations. Tus, I could plot a histogram of the Roa variable from the 3rd imputation :
 
@@ -193,7 +194,7 @@ NoOutliers <- lapply(FileList,function(x){
   
     file <- read.csv(file = path, header = TRUE, stringsAsFactors = FALSE)
   
-    Roa_Lm <- lm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Beta , data = file)
+    Roa_Lm <- lm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Beta , data = file)
   
     cooksdRoa <- cooks.distance(Roa_Lm)
     influentialRoa <- as.numeric(names(cooksdRoa)[(cooksdRoa > 4*mean(cooksdRoa, na.rm=T))])
@@ -224,14 +225,14 @@ NoOutliersTibble <- bind_rows(unclass(NoOutliers)) %>%
 
 
 models_imputations <- NoOutliersTibble %>%
-  mutate(model = data %>% map(~ plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Beta , index = c("Companies", "Year"), model = "random", data = .)),
+  mutate(model = data %>% map(~ plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Beta , index = c("Companies", "Year"), model = "random", data = .)),
          tidied = model %>% map(~ tidy(., conf.int = TRUE)),
          glance = model %>% map(~ glance(.)))
 
 # Having the models structured like this makes it easy to access coefficients for models from individual imputations, like so:
 
 Coefficient_Outdata1.csv <- models_imputations %>%
-  filter(Imputation == "outdata4.csv") %>%
+  filter(Imputation == "outdata8.csv") %>%
   unnest(tidied)
 
 # Create a wide data frame of just the coefficients and standard errors
@@ -258,7 +259,7 @@ coefs_melded <- mi.meld(just_coefs, just_ses)
 
 model_degree_freedom <- models_imputations %>%
   unnest(glance) %>%
-  filter(Imputation == "outdata1.csv") %>%
+  filter(Imputation == "outdata8.csv") %>%
   pull(df.residual)
 
 melded_summary <- as.data.frame(cbind(t(coefs_melded$q.mi),
@@ -278,7 +279,7 @@ melded_summary <- as.data.frame(cbind(t(coefs_melded$q.mi),
 # transform it with Fisher z-transformation, and calculate the variance of R2\
 r2s <- models_imputations %>%
   unnest(glance) %>%
-  select(m, adj.r.squared, df.residual) %>%
+  select(Imputation, adj.r.squared, df.residual) %>%
   mutate(R = sqrt(adj.r.squared),  # Regular R
          Q = 0.5 * log((R + 1) / (1 - R)),  # Fisher z-transformation
          se = 1 / df.residual)  # R2 variance

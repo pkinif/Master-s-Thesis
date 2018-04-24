@@ -23,15 +23,13 @@ if (!require("utils")) install.packages("utils")
 if (!require("dplyr")) install.packages("dplyr")
 if (!require("plm")) install.packages("plm")
 if (!require("stargazer")) install.packages("stargazer")
-if (!require("mice")) install.packages("mice")
-if (!require("mitml")) install.packages("mitml")
+
 
 library(stargazer) # to create wonderful tables
 library(plm) #to carry out regression
 library(utils) #to write database in my folders
 library(dplyr) #to play with data
-library(mice)
-library(mitml)
+
 
 #Database
 
@@ -39,39 +37,7 @@ DB_Lag1 <-as.data.frame(read.csv("DataBase/SyncroRawData/FullDb_Lag1.csv", strin
 
 ```
 
-```{r}
-#####################################
-######### Missing Values ############
-#####################################
 
-Model <- DB_Lag1[,c("Roa",
-                    "CarbonProductivity",
-                    "WaterProductivity",
-                    "WasteProductivity",
-                    "SustainableThemedCommitment",
-                    "SustainabilityPayLink",
-                    "AuditScore",
-                    "LongTermDebtToEquityRatio",
-                    "NetMargin",
-                    "Assets",
-                    "Beta",
-                    "Year",
-                    "Companies")]
-
-Model$FirmSize <- log(Model$Assets)
-
-fml <- Roa + CarbonProductivity + WaterProductivity + WasteProductivity + SustainableThemedCommitment + SustainabilityPayLink + AuditScore + LongTermDebtToEquityRatio + NetMargin + FirmSize + Beta ~ 1 + (1|Companies)
-
-imp <- panImpute(Model, formula = fml, n.burn = 50000, n.iter = 5000, m = 100, seed = 1234)
-
-# List of imputed data sets, summary and plot for vizualizatrion
-impList <- mitmlComplete(imp, print = "all")
-summary(imp)
-plot(imp, trace = "all")
-
-# write full 'mitml' object (default)
-write.mitml(imp, filename="DataBase/ImputationTest.R")
-```
 
 
 
