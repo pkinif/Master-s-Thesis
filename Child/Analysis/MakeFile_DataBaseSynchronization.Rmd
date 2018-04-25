@@ -212,7 +212,8 @@ library(data.table)
                                             ResearchAndDevelopment,
                                             NetIncome,
                                             ShareholdersEquity,
-                                            PriceToEquityRatio
+                                            PriceToEquityRatio,
+                                            EarningsPerShare
                                             ))
 
   
@@ -280,6 +281,7 @@ library(data.table)
                                  "NetIncome",
                                  "ShareholdersEquity",
                                  "PriceToEquityRatio",
+                                 "Eps",
                                  "Ra",
                                  "Rf",
                                  "Rm",
@@ -292,9 +294,15 @@ library(data.table)
                                  "StockPriceClose",
                                  "Volume")
      
-     
+    # I write as FinancialData
+        
+        write.csv(DataBase2, file = "DataBase/DataSynchronization/FinancialData_1216.csv")
+        
+        
+        
+        
 #############################################################
-############## (i) Synchronize Green Data ####################
+############## (i) Synchronize with Green Data ##############
 #############################################################
       
     # I dowload NewsWeek Green Ranking
@@ -303,175 +311,138 @@ library(data.table)
      
     #I remove useless columns
       
-      Newsweek1 <- subset(Newsweek, select = - Companies)
+    Newsweek1 <- subset(Newsweek, select = - Companies)
      
-     
-     
-     
-     
-     
-  # All Database contains a column Ticker and Year except Newsweek which do not have a year column. I create one for each lag. 
-  
-  ## For lag(0) --> - 2 as newsweek GR ranking 2014,2015, 2016 are calculated based on companies data in 2012,2013,2014
-  
-    NewsWeek_Lag0 <- NewsWeek1
-    NewsWeek_Lag0$Year <- NewsWeek_Lag0$YearNewsWeekGR - 2
-  
-    ## Lag 1
-    
-    NewsWeek_Lag1 <- NewsWeek1
-    NewsWeek_Lag1$Year <- NewsWeek_Lag1$YearNewsWeekGR - 1
-    
-    ## Lag 2
-    
-    NewsWeek_Lag2 <- NewsWeek1
-    NewsWeek_Lag2$Year <- NewsWeek_Lag2$YearNewsWeekGR 
-    
-    ## Lag 3
-    
-    NewsWeek_Lag3 <- NewsWeek1
-    NewsWeek_Lag3$Year <- NewsWeek_Lag3$YearNewsWeekGR + 1
-    
+      
+###################################
+############## Lag 0 ##############
+###################################
+      
+# For create my database of lag 0, I create a new column in Newsweek equals to YearnNewsWeekGR -2
 
-##########################################
-############### Merging ##################
-##########################################
+Lag0 <- Newsweek1
+Lag0$Year <- Lag0$YearNewsWeekGR - 2
 
-# First I merge StockPup, CAPM and TobinsQ together
-    
-    
-    Syncro <- merge(StockPup1, TobinsQ1, by = c("Ticker", "Year"), all = TRUE)
-    Syncro1 <- merge(Syncro, CAPM1, by = c("Ticker", "Year"), all = TRUE)
-    Syncro2 <- merge(Companies, Syncro1, by = c("Ticker"), all = TRUE)
+DataBase2_Lag0 <- DataBase2 %>% subset(Year < 2015)     
+Db_Lag0 <- merge(DataBase2_Lag0, Lag0, by = c("Ticker", "Year"), all = TRUE) 
 
-# I rename columns
+# I remove rows where green variables are missing
+Db_Lag0Bis <- Db_Lag0 %>% subset(!is.na(CarbonProductivity))
 
-    OldNames <- c("Shares.split.adjusted", 
-                  "Split.factor", 
-                  "Current.Assets",	
-                  "Liabilities",	
-                  "Current.Liabilities",	
-                  "Shareholders.equity",	
-                  "Non.controlling.interest",	
-                  "Preferred.equity",	
-                  "Goodwill...intangibles",	
-                  "Long.term.debt",	
-                  "Revenue",	
-                  "Earnings",	
-                  "Earnings.available.for.common.stockholders",	
-                  "EPS.basic",	
-                  "EPS.diluted",	
-                  "Dividend.per.share",	
-                  "Cash.from.operating.activities",	
-                  "Cash.from.investing.activities",	
-                  "Cash.from.financing.activities",	
-                  "Cash.change.during.period",	
-                  "Cash.at.end.of.period",	
-                  "Capital.expenditures",	
-                  "Price",	
-                  "Price.high",	
-                  "Price.low",	
-                  "ROE",	
-                  "ROA",	
-                  "Book.value.of.equity.per.share",	
-                  "P.B.ratio",	
-                  "P.E.ratio",	
-                  "Cumulative.dividends.per.share",	
-                  "Dividend.payout.ratio",	
-                  "Long.term.debt.to.equity.ratio",	
-                  "Equity.to.assets.ratio",	
-                  "Net.margin",	
-                  "Asset.turnover",	
-                  "Free.cash.flow.per.share",	
-                  "Current.ratio")
+#I merge with Companies to add the industry variable
+Companies <- read.csv2(file = "DataBase/Companies.csv", header = TRUE, stringsAsFactors = FALSE)
+Companies1 <- Companies[,c(1,3,4)]
 
-        NewNames <- c("SharesSplitAdjusted", 
-                  "SplitFactor", 
-                  "CurrentsAssets", 
-                  "Liabilities",	
-                  "CurrentLiabilities",	
-                  "ShareholdersEquity",	
-                  "NonControllingInterest",	
-                  "PreferreEquity",	
-                  "GoodwillIntangibles",	
-                  "LongTermDebt",	
-                  "Revenue",	
-                  "Earnings",	
-                  "EarningsAvailableForCommonStockholders",	
-                  "EPS_Basic",	
-                  "EPS_Diluted",	
-                  "DividendPerShare",	
-                  "Cash_OperatingActivities",	
-                  "Cash_InvestingActivities",	
-                  "Cash_FinancingActivities",	
-                  "CashChangeDuringPeriod",	
-                  "CashEndPeriod",	
-                  "CapitalExpenditures",	
-                  "Price",	
-                  "PriceHigh",	
-                  "PriceLow",	
-                  "Roe",	
-                  "Roa",	
-                  "BookValue_EquityPerShare",	
-                  "PB_ratio",	
-                  "PE_ratio",	
-                  "CumulativeDividendsPerShare",	
-                  "DividendPayoutRatio",	
-                  "LongTermDebtToEquityRatio",	
-                  "EquityToAssetsRatio",	
-                  "NetMargin",	
-                  "AssetTurnover",	
-                  "FreeCashFlowPerShare",	
-                  "CurrentRatio")
+Db_Lag0BisBis <- merge(Db_Lag0Bis, Companies1, by = "Ticker")
+
+# I add a index columns (required by plm). All in all I have 393 Tickers
+
+Index <- unique(Db_Lag0BisBis$Ticker)
+i<- as.numeric(c(1:393))
+Index1 <- as.data.frame(cbind(Index,i))
+colnames(Index1) <- c("Ticker", "Index")
+Index1$Index <- as.numeric(as.character(Index1$Index))
+
+# I merge the index columns
+
+Last <- merge(Db_Lag0BisBis, Index1, by = "Ticker")
+
+#I write as csv    
+write.csv(Last, file = "DataBase/DataSynchronization/Lag0.csv") 
 
 
-    Syncro3 <- Syncro2 %>% setnames(old = OldNames, new = NewNames)
-    
-# Then I merge with NewsWeek for each lag  
-    
-    ## First I need to select a time period of 3 years for each lag
-    
-      ### Lag 0
+###################################
+############## Lag 1 ##############
+###################################    
 
-        SyncroLag0 <- Syncro3 %>% 
-          subset( Year > 2011) %>%
-          subset(Year < 2015)
-    
-        FullDb_Lag0 <- merge(SyncroLag0, NewsWeek_Lag0, by = c("Ticker", "Year"), all = TRUE)
-        
-      ### Lag 1
+#Create the lag1 model is more complex as only the VD need to be lagged t+1. To do this, I create a df of Dependent Variables and one of Control Variable
 
-        SyncroLag1 <- Syncro3 %>% 
-          subset( Year > 2012) %>%
-          subset(Year < 2016)
-    
-        FullDb_Lag1 <- merge(SyncroLag1, NewsWeek_Lag1, by = c("Ticker", "Year"), all = TRUE)
-        
-      ### Lag 2
+## I create a df with financial variables from 2013 to 2015 (i.E. t+1) and from 2012 to 2014 (i.e. t)
 
-        SyncroLag2 <- Syncro3 %>% 
-          subset( Year > 2013) %>%
-          subset(Year < 2017)
-    
-        FullDb_Lag2 <- merge(SyncroLag2, NewsWeek_Lag2, by = c("Ticker", "Year"), all = TRUE)
+FinancialVariables_Lag1 <- DataBase2 %>%
+  subset(Year > 2012) %>%
+  subset(Year < 2016)
 
-      ### Lag 3
+FinancialVariables_Lag0 <- DataBase2 %>%
+  subset(Year < 2015)
 
-        SyncroLag3 <- Syncro3 %>% 
-          subset( Year > 2014) %>%
-          subset(Year < 2018)
-    
-        FullDb_Lag3 <- merge(SyncroLag3, NewsWeek_Lag3, by = c("Ticker", "Year"), all = TRUE)           
-        
-        
+## I creata a new variable YearIndex (i.e. 1,2,3) in both df and also in newsweek1
+
+FinancialVariables_Lag1$YearIndex <- FinancialVariables_Lag1$Year - 2012
+FinancialVariables_Lag0$YearIndex <- FinancialVariables_Lag0$Year - 2011
+
+Newsweek1$YearIndex <- Newsweek1$Year - 2013
+
+## I create only VD from FinancialVariables_Lag1 and control variable from FinancialVariables_Lag0
+
+DepVar <- FinancialVariables_Lag1 %>% select(c(Ticker,
+                                               YearIndex,
+                                               Roa,
+                                               Roe,
+                                               Roic,
+                                               TobinsQ,
+                                               Ra,
+                                               AlphaJensen,
+                                               Eps,
+                                               StockPriceClose,
+                                               PriceToEquityRatio,
+                                               PayoutRatio
+                                               ))
+
+ContVar <- FinancialVariables_Lag0 %>% select(c(Ticker,
+                                                YearIndex,
+                                                DebtToEquityRatio,
+                                                NetMargin,
+                                                TotalAssets,
+                                                Shares,
+                                                Revenue,
+                                                ResearchAndDevelopment,
+                                                NetIncome,
+                                                ShareholdersEquity,
+                                                Rf,
+                                                Rm,
+                                                Ra_Rf,
+                                                Rm_Rf,
+                                                Beta,
+                                                CostEquity,
+                                                Volume 
+                                                ))
+                                                
+
+# I merge ContVar, DepVar and Newsweek1
+
+Lag1 <- merge(DepVar, ContVar, by = c("Ticker", "YearIndex"), all = TRUE)
+Lag1A <- merge(Lag1, Newsweek1, by = c("Ticker", "YearIndex"))
+
+#I merge with Companies1 to get the GICSClassification
+
+Lag1B <- merge(Lag1A, Companies1, by = "Ticker")
+
+# I add a CompaniesIndex
+
+CompaniesIndex <- Index1
+colnames(CompaniesIndex) <- c("Ticker", "CompaniesIndex")
+
+Lag1C <- merge(Lag1B, CompaniesIndex, by = "Ticker")
+
+# I write as CSV
+
+write.csv(Lag1C, file = "DataBase/DataSynchronization/Lag1.csv")
 
 
-# Finaly I write as csv :)
-    
-    write.csv(FullDb_Lag0, file = "DataBase/SyncroRawData/FullDb_Lag0.csv")
-    write.csv(FullDb_Lag1, file = "DataBase/SyncroRawData/FullDb_Lag1.csv")
-    write.csv(FullDb_Lag2, file = "DataBase/SyncroRawData/FullDb_Lag2.csv")
-    write.csv(FullDb_Lag3, file = "DataBase/SyncroRawData/FullDb_Lag3.csv")
 
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+################################################################################
+
+
+
+
+
+test <- plm(Roic ~ CarbonProductivity + WasteProductivity + WaterProductivity + SustainabilityPayLink + SustainableThemedCommitment + AuditScore + NetMargin + log(TotalAssets) + DebtToEquityRatio + Beta + GicsClassification , index = c("CompaniesIndex", "YearIndex"), data = Lag1C, model = "random")   
+      
+ 
 ```
 
