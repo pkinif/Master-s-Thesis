@@ -347,8 +347,7 @@ Index1$Index <- as.numeric(as.character(Index1$Index))
 
 Last <- merge(Db_Lag0BisBis, Index1, by = "Ticker")
 
-#I write as csv    
-write.csv(Last, file = "DataBase/DataSynchronization/Lag0.csv") 
+
 
 
 ###################################
@@ -425,10 +424,6 @@ colnames(CompaniesIndex) <- c("Ticker", "CompaniesIndex")
 
 Lag1C <- merge(Lag1B, CompaniesIndex, by = "Ticker")
 
-# I write as CSV
-
-write.csv(Lag1C, file = "DataBase/DataSynchronization/Lag1.csv")
-
 
 
 ################################################################################
@@ -468,19 +463,39 @@ Ticker <- unique(TotAsset2$Ticker) #It represents only 82 tickers. I am gonna ch
 
 write.csv(TotAsset2, file = "DataBase/Ycharts/MissingTotAsset.csv")
 
+# I have completed and here is the file
+
+MissingAsset <- read.csv2(file="DataBase/Ycharts/TotAsset.csv", header = TRUE, stringsAsFactors = FALSE)
 
 
-oldDb <- read.csv2(file = "DataBase/Lag_0.csv", header = TRUE, stringsAsFactors = FALSE)
-oldDb1 <- merge(Companies, oldDb, by = "Companies")
-oldDb2 <- oldDb1[,c(2,9,22)]
-colnames(oldDb2) <- c("Ticker", "Year", "FirmSize")
 
-Missing <- merge(TotAsset2, oldDb2, by = c("Ticker", "Year"))
+###############################################################
+############ Replace Na in Total Asset ########################
+###############################################################
 
-Missing$TotalAsset <- exp(Missing$FirmSize)
+#In "Last"
+Last1 <- merge(Last, MissingAsset, by = c("Ticker", "Year"), all = TRUE)
+Last1$TotalAssets[is.na(Last1$TotalAssets)] <- Last1$TotalAsset[is.na(Last1$TotalAssets)]
 
-Missing$test <- log(Missing$TotalAsset)
-write.csv(Missing, file = "DataBase/Ycharts/NoMoreMissingAsset.csv")
+Last2 <- Last1 %>% select(-TotalAsset)
+
+#In "Lag1C"
+MissingAsset$YearIndex <- MissingAsset$Year - 2011
+
+MissingAsset1 <- MissingAsset[,c(1,3,4)]
+Lag1D <- merge(Lag1C, MissingAsset1, by = c("Ticker", "YearIndex"), all = TRUE)
+Lag1D$TotalAssets[is.na(Lag1D$TotalAssets)] <- Lag1D$TotalAsset[is.na(Lag1D$TotalAssets)]
+
+Lag1E <- Lag1D %>% select(-TotalAsset)
+
+#I write as csv  Lag 0 (ie. Last)
+
+write.csv(Last2, file = "DataBase/DataSynchronization/Lag0.csv") 
+
+# I write as CSV Lag1C
+
+write.csv(Lag1E, file = "DataBase/DataSynchronization/Lag1.csv")
+
 
 ```
 
