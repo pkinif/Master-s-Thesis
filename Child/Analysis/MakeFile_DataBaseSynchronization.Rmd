@@ -437,12 +437,50 @@ write.csv(Lag1C, file = "DataBase/DataSynchronization/Lag1.csv")
 ################################################################################
 ################################################################################
 
+###############################################################
+############ Missing Value in Total Assest ####################
+###############################################################
+# I have a lot of missing values for Total Assets. Let's try to find them.
+
+#Lag 1
+
+MissingTotAssetLag1 <- select(Lag1C, c(Ticker, YearIndex, TotalAssets))
+MissingTotAssetLag1$Year <- MissingTotAssetLag1$YearIndex +2011
+MissingTotAssetLag1_A <- subset(MissingTotAssetLag1,is.na(TotalAssets))
+
+dim(MissingTotAssetLag1_A) # 182 nas for Total Assets
+
+#Lag 0
+
+MissingTotAssetLag0 <- select(Last, c(Ticker, Year, TotalAssets))
+MissingTotAssetLag0_A <- subset(MissingTotAssetLag0,is.na(TotalAssets))
+
+dim(MissingTotAssetLag0_A) # 182 nas for Total Assets  also
+
+# Let's merge both
+
+TotAsset <- merge(MissingTotAssetLag1_A, MissingTotAssetLag0_A, by = c("Ticker", "Year"), all = TRUE)
+
+TotAsset1 <- TotAsset[, c(1,2)]
+TotAsset2 <- unique(TotAsset1)
+
+Ticker <- unique(TotAsset2$Ticker) #It represents only 82 tickers. I am gonna check on Ycharts. I can not do it by web scrappin anymore. Let's do it by hand.
+
+write.csv(TotAsset2, file = "DataBase/Ycharts/MissingTotAsset.csv")
 
 
 
+oldDb <- read.csv2(file = "DataBase/Lag_0.csv", header = TRUE, stringsAsFactors = FALSE)
+oldDb1 <- merge(Companies, oldDb, by = "Companies")
+oldDb2 <- oldDb1[,c(2,9,22)]
+colnames(oldDb2) <- c("Ticker", "Year", "FirmSize")
 
-test <- plm(Roic ~ CarbonProductivity + WasteProductivity + WaterProductivity + SustainabilityPayLink + SustainableThemedCommitment + AuditScore + NetMargin + log(TotalAssets) + DebtToEquityRatio + Beta + GicsClassification , index = c("CompaniesIndex", "YearIndex"), data = Lag1C, model = "random")   
-      
- 
+Missing <- merge(TotAsset2, oldDb2, by = c("Ticker", "Year"))
+
+Missing$TotalAsset <- exp(Missing$FirmSize)
+
+Missing$test <- log(Missing$TotalAsset)
+write.csv(Missing, file = "DataBase/Ycharts/NoMoreMissingAsset.csv")
+
 ```
 
