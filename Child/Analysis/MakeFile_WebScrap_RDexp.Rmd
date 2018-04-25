@@ -127,26 +127,36 @@ colnames(Results6) <- c("Day", "Month", "Year", "Ticker", "RD")
 #################################
 RD <- read.csv("C:/Users/Pierrik/Rstudio/GitHub/Thesis/Child/Analysis/DataBase/Ycharts/RD.txt", sep="")
 
-RD <- Results6
+Results6 <- RD
 # Currently the RD column is caracterized , for example for CRM, as 222.13M\n                \n  --> I have to remove the \n  
 
-Clean <- Results6 %>% gsub(pattern = "\n|\n|\n", replacement = "", RD) %>%
-  gsub(pattern = "M", replacement = "", RD) 
-  
-                                                                
-Results6$RD <- Clean
+Clean <- gsub(pattern = "\n|\n|\n|\n", replacement = "", Results6$RD)
+Clean1 <- gsub(pattern = "M", replacement = "_M", Clean)
+Clean2 <- gsub(pattern = "B", replacement = "_B", Clean1)
 
+# Now I can observe that either the value is in Billion (ie. B) or in million (i.e. M). Consequently I need to multiply the value by either 10^6 or 10^9
 
+Results6$RD <- Clean2
+rownames(Results6) <- c()
+Results7 <- Results6 %>% separate(col = RD, into = c("RD_Value", "RD_Unity"), sep = "_")
 
-#I write
+Results7$RD_Value <- as.numeric(Results7$RD_Value)
+Results8 <- na.omit(Results7)
 
-write.table(Results6, file = "DataBase/Ycharts/RD.txt", sep = " ")
+Unity <- gsub(pattern = "B", replacement = "1000000000", Results8$RD_Unity) 
+Unity1 <-  gsub(pattern = "M", replacement = "1000000", Unity)
 
+Results8$RD_Unity <- as.numeric(Unity1)
+Results8$RD <- Results8$RD_Value * Results8$RD_Unity
 
+# Let's clean everything
 
+Results9 <- Results8 %>% subset(select = c(Year, Ticker, RD))
+Results9$Ticker <- as.character(Results9$Ticker)
 
+#Let's write
 
+write.csv2(Results9, file = "DataBase/Ycharts/ResearchAndDevelopment.csv")
 
-Results7 <- separate(Results6, RD, into = c("T1", "T2"), sep = "/n")
 ```
 
