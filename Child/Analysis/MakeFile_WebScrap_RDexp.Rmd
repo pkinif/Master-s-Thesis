@@ -40,7 +40,7 @@ login<-"https://ycharts.com/login?next=%2Fdashboard%2F"
 #create a web session with the desired login address
 pgsession<-html_session(login)
 pgform<-html_form(pgsession)[[1]]  #in this case the submit is the 2nd form
-filled_form<-set_values(pgform, username ="joelkinif@msn.com", password="Loana1234")
+filled_form<-set_values(pgform, username ="write your username", password="write your password")
 submit_form(pgsession, filled_form)
 
 #################################
@@ -121,6 +121,21 @@ Results6$Year <- sub(" ","", Results6$Year,fixed=TRUE) #REmove useless space
 
 #R&D are indicate in number M or B, i split and then multiply
 colnames(Results6) <- c("Day", "Month", "Year", "Ticker", "RD")
+
+#################################
+########### Remove HMTL Text ####
+#################################
+RD <- read.csv("C:/Users/Pierrik/Rstudio/GitHub/Thesis/Child/Analysis/DataBase/Ycharts/RD.txt", sep="")
+
+RD <- Results6
+# Currently the RD column is caracterized , for example for CRM, as 222.13M\n                \n  --> I have to remove the \n  
+
+Clean <- Results6 %>% gsub(pattern = "\n|\n|\n", replacement = "", RD) %>%
+  gsub(pattern = "M", replacement = "", RD) 
+  
+                                                                
+Results6$RD <- Clean
+
 
 
 #I write
