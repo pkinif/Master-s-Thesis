@@ -268,11 +268,15 @@ TidyData3$NetIncome <- TidyData3$NetIncome * 10^6
 TidyData3$ResearchAndDevelopment <- TidyData3$ResearchAndDevelopment * 10^6
 TidyData3$Revenue <- TidyData3$Revenue * 10^6
 
+# I remove Revenue and NetIncome as this variable is also in DataBase6... I should have noticed before... :)))))
+
+TidyData4 <- subset(TidyData3, select = -c(Revenue,NetIncome)) 
+
 ###########################################
 #### Step 4 : Save and write as.csv #######
 ###########################################
 
-write.csv(TidyData3, file = "DataBase/MorningStar/NetIncome_R&R_Revenue.csv")
+write.csv(TidyData4, file = "DataBase/MorningStar/ResearchAndDevelopment.csv")
 
 
 ###############################################################
@@ -352,6 +356,30 @@ TotAsset3$TotalAsset <- TotAsset3$TotalAsset * 10^6
 
 write.csv(TotAsset3, file = "DataBase/MorningStar/TotalAsset.csv")
 
+
+###############################################################
+###############################################################
+########### Merging Key Ratio, TotAsset and the rest ##########
+###############################################################
+###############################################################
+
+
+
+MorningStarMerging <- merge(TotAsset3,DataBase6, by = c("Ticker", "Year"), all = TRUE)
+
+MorningStarMerging1 <- merge(MorningStarMerging, TidyData4, by = c("Ticker", "Year"), all = TRUE)
+
+# I write as csv
+
+write.csv(MorningStarMerging1, file = "DataBase/MorningStar/FullMergingAndPeriod")
+
+# I select only from 2012 and I also write as csv
+
+MorningStarMerging2 <- MorningStarMerging1 %>%
+  subset(Year > 2011) %>%
+  subset(select = - Date)
+
+write.csv(MorningStarMerging2, file = "DataBase/MorningStar/FullMergingFrom2012")
 
 
 ```
