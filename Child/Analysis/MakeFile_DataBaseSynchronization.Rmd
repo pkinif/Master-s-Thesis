@@ -1,6 +1,9 @@
 
 ```{r}
 
+
+# Now I have webscrap data on differennt platforms, I need to synchronize and build my own database.
+
 #############################################################
 #############################################################
 ############## Merging all data together ####################
@@ -23,21 +26,40 @@ library(data.table)
 
 
 
-# This file syncronize data from from StockPup, NewsWeekGreen Ranking, Companies and Tobin'sQ from Ycharts. 
+# This file syncronize data from from MorningStar, StockPup, Ycharts (i.e. TobinsQ and R&R), YahooFinance (i.e. CAPM) and NewsWeekGreen Ranking (i.e. Green metrics) 
 
-# I download each DataBase
 
-  StockPup <- read.csv(file = "DataBase/StockPup/StkP_From2012.csv", header = TRUE, stringsAsFactors = FALSE) # NB : StockPup is already merged with the file Companies.
-  
+#############################################################
+############## (i) Syncronize Financial Data ################
+#############################################################
+
+
+# I download each financial DataBase
+
+  ## StockPup
+    StockPup <- read.csv(file = "DataBase/StockPup/StkP_From2012.csv", header = TRUE, stringsAsFactors = FALSE)
+
+  ## CAPM
   CAPM <- read.csv(file = "DataBase/CAPM/CAPM.csv", header = TRUE, stringsAsFactors = FALSE)
   
-  NewsWeek <- read.csv2( file = "DataBase/NewsWeekGreenRanking_1416.csv", header = TRUE, stringsAsFactors = FALSE)
+  ## YCharts 
   
-  TobinsQ <-  read.csv2( file = "DataBase/TobinsQ_1216.csv", header = TRUE, stringsAsFactors = FALSE)
+  TobinsQ <-  read.csv2( file = "DataBase/Ycharts/TobinsQ_1216.csv", header = TRUE, stringsAsFactors = FALSE)
+  
+  RR_Ycharts <- read.csv( file = "DataBase/Ycharts/ResearchAndDevelopment.csv",sep = ";")
+    RR_Ycharts$Ticker <- as.character(RR_Ycharts$Ticker)
 
-  Companies <- read.csv2( file = "DataBase/Companies.csv", header = TRUE, stringsAsFactors = FALSE)
+  ## MorningStar
   
-# I restructure each DB in removing some useless columns
+    MorningStar <- read.csv(file = "DataBase/MorningStar/FullMergingFrom2012.csv", header= TRUE, stringsAsFactors = FALSE)
+    
+  ## StockPrice from YahooFinance
+    
+    StockPrice <- read.csv(file = "DataBase/TidyQuant/StockPrice.csv", header= TRUE, stringsAsFactors = FALSE)
+    StockPrice$date <- as.Date(StockPrice$date)
+  
+  
+# I restructure each DB in removing some useless columns, renames columns, ect
   
   
   ## StockPup
@@ -51,20 +73,243 @@ library(data.table)
                              CompanyGR2016
                              ))
   StockPup1[,2:42] <- sapply(StockPup1[,2:42], as.numeric)
+  colnames(StockPup1) <- c("Ticker",
+                           "Year",
+                           "Shares",
+                           "SharesSplitAdjusted",
+                           "SplitFactor",
+                           "TotalAsset",
+                           "CurrentAsset",
+                           "Liabilities",
+                           "CurrentLiabilities",
+                           "ShareholdersEquity",
+                           "NonControllingEquity",
+                           "PreferredEquity",
+                           "GoodwillAndIntangibles",
+                           "LongTermDebt",
+                           "Revenue",
+                           "Earnings",
+                           "EarningsAvailableForCommonStockholders",
+                           "EpsBasic",
+                           "EpsDiluted",
+                           "Dividend",
+                           "CashFromOperatingActivities",
+                           "CashFromInvestingActivities",
+                           "CashFromFinancingActivities",
+                           "CashChangeDuringPeriod",
+                           "CashAtEndOfPeriod",
+                           "CapitalExpenditure",
+                           "Price",
+                           "PriceHigh",
+                           "PriceLow",
+                           "Roe",
+                           "Roa",
+                           "BookValueOfEquityPerShare",
+                           "PriceToBookRatio",
+                           "PriceToEquityRatio",
+                           "CumulativeDividendPerShare",
+                           "DividendPayoutRatio",
+                           "LongTermDebtToEquityRatio",
+                           "EquityToAssetsRatio",
+                           "NetMargin",
+                           "AssetTurnover",
+                           "FreeCashFlowPerShare",
+                           "CurrentRatio"
+                           )
   
   ## CAPM
   CAPM1 <- select(CAPM, -c(X,
                            Date))
   
-  ## TobinsQ
+  ## Ycharts
   TobinsQ1 <- select(TobinsQ, -Companies)
+  RR_Ycharts1 <- select(RR_Ycharts, -X)
   
+  ## MorningStar
+  MorningStar1 <- select(MorningStar, -c(X.1,
+                                         X.x,
+                                         X.y,
+                                         X))
   
-  ## Newsweek
-  NewsWeek1 <- select(NewsWeek, -Companies)
+  #######################################
+  #########StockPup Vs MorningStar#######
+  #######################################
   
+  # The first I do is to merge MorningStar with StockPup. Indeed both contains a lot of similar variables. As MorningStar contains more ticker than StockPup, I will merge accoring to MorningStar. Thus my key value is the one coming from MorningStar and in case of missing values I will check in StockPup to complete.
+  
+  # I focus on financial variables that I need for my models, namely : Roa, Roe, P/E Ratio, EPS, NetMargin, FinancialLeverage, Total Asset and Shareholder's Equity. Besides I also consider others variables that could be useful for the future.
+  
+  # First I select those variable from both MorningStar1 and StockPup1
+  
+  StockPup2 <- select(StockPup1, c(Ticker,
+                                   Year,
+                                   Roa,
+                                   Roe,
+                                   PriceToEquityRatio,
+                                   EpsBasic,
+                                   TotalAsset,
+                                   ShareholdersEquity,
+                                   NetMargin, 
+                                   LongTermDebtToEquityRatio,
+                                   DividendPayoutRatio,
+                                   Revenue))
+  
+  MorningStar2 <- select(MorningStar1, c(Ticker,
+                                         Year,
+                                         Roa,
+                                         Roe,
+                                         Roic,
+                                         PayoutRatio,
+                                         TotalAsset,
+                                         EarningsPerShare,
+                                         NetMargin,
+                                         FinancialLeverage,
+                                         DebtEquity,
+                                         ResearchAndDevelopment,
+                                         Shares,
+                                         NetIncome,
+                                         Revenue
+                                         ))
+ 
 
+  
+  # I merge both based on Ticker and Year
+  
+  MorningsPup <- merge(MorningStar2,StockPup2, by = c("Ticker", "Year"), all = TRUE)
+  
+  #I rearrange columns to make a first visual look
+  
+  MorningsPup1 <- MorningsPup[,order(names(MorningsPup))]
+  
+  #I make a function saying that if the obersaion is missing in MorningStar then look into StockPup and if Stockpup is not missing, then replace the missing values of Morningstar by the ones of Stockpup
+  
+  ## Roa
+  MorningsPup1$Roa.x[is.na(MorningsPup1$Roa.x)] <- MorningsPup1$Roa.y[is.na(MorningsPup1$Roa.x)]
+  ##Roe
+  MorningsPup1$Roe.x[is.na(MorningsPup1$Roe.x)] <- MorningsPup1$Roe.y[is.na(MorningsPup1$Roe.x)]
+  ## DebtEquityRatio --> In MorningStar : DebtEquity and in StockPup : LongTermDebtToEquityRatio
+  MorningsPup1$DebtEquity[is.na(MorningsPup1$DebtEquity)] <- MorningsPup1$LongTermDebtToEquityRatio[is.na(MorningsPup1$DebtEquity)]
+  ## NetMargin
+   MorningsPup1$NetMargin.x[is.na(MorningsPup1$NetMargin.x)] <- MorningsPup1$NetMargin.y[is.na(MorningsPup1$NetMargin.x)]
+   ##PayoutRatio --> In MorningStar: PayoutRatio and in StockPup: DividendPayoutRatio
+     MorningsPup1$PayoutRatio[is.na(MorningsPup1$PayoutRatio)] <- MorningsPup1$DividendPayoutRatio[is.na(MorningsPup1$PayoutRatio)]
+  ##Total Asset
+  MorningsPup1$TotalAsset.x[is.na(MorningsPup1$TotalAsset.x)] <- MorningsPup1$TotalAsset.y[is.na(MorningsPup1$TotalAsset.x)]
 
+  # Let's clear a bit. I keep morningstar column and remove Stockpup ones in keeping ones that MorningStar do not have
+     
+     MorningsPup2 <- select(MorningsPup1, c(Ticker,
+                                            Year,
+                                            Roa.x,
+                                            Roe.x,
+                                            DebtEquity,
+                                            NetMargin.x,
+                                            PayoutRatio,
+                                            TotalAsset.x,
+                                            Shares,
+                                            Roic,
+                                            Revenue.x,
+                                            ResearchAndDevelopment,
+                                            NetIncome,
+                                            ShareholdersEquity,
+                                            PriceToEquityRatio
+                                            ))
+
+  
+  
+  ##########################################
+  ######### MorningsPup with the rest ######
+  ##########################################
+     
+     #So I have my MorningPup database. Now I need to syncronize it with CAPM, TobinsQ from Ycharts and StockPrice from YahooFinance. I will not syncronize with R&D because too many na's in both MorningStar and Ycharts.
+     
+      ## Let's start with the CAPM. The CAPM1 database covers a period from 2012 till 2016. So first I subset MorningsPup2 in taking only data between 2012 and 2016
+     
+     MorningsPup3 <- MorningsPup2 %>%
+       subset(Year > 2011) %>%
+       subset(Year < 2017)
+     
+      DataBase <- merge(MorningsPup3, CAPM1, by = c("Ticker", "Year"), all = TRUE) 
+      
+      ## Let's continue with TobinsQ1
+      
+      DataBase1 <- merge(DataBase, TobinsQ1, by = c("Ticker", "Year"), all = TRUE)
+      
+      ## Then StockPrice
+        ### Before moving forward,  I take data of the last day of the month and use it as monthly data of the time series. (Justification : https://www.researchgate.net/post/How_do_you_easily_change_daily_index_data_to_monthly_basis_index_data)
+
+            StockPrice1 <- StockPrice %>%
+              separate(date, into = c("Year","Month","Day"))
+            
+            StockPrice2 <- StockPrice1 %>%
+              subset(Month == "12") 
+            StockPrice3 <- StockPrice2 %>%
+              subset(Day == "28")       
+            
+          ###I restructure StockPrice3
+            StockPrice3$Year <- as.numeric(StockPrice3$Year)
+            StockPrice4 <- select(StockPrice3, c(symbol,
+                                                 Year,
+                                                 close,
+                                                 volume))
+            colnames(StockPrice4) <- c("Ticker",
+                                       "Year",
+                                       "StockPriceClose",
+                                       "Volume")
+            
+            StockPrice5 <- StockPrice4 %>% subset(Year > 2011) %>% subset(Year < 2017)
+          ### I merge with DataBase1
+      
+            DataBase2 <- merge(DataBase1, StockPrice5,by = c("Ticker", "Year"), all = TRUE)
+      
+        
+      ## Change names of DataBase2
+     
+        colnames(DataBase2) <- c("Ticker",
+                                 "Year",
+                                 "Roa",
+                                 "Roe",
+                                 "DebtToEquityRatio",
+                                 "NetMargin",
+                                 "PayoutRatio",
+                                 "TotalAssets",
+                                 "Shares",
+                                 "Roic",
+                                 "Revenue",
+                                 "ResearchAndDevelopment",
+                                 "NetIncome",
+                                 "ShareholdersEquity",
+                                 "PriceToEquityRatio",
+                                 "Ra",
+                                 "Rf",
+                                 "Rm",
+                                 "Ra_Rf",
+                                 "Rm_Rf",
+                                 "Beta",
+                                 "AlphaJensen",
+                                 "CostEquity",
+                                 "TobinsQ",
+                                 "StockPriceClose",
+                                 "Volume")
+     
+     
+#############################################################
+############## (i) Synchronize Green Data ####################
+#############################################################
+      
+    # I dowload NewsWeek Green Ranking
+        
+      Newsweek <- read.csv2(file = "DataBase/NewsWeekGreenRanking/NewsWeekGreenRanking_1416.csv", header = TRUE, stringsAsFactors = FALSE)
+     
+    #I remove useless columns
+      
+      Newsweek1 <- subset(Newsweek, select = - Companies)
+     
+     
+     
+     
+     
+     
   # All Database contains a column Ticker and Year except Newsweek which do not have a year column. I create one for each lag. 
   
   ## For lag(0) --> - 2 as newsweek GR ranking 2014,2015, 2016 are calculated based on companies data in 2012,2013,2014

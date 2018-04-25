@@ -371,7 +371,7 @@ MorningStarMerging1 <- merge(MorningStarMerging, TidyData4, by = c("Ticker", "Ye
 
 # I write as csv
 
-write.csv(MorningStarMerging1, file = "DataBase/MorningStar/FullMergingAndPeriod")
+write.csv(MorningStarMerging1, file = "DataBase/MorningStar/FullMergingAndPeriod.csv")
 
 # I select only from 2012 and I also write as csv
 
@@ -379,7 +379,7 @@ MorningStarMerging2 <- MorningStarMerging1 %>%
   subset(Year > 2011) %>%
   subset(select = - Date)
 
-write.csv(MorningStarMerging2, file = "DataBase/MorningStar/FullMergingFrom2012")
+write.csv(MorningStarMerging2, file = "DataBase/MorningStar/FullMergingFrom2012.csv")
 
 
 ```
