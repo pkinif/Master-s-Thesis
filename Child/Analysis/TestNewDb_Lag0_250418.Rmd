@@ -122,7 +122,7 @@ Roa2 <-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScor
 Roa3 <-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + Beta + DebtToEquityRatio + AlphaJensen  + GicsClassification  , data = DB_Lag0, index = c("Index", "Year"), model = "random") 
 
 #Model 1 without outliers without EnergyProductivity
-Roa4 <-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + Beta + DebtToEquityRatio + AlphaJensen  + GicsClassification   , data = DB_Roa_NoOut, index = c("Index", "Year"), model = "random") 
+Roa4 <-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + Beta + DebtToEquityRatio +  GicsClassification   , data = DB_Roa_NoOut, index = c("Index", "Year"), model = "random") 
 
 #Model process-based CEP without outliers
 

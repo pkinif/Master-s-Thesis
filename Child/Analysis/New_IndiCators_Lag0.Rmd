@@ -33,7 +33,7 @@ library(dplyr) #to play with data
 
 #Database
 
-DB_Lag0 <-as.data.frame(read.csv("DataBase/DataSynchronization/Lag0.csv", stringsAsFactors=FALSE, header = TRUE))
+DB_Lag0 <-as.data.frame(read.csv("DataBase/DataSynchronization/Lag1.csv", stringsAsFactors=FALSE, header = TRUE))
 
 ```
 
@@ -56,21 +56,21 @@ DB_Lag0 <-as.data.frame(read.csv("DataBase/DataSynchronization/Lag0.csv", string
 #####################################
 
 # I define my models in lm as cooks.distance do not support plm object
-Roa <-lm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification    , data = DB_Lag0)
+Roa <-lm(Roa ~ GreenScore + log(TotalAssets) + NetMargin +  GicsClassification + DebtToEquityRatio , data = DB_Lag0)
 
-TobinsQ<-lm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification    , data = DB_Lag0)
+TobinsQ<-lm(log(TobinsQ) ~ GreenScore + log(TotalAssets) + NetMargin +  GicsClassification + DebtToEquityRatio , data = DB_Lag0)
 
-Roic <- lm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification   , data = DB_Lag0)
+Roic <- lm(Roic ~ GreenScore + log(TotalAssets) + NetMargin +  GicsClassification + DebtToEquityRatio , data = DB_Lag0)
 
-Jensen <- lm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification   , data = DB_Lag0)
+Roe <- lm(Roe ~  GreenScore + log(TotalAssets) + NetMargin +  GicsClassification + DebtToEquityRatio   , data = DB_Lag0)
 
-Return <- lm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification    , data = DB_Lag0)
+Return <- lm(Ra ~  GreenScore + log(TotalAssets) + NetMargin +  GicsClassification + DebtToEquityRatio    , data = DB_Lag0)
 
 ## I calculate my cooks distance (i.e. D)
 cooksdRoa <- cooks.distance(Roa)
 cooksdTobinsQ <- cooks.distance(TobinsQ)
 cooksdRoic <- cooks.distance(Roic)
-cooksdJensen <- cooks.distance(Jensen)
+cooksdRoe <- cooks.distance(Roe)
 cooksdReturn <- cooks.distance(Return)
 
 ## I extract rows considered as influential (observations whose D > 4 * means)
@@ -78,14 +78,14 @@ cooksdReturn <- cooks.distance(Return)
 influentialRoa <- as.numeric(names(cooksdRoa)[(cooksdRoa > 4*mean(cooksdRoa, na.rm=T))])  
 influentialTobin <- as.numeric(names(cooksdTobinsQ)[(cooksdTobinsQ > 4*mean(cooksdTobinsQ, na.rm=T))])  
 influentialRoic <- as.numeric(names(cooksdRoic)[(cooksdRoic > 4*mean(cooksdRoic, na.rm=T))])  
-influentialJensen <- as.numeric(names(cooksdJensen)[(cooksdJensen > 4*mean(cooksdJensen, na.rm=T))])  
+influentialRoe <- as.numeric(names(cooksdRoe)[(cooksdRoe > 4*mean(cooksdRoe, na.rm=T))])  
 InfluentialReturn <- as.numeric(names(cooksdReturn)[(cooksdReturn > 4*mean(cooksdReturn, na.rm=T))])  
 
 
 head(DB_Lag0[influentialRoa, ])  # influential observations 
 head(DB_Lag0[influentialTobin, ])  # influential observations 
 head(DB_Lag0[influentialRoic, ])  # influential observations 
-head(DB_Lag0[influentialJensen, ])  # influential observations 
+head(DB_Lag0[influentialRoe, ])  # influential observations 
 head(DB_Lag0[InfluentialReturn, ])  # influential observations
 
 #I remove outliers and create three new data frames that I write in my folders
@@ -96,7 +96,7 @@ DB_Roa_NoOut <- DB_Lag0[-c(influentialRoa),]
 
 DB_Roic_NoOut <- DB_Lag0[-c(influentialRoic),]
 
-DB_Jensen_NoOut <- DB_Lag0[-c(influentialJensen),]
+DB_Roe_NoOut <- DB_Lag0[-c(influentialRoe),]
 
 DB_Return_NoOut <- DB_Lag0[-c(InfluentialReturn),]
 ```
@@ -153,14 +153,14 @@ Roic1<-plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditSco
 Roic2 <-plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification    , data = DB_Roic_NoOut, index = c("Index", "Year"), model = "random") 
 
 ################################
-###### Model 4 : Jensen ########
+###### Model 4 : Roe ########
 ################################
 
 #Mode4 with outliers
-Jensen1<-plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification + GicsClassification  + GicsClassification , data = DB_Lag0, index = c("Index", "Year"), model = "random") 
+Roe1<-plm(AlphaRoe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification + GicsClassification  + GicsClassification , data = DB_Lag0, index = c("Index", "Year"), model = "random") 
 
 #Model4 without outliers 
-Jensen2 <-plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification + GicsClassification   + GicsClassification , data = DB_Jensen_NoOut, index = c("Index", "Year"), model = "random") 
+Roe2 <-plm(AlphaRoe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification + GicsClassification   + GicsClassification , data = DB_Roe_NoOut, index = c("Index", "Year"), model = "random") 
 
 ################################
 ###### Model 5 : Return ########
@@ -189,7 +189,7 @@ TableTobinsQ <- stargazer(Tobins1, Tobins3, type="latex", label = "Tobin", title
 
 TableRoic <- stargazer(Roic1, Roic2, type="latex", label = "Roic", title = "Model 3 - Comparaison with and without outliers", header = FALSE)
 
-TableJensen <- stargazer(Jensen1, Jensen2, type="latex", label = "Jensen", title = "Model 4 - Comparaison with and without outliers", header = FALSE)
+TableRoe <- stargazer(Roe1, Roe2, type="latex", label = "Roe", title = "Model 4 - Comparaison with and without outliers", header = FALSE)
 
 TablkeReturn <- stargazer(Return1, Return2, type="latex", label = "Return", title = "Model 5 - Comparaison with and without outliers", header = FALSE)
 
@@ -214,7 +214,7 @@ Tobins3_Fixed <-plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedComm
 Roic2_Fixed <-plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification     , data = DB_Roic_NoOut, index = c("Index", "Year"), model = "within") 
 
 #Model4 without outliers 
-#Jensen2_Fixed <-plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification     , data = DB_Jensen_NoOut, index = c("Index", "Year"), model = "within") 
+#Roe2_Fixed <-plm(AlphaRoe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification     , data = DB_Roe_NoOut, index = c("Index", "Year"), model = "within") 
 
 #Model5 without outliers 
 Return2_Fixed <-plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + GreenScore + WasteProductivity + log(TotalAssets) + NetMargin +  GicsClassification     , data = DB_Return_NoOut, index = c("Index", "Year"), model = "within") 
@@ -224,7 +224,7 @@ Return2_Fixed <-plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + A
 HausmannRoa <-  cbind("Model 1 without outliers",round(phtest(Roa2_Fixed,Roa2)$p.value,4))
 HausmannTobinsQ <-  cbind("Model 2 without outliers",round(phtest(Tobins3_Fixed,Tobins3)$p.value,4))
 HausmannRoic <-  cbind("Model 3 without outliers",round(phtest(Roic2_Fixed,Roic2)$p.value,4))
-#HausmannJensen <-  cbind("Model 4 without outliers",round(phtest(Jensen2_Fixed,Jensen2)$p.value,4))
+#HausmannRoe <-  cbind("Model 4 without outliers",round(phtest(Roe2_Fixed,Roe2)$p.value,4))
 HausmannReturn <-  cbind("Model 5 without outliers",round(phtest(Return2_Fixed,Return2)$p.value,4))
 
 
