@@ -1,0 +1,306 @@
+---
+title: "Multiple Imputation"
+author: "Kinif Pierrick"
+date: "23 avril 2018"
+output: pdf_document
+---
+```{r}
+## Missing data can significantly influence the results of normal regression models, since the default in R and most other statistical packages is to throw away any rows with missing variables. To avoid unnecessarily throwing out data, it’s helpful to impute missing values. Using the Amelia Package I perform a multiple imputation of the missing values of the database. 
+
+#For more information about the amelia package, see : 
+
+# HONAKER, James, KING, Gary, BLACKWELL, Matthew, et al. Amelia II: A program for missing data. Journal of statistical software, 2011, vol. 45, no 7, p. 1-47. Available at https://r.iq.harvard.edu/docs/amelia/amelia.pdf
+
+
+#####################################
+# Package
+#####################################
+rm(list=ls()) #Removes all items in Environment!
+
+if (!require("Amelia")) install.packages("Amelia")
+if (!require("data.table")) install.packages("data.table")
+if (!require("dplyr")) install.packages("dplyr")
+
+library(Amelia) # to handle na's with mutliple imputation
+library(data.table)
+library(dplyr)
+
+#####################################
+#DataBase
+#####################################
+
+  DB <- read.csv("DataBase/DataSynchronization/Lag0.csv", stringsAsFactors = FALSE, header = TRUE)
+
+
+# According to Honaker et al (2011), "When performing multiple imputation, the first step is to identify the variables to include in the imputation model. It is crucial to include at least as much information as will be used in the analysis model. That is, any variable that will be in the analysis model should also be in the imputation model. This includes any transformations or interactions of variables that will appear in the analysis model. In fact, it is often useful to add more information to the imputation model than will be present when the analysis is run. Since imputation is predictive, any variables that would increase predictive power should be included in the model, even if including them in the analysis model would produce bias in estimating a causal effect (such as for post-treatment variables) or collinearity would preclude determining which variable had a relationship with the dependent variable (such as including multiple alternate measures of GDP)"
+
+# Then I select all variables that are of interest for my regression analysis. Nb : I had to remove Ra from the impuration model. Indeed if I let Ra in the model, then the matrix is singular or not positive definite (see : https://lists.gking.harvard.edu/pipermail/amelia/2013-July/001030.html)
+
+
+  ImputationModel <- select(DB,c(Index,
+                                 Year,
+                                 Roa,
+                                 Roe,
+                                 Roic,
+                                 TobinsQ,
+                                 AlphaJensen,
+                                 Eps,
+                                 DebtToEquityRatio, 
+                                 NetMargin,
+                                 TotalAssets,
+                                 Shares,
+                                 Revenue,
+                                 NetIncome,
+                                 Beta,
+                                 CostEquity,
+                                 GreenScore,
+                                 CarbonProductivity,
+                                 EnergyProductivity,
+                                 WaterProductivity,
+                                 WasteProductivity,
+                                 Green.Revenue,
+                                 SustainabilityPayLink,
+                                 SustainableThemedCommitment,
+                                 AuditScore,
+                                 GicsClassification))
+                                  
+
+  ImputationModel$FirmSize <- log(ImputationModel$TotalAssets)
+  ImputationModel$LogTobinsQ <- log(ImputationModel$TobinsQ)
+  
+
+  
+ 
+  
+#Before starting, let's count the number of missing value in the dataset. 
+  
+  Count_na <- sum(is.na(ImputationModel)) 
+  print(Count_na)
+
+  
+#####################################
+# ImpuationModel
+#####################################
+
+# Let's start the imputation model. The advantage of Amelia is the fact that we include parameters to specify that the dataset is a panel data with two index (time and companies). According to Honaker et al.(2011), "With this input, Amelia will add covariates to the model that correspond to time and its polynomials. These covariates will help better predict the missing values.""
+
+
+  a.out <- amelia(ImputationModel, m = 10, ts = "Year", cs = "Index", polytime = 2)
+
+# Each of the imputed datasets is now in the list a.out$imputations. Tus, I could plot a histogram of the Roa variable from the 3rd imputation :
+
+  hist(a.out$imputations[[3]]$Roa, col="grey", border="white")
+
+  
+#####################################
+# Combining Multiple Amelia Runs
+#####################################
+
+#  a.out.more <- amelia(ImputationModel, m = 10, ts = "Year", cs = "Companies", polytime = 2)
+  
+#combine this output with the original output using the ameliabind function
+
+#  a.out.more1 <- ameliabind(a.out, a.out.more) 
+
+#print ouput
+  
+#  a.out.more1
+  
+#####################################
+# Saving imputed datasets
+#####################################
+
+  
+## In a aggregated form
+  save(a.out, file = "DataBase/ImputationDataBase/Lag0/imputations.RData")
+  
+## Or save each of the imputed datasets to its own file. This will create one comma-separated value file for each imputed dataset
+  write.amelia(obj=a.out, file.stem = "DataBase/ImputationDataBase/Lag0/outdata")
+
+  
+#####################################
+#plausibility check : Diagnostic
+#####################################
+
+  ## 1. Comparing Densities
+  
+#According to Honaker et al. : "One check on the plausibility of the imputation model is check the distribution of imputed values to the distribution of observed values. Obviously we cannot expect, a priori , that these distribution will be identical as the missing values may differ systematically from the observed value–this is fundamental reason to impute to begin with!The plot method works on output from amelia and, by default, shows for each variable a plot of the relative frequencies of the observed data with an overlay of the relative frequency of the imputed values...We can also use the function compare.density directly to make these plots for an individual variable"
+  
+#plot(a.out, which.vars = 1:4)
+  
+#compare.density(a.out, var = "Roa")
+#compare.density(a.out, var = "Roe")
+#compare.density(a.out, var = "TobinsQ")
+#compare.density(a.out, var = "LogTobinsQ")
+#compare.density(a.out, var = "PB_ratio")
+#compare.density(a.out, var = "PE_ratio")
+#compare.density(a.out, var = "BookValue_EquityPerShare")
+#compare.density(a.out, var = "NetMargin")
+#compare.density(a.out, var = "Beta")
+#compare.density(a.out, var = "AlphaJensen")
+#compare.density(a.out, var = "DebtToEquityRatio")
+#compare.density(a.out, var = "FirmSize")
+
+
+  ## 2. Overimpute
+
+# Overimputing involves sequentially treating each of the observed values as if they had actually been missing. For each observed value in turn we then generate several hundred imputed values of that observed value, as if it had been missing . While m = 5 imputations are sufficient for most analysis models, this large number of imputations allows us to construct a confidence interval of what the imputed value would have been, had any of the observed data been missing. We can then graphically inspect whether our observed data tends to fall within the region where it would have been imputed had it been missing. On this graph, a y = x line indicates the line of perfect agreement; that is, if the imputation model was a perfect predictor of the true value, all the imputations would fall on this line. For each observation, Amelia also plots 90% confidence intervals that allows the user to visually inspect the behavior of the imputation model. By checking how many of the confidence intervals cover the y = x line, we can tell how often the imputation model can confidently predict the true value of the observation.
+
+#overimpute(a.out, var = "Roa")
+#overimpute(a.out, var = "Roa")
+#overimpute(a.out, var = "Roe")
+#overimpute(a.out, var = "TobinsQ")
+#overimpute(a.out, var = "LogTobinsQ")
+#overimpute(a.out, var = "PB_ratio")
+#overimpute(a.out, var =  "PE_ratio")
+#overimpute(a.out, var =  "Roa")
+#overimpute(a.out, var = "NetMargin")
+#overimpute(a.out, var = "Beta")
+#overimpute(a.out, var = "AlphaJensen")
+#overimpute(a.out, var = "DebtToEquityRatio")
+#overimpute(a.out, var = "FirmSize")
+
+#Explanation of graphics : Here ninety percent confidence intervals are constructed that detail where an observed value would have been imputed had it been missing from the dataset, given the imputation model. The dots represent the mean imputation. Around ninety percent of these confidence intervals contain the y = x line, which means that the true observed value falls within this range.  The color of the line (as coded in the legend) represents the fraction of missing observations in the pattern of missingness for that observation.
+
+
+#####################################
+# Analysis Model
+#####################################
+
+# Based on https://www.andrewheiss.com/blog/2018/03/07/amelia-tidy-melding/
+
+# a.out is a list of data frames, adn each imputed dataset is stored in a list slot named "imputations" or a.out$imputations. Let's combine these all into one big data frame with bind_rows(), group by the immputation number(i.e. m) and nest them into imputation specific rows :
+
+require(tidyverse)
+require(plm)
+require(broom)
+require(stats)
+  require(purrr)
+
+#####################
+# Remove Outliers
+#####################
+
+# I remove outliers which are considered as influencials. For this I create a vector from 1:100, namely the number of iteration. I create a vector FileList which contains the libellé of each csv file and I make a function to remove outliers on each csvfile.
+
+i <- c(1:10)
+
+FileList <- lapply(i, function(x){
+  paste("outdata", x , ".csv", sep = "")
+})
+
+
+NoOutliers <- lapply(FileList,function(x){
+  
+  #Create the path file
+  path <- paste("DataBase/ImputationDataBase/Lag0/", x, sep = "")
+  
+  #For each File I remove outliers and save into a new variable
+  GetNewFiles <- function(path){
+  
+    file <- read.csv(file = path, header = TRUE, stringsAsFactors = FALSE)
+  
+    Roa_Lm <- lm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + NetMargin + FirmSize + Beta + GicsClassification , data = file)
+  
+    cooksdRoa <- cooks.distance(Roa_Lm)
+    influentialRoa <- as.numeric(names(cooksdRoa)[(cooksdRoa > 4*mean(cooksdRoa, na.rm=T))])
+    NewFiles <- file[-c(influentialRoa),]
+  
+  }
+  
+  #Map everything into a dataframe
+  map_df(path, GetNewFiles) -> results
+  results$Imputation <- x
+  return(results)
+  
+})
+
+#Make the right format
+
+NoOutliersTibble <- bind_rows(unclass(NoOutliers)) %>%
+  group_by(Imputation) %>%
+  nest() %>%
+  as_tibble()
+
+
+######################
+# Regression Analysis
+######################
+
+# With this nested data, let's use purr :: map() to run models and return tidy summaries of those models directly in the data frame
+
+
+models_imputations <- NoOutliersTibble %>%
+  mutate(model = data %>% map(~ plm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + NetMargin + FirmSize + Beta + GicsClassification , index = c("Index", "Year"), model = "random", data = .)),
+         tidied = model %>% map(~ tidy(., conf.int = TRUE)),
+         glance = model %>% map(~ glance(.)))
+
+# Having the models structured like this makes it easy to access coefficients for models from individual imputations, like so:
+
+Coefficient_Outdata1.csv <- models_imputations %>%
+  filter(Imputation == "outdata8.csv") %>%
+  unnest(tidied)
+
+# Create a wide data frame of just the coefficients and standard errors
+params <- models_imputations %>%
+  unnest(tidied) %>%
+  select(Imputation, term, estimate, std.error) %>%
+  gather(key, value, estimate, std.error) %>%
+  spread(term, value)
+
+# Extract just the coefficients
+just_coefs <- params %>%
+  filter(key == "estimate") %>%
+  select(-Imputation, -key)
+
+# Extract just the standard errors
+just_ses <- params %>%
+  filter(key == "std.error") %>%
+  select(-Imputation, -key)
+
+# then use these matrices in mi.meld(), which returns a list with two slots—q.mi and se.mi:
+coefs_melded <- mi.meld(just_coefs, just_ses)
+
+#Armed with these, let's create the regression summary table with some more dplyr wizardry. To calculate the p-value and confidence intervals, I need to extract the degrees of freedom from one of the imputed models
+
+model_degree_freedom <- models_imputations %>%
+  unnest(glance) %>%
+  filter(Imputation == "outdata8.csv") %>%
+  pull(df.residual)
+
+melded_summary <- as.data.frame(cbind(t(coefs_melded$q.mi),
+                                      t(coefs_melded$se.mi))) %>%
+  magrittr::set_colnames(c("estimate", "std.error")) %>%
+  mutate(term = rownames(.)) %>%
+  select(term, everything()) %>%
+  mutate(statistic = estimate / std.error,
+         conf.low = estimate + std.error * qt(0.025, model_degree_freedom),
+         conf.high = estimate + std.error * qt(0.975, model_degree_freedom),
+         p.value = 2 * pt(abs(statistic), model_degree_freedom, lower.tail = FALSE))
+
+
+# Let's add the R^2 and F statistic - It can be done in two steps :
+
+# Step 1: in each complete data set, calculate R2, take its square root,
+# transform it with Fisher z-transformation, and calculate the variance of R2\
+r2s <- models_imputations %>%
+  unnest(glance) %>%
+  select(Imputation, adj.r.squared, df.residual) %>%
+  mutate(R = sqrt(adj.r.squared),  # Regular R
+         Q = 0.5 * log((R + 1) / (1 - R)),  # Fisher z-transformation
+         se = 1 / df.residual)  # R2 variance
+
+#Step 2: combine the results using Rubin's rules (mi.meld()), inverse transform the value, and square it
+
+# Meld the R2 values with mi.meld()
+Q_melded <- mi.meld(as.matrix(r2s$Q), as.matrix(r2s$se))
+
+# Inverse transform Q to R and square it
+r2_melded <- ((exp(2 * Q_melded$q.mi) - 1) / (1 + exp(2 * Q_melded$q.mi)))^2
+
+
+#####################################
+
+
+```
+
