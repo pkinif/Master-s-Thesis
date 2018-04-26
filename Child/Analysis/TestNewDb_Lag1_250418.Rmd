@@ -56,15 +56,15 @@ DB_Lag1 <-as.data.frame(read.csv("DataBase/DataSynchronization/Lag1.csv", string
 #####################################
 
 # I define my models in lm as cooks.distance do not support plm object
-Roa <-lm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta  , data = DB_Lag1)
+Roa <-lm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta    , data = DB_Lag1)
 
-TobinsQ<-lm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta  , data = DB_Lag1)
+TobinsQ<-lm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta    , data = DB_Lag1)
 
-Roe <- lm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta , data = DB_Lag1)
+Roe <- lm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta   , data = DB_Lag1)
 
-Jensen <- lm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta , data = DB_Lag1)
+Jensen <- lm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta   , data = DB_Lag1)
 
-Return <- lm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta  , data = DB_Lag1)
+Return <- lm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta    , data = DB_Lag1)
 
 ## I calculate my cooks distance (i.e. D)
 cooksdRoa <- cooks.distance(Roa)
@@ -113,64 +113,64 @@ DB_Return_NoOut <- DB_Lag1[-c(InfluentialReturn),]
 #############################
 
 #Model 1 with outliers with EnergyProductivity
-Roa1<-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + EnergyProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta  , data = DB_Lag1, index = c("CompaniesIndex", "YearIndex"), model = "random") 
+Roa1<-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + EnergyProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta    , data = DB_Lag1, index = c("CompaniesIndex", "YearIndex"), model = "random") 
 
 #Model 1 without outliers with EnergyProductivity
-Roa2 <-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + EnergyProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta   , data = DB_Roa_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random") 
+Roa2 <-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + EnergyProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta     , data = DB_Roa_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random") 
 
 #Model 1 with outliers without EnergyProductivity
-Roa3 <-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta  , data = DB_Lag1, index = c("CompaniesIndex", "YearIndex"), model = "random") 
+Roa3 <-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta    , data = DB_Lag1, index = c("CompaniesIndex", "YearIndex"), model = "random") 
 
 #Model 1 without outliers without EnergyProductivity
-Roa4 <-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta   , data = DB_Roa_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random") 
+Roa4 <-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta     , data = DB_Roa_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random") 
 
 #Model process-based CEP without outliers
 
-Roa5 <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta   , data = DB_Roa_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random") 
+Roa5 <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + log(TotalAssets) + NetMargin + GicsClassification  + Beta     , data = DB_Roa_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random") 
 
 #Model outcome-based CEP without outliers
 
-Roa6 <- plm(Roa ~ CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta   , data = DB_Roa_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random")
+Roa6 <- plm(Roa ~ CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta     , data = DB_Roa_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random")
 
 #############################
 #### Model 2 : Tobin's Q ####
 #############################
 
 #Mode2 with outliers
-Tobins1 <- plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta  , data = DB_Lag1, index = c("CompaniesIndex", "YearIndex"), model = "random")
+Tobins1 <- plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta    , data = DB_Lag1, index = c("CompaniesIndex", "YearIndex"), model = "random")
 
 #Mode2 without the 40 outliers from Tobin's Q
-Tobins3 <-plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta  , data = DB_TobinsQ_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random")
+Tobins3 <-plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta    , data = DB_TobinsQ_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random")
 
 #############################
 ###### Model 3 : Roe ########
 #############################
 
 #Mode3 with outliers
-Roe1<-plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta  , data = DB_Lag1, index = c("CompaniesIndex", "YearIndex"), model = "random") 
+Roe1<-plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta    , data = DB_Lag1, index = c("CompaniesIndex", "YearIndex"), model = "random") 
 
 #Model3 without the 38 outliers from Roe
-Roe2 <-plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta  , data = DB_Roe_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random") 
+Roe2 <-plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta    , data = DB_Roe_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random") 
 
 ################################
 ###### Model 4 : Jensen ########
 ################################
 
 #Mode4 with outliers
-Jensen1<-plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta + Beta , data = DB_Lag1, index = c("CompaniesIndex", "YearIndex"), model = "random") 
+Jensen1<-plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta    , data = DB_Lag1, index = c("CompaniesIndex", "YearIndex"), model = "random") 
 
 #Model4 without outliers 
-Jensen2 <-plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta + Beta , data = DB_Jensen_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random") 
+Jensen2 <-plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta   , data = DB_Jensen_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random") 
 
 ################################
 ###### Model 5 : Return ########
 ################################
 
 #Model5 with outliers
-Return1<-plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta  , data = DB_Lag1, index = c("CompaniesIndex", "YearIndex"), model = "random") 
+Return1<-plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta    , data = DB_Lag1, index = c("CompaniesIndex", "YearIndex"), model = "random") 
 
 #Model5 without outliers 
-Return2 <-plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta  , data = DB_Return_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random") 
+Return2 <-plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta    , data = DB_Return_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "random") 
 
 #########################################################
 ######### My Stargazer's friend do the rest #############
@@ -205,19 +205,19 @@ TablkeReturn <- stargazer(Return1, Return2, type="latex", label = "Return", titl
 
 
 #Model without the 2 outliers from Roa
-Roa2_Fixed <-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta   , data = DB_Roa_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "within") 
+Roa2_Fixed <-plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta     , data = DB_Roa_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "within") 
 
 #Mode2 without the 40 outliers from Tobin's Q
-Tobins3_Fixed <-plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta  , data = DB_TobinsQ_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "within")
+Tobins3_Fixed <-plm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore +  CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta    , data = DB_TobinsQ_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "within")
 
 #Model3 without the 38 outliers from Roe
-Roe2_Fixed <-plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta   , data = DB_Roe_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "within") 
+Roe2_Fixed <-plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta     , data = DB_Roe_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "within") 
 
 #Model4 without outliers 
-#Jensen2_Fixed <-plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta   , data = DB_Jensen_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "within") 
+#Jensen2_Fixed <-plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta     , data = DB_Jensen_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "within") 
 
 #Model5 without outliers 
-Return2_Fixed <-plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + DebtToEquityRatio + log(TotalAssets) + NetMargin  + GicsClassification + Beta   , data = DB_Return_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "within") 
+Return2_Fixed <-plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + log(TotalAssets) + NetMargin + GicsClassification  + Beta     , data = DB_Return_NoOut, index = c("CompaniesIndex", "YearIndex"), model = "within") 
 
 
 
