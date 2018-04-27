@@ -76,7 +76,7 @@ setnames(Model, old = c("DebtToEquityRatio", "GicsClassification"), new = c("Lev
 # I define my models in lm as cooks.distance do not support plm object
 Roa <-lm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta , data = Model)
 
-TobinsQ<-lm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta , data = Model)
+TobinsQ<-lm(log(TobinsQ) ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta , data = Model)
 
 Roe <- lm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta , data = Model)
 
