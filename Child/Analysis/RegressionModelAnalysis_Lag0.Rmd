@@ -74,17 +74,17 @@ setnames(Model, old = c("DebtToEquityRatio", "GicsClassification"), new = c("Lev
 #####################################
 
 # I define my models in lm as cooks.distance do not support plm object
-Roa <-lm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta , data = Model)
+Roa <-lm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry  , data = Model)
 
-TobinsQ<-lm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta , data = Model)
+TobinsQ<-lm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry  , data = Model)
 
-Roe <- lm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta , data = Model)
+Roe <- lm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry  , data = Model)
 
-Roic <- lm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta , data = Model)
+Roic <- lm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry  , data = Model)
 
-Ra <- lm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta , data = Model)
+Ra <- lm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry  , data = Model)
 
-AlphaJensen <- lm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta , data = Model)
+AlphaJensen <- lm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry  , data = Model)
 
 
 ## I calculate my cooks distance (i.e. D)
@@ -162,32 +162,32 @@ AlphaJensen_Db <- pdata.frame(AlphaJensen_Db, index = c("Index","Year"))
 #######################################################
 
 #TobinsQ
-  PoolTobinsQ<- plm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = TobinsQ_Db, model="pooling", index = c("Index","Year"))
+  PoolTobinsQ<- plm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = TobinsQ_Db, model="pooling", index = c("Index","Year"))
 
   PlmtestTobinsQ <- cbind("TobinsQ", round(plmtest(PoolTobinsQ, effect = "time", type = "bp")$p.value, digits = 4), round(plmtest(PoolTobinsQ, effect = "individual", type = "bp")$p.value, digits = 4), round(plmtest(PoolTobinsQ, effect = "twoways", type = "bp")$p.value, digits = 4)) 
   
 #Roa
-  PoolRoa <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roa_Db, model="pooling", index = c("Index","Year"))
+  PoolRoa <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roa_Db, model="pooling", index = c("Index","Year"))
   
   PlmtestRoa <- cbind("Roa", round(plmtest(PoolRoa, effect = "time", type = "bp")$p.value, digits = 4), round(plmtest(PoolRoa, effect = "individual", type = "bp")$p.value, digits = 4), round(plmtest(PoolRoa, effect = "twoways", type = "bp")$p.value, digits = 4))
 
 #Roe
-  PoolRoe<- plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roe_Db, model="pooling", index = c("Index","Year"))
+  PoolRoe<- plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roe_Db, model="pooling", index = c("Index","Year"))
   
     PlmtestRoe <- cbind("Roe", round(plmtest(PoolRoe, effect = "time", type = "bp")$p.value, digits = 4), round(plmtest(PoolRoe, effect = "individual", type = "bp")$p.value, digits = 4), round(plmtest(PoolRoe, effect = "twoways", type = "bp")$p.value, digits = 4))
 
 #Roic
-  PoolRoic <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roic_Db, model="pooling", index = c("Index","Year"))
+  PoolRoic <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="pooling", index = c("Index","Year"))
   
   PlmtestRoic <- cbind("Roic", round(plmtest(PoolRoic, effect = "time", type = "bp")$p.value, digits = 4 ),  round(plmtest(PoolRoic, effect = "individual", type = "bp")$p.value, digits = 4 ), round(plmtest(PoolRoic, effect = "twoways", type = "bp")$p.value, digits = 4))
 
 #Ra
-  PoolRa <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Ra_Db, model="pooling", index = c("Index","Year"))
+  PoolRa <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Ra_Db, model="pooling", index = c("Index","Year"))
   
   PlmtestRa <- cbind("Ra", round(plmtest(PoolRa, effect = "time", type = "bp")$p.value, digits = 4 ),  round(plmtest(PoolRa, effect = "individual", type = "bp")$p.value, digits = 4 ), round(plmtest(PoolRa, effect = "twoways", type = "bp")$p.value, digits = 4))
 
 #AlphaJensen
-  PoolAlphaJensen <- plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = AlphaJensen_Db, model="pooling", index = c("Index","Year"))
+  PoolAlphaJensen <- plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = AlphaJensen_Db, model="pooling", index = c("Index","Year"))
   
   PlmtestAlphaJensen <- cbind("AlphaJensen", round(plmtest(PoolAlphaJensen, effect = "time", type = "bp")$p.value, digits = 4 ),  round(plmtest(PoolAlphaJensen, effect = "individual", type = "bp")$p.value, digits = 4 ), round(plmtest(PoolAlphaJensen, effect = "twoways", type = "bp")$p.value, digits = 4))
   
@@ -233,48 +233,48 @@ AlphaJensen_Db <- pdata.frame(AlphaJensen_Db, index = c("Index","Year"))
   # Time Effect
   ###################
   
-  FixedTobinsQ<- plm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = TobinsQ_Db, model="within", index = c("Index","Year"), effect = "time")
+  FixedTobinsQ<- plm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = TobinsQ_Db, model="within", index = c("Index","Year"), effect = "time")
   
-  FixedRoa<- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roa_Db, model="within", index = c("Index","Year"), effect = "time")
+  FixedRoa<- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roa_Db, model="within", index = c("Index","Year"), effect = "time")
 
-  FixedRoe<- plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roe_Db, model="within", index = c("Index","Year"), effect = "time")
+  FixedRoe<- plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roe_Db, model="within", index = c("Index","Year"), effect = "time")
 
-  FixedRoic <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roic_Db, model="within", index = c("Index","Year"), effect = "time")
+  FixedRoic <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="within", index = c("Index","Year"), effect = "time")
   
-  FixedRa <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Ra_Db, model="within", index = c("Index","Year"), effect = "time")
+  FixedRa <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Ra_Db, model="within", index = c("Index","Year"), effect = "time")
 
 
-  FixedAlphaJensen <- plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = AlphaJensen_Db, model="within", index = c("Index","Year"), effect = "time")
+  FixedAlphaJensen <- plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = AlphaJensen_Db, model="within", index = c("Index","Year"), effect = "time")
   
   # Individual Effect
   ###################
   
-  FixedTobinsQ1 <- plm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = TobinsQ_Db, model="within", index = c("Index","Year"), effect = "individual")
+  FixedTobinsQ1 <- plm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = TobinsQ_Db, model="within", index = c("Index","Year"), effect = "individual")
   
-  FixedRoa1 <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roa_Db, model="within", index = c("Index","Year"), effect = "individual")
+  FixedRoa1 <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roa_Db, model="within", index = c("Index","Year"), effect = "individual")
 
-  FixedRoe1 <- plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roe_Db, model="within", index = c("Index","Year"), effect = "individual")
+  FixedRoe1 <- plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roe_Db, model="within", index = c("Index","Year"), effect = "individual")
 
-  FixedRoic1 <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roic_Db, model="within", index = c("Index","Year"), effect = "individual")
+  FixedRoic1 <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="within", index = c("Index","Year"), effect = "individual")
   
-  FixedRa1 <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Ra_Db, model="within", index = c("Index","Year"), effect = "individual")
+  FixedRa1 <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Ra_Db, model="within", index = c("Index","Year"), effect = "individual")
 
-  FixedAlphaJensen1 <- plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = AlphaJensen_Db, model="within", index = c("Index","Year"), effect = "individual")
+  FixedAlphaJensen1 <- plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = AlphaJensen_Db, model="within", index = c("Index","Year"), effect = "individual")
   
   # TwoWays Effect
   ###################
   
-  FixedTobinsQ2 <- plm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = TobinsQ_Db, model="within", index = c("Index","Year"), effect = "twoways")
+  FixedTobinsQ2 <- plm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = TobinsQ_Db, model="within", index = c("Index","Year"), effect = "twoways")
   
-  FixedRoa2 <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roa_Db, model="within", index = c("Index","Year"), effect = "twoways")
+  FixedRoa2 <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roa_Db, model="within", index = c("Index","Year"), effect = "twoways")
 
-  FixedRoe2 <- plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roe_Db, model="within", index = c("Index","Year"), effect = "twoways")
+  FixedRoe2 <- plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roe_Db, model="within", index = c("Index","Year"), effect = "twoways")
 
-  FixedRoic2 <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roic_Db, model="within", index = c("Index","Year"), effect = "twoways")
+  FixedRoic2 <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="within", index = c("Index","Year"), effect = "twoways")
   
-  FixedRa2 <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Ra_Db, model="within", index = c("Index","Year"), effect = "twoways")
+  FixedRa2 <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Ra_Db, model="within", index = c("Index","Year"), effect = "twoways")
 
-  FixedAlphaJensen2 <- plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = AlphaJensen_Db, model="within", index = c("Index","Year"), effect = "twoways")
+  FixedAlphaJensen2 <- plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = AlphaJensen_Db, model="within", index = c("Index","Year"), effect = "twoways")
   
   #PfTest
   pFtestTobinsQ <- cbind("TobinsQ", round(pFtest(FixedTobinsQ, PoolTobinsQ, effect = "time")$p.value, digits = 4 ),round(pFtest(FixedTobinsQ1, PoolTobinsQ, effect = "individual")$p.value, digits = 4 ), round(pFtest(FixedTobinsQ2, PoolTobinsQ, effect = "twoways")$p.value, digits = 4 ))
@@ -324,17 +324,17 @@ AlphaJensen_Db <- pdata.frame(AlphaJensen_Db, index = c("Index","Year"))
 # phtest computes the Hausman test which is based on the comparison of two sets of estimates (see Hausman 1978). Its main arguments are two panelmodel objects or a formula. A classical application of the Hausman test for panel data is to compare the Random and the random effects models. 
 #######################################################
 
-  RandomTobinsQ<- plm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = TobinsQ_Db, model="random", index = c("Index","Year"))
+  RandomTobinsQ<- plm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = TobinsQ_Db, model="random", index = c("Index","Year"))
   
-  RandomRoa<- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roa_Db, model="random", index = c("Index","Year"))
+  RandomRoa<- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roa_Db, model="random", index = c("Index","Year"))
 
-  RandomRoe<- plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roe_Db, model="random", index = c("Index","Year"))
+  RandomRoe<- plm(Roe ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roe_Db, model="random", index = c("Index","Year"))
 
-  RandomRoic <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Roic_Db, model="random", index = c("Index","Year"))
+  RandomRoic <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="random", index = c("Index","Year"))
 
-  RandomRa <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Ra_Db, model="random", index = c("Index","Year"))
+  RandomRa <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Ra_Db, model="random", index = c("Index","Year"))
   
-  RandomAlphaJensen <- plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = AlphaJensen_Db, model="random", index = c("Index","Year"))
+  RandomAlphaJensen <- plm(AlphaJensen ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = AlphaJensen_Db, model="random", index = c("Index","Year"))
 
 ### Hausman test with time fixed model
   
@@ -471,6 +471,10 @@ stargazer(FixedRa, FixedRa1, FixedRa2, summary = FALSE, title = "Model compariso
 stargazer(PoolAlphaJensen, RandomAlphaJensen, summary = FALSE, title = "Model comparison AlphaJensen - Pool (1), Random (2)", label = "AlphaJensen", header = FALSE)
 
 stargazer(FixedAlphaJensen, FixedAlphaJensen1, FixedAlphaJensen2, summary = FALSE, title = "Model comparison AlphaJensen - Fixed with time (1), individual (2) and twoways effects (3)", label = "AlphaJensen1", header = FALSE)
+
+stargazer(FixedTobinsQ, PoolRoa, PoolRoe,  summary = FALSE, header= FALSE, label = "summary", title = "Model based on LM, wild and hausmand test")
+stargazer( PoolRoic, summary = FALSE, header= FALSE, label = "summary", title = "Model based on LM, wild and hausmand test")
+
 ```
   
   
@@ -486,31 +490,207 @@ stargazer(FixedAlphaJensen, FixedAlphaJensen1, FixedAlphaJensen2, summary = FALS
 
 ```{r}
 
-
-
-##########################################
-####### Tests of poolability #########
-##########################################
-
-
-# pooltest tests the hypothesis that the same coefficients apply to each individual. It is a standard F test, based on the comparison of a model obtained for the full sample and a model based on the estimation of an equation for each individual. The first argument of pooltest is a plm object. The second argument is a pvcm object obtained with model=within. If the first argument is a pooling model, the test applies to all the cofficients (including the intercepts), if it is a within model, different intercepts are assumed (Croissant et Millo 2008)
+################################################################################
+################################################################################
+##################### Green Score :))))))       ################################
+################################################################################
+################################################################################
 
 
 
-###############
-#### RoA ######
-###############
+###################################
+# Remove Outliers
+###################################
 
-#znp <- pvcm(Roa ~ GreenScore + FirmSize + Beta, data = Model1, model="within", index = c("Index","Year"))
+TobinsQ <- lm(LogTobinsQ ~ GreenScore + FirmSize + Leverage + Industry + NetMargin, data = Model)
+Roa <- lm(Roa ~ GreenScore + FirmSize + Leverage + Industry + NetMargin, data = Model)
+Roe <- lm(Roe ~ GreenScore + FirmSize + Leverage + Industry + NetMargin, data = Model)
+Roic <- lm(LogTobinsQ ~ GreenScore + FirmSize + Leverage + Industry + NetMargin, data = Model)
 
-#zplm <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta, data = Model1, model="within", index = c("Index","Year"))
+cooksdRoa <- cooks.distance(Roa)
+cooksdTobinsQ <- cooks.distance(TobinsQ)
+cooksdRoe <- cooks.distance(Roe)
+cooksdRoic <- cooks.distance(Roic)
 
-#PoolTestRoa <- pooltest(zplm,znp)
+## I extract rows considered as influential (observations whose D > 4 * means)
+
+influentialRoa <- as.numeric(names(cooksdRoa)[(cooksdRoa > 4*mean(cooksdRoa, na.rm=T))])  
+influentialTobin <- as.numeric(names(cooksdTobinsQ)[(cooksdTobinsQ > 4*mean(cooksdTobinsQ, na.rm=T))])  
+influentialRoe <- as.numeric(names(cooksdRoe)[(cooksdRoe > 4*mean(cooksdRoe, na.rm=T))])  
+influentialRoic <- as.numeric(names(cooksdRoic)[(cooksdRoic > 4*mean(cooksdRoic, na.rm=T))])  
 
 
 
-#PoolTestRoa <- pooltest(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry + Beta , data = Model1, model = "within")
+head(Model[influentialRoa, ])  # influential observations 
+head(Model[influentialTobin, ])  # influential observations 
+head(Model[influentialRoe, ])  # influential observations 
+head(Model[influentialRoic, ])  # influential observations 
 
+
+#I remove outliers and create four new data frames that I write in my folders
+
+TobinsQ_Db <- Model[-c(influentialTobin),]
+write.csv(TobinsQ_Db, file = "DataBase/DataSynchronization/NoOutliersLag0/GreenScore/TobinsQ.csv")
+
+Roa_Db <- Model[-c(influentialRoa),]
+write.csv(Roa_Db, file = "DataBase/DataSynchronization/NoOutliersLag0/GreenScore/Roa.csv")
+
+Roe_Db <- Model[-c(influentialRoe),]
+write.csv(Roe_Db, file = "DataBase/DataSynchronization/NoOutliersLag0/GreenScore/Roe.csv")
+
+Roic_Db <- Model[-c(influentialRoic),]
+write.csv(Roe_Db, file = "DataBase/DataSynchronization/NoOutliersLag0/GreenScore/Roic.csv")
+
+
+
+# I make my database pdataframe
+
+TobinsQ_Db <- pdata.frame(TobinsQ_Db, index = c("Index","Year"))
+Roa_Db <- pdata.frame(Roa_Db, index = c("Index","Year"))
+Roe_Db <- pdata.frame(Roe_Db, index = c("Index","Year"))
+Roic_Db <- pdata.frame(Roic_Db, index = c("Index","Year"))
+
+
+
+#######################################################
+# A) LM test for random effects versus OLS
+#######################################################
+
+#TobinsQ
+  PoolTobinsQ<- plm(LogTobinsQ ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = TobinsQ_Db, model="pooling", index = c("Index","Year"))
+
+  PlmtestTobinsQ <- cbind("TobinsQ", round(plmtest(PoolTobinsQ, effect = "time", type = "bp")$p.value, digits = 4))
+  
+#Roa
+  PoolRoa <- plm(Roa ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = Roa_Db, model="pooling", index = c("Index","Year"))
+  
+  PlmtestRoa <- cbind("Roa", round(plmtest(PoolRoa, effect = "time", type = "bp")$p.value, digits = 4))
+#Roe
+  PoolRoe<- plm(Roe ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = Roe_Db, model="pooling", index = c("Index","Year"))
+  
+    PlmtestRoe <- cbind("Roe", round(plmtest(PoolRoe, effect = "time", type = "bp")$p.value, digits = 4))
+
+#Roic
+  PoolRoic <- plm(Roic ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="pooling", index = c("Index","Year"))
+  
+  PlmtestRoic <- cbind("Roic", round(plmtest(PoolRoic, effect = "time", type = "bp")$p.value, digits = 4 ))
+
+
+#Summary in a table    
+      
+  PlmTable <- as.data.frame(rbind(PlmtestTobinsQ, PlmtestRoa, PlmtestRoe, PlmtestRoic))
+  colnames(PlmTable) <- c("DependentVariables", "TimeEffect")
+  rownames(PlmTable) <- c()
+  PlmTable[,2] <- as.numeric(as.character(PlmTable[,2]))  
+
+  # Improve p-value understanding
+  PlmTable$TimeEffect<-ifelse(PlmTable$TimeEffect<0.01,"< .01 ***",
+		ifelse(PlmTable$TimeEffect<0.05,"< .05 **",
+		ifelse(PlmTable$TimeEffect<0.1,"< .1 *",PlmTable$TimeEffect)))
+ 
+ 
+  #Xtable
+  PlmTable1 <- xtable(PlmTable, caption = "Lagrange Multipliers test for random effects versus OLS", label = "Breusch", align = "lll")
+  
+  print.xtable(PlmTable1, type = "latex", table.placement = "h", caption.placement = "top", comment = FALSE, hline.after = c(-1,-1,0,4))
+
+
+#######################################################
+# B) F / Wilrd test for Fixed effects versus OLS
+#######################################################
+  
+  # Time Effect
+  ###################
+  
+  FixedTobinsQ<- plm(LogTobinsQ ~ GreenScore+ FirmSize + NetMargin + Leverage + Industry , data = TobinsQ_Db, model="within", index = c("Index","Year"), effect = "time")
+  
+  FixedRoa<- plm(Roa ~ GreenScore+ FirmSize + NetMargin + Leverage + Industry , data = Roa_Db, model="within", index = c("Index","Year"), effect = "time")
+
+  FixedRoe<- plm(Roe ~ GreenScore+ FirmSize + NetMargin + Leverage + Industry , data = Roe_Db, model="within", index = c("Index","Year"), effect = "time")
+
+  FixedRoic <- plm(Roic ~ GreenScore+ FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="within", index = c("Index","Year"), effect = "time")
+  
+
+
+
+  #PfTest
+  pFtestTobinsQ <- cbind("TobinsQ", round(pFtest(FixedTobinsQ, PoolTobinsQ, effect = "time")$p.value, digits = 4 ))
+  
+  pFtestRoa <- cbind("Roa", round(pFtest(FixedRoa, PoolRoa, effect = "time")$p.value, digits = 4 ))
+  
+  pFtestRoe <- cbind("Roe", round(pFtest(FixedRoe, PoolRoe, effect = "time")$p.value, digits = 4 ))
+  
+  pFtestRoic <- cbind("Roic", round(pFtest(FixedRoic, PoolRoic, effect = "time")$p.value, digits = 4 ))
+  
+
+#Summary in a table    
+      
+  pFtestTable <- as.data.frame(rbind(pFtestTobinsQ, pFtestRoa, pFtestRoe, pFtestRoic))
+  colnames(pFtestTable) <- c("DependentVariables", "TimeEffect")
+  rownames(pFtestTable) <- c()
+  pFtestTable[,2] <- as.numeric(as.character(pFtestTable[,2]))  
+
+  # Improve p-value understanding
+  pFtestTable$TimeEffect<-ifelse(pFtestTable$TimeEffect<0.01,"< .01 ***",
+		ifelse(pFtestTable$TimeEffect<0.05,"< .05 **",
+		ifelse(pFtestTable$TimeEffect<0.1,"< .1 *",pFtestTable$TimeEffect)))
+
+  #Xtable
+  pFtestTable1 <- xtable(pFtestTable, caption = "F test for fixed effects versus OLS", label = "pFtest", align = "lll")
+  
+  print.xtable(pFtestTable1, type = "latex", table.placement = "h", caption.placement = "top", comment = FALSE, hline.after = c(-1,-1,0,4))
+
+
+#######################################################
+# C) Hausman Test
+#######################################################
+
+  RandomTobinsQ<- plm(LogTobinsQ ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = TobinsQ_Db, model="random", index = c("Index","Year"))
+  
+  RandomRoa<- plm(Roa ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = Roa_Db, model="random", index = c("Index","Year"))
+
+  RandomRoe<- plm(Roe ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = Roe_Db, model="random", index = c("Index","Year"))
+
+  RandomRoic <- plm(Roic ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="random", index = c("Index","Year"))
+
+
+
+### Hausman test with time fixed model
+  
+  # Hausman Test
+  phtestTobinsQ <- cbind("TobinsQ", round(phtest(FixedTobinsQ, RandomTobinsQ)$p.value, digits = 4 ))
+  phtestRoa <- cbind("Roa", round(phtest(FixedRoa, RandomRoa)$p.value, digits = 4 ))
+  phtestRoe <- cbind("Roe", round(phtest(FixedRoe, RandomRoe)$p.value, digits = 4 ))
+  phtestRoic <- cbind("Roic", round(phtest(FixedRoic, RandomRoic)$p.value, digits = 4 ))
+
+  
+
+
+#Summary in a table    
+      
+  phtestTable <- as.data.frame(rbind(phtestTobinsQ, phtestRoa, phtestRoe, phtestRoic))
+  colnames(phtestTable) <- c("DependentVariables", "pvalue")
+  rownames(phtestTable) <- c()
+  phtestTable[,2] <- as.numeric(as.character(phtestTable[,2]))  
+
+  
+  # Improve p-value understanding
+  phtestTable$pvalue<-ifelse(phtestTable$pvalue<0.01,"< .01 ***",
+		ifelse(phtestTable$pvalue<0.05,"< .05 **",
+		ifelse(phtestTable$pvalue<0.1,"< .1 *",phtestTable$pvalue)))
+  
+  #Xtable
+  phtestTable1 <- xtable(phtestTable, caption = "Hausman Test with time effect in fixed model", label = "Hausman", align = "lll")
+  
+  print.xtable(phtestTable1, type = "latex", table.placement = "h", caption.placement = "top", comment = FALSE, hline.after = c(-1,-1,0,4))
+
+
+#######################################################
+# D) Result Reporting
+#######################################################
+  
+stargazer(RandomTobinsQ, PoolRoe, summary = FALSE, title = "Random TobinsQ and Pool Roe Model", label = "GreenScore", header = FALSE)
+stargazer(PoolRoa, PoolRoic, summary = FALSE, title = "Pool Model", label = "GreenScore", header = FALSE)
 
 ```
 
