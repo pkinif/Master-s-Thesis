@@ -27,69 +27,36 @@ DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag1_WithCapm.csv", sep = ";",s
 -->
 
 
-Panel data is a common approach to adress the CFP-CEP nexus [@Albertini2013]. Panel data, also called longitudinal data include observations on N cross section units (i.e., firms) over T time-periods [@Hsiao2007a]. @Bell2015 make a clear distinction between panel data and time-series cross-sectional (i.e. TSCS) data and highlights that the difference lies partly in its sample structure. TSCS data has comparatively few higher-level entities (usually groups of individuals such as countries, rather than individuals) and comparatively many measurement of time-periods [@Beck1995].
+Panel data is a common approach to adress the CFP-CEP nexus [@Albertini2013]. Panel data, also called longitudinal data, includes observations on N cross section units (e.g. firms) over T time-periods [@Hsiao2007a]. The main difference between panel data and time-series cross-sectionnal data (i.e. TSCS) lies partly in the sample structure. TSCS data has comparatively few higher-level entities (usually groups of individuals such as countries, rather than individuals) and comparatively many measurement of time-periods [@Beck1995, @Bell2015]. Panel data analysis is considered to be one of the most efficient analytical methods for data analysis [@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007, @HsiaoChapitrePanelData2014]. @Roberts2013 also argued that using panel data offer a partial, but by no means complete and costless, solution to the problem of omitted variables in econometric model, namely the most common causes of endogeneity in empirical corporate finance. 
 
-Panel data analysis using variation in both individuals and time dimensions is considered to be one of the most efficient analytical methods for data analysis[@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007, @HsiaoChapitrePanelData2014]. @Roberts2013 also argued that using panel data offer a partial, but by no means complete and costless, solution to the problem of omitted variables in model, namely the most common causes of endogeneity in empirical corporate finance. Consequently this study use equation \ref{EconometricModel} to test the combined effect of process and outcome-based CEP on CFP (short term vs long term).
+
+Consequently this study use equation \ref{EconometricModel} to test the combined effect of process and outcome-based CEP on CFP (short term vs long term).
 
 \begin{equation}
 \centering
 \begin{aligned}
 Y_{it+1} & = & \beta_{0} + \beta_{1} (SPL_{it}) \\
 && + {} \beta_{2} (STC_{it}) + \beta_{3} (A_{it}) \\
-&& + {} \beta_{4} (EnP_{it})  + \beta_{5} (CaP_{it}) \\
-&& + {} \beta_{6} (WatP_{it}) + \beta_{7} (WastP_{it}) \\ 
-&& + {} (Controls_{it}) + \varepsilon_{it}
+&& + {} \beta_{4} (CaP_{it}) + \beta_{5} (WatP_{it}) \\
+&& + {} \beta_{6} (WastP_{it}) + (Controls_{it}) \\ 
+&& + {} \varepsilon_{it}
 \label{EconometricModel}
 \end{aligned}
 \end{equation}
 
 
-where \(Y_{it+1}\) is a proxy of CFP measured as ROA (i.e. Model 1) or Tobin's Q (i.e. Model 2), \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(EP_{it}\) is a proxy for a firm's energy productivity, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial risk, R&D activities, advertising intensity and capital structure and lastly \(\varepsilon_{it}\) which is the error term.
+where \(Y_{it+1}\) is a proxy of CFP measured as ROA (i.e. Model 1) or Tobin's Q (i.e. Model 2), \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(EP_{it}\) is a proxy for a firm's energy productivity, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth and lastly \(\varepsilon_{it}\) which is the error term.
 
 
 **FE vs RE based on [@Bell2015] --> développez + appliquer sa méthode?**
 
-Panel data setting implies that endogeneity occurs in cases where the independent variable in a regression model is correlated with the error term, or due to simultaneous causality between the dependent and the independent variable [@Sanchez-Ballesta2007, @Biorn2008, @Roberts2013]. Consequently, the presence of endogeneity implies that the fourth and fifth assumptions of OLS\footnote{Five assumptions are required to produce consistent estimators with OLS : (i) a random sample of observations on \(y\) and \((x_{1},...., x_{n})\), (ii) a mean zero error term, (iii) no linear relationship among the explanatory variables, (iv) an error term that is uncorrelated with each explanatory variables and (v) an error term with zero mean conditional on the explanatory variables.} are violated and scholars have to use a different method to produce consistent estimators [@Wooldridge2008, @Roberts2013]. Recent meta-analysis provided evidences that the CFP-CEP nexus is characterized by a bidirectional causality [@Orlitzky2001, @Orlitzky2003, @Wu2006, @Albertini2013, @Dixon-Fowler2013, @EndrikatMakingsenseconflicting2014, @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016, @Busch2018]. In order to adress potential endogeneity problems in my model, firstly, I have lagged observations in dependent and control variables one year behind financial performance. This method allows to increase the confidence of the direction of the relationship [@Hart1996, @Delmas2015, @MiroshnychenkoGreenpracticesfinancial2017] and *in fine* reduce the potential simultaneity bias. Secondly, given that the standard Hausman test had rejected the null hypothesis of random effect (see Annex... for results of the test or find a way to insert p-value in the table of regression idem for cross sectionnal dependence) I use a fixed effect model to regress the equation \ref{EconometricModel}. According to @Roberts2013, fixed effect model improve endogeneity concerns. 
+Panel data setting implies that endogeneity occurs in cases where the independent variable in a regression model is correlated with the error term, or due to simultaneous causality between the dependent and the independent variable [@Sanchez-Ballesta2007, @Biorn2008, @Roberts2013]. Consequently, the presence of endogeneity implies that the fourth and fifth assumptions of OLS\footnote{Five assumptions are required to produce consistent estimators with OLS : (i) a random sample of observations on \(y\) and \((x_{1},...., x_{n})\), (ii) a mean zero error term, (iii) no linear relationship among the explanatory variables, (iv) an error term that is uncorrelated with each explanatory variables and (v) an error term with zero mean conditional on the explanatory variables.} are violated and scholars have to use a different method to produce consistent estimators [@Wooldridge2008, @Roberts2013]. Recent meta-analysis provided evidences that the CFP-CEP nexus is characterized by a bidirectional causality [@Orlitzky2001, @Orlitzky2003, @Wu2006, @Albertini2013, @Dixon-Fowler2013, @EndrikatMakingsenseconflicting2014, @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016, @Busch2018]. In order to adress potential endogeneity problems in my model, firstly, I have lagged observations in dependent and control variables one year behind financial performance. This method allows to increase the confidence of the direction of the relationship [@Hart1996, @Delmas2015, @MiroshnychenkoGreenpracticesfinancial2017] and *in fine* reduce the potential simultaneity bias. 
 
 
-```{r echo = FALSE, error = FALSE, message = FALSE, results = 'hide'}
-if (!require("stargazer")) install.packages("stargazer")
-library(stargazer)
-
-if (!require("xtable")) install.packages("xtable")
-library(xtable)
-
-# Fixed Model
-
-FixedTobinsQ <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "Year"), model="within")
-
-FixedRoa <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "Year"), model="within")
-
-# Random Model
-
-RandomTobinsQ <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "Year"), model="random")
-
-RandomRoa <- plm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1, index=c("Companies", "Year"), model="random")
-
-# Hausmann Test
-
-PvalRoa <- round(phtest(FixedTobinsQ,RandomTobinsQ)$p.value, digits = 4)
-HausmanTobinsQ <- cbind("Model 5",PvalRoa)
-
-PvalTobinsQ <- round(phtest(FixedRoa,RandomRoa)$p.value, digits = 4)
-HausmanRoa <- cbind("Model 6",PvalTobinsQ)
+Secondly, given that the standard Hausman test had rejected the null hypothesis of random effect (see Annex... for results of the test or find a way to insert p-value in the table of regression idem for cross sectionnal dependence) I use a fixed effect model to regress the equation \ref{EconometricModel}. According to @Roberts2013, fixed effect model improve endogeneity concerns. 
 
 
-#summary in table
 
-HausmanTable <- rbind(HausmanRoa, HausmanTobinsQ)
-colnames(HausmanTable) <- c("Model","p-value")
-
-#xtable(HausmanTable, caption = "Hausman Test Result", label = "Hausman", align = "rrr")
-
-stargazer(HausmanTable, summary = FALSE, table.placement = "h", type="latex", label = "Hausman", title = "Hausman Test p-value", header = FALSE)
-
-```
 
 
 ## Outliers treatment
