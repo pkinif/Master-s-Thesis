@@ -23,8 +23,8 @@ if (!require("tidyr")) install.packages("tidyr")
 library(tidyr)
 if (!require("data.table")) install.packages("data.table")
 library(data.table)
-
-
+if (!require("plyr")) install.packages("plyr")
+library(plyr)
 
 # This file syncronize data from from MorningStar, StockPup, Ycharts (i.e. TobinsQ and R&R), YahooFinance (i.e. CAPM) and NewsWeekGreen Ranking (i.e. Green metrics) 
 
@@ -106,7 +106,7 @@ library(data.table)
                            "Roa",
                            "BookValueOfEquityPerShare",
                            "PriceToBookRatio",
-                           "PriceToEquityRatio",
+                           "PriceToEpsRatio",
                            "CumulativeDividendPerShare",
                            "DividendPayoutRatio",
                            "LongTermDebtToEquityRatio",
@@ -145,7 +145,7 @@ library(data.table)
                                    Year,
                                    Roa,
                                    Roe,
-                                   PriceToEquityRatio,
+                                   PriceToEpsRatio,
                                    EpsBasic,
                                    TotalAsset,
                                    ShareholdersEquity,
@@ -212,7 +212,7 @@ library(data.table)
                                             ResearchAndDevelopment,
                                             NetIncome,
                                             ShareholdersEquity,
-                                            PriceToEquityRatio,
+                                            PriceToEpsRatio,
                                             EarningsPerShare
                                             ))
 
@@ -238,30 +238,29 @@ library(data.table)
       
       ## Then StockPrice
         ### Before moving forward,  I take data of the last day of the month and use it as monthly data of the time series. (Justification : https://www.researchgate.net/post/How_do_you_easily_change_daily_index_data_to_monthly_basis_index_data)
-
+      
+      
             StockPrice1 <- StockPrice %>%
               separate(date, into = c("Year","Month","Day"))
-            
-            StockPrice2 <- StockPrice1 %>%
-              subset(Month == "12") 
-            StockPrice3 <- StockPrice2 %>%
-              subset(Day == "28")       
-            
-          ###I restructure StockPrice3
-            StockPrice3$Year <- as.numeric(StockPrice3$Year)
-            StockPrice4 <- select(StockPrice3, c(symbol,
+            # I use the function ddply to group my database by year and compute the yealy stock price for each tickers
+            StockPrice2 <- StockPrice1 %>% ddply(.(symbol, Year), summarize,
+ mean = round(mean(close), 2))
+
+
+          ###I restructure StockPrice2
+            StockPrice2$Year <- as.numeric(StockPrice2$Year)
+            StockPrice3 <- select(StockPrice2, c(symbol,
                                                  Year,
-                                                 close,
-                                                 volume))
-            colnames(StockPrice4) <- c("Ticker",
-                                       "Year",
-                                       "StockPriceClose",
-                                       "Volume")
+                                                 mean))
             
-            StockPrice5 <- StockPrice4 %>% subset(Year > 2011) %>% subset(Year < 2017)
+            colnames(StockPrice3) <- c("Ticker",
+                                       "Year",
+                                       "StockPriceClose")
+
+            StockPrice4 <- StockPrice3 %>% subset(Year > 2011) %>% subset(Year < 2017)
           ### I merge with DataBase1
       
-            DataBase2 <- merge(DataBase1, StockPrice5,by = c("Ticker", "Year"), all = TRUE)
+            DataBase2 <- merge(DataBase1, StockPrice4,by = c("Ticker", "Year"), all = TRUE)
       
         
       ## Change names of DataBase2
@@ -280,7 +279,7 @@ library(data.table)
                                  "ResearchAndDevelopment",
                                  "NetIncome",
                                  "ShareholdersEquity",
-                                 "PriceToEquityRatio",
+                                 "PriceToEpsRatio",
                                  "Eps",
                                  "Ra",
                                  "Rf",
@@ -291,16 +290,23 @@ library(data.table)
                                  "AlphaJensen",
                                  "CostEquity",
                                  "TobinsQ",
-                                 "StockPriceClose",
-                                 "Volume")
-     
-    # I write as FinancialData
-        
-        write.csv(DataBase2, file = "DataBase/DataSynchronization/FinancialData_1216.csv")
+                                 "StockPriceClose")
+
+    
         
         
+  ##########################################
+  ######### Price to Earning Ratio    ######
+  ##########################################     
         
+        # I compute the P/E ratio based on strockpriceclose / eps
+        DataBase2$PriceToEarningRatio <- DataBase2$StockPriceClose / DataBase2$Eps
+        # I remove the "PriceToEpsRatio" column. This one belongs to stockpup and I do not need it anymore as I have calcultaed my own ratio.
+        DataBase3 <- DataBase2 %>% select(-PriceToEpsRatio)
         
+# I write as FinancialData
+        
+        write.csv(DataBase3, file = "DataBase/DataSynchronization/FinancialData_1216.csv")
 #############################################################
 ############## (i) Synchronize with Green Data ##############
 #############################################################
@@ -323,8 +329,8 @@ library(data.table)
 Lag0 <- Newsweek1
 Lag0$Year <- Lag0$YearNewsWeekGR - 2
 
-DataBase2_Lag0 <- DataBase2 %>% subset(Year < 2015)     
-Db_Lag0 <- merge(DataBase2_Lag0, Lag0, by = c("Ticker", "Year"), all = TRUE) 
+DataBase3_Lag0 <- DataBase3 %>% subset(Year < 2015)     
+Db_Lag0 <- merge(DataBase3_Lag0, Lag0, by = c("Ticker", "Year"), all = TRUE) 
 
 # I remove rows where green variables are missing
 Db_Lag0Bis <- Db_Lag0 %>% subset(!is.na(CarbonProductivity))
@@ -358,11 +364,11 @@ Last <- merge(Db_Lag0BisBis, Index1, by = "Ticker")
 
 ## I create a df with financial variables from 2013 to 2015 (i.E. t+1) and from 2012 to 2014 (i.e. t)
 
-FinancialVariables_Lag1 <- DataBase2 %>%
+FinancialVariables_Lag1 <- DataBase3 %>%
   subset(Year > 2012) %>%
   subset(Year < 2016)
 
-FinancialVariables_Lag0 <- DataBase2 %>%
+FinancialVariables_Lag0 <- DataBase3 %>%
   subset(Year < 2015)
 
 ## I creata a new variable YearIndex (i.e. 1,2,3) in both df and also in newsweek1
@@ -384,7 +390,7 @@ DepVar <- FinancialVariables_Lag1 %>% select(c(Ticker,
                                                AlphaJensen,
                                                Eps,
                                                StockPriceClose,
-                                               PriceToEquityRatio,
+                                               PriceToEarningRatio,
                                                PayoutRatio
                                                ))
 
@@ -403,8 +409,7 @@ ContVar <- FinancialVariables_Lag0 %>% select(c(Ticker,
                                                 Ra_Rf,
                                                 Rm_Rf,
                                                 Beta,
-                                                CostEquity,
-                                                Volume 
+                                                CostEquity
                                                 ))
                                                 
 
@@ -425,6 +430,75 @@ colnames(CompaniesIndex) <- c("Ticker", "CompaniesIndex")
 Lag1C <- merge(Lag1B, CompaniesIndex, by = "Ticker")
 
 
+###################################
+############## Lag 2 ##############
+###################################    
+
+
+# Idme  lag 1
+
+FinancialVariables_Lag2 <- DataBase3 %>%
+  subset(Year > 2013) %>%
+  subset(Year < 2017)
+
+FinancialVariables_Lag0 <- DataBase3 %>%
+  subset(Year < 2015)
+
+## I creata a new variable YearIndex (i.e. 1,2,3) in both df and also in newsweek1
+
+FinancialVariables_Lag2$YearIndex <- FinancialVariables_Lag2$Year - 2013
+FinancialVariables_Lag0$YearIndex <- FinancialVariables_Lag0$Year - 2011
+
+## I create only VD from FinancialVariables_Lag1 and control variable from FinancialVariables_Lag0
+
+DepVar <- FinancialVariables_Lag2 %>% select(c(Ticker,
+                                               YearIndex,
+                                               Roa,
+                                               Roe,
+                                               Roic,
+                                               TobinsQ,
+                                               Ra,
+                                               AlphaJensen,
+                                               Eps,
+                                               StockPriceClose,
+                                               PriceToEarningRatio,
+                                               PayoutRatio
+                                               ))
+
+ContVar <- FinancialVariables_Lag0 %>% select(c(Ticker,
+                                                YearIndex,
+                                                DebtToEquityRatio,
+                                                NetMargin,
+                                                TotalAssets,
+                                                Shares,
+                                                Revenue,
+                                                ResearchAndDevelopment,
+                                                NetIncome,
+                                                ShareholdersEquity,
+                                                Rf,
+                                                Rm,
+                                                Ra_Rf,
+                                                Rm_Rf,
+                                                Beta,
+                                                CostEquity
+                                                ))
+                                                
+
+# I merge ContVar, DepVar and Newsweek1
+
+Lag2 <- merge(DepVar, ContVar, by = c("Ticker", "YearIndex"), all = TRUE)
+Lag2A <- merge(Lag2, Newsweek1, by = c("Ticker", "YearIndex"))
+
+#I merge with Companies1 to get the GICSClassification
+
+Lag2B <- merge(Lag2A, Companies1, by = "Ticker")
+
+# I add a CompaniesIndex
+
+CompaniesIndex <- Index1
+colnames(CompaniesIndex) <- c("Ticker", "CompaniesIndex")
+
+Lag2C <- merge(Lag2B, CompaniesIndex, by = "Ticker")
 
 ################################################################################
 ################################################################################
@@ -488,14 +562,26 @@ Lag1D$TotalAssets[is.na(Lag1D$TotalAssets)] <- Lag1D$TotalAsset[is.na(Lag1D$Tota
 
 Lag1E <- Lag1D %>% select(-TotalAsset)
 
-#I write as csv  Lag 0 (ie. Last)
+# In lag2C
+
+Lag2D <- merge(Lag2C, MissingAsset1, by = c("Ticker", "YearIndex"), all = TRUE)
+Lag2D$TotalAssets[is.na(Lag2D$TotalAssets)] <- Lag2D$TotalAsset[is.na(Lag2D$TotalAssets)]
+
+Lag2E <- Lag2D %>% select(-TotalAsset)
+
+
+
+
+#I write as csv  Lag 0 (ie. Last2)
 
 write.csv(Last2, file = "DataBase/DataSynchronization/Lag0.csv") 
 
-# I write as CSV Lag1C
+# I write as CSV Lag1E
 
 write.csv(Lag1E, file = "DataBase/DataSynchronization/Lag1.csv")
 
+# I write as CSV Lag2E
 
+write.csv(Lag2E, file = "DataBase/DataSynchronization/Lag2.csv")
 ```
 
