@@ -1,6 +1,2 @@
 # Appendix {-}
 
-```{r child = 'AppendixOutliers.Rmd'}
-```
-\newpage
-

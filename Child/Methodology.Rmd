@@ -7,9 +7,9 @@ header-includes:
 
 # Methodology {#Methodology}
 
-## Panel Data
+## Panel Data : a theoretical background
 
-This study uses the panel data methodology which is a common approach to adress the CFP-CEP nexus [@Albertini2013]. Panel data analysis is considered to be one of the most efficient analytical methods for data analysis [@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007, @HsiaoChapitrePanelData2014]. @Roberts2013 also argued that using panel data offer a partial, but by no means complete and costless, solution to the problem of omitted variables in econometric model, namely the most common causes of endogeneity in empirical corporate finance. Panel data takes the following econometric form :  
+This study uses the panel data methodology which is a common approach to adress the CFP-CEP nexus [@Albertini2013]. Panel data analysis is considered to be one of the most efficient analytical methods for data analysis [@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007, @HsiaoChapitrePanelData2014]. @Roberts2013 also argued that using panel data offers a partial, but by no means complete and costless, solution to the problem of omitted variables in econometric model, namely the most common causes of endogeneity in empirical corporate finance. Panel data takes the following econometric form :  
 
 \begin{equation}
 \centering
@@ -17,7 +17,7 @@ Y_{it} = \alpha + \beta X_{it} + u_{it}
 \label{PanelData}
 \end{equation}
 
-Panel data, also called longitudinal data, includes observations on \(i = 1,..., n\) cross section units (e.g. firms) over \(t = 1,..., T\) time-periods [@Hsiao2007a]. Here \(Y_{it}\) is the dependent variable, \(X_{it}\) represents a \(K\)-dimensional row vectors of dependent variables, \(\alpha\) is the intercept, \(\beta\) is a \(K\)-dimensional column vectors of parameters and \(u_{it}\) is the random disturbance term of mean equals zero. The latter which can be decomposed as \(u_{it} = \mu_{i} + \epsilon_{it}\). The first term, \(\mu_{i}\), represents the individual error components and do not change over time. It can be considered as the unobserved effect model. The second term, \(\epsilon_{it}\), is the idiosyncratic error which is assumed well-behaved and independent of \(X_{it}\) and \(\mu_{i}\).  
+Panel data, also called longitudinal data, includes observations on \(i = 1,..., n\) cross section units (e.g. firms) over \(t = 1,..., T\) time-periods [@Hsiao2007a]. Here \(Y_{it}\) is the dependent variable, \(X_{it}\) represents a \(K\)-dimensional row vectors of dependent variables, \(\alpha\) is the intercept, \(\beta\) is a \(K\)-dimensional column vectors of parameters and \(u_{it}\) is the random disturbance term of mean equals zero. The latter can be decomposed as \(u_{it} = \mu_{i} + \epsilon_{it}\). The first term, \(\mu_{i}\), represents the individual error components and do not change over time. It can be considered as the unobserved effect model. The second term, \(\epsilon_{it}\), is the idiosyncratic error which is assumed well-behaved and independent of \(X_{it}\) and \(\mu_{i}\).  
 
 The starting point of all panel data is to determine if \(\mu_{i}\) is correlated with \(X_{it}\). In case it is correlated, then \(\mu_{i}\) is considered as the *Fixed Effect* (i.e. FE) and the initial equation \ref{PanelData} is now described as the equation \ref{Fixed}. Else, \(\mu_{i}\) is considered as the *Random Effect* (i.e. RE) and the equation \ref{PanelData} becomes equation \ref{Random}.
 
@@ -33,9 +33,9 @@ Y_{it} = \alpha + \beta X_{it} + (\epsilon_{it} + \mu{i})
 \label{Random}
 \end{equation}
 
-Fixed (i.e. \autoref{Fixed}) and Random (i.e. \autoref{Random}) Effect Model implies that the Ordinary Least Square (i.e. OLS) estimator of \(\beta\) are inconsistent\footnote{Five assumptions are required to produce consistent estimators with OLS : (i) a random sample of observations on \(y\) and \((x_{1},...., x_{n})\), (ii) a random sample of \(n\) observations, (iii) no linear relationship among the explanatory variables, (iv) an error term that is uncorrelated with each explanatory variables and (v) an error term with zero mean conditional on the explanatory variables.}. Indeed FE Model violates the fourth assumption of OLS, namely an error term that is uncorrelated with each explanatory variables. RE model implies that the common error component over individuals induces correlation across the composite error terms making the third assumption of OLS violated (i.e. no linear relationship among the explanatory variables) [@Croissant2008]. 
+Fixed (i.e. \autoref{Fixed}) and Random (i.e. \autoref{Random}) Effect Model implies that the Ordinary Least Square (i.e. OLS) estimator of \(\beta\) are inconsistent. Five assumptions are required to produce consistent estimators with OLS : (i) a random sample of observations on \(y\) and \((x_{1},..., x_{n})\), (ii) a random sample of \(n\) observations, (iii) no linear relationship among the explanatory variables, (iv) an error term that is uncorrelated with each explanatory variables and (v) an error term with zero mean conditional on the explanatory variables. FE Model violates the fourth assumption while RE model implies that the common error component over individuals induces correlation across the composite error terms making the third assumption violated [@Croissant2008]. 
 
-While OLS is not consistent to estimate panel data model, the R package *plm* provides useful estimation methods. (i) *Pooled ols estimation* ignores the panel structure of the data and apply the same cofficients to each individual [@Schmidheiny2015]. (ii) *The random effects estimation* is  the  feasible  Generalized  Least Squares (i.e. GLS) estimator. (iii) *The fixed effects estimation* transforms the original equation \ref{PanelData} in substracting the time averages to every variables, such as :
+While OLS is not consistent to estimate panel data model, the R package *plm* provides pertinent estimation methods. (i) *Pooled ols estimation* ignores the panel structure of the data and apply the same cofficients to each individual [@Schmidheiny2015]. (ii) *The random effects estimation* is  the  feasible  Generalized  Least Squares (i.e. GLS) estimator. (iii) *The fixed effects estimation*, also called *within estimation*, transforms the original equation \ref{PanelData} in substracting the time averages to every variables, such as :
 
 \begin{equation}
 \centering
@@ -43,70 +43,34 @@ Y_{it} - \bar{Y}_{i} = \beta (X_{itk} - \bar{X}_{ik}) + (u_{it} - \bar{u}_{i})
 \label{FixedEffectsEstimation}
 \end{equation}
 
-If the individual component is missing, namely \(\mu_{i} = 0\), pooled ols estimation is the most efficient estimator [@Croissant2008]. Under the assumptions of the FE model, the random effects estimators are biased and inconsistent, because \(\mu_{i}\) is omitted and potentially correlated with the other regressors [@Schmidheiny2015]. Under the assumptions of the RE model, both the random and fixed effects estimation can be used.
+The presence of RE model in a panel data can be tested using the Breusch-Pagan Lagrange multiplier test [@Breusch1980]. This test is represented by the *plmtest* function in *R* and examines if time and/or individual specific variance components equal zero [@Park2011]. If Ho is verified, then there is no RE model in the panel data. The presence of FE model is tested by a F test (i.e. the function *pFtest* in *R*). The latter tests the individual and/or time effects based on the comparison of the within and the pooling model [@Croissant2008]. If Ho is verified then there is no FE model in the panel data.
 
+In case of the absence of both RE and FE model, namely \(\mu_{i} = 0\), pooled ols estimation is the most efficient estimator [@Croissant2008]. Under the assumptions of the FE model, the random effects estimators are biased and inconsistent as \(\mu_{i}\) is omitted and potentially correlated with the other regressors. Consequently, the fixed effects estimation need to be used. Under the assumption of the RE model,  both FE and RE estimators are unbiased and consistent. According to @Schmidheiny2015, scholars should prefer the RE estimator only and only if \(E[\mu_{i}, X_{i}] = 0\). This is tested by the Hausman test [@Hausman1981]. If Ho is verified then scholars should use RE estimator.
 
-
-
-
+\newpage
 ## Econometric Model
 
-Consequently this study use equation \ref{EconometricModel} to test the combined effect of process and outcome-based CEP on CFP (short term vs long term). 
+This study uses the following equation to test the combined effect of process and outcome-based CEP on CFP (short term vs long term). 
 
 \begin{equation}
 \centering
 \begin{aligned}
-Y_{it+1} & = & \beta_{0} + \beta_{1} (SPL_{it}) \\
-&& + {} \beta_{2} (STC_{it}) + \beta_{3} (A_{it}) \\
-&& + {} \beta_{4} (CaP_{it}) + \beta_{5} (WatP_{it}) \\
-&& + {} \beta_{6} (WastP_{it}) + (Controls_{it}) \\ 
-&& + {} \varepsilon_{it}
+Y_{it+1} & = & \alpha + \beta_{1} (SPL_{it}) \\
+&& + { } \beta_{2} (STC_{it}) + \beta_{3} (A_{it}) \\
+&& + { } \beta_{4} (CaP_{it}) + \beta_{5} (WatP_{it}) \\
+&& + { } \beta_{6} (WastP_{it}) + (Controls_{it}) \\ 
+&& + { } u_{it}
 \label{EconometricModel}
 \end{aligned}
 \end{equation}
 
 
-where \(Y_{it+1}\) is a proxy of CFP measured as ROA (i.e. Model 1) or Tobin's Q (i.e. Model 2), \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(EP_{it}\) is a proxy for a firm's energy productivity, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth and lastly \(\varepsilon_{it}\) which is the error term.
+where \(Y_{it+1}\) is a proxy of CFP measured as ROA (i.e. Model 1) or Tobin's Q (i.e. Model 2), \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth and lastly \(u_{it}\) which is the error term.
 
-
-**FE vs RE based on [@Bell2015] --> développez + appliquer sa méthode?**
-
-Panel data setting implies that endogeneity occurs in cases where the independent variable in a regression model is correlated with the error term, or due to simultaneous causality between the dependent and the independent variable [@Sanchez-Ballesta2007, @Biorn2008, @Roberts2013]. Consequently, the presence of endogeneity implies that the fourth and fifth assumptions of OLS\footnote{Five assumptions are required to produce consistent estimators with OLS : (i) a random sample of observations on \(y\) and \((x_{1},...., x_{n})\), (ii) a mean zero error term, (iii) no linear relationship among the explanatory variables, (iv) an error term that is uncorrelated with each explanatory variables and (v) an error term with zero mean conditional on the explanatory variables.} are violated and scholars have to use a different method to produce consistent estimators [@Wooldridge2008, @Roberts2013]. Recent meta-analysis provided evidences that the CFP-CEP nexus is characterized by a bidirectional causality [@Orlitzky2001, @Orlitzky2003, @Wu2006, @Albertini2013, @Dixon-Fowler2013, @EndrikatMakingsenseconflicting2014, @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016, @Busch2018]. In order to adress potential endogeneity problems in my model, firstly, I have lagged observations in dependent and control variables one year behind financial performance. This method allows to increase the confidence of the direction of the relationship [@Hart1996, @Delmas2015, @MiroshnychenkoGreenpracticesfinancial2017] and *in fine* reduce the potential simultaneity bias. 
-
-
-Secondly, given that the standard Hausman test had rejected the null hypothesis of random effect (see Annex... for results of the test or find a way to insert p-value in the table of regression idem for cross sectionnal dependence) I use a fixed effect model to regress the equation \ref{EconometricModel}. According to @Roberts2013, fixed effect model improve endogeneity concerns. 
-
-
-
+Recent meta-analysis provided evidences that the CFP-CEP nexus is characterized by a bidirectional causality [@Orlitzky2001, @Orlitzky2003, @Wu2006, @Albertini2013, @Dixon-Fowler2013, @EndrikatMakingsenseconflicting2014, @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016, @Busch2018]. This could cause simultaneous causality between the dependent and the independent variable and lead to endogeneity concern in my model [@Sanchez-Ballesta2007, @Biorn2008, @Roberts2013]. In order to adress this issue I have lagged observations in dependent and control variables one year behind financial performance. This increases the confidence of the direction of the relationship [@Hart1996, @Delmas2015, @MiroshnychenkoGreenpracticesfinancial2017] and *in fine* reduce the potential simultaneity bias. 
 
 
 ## Outliers treatment
 
 
-@Lyu2015 defines outliers as observations in the dataset that appear to be unusual and discordant and which could lead to inconsistent results. @Osborne2004 have shown that even a small proportion of outliers can significantly affect simple analyses (i.e. t-tests, correlations and ANOVAs). Outliers are an issue only and only if they are influential \footnote{Influential obervations are observations whose  removal causes a different conclusion in the analysis} [@Cousineau2010]. I have used the Cook's distance [@Cook1977] test which is a common statistical tool to assess the influence of outliers [@JPStevens1984, @Cousineau2010, @Zuurprotocoldataexploration2010]. Cook’s Distance observe the difference between the regression paramater of a given model,  \(\hat{\beta}\) and what they become if the \(i_{th}\) data points is deleted,let's say  \(\hat{\beta}_{i}\). One difficulty with treatment of outliers is that the literature have not found common theoretical framework yet for the treatment of influential outliers [@OrrJohn1991, @Cousineau2010]. @Tabachnick2007 argue that the imputation with the mean is the best method while @Cousineau2010 highlights that it tends to reduce the spread of the population, make the observed distribution more leptokurtic, and possibly increase the likelihood of a type-I error. @Dang2009 argues that more elaborate technique involves replacing outliers with possible values while @Barnett1994 would prefere to remove or windsorized them. Alternatively, @Pollet2017 propose an other route to handle outliers and argue that inclusion or exclusion of outliers depend on the significativity of the results, meaning that if results are more significant without outliers, scholars should remove them and vice versa.
-
-Following the mindset of @Pollet2017, I have concluded that model 1 using ROA as CFP proxies give better results with outliers and model 2 using Tobin's Q as CFP proxies give better results without outliers. See annex [outliers](#appendixA-outliers) for furthers details.
-
-
-
-
-<!--
-Motivations to use one time lag - citation from [@Albertini2013]: 
-
-> Hart and Ahuja (1996) argue that there is a time lag between the initiation of emission reduction efforts and the realization of bottom line benefits. First, pollution prevention requires up-front investment in training and equipment. Second, it takes time to gain reduction because internal reorganization and renegotiation of supply and waste disposal contracts may be required (Hart & Ahuja, 1996). Evidence also suggests that in the early stages of pollution prevention there is a great deal of “low-hanging fruit”—easy and inexpensive behavioural and material changes that result in large emission reductions relative to costs (Hart, 1994; Rooney, 1993). As the firm’s environmental performance improves, further reductions in emissions become progressively more difficult, requiring more significant change in processes or even entirely new production technology (Russo & Fouts, 1997). Some studies have collected data on a longitudinal perspective (more than 1 year) in order to take into account the long-term payback of environmental management strategies, while others have collected data on a short period of time (1 year and less). Analysing the relationship between CEM and CFP during a short period of time implies that the researcher intends to prove that the environmental management influences regularly and at any time the financial profitability of the firm. Yet the natural and organizational environments are different because of the time markers of their respective materialities, such as short term for the financial profitability and very long term for the environmental issue (Bansal & Knox-Hayes, 2013). Thus, we can argue that the longitudinal characteristic of the studies might explain part of the variation in the results regarding the relationship between CEM and CFP. **NB: the hypothese had been verified : The relationship between CEM and CFP is significantly stronger for non-longitudinal studies (0.13) than for longitudinal studies (0.07)**
-
--->
-
-
-
-
-
-
-
-
-## Sensitivity Analysis
-
-
-Take ROE as another proxy of short term CFP. I need to find an other proxy for market-based indicator. I will also consider ESG factor of yahoo finance as a proxy for CEP.
-
-To be continued...
+@Lyu2015 defines outliers as observations in the dataset that appear to be unusual and discordant and which could lead to inconsistent results. @Osborne2004 have shown that even a small proportion of outliers can significantly affect simple analyses (i.e. t-tests, correlations and ANOVAs). Outliers are an issue only and only if they are influential \footnote{Influential obervations are observations whose  removal causes a different conclusion in the analysis} [@Cousineau2010]. I have used the Cook's distance [@Cook1977] test which is a common statistical tool to assess the influence of outliers [@JPStevens1984, @Cousineau2010, @Zuurprotocoldataexploration2010]. Cook’s Distance observe the difference between the regression paramater of a given model,  \(\hat{\beta}\) and what they become if the \(i_{th}\) data points is deleted,let's say  \(\hat{\beta}_{i}\). One difficulty with treatment of outliers is that the literature have not found common theoretical framework yet for the treatment of influential outliers [@OrrJohn1991, @Cousineau2010]. @Tabachnick2007 argues that the imputation with the mean is the best method while @Cousineau2010 highlights that it tends to reduce the spread of the population, make the observed distribution more leptokurtic, and possibly increase the likelihood of a type-I error. @Dang2009 argues that more elaborate technique involves replacing outliers with possible values while @Barnett1994 would prefer to remove or windsorized them. Alternatively, @Pollet2017 propose an other route to handle outliers and argue that inclusion or exclusion of outliers depend on the significativity of the results, meaning that if results are more significant without outliers, scholars should remove them and vice versa. Following the mindset of @Pollet2017, I have removed outliers from my database. See annex [outliers](#appendixA-outliers) for furthers details.
