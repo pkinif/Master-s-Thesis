@@ -4,33 +4,54 @@ output:
 header-includes:
 - \usepackage{amsmath}
 ---
-```{r echo =FALSE, message = FALSE, error = FALSE}
-if (!require("dplyr")) install.packages("dplyr")
-library(dplyr)
-if (!require("plm")) install.packages("plm")
-library(plm)
-if (!require("stargazer")) install.packages("stargazer")
-library(stargazer)
-# I download my database 
-
-DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag1_WithCapm.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
-
-```
 
 # Methodology {#Methodology}
 
-## Econometric model
+## Panel Data
 
-<!--
-... Deal with methodology to test H1 ..... **To be defined**
+This study uses the panel data methodology which is a common approach to adress the CFP-CEP nexus [@Albertini2013]. Panel data analysis is considered to be one of the most efficient analytical methods for data analysis [@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007, @HsiaoChapitrePanelData2014]. @Roberts2013 also argued that using panel data offer a partial, but by no means complete and costless, solution to the problem of omitted variables in econometric model, namely the most common causes of endogeneity in empirical corporate finance. Panel data takes the following econometric form :  
 
--->
+\begin{equation}
+\centering
+Y_{it} = \alpha + \beta X_{it} + u_{it} 
+\label{PanelData}
+\end{equation}
+
+Panel data, also called longitudinal data, includes observations on \(i = 1,..., n\) cross section units (e.g. firms) over \(t = 1,..., T\) time-periods [@Hsiao2007a]. Here \(Y_{it}\) is the dependent variable, \(X_{it}\) represents a \(K\)-dimensional row vectors of dependent variables, \(\alpha\) is the intercept, \(\beta\) is a \(K\)-dimensional column vectors of parameters and \(u_{it}\) is the random disturbance term of mean equals zero. The latter which can be decomposed as \(u_{it} = \mu_{i} + \epsilon_{it}\). The first term, \(\mu_{i}\), represents the individual error components and do not change over time. It can be considered as the unobserved effect model. The second term, \(\epsilon_{it}\), is the idiosyncratic error which is assumed well-behaved and independent of \(X_{it}\) and \(\mu_{i}\).  
+
+The starting point of all panel data is to determine if \(\mu_{i}\) is correlated with \(X_{it}\). In case it is correlated, then \(\mu_{i}\) is considered as the *Fixed Effect* (i.e. FE) and the initial equation \ref{PanelData} is now described as the equation \ref{Fixed}. Else, \(\mu_{i}\) is considered as the *Random Effect* (i.e. RE) and the equation \ref{PanelData} becomes equation \ref{Random}.
+
+\begin{equation}
+\centering
+Y_{it} = (\alpha + \mu{i}) + \beta X_{it} + \epsilon_{it} 
+\label{Fixed}
+\end{equation}
+
+\begin{equation}
+\centering
+Y_{it} = \alpha + \beta X_{it} + (\epsilon_{it} + \mu{i})
+\label{Random}
+\end{equation}
+
+Fixed (i.e. \autoref{Fixed}) and Random (i.e. \autoref{Random}) Effect Model implies that the Ordinary Least Square (i.e. OLS) estimator of \(\beta\) are inconsistent\footnote{Five assumptions are required to produce consistent estimators with OLS : (i) a random sample of observations on \(y\) and \((x_{1},...., x_{n})\), (ii) a random sample of \(n\) observations, (iii) no linear relationship among the explanatory variables, (iv) an error term that is uncorrelated with each explanatory variables and (v) an error term with zero mean conditional on the explanatory variables.}. Indeed FE Model violates the fourth assumption of OLS, namely an error term that is uncorrelated with each explanatory variables. RE model implies that the common error component over individuals induces correlation across the composite error terms making the third assumption of OLS violated (i.e. no linear relationship among the explanatory variables) [@Croissant2008]. 
+
+While OLS is not consistent to estimate panel data model, the R package *plm* provides useful estimation methods. (i) *Pooled ols estimation* ignores the panel structure of the data and apply the same cofficients to each individual [@Schmidheiny2015]. (ii) *The random effects estimation* is  the  feasible  Generalized  Least Squares (i.e. GLS) estimator. (iii) *The fixed effects estimation* transforms the original equation \ref{PanelData} in substracting the time averages to every variables, such as :
+
+\begin{equation}
+\centering
+Y_{it} - \bar{Y}_{i} = \beta (X_{itk} - \bar{X}_{ik}) + (u_{it} - \bar{u}_{i})
+\label{FixedEffectsEstimation}
+\end{equation}
+
+If the individual component is missing, namely \(\mu_{i} = 0\), pooled ols estimation is the most efficient estimator [@Croissant2008]. Under the assumptions of the FE model, the random effects estimators are biased and inconsistent, because \(\mu_{i}\) is omitted and potentially correlated with the other regressors [@Schmidheiny2015]. Under the assumptions of the RE model, both the random and fixed effects estimation can be used.
 
 
-Panel data is a common approach to adress the CFP-CEP nexus [@Albertini2013]. Panel data, also called longitudinal data, includes observations on N cross section units (e.g. firms) over T time-periods [@Hsiao2007a]. The main difference between panel data and time-series cross-sectionnal data (i.e. TSCS) lies partly in the sample structure. TSCS data has comparatively few higher-level entities (usually groups of individuals such as countries, rather than individuals) and comparatively many measurement of time-periods [@Beck1995, @Bell2015]. Panel data analysis is considered to be one of the most efficient analytical methods for data analysis [@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007, @HsiaoChapitrePanelData2014]. @Roberts2013 also argued that using panel data offer a partial, but by no means complete and costless, solution to the problem of omitted variables in econometric model, namely the most common causes of endogeneity in empirical corporate finance. 
 
 
-Consequently this study use equation \ref{EconometricModel} to test the combined effect of process and outcome-based CEP on CFP (short term vs long term).
+
+## Econometric Model
+
+Consequently this study use equation \ref{EconometricModel} to test the combined effect of process and outcome-based CEP on CFP (short term vs long term). 
 
 \begin{equation}
 \centering
