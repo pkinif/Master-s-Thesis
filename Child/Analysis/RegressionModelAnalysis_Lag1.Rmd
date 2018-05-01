@@ -120,22 +120,22 @@ head(Model[influentialPriceToEarningRatio, ])  # influential observations
 #I remove outliers and create four new data frames that I write in my folders
 
 TobinsQ_Db <- Model[-c(influentialTobin),]
-write.csv(TobinsQ_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/TobinsQ.csv")
+#write.csv(TobinsQ_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/TobinsQ.csv")
 
 Roa_Db <- Model[-c(influentialRoa),]
-write.csv(Roa_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/Roa.csv")
+#write.csv(Roa_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/Roa.csv")
 
 Roe_Db <- Model[-c(influentialRoe),]
-write.csv(Roe_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/Roe.csv")
+#write.csv(Roe_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/Roe.csv")
 
 Roic_Db <- Model[-c(influentialRoic),]
-write.csv(Roic_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/Roic.csv")
+#write.csv(Roic_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/Roic.csv")
 
 Ra_Db <- Model[-c(influentialRa),]
-write.csv(Ra_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/Ra.csv")
+#write.csv(Ra_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/Ra.csv")
 
 PriceToEarningRatio_Db <- Model[-c(influentialPriceToEarningRatio),]
-write.csv(PriceToEarningRatio_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/PriceToEarningRatio.csv")
+#write.csv(PriceToEarningRatio_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/PriceToEarningRatio.csv")
 ```
 
 

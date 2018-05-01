@@ -22,7 +22,7 @@ library(data.table)
 ################################################
 ############## DataBase loading ################
 ################################################
-Lag1 <- read.csv(file = "DataBase/DataSynchronization/Lag1.csv", header = TRUE, stringsAsFactors = FALSE)
+Lag1 <- as.data.frame(read.csv(file = "DataBase/DataSynchronization/Lag1.csv", header = TRUE, stringsAsFactors = FALSE))
 
 ```
 

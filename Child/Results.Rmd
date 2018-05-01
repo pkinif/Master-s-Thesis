@@ -183,7 +183,7 @@ table <- stargazer(CorMatrix, summary = FALSE, type = "latex", title = "Correlat
 
 # I make Model1 a plm database
 
-Model1 <- pdata.frame(Model1, index = c("YearIndex", "CompaniesIndex"))
+Model1 <- pdata.frame(Model1, index = c("CompaniesIndex", "YearIndex"))
 
 # The vif function can not be used with within model. I need to estimate my models with the pooling model.
 Roa <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FinancialLeverage + Growth + FirmSize + Industry, model = "pooling", data = Model1, index = c("YearIndex", "CompaniesIndex"))
@@ -231,7 +231,9 @@ effect of process-based CEP variables on outcome-based CEP. Consequently, hypoth
 # I select only CEP variables in model2. As Model2 is already a pdata.frame, I do not need to reproduce this function on Model3.
 
 Model3 <- Model1 %>% 
-  select(c(CarbonProductivity, 
+  select(c(YearIndex,
+           CompaniesIndex,
+           CarbonProductivity, 
            WaterProductivity, 
            WasteProductivity, 
            SustainabilityPayLink,
@@ -269,11 +271,11 @@ Model3 <- Model1 %>%
   
   ## Within Model with time effect
   
-  CarbonWithin <- plm(CarbonProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="within")
+  CarbonWithin <- plm(CarbonProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="within", effect = "time")
 
-  WaterWithin <- plm(WaterProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="within")
+  WaterWithin <- plm(WaterProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="within", effect = "time")
 
-  WasteWithin <- plm(WasteProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="within")
+  WasteWithin <- plm(WasteProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="within", effect = "time")
   
   ## pFtest
   
@@ -301,8 +303,6 @@ Model3 <- Model1 %>%
   colnames(NiceTable) <- c("Dependent Variables", "Lagrange Multiplier Test", "F Test")
   stargazer(NiceTable, summary = FALSE, title = "P-value Reporting", label = "CepTest", align = TRUE, type = "latex", header = FALSE, notes = "Note : * p<0.1; ** p<0.05; *** p<0.01", notes.align = "r" )
   
- # print.xtable(NiceTable1, type = "latex", table.placement = "h", caption.placement = "top", comment = FALSE, hline.after = c(-1,-1,0,3))
-
 # Based on the results of the tests, the three models need to be estimated with the fixed effects estimations (i.e. model = "within" in plm). Let's consolidate into a stargazer table
   
   stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The impact of process-based on outcome-based CEP", label = "CepResults", header = FALSE, type = "latex")
@@ -311,7 +311,87 @@ Model3 <- Model1 %>%
 
 ## The impact of CEP on CFP 
 
+\autoref{CfpResults} reports the main results of the analysis of the impact of both process-based CEP (i.e. sustainability pay link, sustainable themed commitment and audit score) and outcome-based CEP (i.e. carbon, water and waste productivity) on short-term CFP (i.e. Roa) and long-term CFP (i.e. TobinsQ). Based on the results of the table \ref{CfpTest}, estimators of the TobinsQ model had been estimated with the *pooled ols estimators* and the estimators of the Roa model with the *fixed effects estimation*. 
 
+TobinsQ model shows evidences of a positive and highly statistically significant
+effect of sustainability pay link, audit score and water productivity on long-term CEP. Roa model shows evidences of a positive and highly statistically significant effect of sustainability pay link, sustainable themed commitment and carbon productivity on short-term CEP. Consequently hypothesis 2, 3, 4 and 5 are verified.
+
+
+```{r}
+################################################
+######## The impact of CEP on CFP ##############
+################################################
+
+# I have already removed outliers from both model (i.e. Roa and TobinsQ) through the file = "Analysis/MakeFile_RemoveOutliers_Lag1.rmd". Consequently I just need to download them in this file.
+RoaNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/Roa.csv", header = TRUE, stringsAsFactors = FALSE)
+
+TobinNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/TobinsQ.csv", header = TRUE, stringsAsFactors = FALSE)
+ 
+# I make both df a plm dataframe
+RoaNoOut <- RoaNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
+TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
+
+# I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
+
+  ## Pooling Model
+  RoaPooling <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + FinancialLeverage + Growth + Industry, data = RoaNoOut, model="pooling")
+  TobinPooling <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + FinancialLeverage + Growth + Industry, data = TobinNoOut, model="pooling")
+
+
+  ## Plmtest
+  PlmtestRoa <- cbind("Roa", round(plmtest(RoaPooling, effect = "time", type = "bp")$p.value, digits = 4))
+  PlmtestTobin <- cbind("TobinsQ", round(plmtest(TobinPooling, effect = "time", type = "bp")$p.value, digits = 4))
+
+  
+  ## I consolidate into a table for later reporting 
+  CfpPlmTest <- as.data.frame(rbind(PlmtestRoa, PlmtestTobin))
+  colnames(CfpPlmTest) <- c("DependentVariables", "Plmtest")
+  rownames(CfpPlmTest) <- c()
+  CfpPlmTest[,2] <- as.numeric(as.character(CfpPlmTest[,2]))  
+
+  ## Improve p-value understanding
+  CfpPlmTest$Plmtest<-ifelse(CfpPlmTest$Plmtest<0.01, paste(CfpPlmTest$Plmtest,"***",sep = ""),
+		ifelse(CfpPlmTest$Plmtest<0.05,paste(CfpPlmTest$Plmtest,"**",sep = ""),
+		ifelse(CfpPlmTest$Plmtest<0.1,paste(CfpPlmTest$Plmtest,"*",sep = ""),CfpPlmTest$Plmtest)))
+ 
+  
+# I test for Fixed Effect Model using pFtest which is a test of individual and/or time effects based on the comparison of the within and the pooling model.
+  
+  ## Within Model with time effect
+  
+  RoaWithin <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + FinancialLeverage + Growth + Industry, data = RoaNoOut, model="within", effect = "time")
+  TobinWithin <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + FinancialLeverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
+  
+  ## pFtest
+  
+  pFtestRoa <- cbind("Roa", round(pFtest(RoaWithin, RoaPooling)$p.value, digits = 4))
+  
+  pFtestTobin <- cbind("TobinsQ", round(pFtest(TobinWithin, TobinPooling)$p.value, digits = 4))
+  
+
+  ## I consolidate into a table for later reporting 
+  CfppFtest <- as.data.frame(rbind(pFtestRoa, pFtestTobin))
+  colnames(CfppFtest) <- c("DependentVariables", "pFtest")
+  rownames(CfppFtest) <- c()
+  CfppFtest[,2] <- as.numeric(as.character(CfppFtest[,2]))  
+
+  ## Improve p-value understanding
+  CfppFtest$pFtest<-ifelse(CfppFtest$pFtest<0.01, paste(CfppFtest$pFtest,"***",sep = ""),
+		ifelse(CfppFtest$pFtest<0.05,paste(CfppFtest$pFtest,"**",sep = ""),
+		ifelse(CfppFtest$pFtest<0.1,paste(CfppFtest$pFtest,"*",sep = ""),CfppFtest$pFtest)))
+
+
+# I consolidate the p-value of the two tests into a nice stargazer table 
+
+  NiceTable <- merge(CfpPlmTest, CfppFtest, by = "DependentVariables")
+  colnames(NiceTable) <- c("Dependent Variables", "Lagrange Multiplier Test", "F Test")
+  stargazer(NiceTable, summary = FALSE, title = "P-value Reporting", label = "CfpTest", align = TRUE, type = "latex", header = FALSE, notes = "Note : * p<0.1; ** p<0.05; *** p<0.01", notes.align = "r" )
+  
+# Based on the results of the tests, the three models need to be estimated with the fixed effects estimations (i.e. model = "within" in plm). Let's consolidate into a stargazer table
+  
+  stargazer(TobinPooling, RoaWithin, title = "The impact of both process-based and outcome-based CEP on CFP", label = "CfpResults", header = FALSE, type = "latex")
+
+```
 
 
 
