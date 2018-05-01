@@ -83,22 +83,6 @@ Tobin's Q = \frac{MVE + PS + DEBT}{TA}
 
 where \(MVE\) is the product of a firm's shares prices and the number of common stock shares outstanding, \(PS\) is the liquidating value of the firm's outstanding preferred stock, \(DEBT\) is the value of the firm's short term liabilities net of its short-term assets, plus the book value of the firm's long-term debt and \(TA\) is the book value of the total assets of the firms.
 
-
-
-<!--
-\autoref{Smpl} contains a sample of my database. Some missing values appears in the TobinsQ column. Compared to ROA, calculating Tobin’s Q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces sample bias. **Therefore I will do the same and depending on the robustness of results I will use one or two sample spaces in my study. I still need to figure out how to perform this test in R.**
-
-```{r echo = FALSE, message = FALSE, warning = FALSE,  results='hide'}
-
-
-#PanelData <- pdata.frame(DbLag1, index=c("Companies", "Year"))
-
-#stargazer(PanelData[c(1:10),c("Companies", "Year", "ROA", "TobinsQ")], summary = FALSE, type="latex", title = "Sample selection of the database", label="Smpl", table.placement = "h", digits = 2, header = FALSE) # the agument 'header = FALSE" is really important to remove the citation info of stargazer package"
-
-```
-
--->
-
 \newpage
 
 ## Independent Variables

@@ -1,37 +1,227 @@
 ---
-output:
-  pdf_document
+output: 
+  pdf_document 
+header-includes:
+   - \usepackage{rotating}
+   -  \usepackage{dcolumn}
 ---
+
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis')
+```
+
+
+```{r}
+
+################################################
+############## Package loading #################
+################################################
+
+rm(list=ls()) #Removes all items in the R environment
+if (!require("plm")) install.packages("plm")
+library(plm) 
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr) 
+if (!require("data.table")) install.packages("data.table")
+library(data.table)
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer)
+if (!require("Hmisc")) install.packages("Hmisc")
+library(Hmisc)
+if (!require("lattice")) install.packages("lattice")
+library(lattice)
+if (!require("survival")) install.packages("survival")
+library(survival)
+if (!require("ggplot2")) install.packages("ggplot2")
+library(ggplot2)
+if (!require("car")) install.packages("car")
+library(car)
+if (!require("ggpubr")) install.packages("ggpubr")
+library(ggpubr)
+```
+
+```{r}
+################################################
+############## DataBase loading ################
+################################################
+
+DataBase <- read.csv(file = "Analysis/DataBase/DataSynchronization/Lag1.csv", header = TRUE, stringsAsFactors = FALSE)
+
+#I create a new df called "model" which contains only variables that I need
+
+Model <- DataBase %>% select(c(YearIndex,
+                               CompaniesIndex,
+                               Roa,
+                               TobinsQ,
+                               DebtToEquityRatio,
+                               NetMargin,
+                               TotalAssets,
+                               GicsClassification,
+                               CarbonProductivity,
+                               WaterProductivity,
+                               WasteProductivity,
+                               SustainabilityPayLink,
+                               SustainableThemedCommitment,
+                               AuditScore,
+                               GreenScore
+                               ))
+
+# I transform the "TotalAssets" column into FirmSize using the log of TotalAssets 
+Model$TotalAssets <- log(Model$TotalAssets)
+
+# I use the natural log for TobinsQ
+Model$TobinsQ <- log(Model$TobinsQ)
+
+# I rename some columns
+
+Model1 <- Model %>% setnames(old = c("DebtToEquityRatio", "TotalAssets", "GicsClassification", "NetMargin"), new = c("FinancialLeverage", "FirmSize", "Industry", "Growth"))
+
+```
 
 # Results
 
-## Descriptive Statistics
+## Get a feel of the data
 
+```{r}
+################################################
+######## unpaired two-samples t-test ###########
+################################################
 
-## Some boxplots and histogram
+Sample1 <- Model1 %>% subset( subset = !is.na(Roa)) %>% select(Roa)
+Sample2 <- Model1 %>% subset( subset = !is.na(TobinsQ)) %>% select(Roa)
 
-```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6}
+IdenticalAnalyses <- round(t.test(Sample1, Sample2, alternative = "two.sided", var.equal = FALSE)$p.value, digits = 4)
 
-par(mfrow=c(2,1))
-boxplot(DB_Lag1$TobinsQ,horizontal=T,main="Boxplot TobinsQ")
-hist(DB_Lag1$TobinsQ,horizontal=T,main="Hist TobinsQ")
-
-par(mfrow=c(2,1))
-boxplot(DB_Lag1$ROA,horizontal=T,main="Boxplot ROA")
-hist(DB_Lag1$ROA,horizontal=T,main="Hist ROA")
-
-par(mfrow=c(2,1))
-boxplot(DB_Lag1$Leverage,horizontal=T,main="Boxplot Leverage")
-hist(DB_Lag1$Leverage,horizontal=T,main="Hist Leverage")
-
-par(mfrow=c(2,1))
-boxplot(DB_Lag1$NetMargin,horizontal=T,main="Boxplot NetMargin")
-hist(DB_Lag1$NetMargin,horizontal=T,main="Hist NetMargin")
-
-par(mfrow=c(2,1))
-boxplot(DB_Lag1$FirmSize,horizontal=T,main="Boxplot FirmSize")
-hist(DB_Lag1$FirmSize,horizontal=T,main="Hist FirmSize")
 ```
 
-\newpage
+```{r}
+################################################
+########### Descriptive statistics #############
+################################################
+
+# I remove the column "GreenScore", "CompaniesIndex" and "YearIndex". Right now I do not need it.
+Model2 <- Model1 %>% select(-c(GreenScore, YearIndex, CompaniesIndex))
+
+# I use stargazer to create a table containing descriptive statistics for each variable
+
+stargazer(Model2, title = "Descriptive statistics", label = "DescriptiveStatistics", header = FALSE, type = "latex", align = TRUE)
+
+```
+
+```{r}
+################################################
+########### Matrix of correlation ##############
+################################################
+
+# The corstars function allows to create the matrix of correlation. This function contains 4 arguments: a dataframe, the method to use, the visual appearance of the matrix (i.e. if you prefer to keep the upper or lower triangle of the matrix and lasly the type of the output (i.e. "none", "html" or "latex"))
+
+corstars <-function(x, method=c("pearson", "spearman"), removeTriangle=c("upper", "lower"), result=c("none", "html", "latex")){
+  
+    #Compute correlation matrix
+    require(Hmisc)
+    x <- as.matrix(x)
+    correlation_matrix<-rcorr(x, type=method[1])
+    R <- correlation_matrix$r # Matrix of correlation coeficients
+    p <- correlation_matrix$P # Matrix of p-value 
+    
+    ## Define notions for significance levels; spacing is important.
+    mystars <- ifelse(p < .01, "*** ", ifelse(p < .05, "**  ", ifelse(p < .1, "*   ", "    ")))
+    
+    ## trunctuate the correlation matrix to two decimal
+    R <- format(round(cbind(rep(-1.11, ncol(x)), R), 2))[,-1]
+    
+    ## build a new matrix that includes the correlations with their apropriate stars
+    Rnew <- matrix(paste(R, mystars, sep=""), ncol=ncol(x))
+    diag(Rnew) <- paste(diag(R), " ", sep="")
+    rownames(Rnew) <- colnames(x)
+    colnames(Rnew) <- paste(colnames(x), "", sep="")
+    
+    ## remove upper triangle of correlation matrix
+    if(removeTriangle[1]=="upper"){
+      Rnew <- as.matrix(Rnew)
+      Rnew[upper.tri(Rnew, diag = TRUE)] <- ""
+      Rnew <- as.data.frame(Rnew)
+    }
+    
+    ## remove lower triangle of correlation matrix
+    else if(removeTriangle[1]=="lower"){
+      Rnew <- as.matrix(Rnew)
+      Rnew[lower.tri(Rnew, diag = TRUE)] <- ""
+      Rnew <- as.data.frame(Rnew)
+    }
+    
+    ## remove last column and return the correlation matrix
+    Rnew <- cbind(Rnew[1:length(Rnew)-1])
+    if (result[1]=="none") return(Rnew)
+    else{
+      if(result[1]=="html") print(xtable(Rnew), type="html")
+      else print(xtable(Rnew), type="latex") 
+    }
+} 
+
+# I use the function on my database (i.e. Model2)
+
+CorMatrix <- corstars(Model2, method = "pearson", removeTriangle = "upper",  result = "none")
+
+# Right now, the names of each variable stand in both the names of the row and the column. I do not need to have dupplicates. So I keep the names of the variables as names of the row and I use a number for the names of the column.
+
+number <- c( 1 : (ncol(Model2) - 1)) #number of variables
+colnames(CorMatrix) <- number
+
+NewRowNames <- paste(c( 1 : ncol(Model2)), rownames(CorMatrix), sep = ". ")
+rownames(CorMatrix) <- NewRowNames
+
+# I use stargazer to make a nice table
+
+table <- stargazer(CorMatrix, summary = FALSE, type = "latex", title = "Correlation Matrix" , label = "Matrix", float=TRUE, float.env = "sidewaystable", header = FALSE, table.placement = "h", column.sep.width = "2pt", font.size = "small", notes = "Note : * p<0.1; ** p<0.05; *** p<0.01", notes.align = "r")
+
+```
+
+```{r}
+################################################
+######### Variance Inflation Factor  ###########
+################################################
+
+# I make Model1 a plm database
+
+Model1 <- pdata.frame(Model1, index = c("YearIndex", "CompaniesIndex"))
+
+# The vif function can not be used with within model. I need to estimate my models with the pooling model.
+Roa <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FinancialLeverage + Growth + FirmSize + Industry, model = "pooling", data = Model1, index = c("YearIndex", "CompaniesIndex"))
+
+TobinsQ <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FinancialLeverage + Growth + FirmSize + Industry, model = "pooling", data = Model1, index = c("YearIndex", "CompaniesIndex"))
+
+
+#VIF Calculation and summary in a nice stargazer table
+
+VifRoa <- car::vif(Roa)
+VifTobin <- car::vif(TobinsQ)
+
+
+VifTable <- cbind(VifRoa, VifTobin)
+colnames(VifTable) <- c("Roa", "Tobin's Q")
+
+stargazer(VifTable, summary = FALSE, title = "The Variance Inflation Factor", label = "VIF", header = FALSE, type = "latex", align = TRUE)
+```
+
+This section gives an overview of the database. \autoref{DescriptiveStatistics} presents the main descriptive statistics of each variables. The sample size of ROA (i.e. N = `r sum(!is.na(Model1$Roa))`) is superior to the sample size of TobinsQ (i.e. N = `r sum(!is.na(Model1$TobinsQ))`). Indeed, compared to ROA, calculating Tobin’s Q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces sample bias. I did the same and the p-value of the unpaired two-samples t-test equals `r IdenticalAnalyses` meaning that they is not significant difference between both samples.
+
+\autoref{Matrix} contains the matrix of correlation of my database. There are statistically significant correlations between outcome-based CEP variables (i.e. carbon, water and waste productivity) suggesting that my model could suffer from multicollinearity. \autoref{VIF} reports the variance inflation factor (i.e. VIF) of all the variables. The maximum VIF is `r round(max(VifTable), digits = 4)` meaning that there is no multicollinearity in the model [@Obrien2007].
+
+The R code of this section is available in annex [Data](#appendixA-outliers).
+
+
+## Outliers treatment
+
+@Lyu2015 defines outliers as observations in the dataset that appear to be unusual and discordant and which could lead to inconsistent results. @Osborne2004 have shown that even a small proportion of outliers can significantly affect simple analyses (i.e. t-tests, correlations and ANOVAs). Outliers are an issue only and only if they are influential \footnote{Influential obervations are observations whose  removal causes a different conclusion in the analysis} [@Cousineau2010]. I have used the Cook's distance [@Cook1977] test which is a common statistical tool to assess the influence of outliers [@JPStevens1984, @Cousineau2010, @Zuurprotocoldataexploration2010]. Cook’s Distance observes the difference between the regression paramater of a given model,  \(\hat{\beta}\) and what they become if the \(i_{th}\) data points is deleted, let's say  \(\hat{\beta}_{i}\). One difficulty with treatment of outliers is that the literature have not found common theoretical framework yet for the treatment of influential outliers [@OrrJohn1991, @Cousineau2010]. @Tabachnick2007 argues that the imputation with the mean is the best method while @Cousineau2010 highlight that it tends to reduce the spread of the population, making the observed distribution more leptokurtic, and possibly increase the likelihood of a type-I error. @Dang2009 argue that more elaborate technique involves replacing outliers with possible values while @Barnett1994 would prefer to remove or windsorized them. Alternatively, @Pollet2017 propose an other route to handle outliers and argue that inclusion or exclusion of outliers depend on the significativity of the results, meaning that if results are more significant without outliers, scholars should remove them and vice versa. Following the mindset of @Pollet2017, I have removed outliers from my database. See annex [outliers](#appendixA-outliers) for furthers details.
+
+
+
+## The impact of process-based on outcome-based CEP
+
+## The impact of CEP on CFP 
+
+
+
+
 
