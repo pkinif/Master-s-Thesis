@@ -32,7 +32,7 @@ library(data.table)
 library(xtable)
 
 #Database
-DbLag1 <-as.data.frame(read.csv("DataBase/DataSynchronization/Lag1.csv", stringsAsFactors=FALSE, header = TRUE))
+DbLag1 <-as.data.frame(read.csv("DataBase/DataSynchronization/Lag2.csv", stringsAsFactors=FALSE, header = TRUE))
 
 Model <- DbLag1 %>% select(c("CompaniesIndex",
                  "YearIndex",
@@ -41,7 +41,7 @@ Model <- DbLag1 %>% select(c("CompaniesIndex",
                  "StockPriceClose",
                  "TobinsQ",
                  "PriceToEarningRatio",
-                 "Roic",
+                 "PriceToEpsRatio",
                  "GreenScore",
                  "CarbonProductivity",
                  "WaterProductivity",
@@ -65,6 +65,7 @@ Model$LogTobinsQ <- log(Model$TobinsQ)
 Model$LogPriceToEarningRatio <- log(Model$PriceToEarningRatio)
 Model$LogEps <- log(Model$Eps)
 Model$LogStockPrice <- log(Model$StockPriceClose)
+Model$LogPriceToEpsRatio <- log(Model$PriceToEpsRatio)
 
 setnames(Model, old = c("DebtToEquityRatio", "GicsClassification"), new = c("Leverage","Industry"))
 
@@ -86,7 +87,7 @@ TobinsQ<-lm(LogTobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + A
 
 LogStockPrice <- lm(LogStockPrice ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry  , data = Model)
 
-Roic <- lm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry  , data = Model)
+LogPriceToEpsRatio <- lm(LogPriceToEpsRatio ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry  , data = Model)
 
 Ra <- lm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry  , data = Model)
 
@@ -97,7 +98,7 @@ PriceToEarningRatio <- lm(LogPriceToEarningRatio ~ SustainabilityPayLink + Susta
 cooksdLogEps <- cooks.distance(LogEps)
 cooksdTobinsQ <- cooks.distance(TobinsQ)
 cooksdLogStockPrice <- cooks.distance(LogStockPrice)
-cooksdRoic <- cooks.distance(Roic)
+cooksdLogPriceToEpsRatio <- cooks.distance(LogPriceToEpsRatio)
 cooksdRa <- cooks.distance(Ra)
 cooksdPriceToEarningRatio <- cooks.distance(PriceToEarningRatio)
 
@@ -107,7 +108,7 @@ cooksdPriceToEarningRatio <- cooks.distance(PriceToEarningRatio)
 influentialLogEps <- as.numeric(names(cooksdLogEps)[(cooksdLogEps > 4*mean(cooksdLogEps, na.rm=T))])  
 influentialTobin <- as.numeric(names(cooksdTobinsQ)[(cooksdTobinsQ > 4*mean(cooksdTobinsQ, na.rm=T))])  
 influentialLogStockPrice <- as.numeric(names(cooksdLogStockPrice)[(cooksdLogStockPrice > 4*mean(cooksdLogStockPrice, na.rm=T))])  
-influentialRoic <- as.numeric(names(cooksdRoic)[(cooksdRoic > 4*mean(cooksdRoic, na.rm=T))])  
+influentialLogPriceToEpsRatio <- as.numeric(names(cooksdLogPriceToEpsRatio)[(cooksdLogPriceToEpsRatio > 4*mean(cooksdLogPriceToEpsRatio, na.rm=T))])  
 influentialRa <- as.numeric(names(cooksdRa)[(cooksdRa > 4*mean(cooksdRa, na.rm=T))])  
 influentialPriceToEarningRatio <- as.numeric(names(cooksdPriceToEarningRatio)[(cooksdPriceToEarningRatio > 4*mean(cooksdPriceToEarningRatio, na.rm=T))])
 
@@ -115,29 +116,23 @@ influentialPriceToEarningRatio <- as.numeric(names(cooksdPriceToEarningRatio)[(c
 head(Model[influentialLogEps, ])  # influential observations 
 head(Model[influentialTobin, ])  # influential observations 
 head(Model[influentialLogStockPrice, ])  # influential observations 
-head(Model[influentialRoic, ])  # influential observations 
+head(Model[influentialLogPriceToEpsRatio, ])  # influential observations 
 head(Model[influentialRa, ])  # influential observations 
 head(Model[influentialPriceToEarningRatio, ])  # influential observations 
 
 #I remove outliers and create four new data frames that I write in my folders
 
 TobinsQ_Db <- Model[-c(influentialTobin),]
-write.csv(TobinsQ_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/TobinsQ.csv")
 
 LogEps_Db <- Model[-c(influentialLogEps),]
-write.csv(LogEps_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/LogEps.csv")
 
 LogStockPrice_Db <- Model[-c(influentialLogStockPrice),]
-write.csv(LogStockPrice_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/LogStockPrice.csv")
 
-Roic_Db <- Model[-c(influentialRoic),]
-write.csv(Roic_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/Roic.csv")
+LogPriceToEpsRatio_Db <- Model[-c(influentialLogPriceToEpsRatio),]
 
 Ra_Db <- Model[-c(influentialRa),]
-write.csv(Ra_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/Ra.csv")
 
 PriceToEarningRatio_Db <- Model[-c(influentialPriceToEarningRatio),]
-write.csv(PriceToEarningRatio_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/PriceToEarningRatio.csv")
 ```
 
 
@@ -158,7 +153,7 @@ write.csv(PriceToEarningRatio_Db, file = "DataBase/DataSynchronization/NoOutlier
 TobinsQ_Db <- pdata.frame(TobinsQ_Db, index = c("CompaniesIndex","YearIndex"))
 LogEps_Db <- pdata.frame(LogEps_Db, index = c("CompaniesIndex","YearIndex"))
 LogStockPrice_Db <- pdata.frame(LogStockPrice_Db, index = c("CompaniesIndex","YearIndex"))
-Roic_Db <- pdata.frame(Roic_Db, index = c("CompaniesIndex","YearIndex"))
+LogPriceToEpsRatio_Db <- pdata.frame(LogPriceToEpsRatio_Db, index = c("CompaniesIndex","YearIndex"))
 Ra_Db <- pdata.frame(Ra_Db, index = c("CompaniesIndex","YearIndex"))
 PriceToEarningRatio_Db <- pdata.frame(PriceToEarningRatio_Db, index = c("CompaniesIndex","YearIndex"))
 
@@ -182,10 +177,10 @@ PriceToEarningRatio_Db <- pdata.frame(PriceToEarningRatio_Db, index = c("Compani
   
     PlmtestLogStockPrice <- cbind("LogStockPrice", round(plmtest(PoolLogStockPrice, effect = "time", type = "bp")$p.value, digits = 4), round(plmtest(PoolLogStockPrice, effect = "individual", type = "bp")$p.value, digits = 4), round(plmtest(PoolLogStockPrice, effect = "twoways", type = "bp")$p.value, digits = 4))
 
-#Roic
-  PoolRoic <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="pooling", index = c("CompaniesIndex","YearIndex"))
+#LogPriceToEpsRatio
+  PoolLogPriceToEpsRatio <- plm(LogPriceToEpsRatio ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = LogPriceToEpsRatio_Db, model="pooling", index = c("CompaniesIndex","YearIndex"))
   
-  PlmtestRoic <- cbind("Roic", round(plmtest(PoolRoic, effect = "time", type = "bp")$p.value, digits = 4 ),  round(plmtest(PoolRoic, effect = "individual", type = "bp")$p.value, digits = 4 ), round(plmtest(PoolRoic, effect = "twoways", type = "bp")$p.value, digits = 4))
+  PlmtestLogPriceToEpsRatio <- cbind("LogPriceToEpsRatio", round(plmtest(PoolLogPriceToEpsRatio, effect = "time", type = "bp")$p.value, digits = 4 ),  round(plmtest(PoolLogPriceToEpsRatio, effect = "individual", type = "bp")$p.value, digits = 4 ), round(plmtest(PoolLogPriceToEpsRatio, effect = "twoways", type = "bp")$p.value, digits = 4))
 
 #Ra
   PoolRa <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Ra_Db, model="pooling", index = c("CompaniesIndex","YearIndex"))
@@ -201,7 +196,7 @@ PriceToEarningRatio_Db <- pdata.frame(PriceToEarningRatio_Db, index = c("Compani
   
 #Summary in a table    
       
-  PlmTable <- as.data.frame(rbind(PlmtestTobinsQ, PlmtestLogEps, PlmtestLogStockPrice, PlmtestRoic, PlmtestRa, PlmtestPriceToEarningRatio))
+  PlmTable <- as.data.frame(rbind(PlmtestTobinsQ, PlmtestLogEps, PlmtestLogStockPrice, PlmtestLogPriceToEpsRatio, PlmtestRa, PlmtestPriceToEarningRatio))
   colnames(PlmTable) <- c("DependentVariables", "TimeEffect", "IndividualEffect", "TwowaysEffect")
   rownames(PlmTable) <- c()
   PlmTable[,2] <- as.numeric(as.character(PlmTable[,2]))  
@@ -244,7 +239,7 @@ PriceToEarningRatio_Db <- pdata.frame(PriceToEarningRatio_Db, index = c("Compani
 
   FixedLogStockPrice<- plm(LogStockPrice ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = LogStockPrice_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "time")
 
-  FixedRoic <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "time")
+  FixedLogPriceToEpsRatio <- plm(LogPriceToEpsRatio ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = LogPriceToEpsRatio_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "time")
   
   FixedRa <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Ra_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "time")
 
@@ -260,7 +255,7 @@ PriceToEarningRatio_Db <- pdata.frame(PriceToEarningRatio_Db, index = c("Compani
 
   FixedLogStockPrice1 <- plm(LogStockPrice ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = LogStockPrice_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "individual")
 
-  FixedRoic1 <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "individual")
+  FixedLogPriceToEpsRatio1 <- plm(LogPriceToEpsRatio ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = LogPriceToEpsRatio_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "individual")
   
   FixedRa1 <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Ra_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "individual")
 
@@ -275,7 +270,7 @@ PriceToEarningRatio_Db <- pdata.frame(PriceToEarningRatio_Db, index = c("Compani
 
   FixedLogStockPrice2 <- plm(LogStockPrice ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = LogStockPrice_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "twoways")
 
-  FixedRoic2 <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "twoways")
+  FixedLogPriceToEpsRatio2 <- plm(LogPriceToEpsRatio ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = LogPriceToEpsRatio_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "twoways")
   
   FixedRa2 <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Ra_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "twoways")
 
@@ -288,7 +283,7 @@ PriceToEarningRatio_Db <- pdata.frame(PriceToEarningRatio_Db, index = c("Compani
   
   pFtestLogStockPrice <- cbind("LogStockPrice", round(pFtest(FixedLogStockPrice, PoolLogStockPrice, effect = "time")$p.value, digits = 4 ),round(pFtest(FixedLogStockPrice1, PoolLogStockPrice, effect = "individual")$p.value, digits = 4 ), round(pFtest(FixedLogStockPrice2, PoolLogStockPrice, effect = "twoways")$p.value, digits = 4 ))
   
-  pFtestRoic <- cbind("Roic", round(pFtest(FixedRoic, PoolRoic, effect = "time")$p.value, digits = 4 ),round(pFtest(FixedRoic1, PoolRoic, effect = "individual")$p.value, digits = 4 ), round(pFtest(FixedRoic2, PoolRoic, effect = "twoways")$p.value, digits = 4 ))
+  pFtestLogPriceToEpsRatio <- cbind("LogPriceToEpsRatio", round(pFtest(FixedLogPriceToEpsRatio, PoolLogPriceToEpsRatio, effect = "time")$p.value, digits = 4 ),round(pFtest(FixedLogPriceToEpsRatio1, PoolLogPriceToEpsRatio, effect = "individual")$p.value, digits = 4 ), round(pFtest(FixedLogPriceToEpsRatio2, PoolLogPriceToEpsRatio, effect = "twoways")$p.value, digits = 4 ))
   
   pFtestRa <- cbind("Ra", round(pFtest(FixedRa, PoolRa, effect = "time")$p.value, digits = 4 ),round(pFtest(FixedRa1, PoolRa, effect = "individual")$p.value, digits = 4 ), round(pFtest(FixedRa2, PoolRa, effect = "twoways")$p.value, digits = 4 ))
   
@@ -296,7 +291,7 @@ PriceToEarningRatio_Db <- pdata.frame(PriceToEarningRatio_Db, index = c("Compani
 
 #Summary in a table    
       
-  pFtestTable <- as.data.frame(rbind(pFtestTobinsQ, pFtestLogEps, pFtestLogStockPrice, pFtestRoic, pFtestRa, pFtestPriceToEarningRatio))
+  pFtestTable <- as.data.frame(rbind(pFtestTobinsQ, pFtestLogEps, pFtestLogStockPrice, pFtestLogPriceToEpsRatio, pFtestRa, pFtestPriceToEarningRatio))
   colnames(pFtestTable) <- c("DependentVariables", "TimeEffect", "IndividualEffect", "TwowaysEffect")
   rownames(pFtestTable) <- c()
   pFtestTable[,2] <- as.numeric(as.character(pFtestTable[,2]))  
@@ -335,7 +330,7 @@ PriceToEarningRatio_Db <- pdata.frame(PriceToEarningRatio_Db, index = c("Compani
 
   RandomLogStockPrice<- plm(LogStockPrice ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = LogStockPrice_Db, model="random", index = c("CompaniesIndex","YearIndex"))
 
-  RandomRoic <- plm(Roic ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="random", index = c("CompaniesIndex","YearIndex"))
+  RandomLogPriceToEpsRatio <- plm(LogPriceToEpsRatio ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = LogPriceToEpsRatio_Db, model="random", index = c("CompaniesIndex","YearIndex"))
 
   RandomRa <- plm(Ra ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + NetMargin + Leverage + Industry , data = Ra_Db, model="random", index = c("CompaniesIndex","YearIndex"))
   
@@ -347,7 +342,7 @@ PriceToEarningRatio_Db <- pdata.frame(PriceToEarningRatio_Db, index = c("Compani
   phtestTobinsQ <- cbind("TobinsQ", round(phtest(FixedTobinsQ, RandomTobinsQ)$p.value, digits = 4 ))
   phtestLogEps <- cbind("LogEps", round(phtest(FixedLogEps, RandomLogEps)$p.value, digits = 4 ))
   phtestLogStockPrice <- cbind("LogStockPrice", round(phtest(FixedLogStockPrice, RandomLogStockPrice)$p.value, digits = 4 ))
-  phtestRoic <- cbind("Roic", round(phtest(FixedRoic, RandomRoic)$p.value, digits = 4 ))
+  phtestLogPriceToEpsRatio <- cbind("LogPriceToEpsRatio", round(phtest(FixedLogPriceToEpsRatio, RandomLogPriceToEpsRatio)$p.value, digits = 4 ))
   phtestRa <- cbind("Ra", round(phtest(FixedRa, RandomRa)$p.value, digits = 4 ))
   phtestPriceToEarningRatio <- cbind("PriceToEarningRatio", round(phtest(FixedPriceToEarningRatio, RandomPriceToEarningRatio)$p.value, digits = 4 ))
   
@@ -355,7 +350,7 @@ PriceToEarningRatio_Db <- pdata.frame(PriceToEarningRatio_Db, index = c("Compani
 
 #Summary in a table    
       
-  phtestTable <- as.data.frame(rbind(phtestTobinsQ, phtestLogEps, phtestLogStockPrice, phtestRoic, phtestRa, phtestPriceToEarningRatio))
+  phtestTable <- as.data.frame(rbind(phtestTobinsQ, phtestLogEps, phtestLogStockPrice, phtestLogPriceToEpsRatio, phtestRa, phtestPriceToEarningRatio))
   colnames(phtestTable) <- c("DependentVariables", "pvalue")
   rownames(phtestTable) <- c()
   phtestTable[,2] <- as.numeric(as.character(phtestTable[,2]))  
@@ -378,14 +373,14 @@ PriceToEarningRatio_Db <- pdata.frame(PriceToEarningRatio_Db, index = c("Compani
   phtestTobinsQ <- cbind("TobinsQ", round(phtest(FixedTobinsQ1, RandomTobinsQ)$p.value, digits = 4 ))
   phtestLogEps <- cbind("LogEps", round(phtest(FixedLogEps1, RandomLogEps)$p.value, digits = 4 ))
   phtestLogStockPrice <- cbind("LogStockPrice", round(phtest(FixedLogStockPrice1, RandomLogStockPrice)$p.value, digits = 4 ))
-  phtestRoic <- cbind("Roic", round(phtest(FixedRoic1, RandomRoic)$p.value, digits = 4 ))
+  phtestLogPriceToEpsRatio <- cbind("LogPriceToEpsRatio", round(phtest(FixedLogPriceToEpsRatio1, RandomLogPriceToEpsRatio)$p.value, digits = 4 ))
   phtestRa <- cbind("Ra", round(phtest(FixedRa1, RandomRa)$p.value, digits = 4 ))
   phtestPriceToEarningRatio <- cbind("PriceToEarningRatio", round(phtest(FixedPriceToEarningRatio1, RandomPriceToEarningRatio)$p.value, digits = 4 ))
 
 
 #Summary in a table    
       
-  phtestTable <- as.data.frame(rbind(phtestTobinsQ, phtestLogEps, phtestLogStockPrice, phtestRoic, phtestRa, phtestPriceToEarningRatio))
+  phtestTable <- as.data.frame(rbind(phtestTobinsQ, phtestLogEps, phtestLogStockPrice, phtestLogPriceToEpsRatio, phtestRa, phtestPriceToEarningRatio))
   colnames(phtestTable) <- c("DependentVariables", "pvalue")
   rownames(phtestTable) <- c()
   phtestTable[,2] <- as.numeric(as.character(phtestTable[,2]))  
@@ -407,14 +402,14 @@ PriceToEarningRatio_Db <- pdata.frame(PriceToEarningRatio_Db, index = c("Compani
   phtestTobinsQ <- cbind("TobinsQ", round(phtest(FixedTobinsQ2, RandomTobinsQ)$p.value, digits = 4 ))
   phtestLogEps <- cbind("LogEps", round(phtest(FixedLogEps2, RandomLogEps)$p.value, digits = 4 ))
   phtestLogStockPrice <- cbind("LogStockPrice", round(phtest(FixedLogStockPrice2, RandomLogStockPrice)$p.value, digits = 4 ))
-  phtestRoic <- cbind("Roic", round(phtest(FixedRoic2, RandomRoic)$p.value, digits = 4 ))
+  phtestLogPriceToEpsRatio <- cbind("LogPriceToEpsRatio", round(phtest(FixedLogPriceToEpsRatio2, RandomLogPriceToEpsRatio)$p.value, digits = 4 ))
   phtestRa <- cbind("Ra", round(phtest(FixedRa2, RandomRa)$p.value, digits = 4 ))
   phtestPriceToEarningRatio <- cbind("PriceToEarningRatio", round(phtest(FixedPriceToEarningRatio2, RandomPriceToEarningRatio)$p.value, digits = 4 ))
 
 
 #Summary in a table    
       
-  phtestTable <- as.data.frame(rbind(phtestTobinsQ, phtestLogEps, phtestLogStockPrice, phtestRoic, phtestRa, phtestPriceToEarningRatio))
+  phtestTable <- as.data.frame(rbind(phtestTobinsQ, phtestLogEps, phtestLogStockPrice, phtestLogPriceToEpsRatio, phtestRa, phtestPriceToEarningRatio))
   colnames(phtestTable) <- c("DependentVariables", "pvalue")
   rownames(phtestTable) <- c()
   phtestTable[,2] <- as.numeric(as.character(phtestTable[,2]))  
@@ -462,10 +457,10 @@ stargazer(PoolLogStockPrice, RandomLogStockPrice, summary = FALSE, title = "Mode
 
 stargazer(FixedLogStockPrice, FixedLogStockPrice1, FixedLogStockPrice2, summary = FALSE, title = "Model comparison LogStockPrice - Fixed with time (1), individual (2) and twoways effects (3)", label = "LogStockPrice1", header = FALSE)
 
-#Roic
-stargazer(PoolRoic, RandomRoic, summary = FALSE, title = "Model comparison Roic - Pool (1), Random (2)", label = "Roic", header = FALSE)
+#LogPriceToEpsRatio
+stargazer(PoolLogPriceToEpsRatio, RandomLogPriceToEpsRatio, summary = FALSE, title = "Model comparison LogPriceToEpsRatio - Pool (1), Random (2)", label = "LogPriceToEpsRatio", header = FALSE)
 
-stargazer(FixedRoic, FixedRoic1, FixedRoic2, summary = FALSE, title = "Model comparison Roic - Fixed with time (1), individual (2) and twoways effects (3)", label = "Roic1", header = FALSE)
+stargazer(FixedLogPriceToEpsRatio, FixedLogPriceToEpsRatio1, FixedLogPriceToEpsRatio2, summary = FALSE, title = "Model comparison LogPriceToEpsRatio - Fixed with time (1), individual (2) and twoways effects (3)", label = "LogPriceToEpsRatio1", header = FALSE)
 
 #Ra
 stargazer(PoolRa, RandomRa, summary = FALSE, title = "Model comparison Ra - Pool (1), Random (2)", label = "Ra", header = FALSE)
@@ -479,11 +474,11 @@ stargazer(FixedPriceToEarningRatio, FixedPriceToEarningRatio1, FixedPriceToEarni
 
 
 
-# Based on test, I have to use pooling for both Tobin and LogStockPrice and fixed effect for both LogEps and Roic. 
+# Based on test, I have to use pooling for both Tobin and LogStockPrice and fixed effect for both LogEps and LogPriceToEpsRatio. 
 
 stargazer(FixedLogEps, PoolLogStockPrice, summary = FALSE, header= FALSE, label = "summary", title = "Model based on LM, wild and hausmand test")
 
-stargazer(PoolTobinsQ, FixedRoic, summary = FALSE, header= FALSE, label = "summary", title = "Model based on LM, wild and hausmand test")
+stargazer(PoolTobinsQ, FixedLogPriceToEpsRatio, summary = FALSE, header= FALSE, label = "summary", title = "Model based on LM, wild and hausmand test")
 
 ```
   
@@ -507,52 +502,48 @@ stargazer(PoolTobinsQ, FixedRoic, summary = FALSE, header= FALSE, label = "summa
 ###################################
 
 TobinsQ <- lm(LogTobinsQ ~ GreenScore + FirmSize + Leverage + Industry + NetMargin, data = Model)
-LogEps <- lm(LogEps ~ GreenScore + FirmSize + Leverage + Industry + NetMargin, data = Model)
+LogPriceToEarningRatio <- lm(LogPriceToEarningRatio ~ GreenScore + FirmSize + Leverage + Industry + NetMargin, data = Model)
 LogStockPrice <- lm(LogStockPrice ~ GreenScore + FirmSize + Leverage + Industry + NetMargin, data = Model)
-Roic <- lm(LogTobinsQ ~ GreenScore + FirmSize + Leverage + Industry + NetMargin, data = Model)
+LogPriceToEpsRatio <- lm(LogTobinsQ ~ GreenScore + FirmSize + Leverage + Industry + NetMargin, data = Model)
 
-cooksdLogEps <- cooks.distance(LogEps)
+cooksdLogPriceToEarningRatio <- cooks.distance(LogPriceToEarningRatio)
 cooksdTobinsQ <- cooks.distance(TobinsQ)
 cooksdLogStockPrice <- cooks.distance(LogStockPrice)
-cooksdRoic <- cooks.distance(Roic)
+cooksdLogPriceToEpsRatio <- cooks.distance(LogPriceToEpsRatio)
 
 ## I extract rows considered as influential (observations whose D > 4 * means)
 
-influentialLogEps <- as.numeric(names(cooksdLogEps)[(cooksdLogEps > 4*mean(cooksdLogEps, na.rm=T))])  
+influentialLogPriceToEarningRatio <- as.numeric(names(cooksdLogPriceToEarningRatio)[(cooksdLogPriceToEarningRatio > 4*mean(cooksdLogPriceToEarningRatio, na.rm=T))])  
 influentialTobin <- as.numeric(names(cooksdTobinsQ)[(cooksdTobinsQ > 4*mean(cooksdTobinsQ, na.rm=T))])  
 influentialLogStockPrice <- as.numeric(names(cooksdLogStockPrice)[(cooksdLogStockPrice > 4*mean(cooksdLogStockPrice, na.rm=T))])  
-influentialRoic <- as.numeric(names(cooksdRoic)[(cooksdRoic > 4*mean(cooksdRoic, na.rm=T))])  
+influentialLogPriceToEpsRatio <- as.numeric(names(cooksdLogPriceToEpsRatio)[(cooksdLogPriceToEpsRatio > 4*mean(cooksdLogPriceToEpsRatio, na.rm=T))])  
 
 
 
-head(Model[influentialLogEps, ])  # influential observations 
+head(Model[influentialLogPriceToEarningRatio, ])  # influential observations 
 head(Model[influentialTobin, ])  # influential observations 
 head(Model[influentialLogStockPrice, ])  # influential observations 
-head(Model[influentialRoic, ])  # influential observations 
+head(Model[influentialLogPriceToEpsRatio, ])  # influential observations 
 
 
 #I remove outliers and create four new data frames that I write in my folders
 
 TobinsQ_Db <- Model[-c(influentialTobin),]
-write.csv(TobinsQ_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/GreenScore/TobinsQ.csv")
 
-LogEps_Db <- Model[-c(influentialLogEps),]
-write.csv(LogEps_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/GreenScore/LogEps.csv")
+LogPriceToEarningRatio_Db <- Model[-c(influentialLogPriceToEarningRatio),]
 
 LogStockPrice_Db <- Model[-c(influentialLogStockPrice),]
-write.csv(LogStockPrice_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/GreenScore/LogStockPrice.csv")
 
-Roic_Db <- Model[-c(influentialRoic),]
-write.csv(LogStockPrice_Db, file = "DataBase/DataSynchronization/NoOutliersLag1/GreenScore/Roic.csv")
+LogPriceToEpsRatio_Db <- Model[-c(influentialLogPriceToEpsRatio),]
 
 
 
 # I make my database pdataframe
 
 TobinsQ_Db <- pdata.frame(TobinsQ_Db, index = c("CompaniesIndex","YearIndex"))
-LogEps_Db <- pdata.frame(LogEps_Db, index = c("CompaniesIndex","YearIndex"))
+LogPriceToEarningRatio_Db <- pdata.frame(LogPriceToEarningRatio_Db, index = c("CompaniesIndex","YearIndex"))
 LogStockPrice_Db <- pdata.frame(LogStockPrice_Db, index = c("CompaniesIndex","YearIndex"))
-Roic_Db <- pdata.frame(Roic_Db, index = c("CompaniesIndex","YearIndex"))
+LogPriceToEpsRatio_Db <- pdata.frame(LogPriceToEpsRatio_Db, index = c("CompaniesIndex","YearIndex"))
 
 
 
@@ -565,24 +556,24 @@ Roic_Db <- pdata.frame(Roic_Db, index = c("CompaniesIndex","YearIndex"))
 
   PlmtestTobinsQ <- cbind("TobinsQ", round(plmtest(PoolTobinsQ, effect = "time", type = "bp")$p.value, digits = 4))
   
-#LogEps
-  PoolLogEps <- plm(LogEps ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = LogEps_Db, model="pooling", index = c("CompaniesIndex","YearIndex"))
+#LogPriceToEarningRatio
+  PoolLogPriceToEarningRatio <- plm(LogPriceToEarningRatio ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = LogPriceToEarningRatio_Db, model="pooling", index = c("CompaniesIndex","YearIndex"))
   
-  PlmtestLogEps <- cbind("LogEps", round(plmtest(PoolLogEps, effect = "time", type = "bp")$p.value, digits = 4))
+  PlmtestLogPriceToEarningRatio <- cbind("LogPriceToEarningRatio", round(plmtest(PoolLogPriceToEarningRatio, effect = "time", type = "bp")$p.value, digits = 4))
 #LogStockPrice
   PoolLogStockPrice<- plm(LogStockPrice ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = LogStockPrice_Db, model="pooling", index = c("CompaniesIndex","YearIndex"))
   
     PlmtestLogStockPrice <- cbind("LogStockPrice", round(plmtest(PoolLogStockPrice, effect = "time", type = "bp")$p.value, digits = 4))
 
-#Roic
-  PoolRoic <- plm(Roic ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="pooling", index = c("CompaniesIndex","YearIndex"))
+#LogPriceToEpsRatio
+  PoolLogPriceToEpsRatio <- plm(LogPriceToEpsRatio ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = LogPriceToEpsRatio_Db, model="pooling", index = c("CompaniesIndex","YearIndex"))
   
-  PlmtestRoic <- cbind("Roic", round(plmtest(PoolRoic, effect = "time", type = "bp")$p.value, digits = 4 ))
+  PlmtestLogPriceToEpsRatio <- cbind("LogPriceToEpsRatio", round(plmtest(PoolLogPriceToEpsRatio, effect = "time", type = "bp")$p.value, digits = 4 ))
 
 
 #Summary in a table    
       
-  PlmTable <- as.data.frame(rbind(PlmtestTobinsQ, PlmtestLogEps, PlmtestLogStockPrice, PlmtestRoic))
+  PlmTable <- as.data.frame(rbind(PlmtestTobinsQ, PlmtestLogPriceToEarningRatio, PlmtestLogStockPrice, PlmtestLogPriceToEpsRatio))
   colnames(PlmTable) <- c("DependentVariables", "TimeEffect")
   rownames(PlmTable) <- c()
   PlmTable[,2] <- as.numeric(as.character(PlmTable[,2]))  
@@ -608,27 +599,27 @@ Roic_Db <- pdata.frame(Roic_Db, index = c("CompaniesIndex","YearIndex"))
   
   FixedTobinsQ<- plm(LogTobinsQ ~ GreenScore+ FirmSize + NetMargin + Leverage + Industry , data = TobinsQ_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "time")
   
-  FixedLogEps<- plm(LogEps ~ GreenScore+ FirmSize + NetMargin + Leverage + Industry , data = LogEps_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "time")
+  FixedLogPriceToEarningRatio<- plm(LogPriceToEarningRatio ~ GreenScore+ FirmSize + NetMargin + Leverage + Industry , data = LogPriceToEarningRatio_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "time")
 
   FixedLogStockPrice<- plm(LogStockPrice ~ GreenScore+ FirmSize + NetMargin + Leverage + Industry , data = LogStockPrice_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "time")
 
-  FixedRoic <- plm(Roic ~ GreenScore+ FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "time")
+  FixedLogPriceToEpsRatio <- plm(LogPriceToEpsRatio ~ GreenScore+ FirmSize + NetMargin + Leverage + Industry , data = LogPriceToEpsRatio_Db, model="within", index = c("CompaniesIndex","YearIndex"), effect = "time")
 
 
 
   #PfTest
   pFtestTobinsQ <- cbind("TobinsQ", round(pFtest(FixedTobinsQ, PoolTobinsQ, effect = "time")$p.value, digits = 4 ))
   
-  pFtestLogEps <- cbind("LogEps", round(pFtest(FixedLogEps, PoolLogEps, effect = "time")$p.value, digits = 4 ))
+  pFtestLogPriceToEarningRatio <- cbind("LogPriceToEarningRatio", round(pFtest(FixedLogPriceToEarningRatio, PoolLogPriceToEarningRatio, effect = "time")$p.value, digits = 4 ))
   
   pFtestLogStockPrice <- cbind("LogStockPrice", round(pFtest(FixedLogStockPrice, PoolLogStockPrice, effect = "time")$p.value, digits = 4 ))
   
-  pFtestRoic <- cbind("Roic", round(pFtest(FixedRoic, PoolRoic, effect = "time")$p.value, digits = 4 ))
+  pFtestLogPriceToEpsRatio <- cbind("LogPriceToEpsRatio", round(pFtest(FixedLogPriceToEpsRatio, PoolLogPriceToEpsRatio, effect = "time")$p.value, digits = 4 ))
   
 
 #Summary in a table    
       
-  pFtestTable <- as.data.frame(rbind(pFtestTobinsQ, pFtestLogEps, pFtestLogStockPrice, pFtestRoic))
+  pFtestTable <- as.data.frame(rbind(pFtestTobinsQ, pFtestLogPriceToEarningRatio, pFtestLogStockPrice, pFtestLogPriceToEpsRatio))
   colnames(pFtestTable) <- c("DependentVariables", "TimeEffect")
   rownames(pFtestTable) <- c()
   pFtestTable[,2] <- as.numeric(as.character(pFtestTable[,2]))  
@@ -650,11 +641,11 @@ Roic_Db <- pdata.frame(Roic_Db, index = c("CompaniesIndex","YearIndex"))
 
   RandomTobinsQ<- plm(LogTobinsQ ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = TobinsQ_Db, model="random", index = c("CompaniesIndex","YearIndex"))
   
-  RandomLogEps<- plm(LogEps ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = LogEps_Db, model="random", index = c("CompaniesIndex","YearIndex"))
+  RandomLogPriceToEarningRatio<- plm(LogPriceToEarningRatio ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = LogPriceToEarningRatio_Db, model="random", index = c("CompaniesIndex","YearIndex"))
 
   RandomLogStockPrice<- plm(LogStockPrice ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = LogStockPrice_Db, model="random", index = c("CompaniesIndex","YearIndex"))
 
-  RandomRoic <- plm(Roic ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = Roic_Db, model="random", index = c("CompaniesIndex","YearIndex"))
+  RandomLogPriceToEpsRatio <- plm(LogPriceToEpsRatio ~ GreenScore + FirmSize + NetMargin + Leverage + Industry , data = LogPriceToEpsRatio_Db, model="random", index = c("CompaniesIndex","YearIndex"))
 
 
 
@@ -662,16 +653,16 @@ Roic_Db <- pdata.frame(Roic_Db, index = c("CompaniesIndex","YearIndex"))
   
   # Hausman Test
   phtestTobinsQ <- cbind("TobinsQ", round(phtest(FixedTobinsQ, RandomTobinsQ)$p.value, digits = 4 ))
-  phtestLogEps <- cbind("LogEps", round(phtest(FixedLogEps, RandomLogEps)$p.value, digits = 4 ))
+  phtestLogPriceToEarningRatio <- cbind("LogPriceToEarningRatio", round(phtest(FixedLogPriceToEarningRatio, RandomLogPriceToEarningRatio)$p.value, digits = 4 ))
   phtestLogStockPrice <- cbind("LogStockPrice", round(phtest(FixedLogStockPrice, RandomLogStockPrice)$p.value, digits = 4 ))
-  phtestRoic <- cbind("Roic", round(phtest(FixedRoic, RandomRoic)$p.value, digits = 4 ))
+  phtestLogPriceToEpsRatio <- cbind("LogPriceToEpsRatio", round(phtest(FixedLogPriceToEpsRatio, RandomLogPriceToEpsRatio)$p.value, digits = 4 ))
 
   
 
 
 #Summary in a table    
       
-  phtestTable <- as.data.frame(rbind(phtestTobinsQ, phtestLogEps, phtestLogStockPrice, phtestRoic))
+  phtestTable <- as.data.frame(rbind(phtestTobinsQ, phtestLogPriceToEarningRatio, phtestLogStockPrice, phtestLogPriceToEpsRatio))
   colnames(phtestTable) <- c("DependentVariables", "pvalue")
   rownames(phtestTable) <- c()
   phtestTable[,2] <- as.numeric(as.character(phtestTable[,2]))  
@@ -692,8 +683,8 @@ Roic_Db <- pdata.frame(Roic_Db, index = c("CompaniesIndex","YearIndex"))
 # D) Result Reporting
 #######################################################
   
-stargazer(PoolTobinsQ, PoolLogStockPrice, summary = FALSE, title = "Pool Model", label = "GreenScore", header = FALSE)
-stargazer(PoolLogEps, FixedRoic, summary = FALSE, title = "Pool and Fixed Model", label = "GreenScore", header = FALSE)
+stargazer(FixedLogPriceToEarningRatio, FixedLogPriceToEpsRatio, summary = FALSE, title = " Fixed Model", label = "GreenScore", header = FALSE)
+stargazer(PoolLogPriceToEarningRatio, PoolLogPriceToEpsRatio, summary = FALSE, title = "Pool  Model", label = "GreenScore", header = FALSE)
 
   
 ```

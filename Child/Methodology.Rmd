@@ -50,7 +50,17 @@ In case of the absence of both RE and FE model, namely \(\mu_{i} = 0\), pooled o
 \newpage
 ## Econometric Model
 
-This study uses the following equation to test the combined effect of process and outcome-based CEP on CFP (short term vs long term). 
+This study uses the equation \ref{CEP} to analyze the link between outcome-based and process-based CEP and the equation \ref{EconometricModel} to test the combined effect of process and outcome-based CEP on CFP (short term and long term). 
+
+
+\begin{equation}
+\centering
+Y_{it} = \alpha + \beta_{1} (SPL_{it}) + \beta_{2} (STC_{it}) + \beta_{3} (A_{it}) + u_{it}
+\label{CEP}
+\end{equation}
+
+where \(Y_{it}\) is a proxy of outcome-based CEP measured as carbon productivity (i.e. Model 1), water productivity (i.e. Model 2) and waste productivity (i.e. Model 3), \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score and \(u_{it}\) which is the error term.
+
 
 \begin{equation}
 \centering
@@ -65,7 +75,7 @@ Y_{it+1} & = & \alpha + \beta_{1} (SPL_{it}) \\
 \end{equation}
 
 
-where \(Y_{it+1}\) is a proxy of CFP measured as ROA (i.e. Model 1) or Tobin's Q (i.e. Model 2), \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth and lastly \(u_{it}\) which is the error term.
+where \(Y_{it+1}\) is a proxy of CFP measured as ROA (i.e. Model 4) or Tobin's Q (i.e. Model 5), \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth and lastly \(u_{it}\) which is the error term.
 
 Recent meta-analysis provided evidences that the CFP-CEP nexus is characterized by a bidirectional causality [@Orlitzky2001, @Orlitzky2003, @Wu2006, @Albertini2013, @Dixon-Fowler2013, @EndrikatMakingsenseconflicting2014, @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016, @Busch2018]. This could cause simultaneous causality between the dependent and the independent variable and lead to endogeneity concern in my model [@Sanchez-Ballesta2007, @Biorn2008, @Roberts2013]. In order to adress this issue I have lagged observations in dependent and control variables one year behind financial performance. This increases the confidence of the direction of the relationship [@Hart1996, @Delmas2015, @MiroshnychenkoGreenpracticesfinancial2017] and *in fine* reduce the potential simultaneity bias. 
 

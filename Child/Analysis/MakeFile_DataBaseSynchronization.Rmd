@@ -300,13 +300,15 @@ library(plyr)
   ##########################################     
         
         # I compute the P/E ratio based on strockpriceclose / eps
-        DataBase2$PriceToEarningRatio <- DataBase2$StockPriceClose / DataBase2$Eps
+        DataBase2$PriceToEarningRatio <- abs(DataBase2$StockPriceClose / DataBase2$Eps)
         # I remove the "PriceToEpsRatio" column. This one belongs to stockpup and I do not need it anymore as I have calcultaed my own ratio.
-        DataBase3 <- DataBase2 %>% select(-PriceToEpsRatio)
-        
+        #DataBase3 <- DataBase2 %>% select(-PriceToEpsRatio)
+        DataBase3 <- DataBase2
 # I write as FinancialData
         
         write.csv(DataBase3, file = "DataBase/DataSynchronization/FinancialData_1216.csv")
+        
+        
 #############################################################
 ############## (i) Synchronize with Green Data ##############
 #############################################################
@@ -391,6 +393,7 @@ DepVar <- FinancialVariables_Lag1 %>% select(c(Ticker,
                                                Eps,
                                                StockPriceClose,
                                                PriceToEarningRatio,
+                                               PriceToEpsRatio,
                                                PayoutRatio
                                                ))
 
@@ -462,6 +465,7 @@ DepVar <- FinancialVariables_Lag2 %>% select(c(Ticker,
                                                Eps,
                                                StockPriceClose,
                                                PriceToEarningRatio,
+                                               PriceToEpsRatio,
                                                PayoutRatio
                                                ))
 
