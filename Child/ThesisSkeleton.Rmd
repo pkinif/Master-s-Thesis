@@ -115,6 +115,12 @@ rm(list=ls()) #Removes all items in Environment!
 
 \FloatBarrier
 \newpage
+\fancyhead[CO,CE]{Sensitivity Analysis}
+```{r child = 'SensitivityAnalysis.Rmd'} 
+```
+
+\FloatBarrier
+\newpage
 \fancyhead[CO,CE]{Discussion}
 ```{r child = 'Discussion.Rmd'} 
 ```

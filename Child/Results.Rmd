@@ -7,20 +7,8 @@ output:
 
 ## Descriptive Statistics
 
-```{r echo = FALSE, message = FALSE, warning = FALSE,  results='asis'}
-if (!require("stargazer")) install.packages("stargazer")
-if (!require("dplyr")) install.packages("dplyr")
 
-library(stargazer)
-library(dplyr)
-
-DB_Lag1<-data.frame(read.csv2("Analysis/DataBase/Lag1_WithCapm.csv", sep = ";",stringsAsFactors=FALSE, header = TRUE ))
-
-
-
-```
-
-##Some boxplots and histogram
+## Some boxplots and histogram
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6}
 
@@ -46,61 +34,4 @@ hist(DB_Lag1$FirmSize,horizontal=T,main="Hist FirmSize")
 ```
 
 \newpage
-## Cooks Distance
-
-This section will not be in the final document. Here I measure the cook's distance of my model 5 and 6. Cook’s distance is a measure computed with respect to a given regression model and therefore is impacted only by the X variables included in the model. Cook’s distance computes the influence exerted by each data point (row) on the predicted outcome. I summarise on a graph (i.e. one for each model), those observations that have a cook’s distance greater than 4 times the mean and which may be classified as influential. I want to detect which observations is an outlier. See below both graphics.
-
-
-**Should I redo this process for each Model?**
-
-```{r echo = FALSE, message = FALSE, warning = FALSE, fig.align = 'center', fig.width = 6, fig.height = 6}
-if (!require("utils")) install.packages("utils")
-if (!require("car")) install.packages("car")
-if (!require("dplyr")) install.packages("dplyr")
-
-library(utils)
-library(car)
-library(dplyr)
-
-# Let's measure the cook distance
-
-## My models
-M6 <-lm(ROA ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1)
-M5 <-lm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + EnergyProductivity + CarbonProductivity + WaterProductivity + WasteProductivity + Leverage + NetMargin + FirmSize + Industry, data=DB_Lag1)
-
-## I calculate my cooks distance. Cook’s distance is a measure computed with respect to a given regression model and therefore is impacted only by the X variables included in the model. Cook’s distance computes the influence exerted by each data point (row) on the predicted outcome.
-
-cooksd6 <- cooks.distance(M6)
-cooksd5 <- cooks.distance(M5)
-
-#Model 5
-## I summarise on a graph, those observations that have a cook’s distance greater than 4 times the mean may be classified as influential.
-plot(cooksd5, pch="*", cex=2, main="Influential Obs by Cooks distance - M5")  # plot cook's distance
-abline(h = 4*mean(cooksd5, na.rm=T), col="red")  # add cutoff line
-text(x=1:length(cooksd5)+1, y=cooksd5, labels=ifelse(cooksd5>4*mean(cooksd5, na.rm=T),names(cooksd5),""), col="red")  # add labels
-
-##The following command find out the influential rows, namely rows where are the outliers of my BD
-
-influential <- as.numeric(names(cooksd5)[(cooksd5 > 4*mean(cooksd5, na.rm=T))])  
-
-#Model 6
-## I summarise on a graph, those observations that have a cook’s distance greater than 4 times the mean may be classified as influential.
-plot(cooksd6, pch="*", cex=2, main="Influential Obs by Cooks distance - M6")  # plot cook's distance
-abline(h = 4*mean(cooksd6, na.rm=T), col="red")  # add cutoff line
-text(x=1:length(cooksd6)+1, y=cooksd6, labels=ifelse(cooksd6>4*mean(cooksd6, na.rm=T),names(cooksd6),""), col="red")  # add labels
-
-##The following command find out the influential rows, namely rows where are the outliers of my BD
-
-influential <- as.numeric(names(cooksd6)[(cooksd6 > 4*mean(cooksd6, na.rm=T))])
-```
-
-Here the function outlierTest from *car* package gives the most extreme observation based on the given model. **Should I remove those observations from my database?**
-
-```{r}
-## The function outlierTest from car package gives the most extreme observation based on the given model
-
-car::outlierTest(M6)
-car::outlierTest(M5)
-```
-
 
