@@ -1,0 +1,134 @@
+This makefile remove outliers from database lag2 (for each model) and save into a new database.It makes the whole process for both "main" analysis and "sensitivity analysis" (i.e. use of greenscore)
+
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis')
+```
+
+
+```{r}
+
+################################################
+############## Package loading #################
+################################################
+
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr) 
+if (!require("data.table")) install.packages("data.table")
+library(data.table)
+
+```
+
+```{r}
+################################################
+############## DataBase loading ################
+################################################
+Lag2 <- read.csv(file = "DataBase/DataSynchronization/Lag2.csv", header = TRUE, stringsAsFactors = FALSE)
+
+```
+
+
+
+
+
+```{r}
+################################################
+########### Lag 2 - Main Analysis ##############
+################################################
+
+# Select only variables that I need for my models
+ModelLag2 <- Lag2 %>% select(c(YearIndex,
+                               CompaniesIndex,
+                               Roa,
+                               TobinsQ,
+                               DebtToEquityRatio,
+                               NetMargin,
+                               TotalAssets,
+                               GicsClassification,
+                               CarbonProductivity,
+                               WaterProductivity,
+                               WasteProductivity,
+                               SustainabilityPayLink,
+                               SustainableThemedCommitment,
+                               AuditScore
+                               ))
+
+# I transform the "TotalAssets" column into FirmSize using the log of TotalAssets 
+ModelLag2$TotalAssets <- log(ModelLag2$TotalAssets)
+
+# I use the natural log for TobinsQ
+ModelLag2$TobinsQ <- log(ModelLag2$TobinsQ)
+
+# I rename some columns
+
+ModelLag2 <- ModelLag2 %>% setnames(old = c("DebtToEquityRatio", "TotalAssets", "GicsClassification", "NetMargin"), new = c("FinancialLeverage", "FirmSize", "Industry", "Growth"))
+
+
+# I define my models in lm as cooks.distance do not support plm object
+Roa <-lm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + Growth + FinancialLeverage + Industry  , data = ModelLag2)
+
+TobinsQ<-lm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + Growth + FinancialLeverage + Industry  , data = ModelLag2)
+
+# I calculate my cooks distance (i.e. D)
+cooksdRoa <- cooks.distance(Roa)
+cooksdTobinsQ <- cooks.distance(TobinsQ)
+
+## I extract rows considered as influential (observations whose D > 4 * means)
+influentialRoa <- as.numeric(names(cooksdRoa)[(cooksdRoa > 4*mean(cooksdRoa, na.rm=T))])  
+influentialTobin <- as.numeric(names(cooksdTobinsQ)[(cooksdTobinsQ > 4*mean(cooksdTobinsQ, na.rm=T))])
+
+#I remove outliers and create two new dataframes that I write in my folders
+TobinsQ_Db <- ModelLag2[-c(influentialTobin),]
+write.csv(TobinsQ_Db, file = "DataBase/DataSynchronization/NoOutliersLag2/TobinsQ.csv")
+
+Roa_Db <- ModelLag2[-c(influentialRoa),]
+write.csv(Roa_Db, file = "DataBase/DataSynchronization/NoOutliersLag2/Roa.csv")
+```
+
+```{r}
+################################################
+######### Lag 2 - Sensitivity Analysis #########
+################################################
+
+# Select only variables that I need for my models
+ModelLag2_Bis <- Lag2 %>% select(c(YearIndex,
+                               CompaniesIndex,
+                               Roa,
+                               TobinsQ,
+                               DebtToEquityRatio,
+                               NetMargin,
+                               TotalAssets,
+                               GicsClassification,
+                               GreenScore
+                               ))
+
+# I transform the "TotalAssets" column into FirmSize using the log of TotalAssets 
+ModelLag2_Bis$TotalAssets <- log(ModelLag2_Bis$TotalAssets)
+
+# I use the natural log for TobinsQ
+ModelLag2_Bis$TobinsQ <- log(ModelLag2_Bis$TobinsQ)
+
+# I rename some columns
+
+ModelLag2_Bis <- ModelLag2_Bis %>% setnames(old = c("DebtToEquityRatio", "TotalAssets", "GicsClassification", "NetMargin"), new = c("FinancialLeverage", "FirmSize", "Industry", "Growth"))
+
+
+# I define my models in lm as cooks.distance do not support plm object
+Roa <-lm(Roa ~ GreenScore + FirmSize + Growth + FinancialLeverage + Industry  , data = ModelLag2_Bis)
+
+TobinsQ<-lm(TobinsQ ~ GreenScore + FirmSize + Growth + FinancialLeverage + Industry  , data = ModelLag2_Bis)
+
+# I calculate my cooks distance (i.e. D)
+cooksdRoa <- cooks.distance(Roa)
+cooksdTobinsQ <- cooks.distance(TobinsQ)
+
+## I extract rows considered as influential (observations whose D > 4 * means)
+influentialRoa <- as.numeric(names(cooksdRoa)[(cooksdRoa > 4*mean(cooksdRoa, na.rm=T))])  
+influentialTobin <- as.numeric(names(cooksdTobinsQ)[(cooksdTobinsQ > 4*mean(cooksdTobinsQ, na.rm=T))])
+
+#I remove outliers and create two new dataframes that I write in my folders
+TobinsQ_Db <- ModelLag2_Bis[-c(influentialTobin),]
+write.csv(TobinsQ_Db, file = "DataBase/DataSynchronization/NoOutliersLag2/GreenScore/TobinsQ.csv")
+
+Roa_Db <- ModelLag2_Bis[-c(influentialRoa),]
+write.csv(Roa_Db, file = "DataBase/DataSynchronization/NoOutliersLag2/GreenScore/Roa.csv")
+```

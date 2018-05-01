@@ -1,9 +1,6 @@
 ---
 output: 
   pdf_document 
-header-includes:
-   - \usepackage{rotating}
-   -  \usepackage{dcolumn}
 ---
 
 ```{r include = FALSE}
@@ -206,7 +203,7 @@ colnames(VifTable) <- c("Roa", "Tobin's Q")
 stargazer(VifTable, summary = FALSE, title = "The Variance Inflation Factor", label = "VIF", header = FALSE, type = "latex", align = TRUE)
 ```
 
-This section gives an overview of the database. \autoref{DescriptiveStatistics} presents the main descriptive statistics of each variables. The sample size of ROA (i.e. N = `r sum(!is.na(Model1$Roa))`) is superior to the sample size of TobinsQ (i.e. N = `r sum(!is.na(Model1$TobinsQ))`). Indeed, compared to ROA, calculating Tobin’s Q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces sample bias. I did the same and the p-value of the unpaired two-samples t-test equals `r IdenticalAnalyses` meaning that they is not significant difference between both samples.
+This section gives an overview of the database. \autoref{DescriptiveStatistics} presents the main descriptive statistics of each variables. The sample size of Roa (i.e. N = `r sum(!is.na(Model1$Roa))`) is superior to the sample size of TobinsQ (i.e. N = `r sum(!is.na(Model1$TobinsQ))`). Indeed, compared to ROA, calculating Tobin’s Q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces sample bias. I did the same and the p-value of the unpaired two-samples t-test equals `r IdenticalAnalyses` meaning that they is not significant difference between both samples.
 
 \autoref{Matrix} contains the matrix of correlation of my database. There are statistically significant correlations between outcome-based CEP variables (i.e. carbon, water and waste productivity) suggesting that my model could suffer from multicollinearity. \autoref{VIF} reports the variance inflation factor (i.e. VIF) of all the variables. The maximum VIF is `r round(max(VifTable), digits = 3)` meaning that there is no multicollinearity in the model [@Obrien2007].
 
@@ -263,9 +260,9 @@ Model3 <- Model1 %>%
   CepPlmTest[,2] <- as.numeric(as.character(CepPlmTest[,2]))  
 
   ## Improve p-value understanding
-  CepPlmTest$Plmtest<-ifelse(CepPlmTest$Plmtest<0.01, paste(CepPlmTest$Plmtest,"∗∗∗",sep = ""),
-		ifelse(CepPlmTest$Plmtest<0.05,paste(CepPlmTest$Plmtest,"∗∗",sep = ""),
-		ifelse(CepPlmTest$Plmtest<0.1,paste(CepPlmTest$Plmtest,"∗",sep = ""),CepPlmTest$Plmtest)))
+  CepPlmTest$Plmtest<-ifelse(CepPlmTest$Plmtest<0.01, paste(CepPlmTest$Plmtest,"***",sep = ""),
+		ifelse(CepPlmTest$Plmtest<0.05,paste(CepPlmTest$Plmtest,"**",sep = ""),
+		ifelse(CepPlmTest$Plmtest<0.1,paste(CepPlmTest$Plmtest,"*",sep = ""),CepPlmTest$Plmtest)))
  
   
 # I test for Fixed Effect Model using pFtest which is a test of individual and/or time effects based on the comparison of the within and the pooling model.
@@ -293,22 +290,22 @@ Model3 <- Model1 %>%
   CeppFtest[,2] <- as.numeric(as.character(CeppFtest[,2]))  
 
   ## Improve p-value understanding
-  CeppFtest$pFtest<-ifelse(CeppFtest$pFtest<0.01, paste(CeppFtest$pFtest,"∗∗∗",sep = ""),
-		ifelse(CeppFtest$pFtest<0.05,paste(CeppFtest$pFtest," ∗∗",sep = ""),
-		ifelse(CeppFtest$pFtest<0.1,paste(CeppFtest$pFtest,"∗",sep = ""),CeppFtest$pFtest)))
+  CeppFtest$pFtest<-ifelse(CeppFtest$pFtest<0.01, paste(CeppFtest$pFtest,"***",sep = ""),
+		ifelse(CeppFtest$pFtest<0.05,paste(CeppFtest$pFtest," **",sep = ""),
+		ifelse(CeppFtest$pFtest<0.1,paste(CeppFtest$pFtest,"*",sep = ""),CeppFtest$pFtest)))
 
 
 # I consolidate the p-value of the two tests into a nice stargazer table 
 
   NiceTable <- merge(CepPlmTest, CeppFtest, by = "DependentVariables")
   colnames(NiceTable) <- c("Dependent Variables", "Lagrange Multiplier Test", "F Test")
-  stargazer(NiceTable, summary = FALSE, title = "P-value Reporting", label = "CepTest", align = TRUE, type = "latex", header = FALSE, notes = "Note : ∗ p<0.1; ∗∗ p<0.05; ∗∗∗ p<0.01", notes.align = "r" )
+  stargazer(NiceTable, summary = FALSE, title = "P-value Reporting", label = "CepTest", align = TRUE, type = "latex", header = FALSE, notes = "Note : * p<0.1; ** p<0.05; *** p<0.01", notes.align = "r" )
   
  # print.xtable(NiceTable1, type = "latex", table.placement = "h", caption.placement = "top", comment = FALSE, hline.after = c(-1,-1,0,3))
 
 # Based on the results of the tests, the three models need to be estimated with the fixed effects estimations (i.e. model = "within" in plm). Let's consolidate into a stargazer table
   
-  stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The impact of process-based on outcome-based CEP", label = "CepResults", header = FALSE, type = "latex", column.labels = c("Model 1", "Model 2", "Model 3"))
+  stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The impact of process-based on outcome-based CEP", label = "CepResults", header = FALSE, type = "latex")
 
 ```
 
