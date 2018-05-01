@@ -38,6 +38,8 @@ if (!require("car")) install.packages("car")
 library(car)
 if (!require("ggpubr")) install.packages("ggpubr")
 library(ggpubr)
+if (!require("xtable")) install.packages("xtable")
+library(xtable)
 ```
 
 ```{r}
@@ -206,7 +208,7 @@ stargazer(VifTable, summary = FALSE, title = "The Variance Inflation Factor", la
 
 This section gives an overview of the database. \autoref{DescriptiveStatistics} presents the main descriptive statistics of each variables. The sample size of ROA (i.e. N = `r sum(!is.na(Model1$Roa))`) is superior to the sample size of TobinsQ (i.e. N = `r sum(!is.na(Model1$TobinsQ))`). Indeed, compared to ROA, calculating Tobin’s Q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces sample bias. I did the same and the p-value of the unpaired two-samples t-test equals `r IdenticalAnalyses` meaning that they is not significant difference between both samples.
 
-\autoref{Matrix} contains the matrix of correlation of my database. There are statistically significant correlations between outcome-based CEP variables (i.e. carbon, water and waste productivity) suggesting that my model could suffer from multicollinearity. \autoref{VIF} reports the variance inflation factor (i.e. VIF) of all the variables. The maximum VIF is `r round(max(VifTable), digits = 4)` meaning that there is no multicollinearity in the model [@Obrien2007].
+\autoref{Matrix} contains the matrix of correlation of my database. There are statistically significant correlations between outcome-based CEP variables (i.e. carbon, water and waste productivity) suggesting that my model could suffer from multicollinearity. \autoref{VIF} reports the variance inflation factor (i.e. VIF) of all the variables. The maximum VIF is `r round(max(VifTable), digits = 3)` meaning that there is no multicollinearity in the model [@Obrien2007].
 
 The R code of this section is available in annex [Data](#appendixA-outliers).
 
@@ -217,7 +219,98 @@ The R code of this section is available in annex [Data](#appendixA-outliers).
 
 
 
-## The impact of process-based on outcome-based CEP
+## The impact of process-based CEP on outcome-based CEP
+
+\autoref{CepResults} reports the main results of the analysis of the impact of process-based CEP (i.e. sustainability pay link, sustainable themed commitment and audit score) on outcome-based CEP (i.e. carbon, water and waste productivity). Estimators of the three models had been estimated with the *fixed effects estimation*. Indeed, based on the p-value of the table \ref{CepTest}, the three models have FE model making both the random effects and pooled ols estimators biased.
+
+Except for Model 1 which indicates no significant relation between sustainability pay link and carbon productivity, all models show evidences of a positive and highly statistically significant
+effect of process-based CEP variables on outcome-based CEP. Consequently, hypothesis 1 is verified.
+
+```{r}
+################################################
+######## Process vs outcome based CEP ##########
+################################################
+
+# I select only CEP variables in model2. As Model2 is already a pdata.frame, I do not need to reproduce this function on Model3.
+
+Model3 <- Model1 %>% 
+  select(c(CarbonProductivity, 
+           WaterProductivity, 
+           WasteProductivity, 
+           SustainabilityPayLink,
+           SustainableThemedCommitment,
+           AuditScore)) 
+
+
+# I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
+
+## Pooling Model
+  CarbonPooling <- plm(CarbonProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="pooling")
+
+  WaterPooling <- plm(WaterProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="pooling")
+
+  WastePooling <- plm(WasteProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="pooling")
+
+  ## Plmtest
+  PlmtestCarbon <- cbind("CarbonProductivity", round(plmtest(CarbonPooling, effect = "time", type = "bp")$p.value, digits = 4))
+  PlmtestWater <- cbind("WaterProductivity", round(plmtest(WaterPooling, effect = "time", type = "bp")$p.value, digits = 4))
+  PlmtestWaste <- cbind("WasteProductivity", round(plmtest(WastePooling, effect = "time", type = "bp")$p.value, digits = 4))
+  
+  ## I consolidate into a table for later reporting 
+  CepPlmTest <- as.data.frame(rbind(PlmtestCarbon, PlmtestWater, PlmtestWaste))
+  colnames(CepPlmTest) <- c("DependentVariables", "Plmtest")
+  rownames(CepPlmTest) <- c()
+  CepPlmTest[,2] <- as.numeric(as.character(CepPlmTest[,2]))  
+
+  ## Improve p-value understanding
+  CepPlmTest$Plmtest<-ifelse(CepPlmTest$Plmtest<0.01, paste(CepPlmTest$Plmtest,"∗∗∗",sep = ""),
+		ifelse(CepPlmTest$Plmtest<0.05,paste(CepPlmTest$Plmtest,"∗∗",sep = ""),
+		ifelse(CepPlmTest$Plmtest<0.1,paste(CepPlmTest$Plmtest,"∗",sep = ""),CepPlmTest$Plmtest)))
+ 
+  
+# I test for Fixed Effect Model using pFtest which is a test of individual and/or time effects based on the comparison of the within and the pooling model.
+  
+  ## Within Model with time effect
+  
+  CarbonWithin <- plm(CarbonProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="within")
+
+  WaterWithin <- plm(WaterProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="within")
+
+  WasteWithin <- plm(WasteProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="within")
+  
+  ## pFtest
+  
+  pFtestCarbon <- cbind("CarbonProductivity", round(pFtest(CarbonWithin, CarbonPooling)$p.value, digits = 4))
+  
+  pFtestWater <- cbind("WaterProductivity", round(pFtest(WaterWithin, WaterPooling)$p.value, digits = 4))
+  
+  pFtestWaste <- cbind("WasteProductivity", round(pFtest(WasteWithin, WastePooling)$p.value, digits = 4))
+  
+  ## I consolidate into a table for later reporting 
+  CeppFtest <- as.data.frame(rbind(pFtestCarbon, pFtestWater, pFtestWaste))
+  colnames(CeppFtest) <- c("DependentVariables", "pFtest")
+  rownames(CeppFtest) <- c()
+  CeppFtest[,2] <- as.numeric(as.character(CeppFtest[,2]))  
+
+  ## Improve p-value understanding
+  CeppFtest$pFtest<-ifelse(CeppFtest$pFtest<0.01, paste(CeppFtest$pFtest,"∗∗∗",sep = ""),
+		ifelse(CeppFtest$pFtest<0.05,paste(CeppFtest$pFtest," ∗∗",sep = ""),
+		ifelse(CeppFtest$pFtest<0.1,paste(CeppFtest$pFtest,"∗",sep = ""),CeppFtest$pFtest)))
+
+
+# I consolidate the p-value of the two tests into a nice stargazer table 
+
+  NiceTable <- merge(CepPlmTest, CeppFtest, by = "DependentVariables")
+  colnames(NiceTable) <- c("Dependent Variables", "Lagrange Multiplier Test", "F Test")
+  stargazer(NiceTable, summary = FALSE, title = "P-value Reporting", label = "CepTest", align = TRUE, type = "latex", header = FALSE, notes = "Note : ∗ p<0.1; ∗∗ p<0.05; ∗∗∗ p<0.01", notes.align = "r" )
+  
+ # print.xtable(NiceTable1, type = "latex", table.placement = "h", caption.placement = "top", comment = FALSE, hline.after = c(-1,-1,0,3))
+
+# Based on the results of the tests, the three models need to be estimated with the fixed effects estimations (i.e. model = "within" in plm). Let's consolidate into a stargazer table
+  
+  stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The impact of process-based on outcome-based CEP", label = "CepResults", header = FALSE, type = "latex", column.labels = c("Model 1", "Model 2", "Model 3"))
+
+```
 
 ## The impact of CEP on CFP 
 
