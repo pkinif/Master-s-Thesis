@@ -3,4 +3,4 @@ output:
   pdf_document
 ---
 
-# Sensitivity Analaysis
+# Sensitivity Analysis

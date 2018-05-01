@@ -101,21 +101,21 @@ Carbon Productivity (i.e. CaP), Water Productivity (i.e. WatP) and Waste Product
 
 
 \begin{equation}
-CaP = \frac{Revenue}{TGGE}
+CaP_{it} = \frac{Revenue_{it}}{TGGE_{it}}
 \label{CaP}
 \end{equation}
 
 \begin{equation}
-WatP = \frac{Revenue}{TW}
+WatP_{it} = \frac{Revenue_{it}}{TW_{it}}
 \label{WatP}
 \end{equation}
 
 \begin{equation}
-WastP = \frac{Revenue}{(TWG - TWRR)}
+WastP_{it} = \frac{Revenue_{it}}{(TWG_{it} - TWRR_{it})}
 \label{WastP}
 \end{equation}
 
-where \(Revenue\) is the total revenue in US$, \(TGGE\) is the total greenhouse gaz emissions in \(co_{2}\), \(TW\) is the total water in \(m_{3}\), \(TWG\) is the total waste generated in metric tons and \(TWRR\) is the total waste recycled and reused in metric tons.
+where \(Revenue_{it}\) is the total revenue in US$, \(TGGE_{it}\) is the total greenhouse gaz emissions in \(co_{2}\), \(TW_{it}\) is the total water in \(m_{3}\), \(TWG_{it}\) is the total waste generated in metric tons and \(TWRR\) is the total waste recycled and reused in metric tons.
 
 
 ## Control Variables
