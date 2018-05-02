@@ -1,2 +1,14 @@
 # Appendix {-}
 
+## Appendix A : Database construction {-}
+
+```{r child = 'DataBaseConstruction.Rmd'}
+```
+
+\newpage
+## Appendix B : Outliers treatment {-}
+
+```{r child = 'OutliersTreatment.Rmd'}
+```
+
+\newpage

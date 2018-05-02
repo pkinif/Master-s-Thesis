@@ -6,9 +6,11 @@ output:
 bibliography: References.bib
 fontsize: 11pt
 geometry: margin = 1.2in
-urlcolor: blue
+urlcolor: black
 linkcolor: black
-citecolor: blue
+citecolor: black
+nocite: | 
+  @Hlavac2018, @Gandrud2013b
 header-includes:
 - \usepackage{placeins}
 - \usepackage{fancyhdr}
@@ -20,16 +22,8 @@ header-includes:
 - \usepackage{rotating}
 - \usepackage{dcolumn}
 ---
-nocite: | 
-  @Hlavac2018, @Gandrud2013b
-...
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(fig.path = '/figures/',
-                      echo = FALSE, warning = FALSE, message = FALSE, error = FALSE, results = 'asis')
 
-# Code chunks option applied to the whole document
-```
 <!-- The following latex function allow to avoid that footnotes split up accros two pages-->
 
 \interfootnotelinepenalty=10000 

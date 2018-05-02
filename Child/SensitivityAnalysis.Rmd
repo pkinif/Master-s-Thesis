@@ -3,12 +3,9 @@ output:
   pdf_document
 ---
 
-```{r include = FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis')
-```
 
 
-```{r}
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 
 ################################################
 ############## Package loading #################
@@ -46,7 +43,7 @@ The model using TobinsQ as a proxy for CFP had been estimated with the *pooled o
 
 
 \newpage
-```{r}
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
 ######## The impact of CEP on CFP ##############
 ################################################
@@ -112,7 +109,7 @@ stargazer(TobinPooling, RoaPooling, title = "The impact of process and outcome-b
 
 
 \newpage
-```{r}
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
 ###### GreenScore as an alternative ############
 ################################################

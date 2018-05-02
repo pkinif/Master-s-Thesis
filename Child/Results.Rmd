@@ -3,12 +3,10 @@ output:
   pdf_document 
 ---
 
-```{r include = FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis')
-```
 
 
-```{r}
+
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 
 ################################################
 ############## Package loading #################
@@ -39,7 +37,7 @@ if (!require("xtable")) install.packages("xtable")
 library(xtable)
 ```
 
-```{r}
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
 ############## DataBase loading ################
 ################################################
@@ -81,7 +79,7 @@ Model1 <- Model %>% setnames(old = c("DebtToEquityRatio", "TotalAssets", "GicsCl
 
 ## Get a feel of the data
 
-```{r}
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
 ######## unpaired two-samples t-test ###########
 ################################################
@@ -99,7 +97,7 @@ This section gives an overview of the database. \autoref{DescriptiveStatistics} 
 
 The R code of this section is available in annex [Data](#appendixA-outliers).
 
-```{r}
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
 ########### Descriptive statistics #############
 ################################################
@@ -113,7 +111,7 @@ stargazer(Model2, title = "Descriptive statistics", label = "DescriptiveStatisti
 
 ```
 
-```{r}
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
 ########### Matrix of correlation ##############
 ################################################
@@ -181,7 +179,7 @@ table <- stargazer(CorMatrix, summary = FALSE, type = "latex", title = "Correlat
 
 ```
 
-```{r}
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
 ######### Variance Inflation Factor  ###########
 ################################################
@@ -214,7 +212,7 @@ stargazer(VifTable, summary = FALSE, title = "Variance Inflation Factor", label 
 
 ## Outliers treatment
 
-@Lyu2015 defines outliers as observations in the dataset that appear to be unusual and discordant and which could lead to inconsistent results. @Osborne2004 have shown that even a small proportion of outliers can significantly affect simple analyses (i.e. t-tests, correlations and ANOVAs). Outliers are an issue only and only if they are influential \footnote{Influential obervations are observations whose  removal causes a different conclusion in the analysis} [@Cousineau2010]. I have used the Cook's distance [@Cook1977] test which is a common statistical tool to assess the influence of outliers [@JPStevens1984, @Cousineau2010, @Zuurprotocoldataexploration2010]. Cook’s Distance observes the difference between the regression paramater of a given model,  \(\hat{\beta}\) and what they become if the \(i_{th}\) data points is deleted, let's say  \(\hat{\beta}_{i}\). One difficulty with treatment of outliers is that the literature have not found common theoretical framework yet for the treatment of influential outliers [@OrrJohn1991, @Cousineau2010]. @Tabachnick2007 argues that the imputation with the mean is the best method while @Cousineau2010 highlight that it tends to reduce the spread of the population, making the observed distribution more leptokurtic, and possibly increase the likelihood of a type-I error. @Dang2009 argue that more elaborate technique involves replacing outliers with possible values while @Barnett1994 would prefer to remove or windsorized them. Alternatively, @Pollet2017 propose an other route to handle outliers and argue that inclusion or exclusion of outliers depend on the significativity of the results, meaning that if results are more significant without outliers, scholars should remove them and vice versa. Following the mindset of @Pollet2017, I have removed outliers from my database. See annex [outliers](#appendixA-outliers) for furthers details.
+@Lyu2015 defines outliers as observations in the dataset that appear to be unusual and discordant and which could lead to inconsistent results. @Osborne2004 have shown that even a small proportion of outliers can significantly affect simple analyses (i.e. t-tests, correlations and ANOVAs). Outliers are an issue only and only if they are influential \footnote{Influential obervations are observations whose  removal causes a different conclusion in the analysis} [@Cousineau2010]. I have used the Cook's distance [@Cook1977] test which is a common statistical tool to assess the influence of outliers [@JPStevens1984, @Cousineau2010, @Zuurprotocoldataexploration2010]. Cook’s Distance observes the difference between the regression paramater of a given model,  \(\hat{\beta}\) and what they become if the \(i_{th}\) data points is deleted, let's say  \(\hat{\beta}_{i}\). One difficulty with treatment of outliers is that the literature have not found common theoretical framework yet for the treatment of influential outliers [@OrrJohn1991, @Cousineau2010]. @Tabachnick2007 argues that the imputation with the mean is the best method while @Cousineau2010 highlight that it tends to reduce the spread of the population, making the observed distribution more leptokurtic, and possibly increase the likelihood of a type-I error. @Dang2009 argue that more elaborate technique involves replacing outliers with possible values while @Barnett1994 would prefer to remove or windsorized them. Alternatively, @Pollet2017 propose an other route to handle outliers and argue that inclusion or exclusion of outliers depend on the significativity of the results, meaning that if results are more significant without outliers, scholars should remove them and vice versa. Following the mindset of @Pollet2017, I have removed outliers from my database. See [Appendix B : Outliers treatment]  for furthers details.
 
 
 
@@ -225,7 +223,7 @@ stargazer(VifTable, summary = FALSE, title = "Variance Inflation Factor", label 
 Except for Model 1 which indicates no significant relation between sustainability pay link and carbon productivity, all models show evidences of a positive and highly statistically significant
 effect of process-based CEP variables on outcome-based CEP. Consequently, hypothesis 1 is verified.
 
-```{r}
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
 ######## Process vs outcome based CEP ##########
 ################################################
@@ -313,7 +311,7 @@ stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The impact of process
 TobinsQ model shows evidences of a positive and highly statistically significant effect of sustainability pay link, audit score and water productivity on long-term CEP. Roa model shows evidences of a positive and highly statistically significant effect of sustainability pay link, sustainable themed commitment and carbon productivity on short-term CEP. Consequently hypothesis 2, 3, 4 and 5 are verified.
 
 
-```{r}
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
 ######## The impact of CEP on CFP ##############
 ################################################

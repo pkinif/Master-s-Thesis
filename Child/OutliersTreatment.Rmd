@@ -1,0 +1,147 @@
+---
+output:
+  pdf_document
+
+---
+
+This appendix presents the R code I have used to identify and remove outliers from my database. 
+
+
+
+
+```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55) }
+
+
+# Packages loading 
+
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr) 
+if (!require("data.table")) install.packages("data.table")
+library(data.table)
+if (!require("formatR")) install.packages("formatR")
+library(formatR)
+if (!require("highlight")) install.packages("highlight")
+library(highlight)
+
+```
+
+```{r message = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE}
+
+# Database Loading 
+Lag1 <- read.csv(
+  file = "Analysis/DataBase/DataSynchronization/Lag1.csv", 
+  header = TRUE, 
+  stringsAsFactors = FALSE)
+
+```
+
+
+```{r message = FALSE, error = FALSE, warning = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55),  results = 'asis', tidy = TRUE, comment = FALSE}
+
+# Select only variables that I need for my models
+ModelLag1 <- Lag1 %>% select(c(YearIndex,
+                               CompaniesIndex,
+                               Roa,
+                               TobinsQ,
+                               DebtToEquityRatio,
+                               NetMargin,
+                               TotalAssets,
+                               GicsClassification,
+                               CarbonProductivity,
+                               WaterProductivity,
+                               WasteProductivity,
+                               SustainabilityPayLink,
+                               SustainableThemedCommitment,
+                               AuditScore
+                               ))
+
+# I transform the "TotalAssets" column into FirmSize using the log of TotalAssets 
+ModelLag1$TotalAssets <- log(ModelLag1$TotalAssets)
+
+# I use the natural log for TobinsQ
+ModelLag1$TobinsQ <- log(ModelLag1$TobinsQ)
+
+# I rename some columns
+
+ModelLag1 <- ModelLag1 %>% setnames(old = 
+                                      c("DebtToEquityRatio", 
+                                        "TotalAssets", 
+                                        "GicsClassification", 
+                                        "NetMargin"), 
+                                    new = 
+                                      c("FinancialLeverage", 
+                                        "FirmSize", 
+                                        "Industry", 
+                                        "Growth"))
+
+
+# I define my models in lm as cooks.distance do not support plm object
+Roa <-lm(Roa ~ SustainabilityPayLink +
+           SustainableThemedCommitment + 
+           AuditScore + 
+           CarbonProductivity + 
+           WaterProductivity + 
+           WasteProductivity + 
+           FirmSize + 
+           Growth + 
+           FinancialLeverage + 
+           Industry, 
+         data = ModelLag1)
+
+TobinsQ<-lm(TobinsQ ~ SustainabilityPayLink + 
+              SustainableThemedCommitment + 
+              AuditScore + 
+              CarbonProductivity + 
+              WaterProductivity + 
+              WasteProductivity + 
+              FirmSize + 
+              Growth + 
+              FinancialLeverage + 
+              Industry, 
+            data = ModelLag1)
+
+# I calculate my cooks distance (i.e. D)
+cooksdRoa <- cooks.distance(Roa)
+cooksdTobinsQ <- cooks.distance(TobinsQ)
+
+# I extract rows considered as influential (i.e. observations whose D > 4 * means)
+influentialRoa <- as.numeric(names(cooksdRoa)[(cooksdRoa > 4*mean(cooksdRoa, na.rm=T))]) 
+influentialRoa
+influentialTobin <- as.numeric(names(cooksdTobinsQ)[(cooksdTobinsQ > 4*mean(cooksdTobinsQ, na.rm=T))])
+influentialTobin
+```
+
+```{r echo = TRUE, eval = FALSE, error = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), message = FALSE, warning = FALSE, comment = FALSE, tidy = TRUE}
+
+#I remove outliers and create two new dataframes that I write in my folders
+TobinsQ_Db <- ModelLag1[-c(influentialTobin),]
+write.csv(
+  TobinsQ_Db,
+  file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/TobinsQ.csv")
+
+Roa_Db <- ModelLag1[-c(influentialRoa),]
+write.csv(
+  Roa_Db, 
+  file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/Roa.csv")
+
+```
+
+```{r message = FALSE, error = FALSE, warning = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55),  results = 'asis', tidy = TRUE, comment = FALSE}
+# I report influencial obervations on a graph
+
+## TobinsQ
+### plot cook's distance
+plot(cooksdTobinsQ, pch="*", cex=2)  
+### add cutoff line
+abline(h = 4*mean(cooksdTobinsQ, na.rm=T), col="red")
+### add labels
+text(x=1:length(cooksdTobinsQ)+1, y=cooksdTobinsQ, labels=ifelse(cooksdTobinsQ>4*mean(cooksdTobinsQ, na.rm=T),names(cooksdTobinsQ),""), col="red")  
+
+## Roa
+### plot cook's distance
+plot(cooksdRoa, pch="*", cex=2)  
+### add cutoff line
+abline(h = 4*mean(cooksdRoa, na.rm=T), col="red")  
+### add labels
+text(x=1:length(cooksdRoa)+1, y=cooksdRoa, labels=ifelse(cooksdRoa>4*mean(cooksdRoa, na.rm=T),names(cooksdRoa),""), col="red") 
+```
