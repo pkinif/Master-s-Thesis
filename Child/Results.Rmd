@@ -311,7 +311,7 @@ Model3 <- Model1 %>%
 
 ## The impact of CEP on CFP 
 
-\autoref{CfpResults} reports the main results of the analysis of the impact of both process-based CEP (i.e. sustainability pay link, sustainable themed commitment and audit score) and outcome-based CEP (i.e. carbon, water and waste productivity) on short-term CFP (i.e. Roa) and long-term CFP (i.e. TobinsQ). Based on the results of the table \ref{CfpTest}, estimators of the TobinsQ model had been estimated with the *pooled ols estimators* and the estimators of the Roa model with the *fixed effects estimation*. 
+\autoref{CfpResults} reports the main results of the analysis of the impact of both process-based CEP (i.e. sustainability pay link, sustainable themed commitment and audit score) and outcome-based CEP (i.e. carbon, water and waste productivity) on short-term CFP (i.e. Roa) and long-term CFP (i.e. TobinsQ). Based on the results of the table \ref{CfpTest}, estimators of the TobinsQ model had been estimated with the *pooled ols estimation* and the estimators of the Roa model with the *fixed effects estimation*. 
 
 TobinsQ model shows evidences of a positive and highly statistically significant
 effect of sustainability pay link, audit score and water productivity on long-term CEP. Roa model shows evidences of a positive and highly statistically significant effect of sustainability pay link, sustainable themed commitment and carbon productivity on short-term CEP. Consequently hypothesis 2, 3, 4 and 5 are verified.

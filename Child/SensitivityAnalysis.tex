@@ -1,0 +1,184 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{}
+  \pretitle{\vspace{\droptitle}}
+  \posttitle{}
+  \author{}
+  \preauthor{}\postauthor{}
+  \date{}
+  \predate{}\postdate{}
+
+
+\begin{document}
+
+\section{Sensitivity Analysis}\label{sensitivity-analysis}
+
+Sensitivity Analysis (SA) investigates how the variation in the output
+of a numerical model can be attributed to variations of its input
+factors {[}@Pianosi2016{]}. To ensure the robustness of the main
+findings of the previous section I have carried out two robustness
+tests.
+
+Firstly the equation \ref{EconometricModel} had been re-estimated using
+dependent variables accelerated by one year in a sense that observations
+in independent and control variables are now lagged two year behind
+corporate financial performance. Based on the results of the table
+\ref{Lag2Test}, estimators of both TobinsQ and Roa model had been
+estimated with the \emph{pooled ols estimation}. Results are reported in
+table \ref{Lag2} and confirms results of the previous section.
+
+Secondly, I have used an alternative proxy for approaching corporate
+environmental performance, namely the Green Score assigned to each
+company of the NewsWeek Green Ranking. The score is based on a weighted
+average of the key performance indicators of the ranking. Concretely, it
+means that equation \ref{EconometricModel} becomes the following
+equation.
+
+\begin{equation}
+\centering
+Y_{it+1} = \alpha + \beta_{1} GS_{it} + Controls_{it} + u_{it}
+\label{GreenScoreEquation}
+\end{equation}
+
+where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q,
+\(GS_{it}\) is a proxy for a firm's green score, \(Controls_{it}\) is a
+vector of control variables that includes firm size, industry sector,
+financial leverage and growth and lastly \(u_{it}\) which is the error
+term.
+
+Based on the results of p-value of table \ref{GreenScoreTests},
+equation\ref{GreenScoreEquation} had been estimated with the
+\emph{pooled ols estimators} (for TobinsQ) and the \emph{fixed effect
+estimation} (for Roa). Results are reported in table
+\ref{GreenScoreResults} and confirms findings of the previous section.
+Consequently, the sensitivity analysis supports that CEP do have a
+significant and positive effect on CFP (short and long-term).
+
+\begin{table}[!htbp] \centering 
+  \caption{P-value Reporting} 
+  \label{GreenScoreTests} 
+\begin{tabular}{@{\extracolsep{5pt}} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} D{.}{.}{-3} } 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{Dependent Variables} & \multicolumn{1}{c}{Lagrange Multiplier Test} & \multicolumn{1}{c}{F Test} \\ 
+\hline \\[-1.8ex] 
+\multicolumn{1}{c}{1} & \multicolumn{1}{c}{Roa} & \multicolumn{1}{c}{3e-04\textasteriskcentered \textasteriskcentered \textasteriskcentered } & \multicolumn{1}{c}{0.0024\textasteriskcentered \textasteriskcentered \textasteriskcentered } \\ 
+\multicolumn{1}{c}{2} & \multicolumn{1}{c}{TobinsQ} & \multicolumn{1}{c}{0.4748} & \multicolumn{1}{c}{0.5361} \\ 
+\hline \\[-1.8ex] 
+\multicolumn{4}{r}{Note : * p<0.1; ** p<0.05; *** p<0.01} \\ 
+\end{tabular} 
+\end{table}
+
+\begin{table}[!htbp] \centering 
+  \caption{Robustness check : alternative variable for corporate environmental performance} 
+  \label{GreenScoreResults} 
+\begin{tabular}{@{\extracolsep{5pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & TobinsQ & Roa \\ 
+\\[-1.8ex] & (1) & (2)\\ 
+\hline \\[-1.8ex] 
+ GreenScore & 0.669$^{***}$ & 0.051$^{***}$ \\ 
+  & (0.093) & (0.008) \\ 
+  & & \\ 
+ FirmSize & $-$0.413$^{***}$ & $-$0.018$^{***}$ \\ 
+  & (0.014) & (0.001) \\ 
+  & & \\ 
+ FinancialLeverage & 0.003 & $-$0.0003 \\ 
+  & (0.004) & (0.001) \\ 
+  & & \\ 
+ Growth & 0.528$^{***}$ & 0.134$^{***}$ \\ 
+  & (0.162) & (0.013) \\ 
+  & & \\ 
+ Industry & $-$0.030$^{***}$ & $-$0.002$^{***}$ \\ 
+  & (0.007) & (0.001) \\ 
+  & & \\ 
+ Constant & 9.916$^{***}$ &  \\ 
+  & (0.336) &  \\ 
+  & & \\ 
+\hline \\[-1.8ex] 
+Observations & 956 & 1,094 \\ 
+R$^{2}$ & 0.481 & 0.268 \\ 
+Adjusted R$^{2}$ & 0.479 & 0.263 \\ 
+F Statistic & 176.286$^{***}$ (df = 5; 950) & 79.571$^{***}$ (df = 5; 1086) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+
+
+\end{document}
