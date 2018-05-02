@@ -28,8 +28,9 @@ library(highlight)
 ```{r message = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE}
 
 # Database Loading 
+path <- "Analysis/DataBase/DataSynchronization/Lag1.csv"
 Lag1 <- read.csv(
-  file = "Analysis/DataBase/DataSynchronization/Lag1.csv", 
+  file = path, 
   header = TRUE, 
   stringsAsFactors = FALSE)
 
@@ -115,14 +116,16 @@ influentialTobin
 
 #I remove outliers and create two new dataframes that I write in my folders
 TobinsQ_Db <- ModelLag1[-c(influentialTobin),]
+path <- "Analysis/DataBase/DataSynchronization/NoOutliersLag1/TobinsQ.csv"
 write.csv(
   TobinsQ_Db,
-  file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/TobinsQ.csv")
+  file = path)
 
+path <- "Analysis/DataBase/DataSynchronization/NoOutliersLag1/Roa.csv"
 Roa_Db <- ModelLag1[-c(influentialRoa),]
 write.csv(
   Roa_Db, 
-  file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/Roa.csv")
+  file = path)
 
 ```
 
