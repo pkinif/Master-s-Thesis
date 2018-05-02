@@ -4,11 +4,10 @@ output:
     fig_caption: yes
     number_sections: yes
 bibliography: References.bib
-#csl:
 fontsize: 11pt
 geometry: margin = 1.2in
 urlcolor: blue
-linkcolor: blue
+linkcolor: black
 citecolor: blue
 header-includes:
 - \usepackage{placeins}
@@ -21,6 +20,9 @@ header-includes:
 - \usepackage{rotating}
 - \usepackage{dcolumn}
 ---
+nocite: | 
+  @Hlavac2018, @Gandrud2013b
+...
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(fig.path = '/figures/',

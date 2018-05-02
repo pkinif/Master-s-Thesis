@@ -55,7 +55,11 @@ The model using TobinsQ as a proxy for CFP had been estimated with the *pooled o
 RoaNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag2/Roa.csv", header = TRUE, stringsAsFactors = FALSE)
 
 TobinNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag2/TobinsQ.csv", header = TRUE, stringsAsFactors = FALSE)
- 
+
+# I change names
+RoaNoOut <- RoaNoOut %>% setnames(old = c("FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
+TobinNoOut <- TobinNoOut %>% setnames(old = c("FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
+
 # I make both df a plm dataframe
 RoaNoOut <- RoaNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
 TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
@@ -63,8 +67,8 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
 # I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
 
   ## Pooling Model
-  RoaPooling <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + FinancialLeverage + Growth + Industry, data = RoaNoOut, model="pooling")
-  TobinPooling <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + FinancialLeverage + Growth + Industry, data = TobinNoOut, model="pooling")
+  RoaPooling <- plm(Roa ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="pooling")
+  TobinPooling <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model="pooling")
 
 
   ## Plmtest
@@ -83,8 +87,8 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
   
   ## Within Model with time effect
   
-  RoaWithin <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + FinancialLeverage + Growth + Industry, data = RoaNoOut, model="within", effect = "time")
-  TobinWithin <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + FinancialLeverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
+  RoaWithin <- plm(Roa ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="within", effect = "time")
+  TobinWithin <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
   
   ## pFtest
   
@@ -101,7 +105,7 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
   
 # Based on the results of the tests, the two models need to be estimated with the pooling ols estimations (i.e. model = "pooling" in plm). Let's consolidate into a nice stargazer table
   
-stargazer(TobinPooling, RoaPooling, title = "The impact of both process-based and outcome-based CEP on CFP (lag = 2)", label = "Lag2", header = FALSE, type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
+stargazer(TobinPooling, RoaPooling, title = "The impact of process and outcome-based CEP on CFP (lag = 2)", label = "Lag2", header = FALSE, type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
                            c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
 
 ```
@@ -117,7 +121,12 @@ stargazer(TobinPooling, RoaPooling, title = "The impact of both process-based an
 RoaNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/GreenScore/Roa.csv", header = TRUE, stringsAsFactors = FALSE)
 
 TobinNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/GreenScore/TobinsQ.csv", header = TRUE, stringsAsFactors = FALSE)
- 
+
+# I change names
+RoaNoOut <- RoaNoOut %>% setnames(old = "FinancialLeverage", new = "Leverage")
+TobinNoOut <- TobinNoOut %>% setnames(old = "FinancialLeverage", new = "Leverage")
+
+
 # I make both df a plm dataframe
 RoaNoOut <- RoaNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
 TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
@@ -125,8 +134,8 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
 # I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
 
   ## Pooling Model
-  RoaPooling <- plm(Roa ~ GreenScore + FirmSize + FinancialLeverage + Growth + Industry, data = RoaNoOut, model="pooling")
-  TobinPooling <- plm(TobinsQ ~ GreenScore + FirmSize + FinancialLeverage + Growth + Industry, data = TobinNoOut, model="pooling")
+  RoaPooling <- plm(Roa ~ GreenScore + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="pooling")
+  TobinPooling <- plm(TobinsQ ~ GreenScore + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model="pooling")
 
 
   ## Plmtest
@@ -145,8 +154,8 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
   
   ## Within Model with time effect
   
-  RoaWithin <- plm(Roa ~ GreenScore + FirmSize + FinancialLeverage + Growth + Industry, data = RoaNoOut, model = "within", effect = "time")
-  TobinWithin <- plm(TobinsQ ~ GreenScore + FirmSize + FinancialLeverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
+  RoaWithin <- plm(Roa ~ GreenScore + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model = "within", effect = "time")
+  TobinWithin <- plm(TobinsQ ~ GreenScore + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
   
   ## pFtest
   

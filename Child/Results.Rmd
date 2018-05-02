@@ -73,7 +73,7 @@ Model$TobinsQ <- log(Model$TobinsQ)
 
 # I rename some columns
 
-Model1 <- Model %>% setnames(old = c("DebtToEquityRatio", "TotalAssets", "GicsClassification", "NetMargin"), new = c("FinancialLeverage", "FirmSize", "Industry", "Growth"))
+Model1 <- Model %>% setnames(old = c("DebtToEquityRatio", "TotalAssets", "GicsClassification", "NetMargin", "CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "FirmSize", "Industry", "Growth", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
 
 ```
 
@@ -109,7 +109,7 @@ Model2 <- Model1 %>% select(-c(GreenScore, YearIndex, CompaniesIndex))
 
 # I use stargazer to create a table containing descriptive statistics for each variable
 
-stargazer(Model2, title = "Descriptive statistics", label = "DescriptiveStatistics", header = FALSE, type = "latex", align = TRUE, table.placement = "b", digits = 2, digits.extra = 2)
+stargazer(Model2, title = "Descriptive statistics", label = "DescriptiveStatistics", header = FALSE, type = "latex", align = FALSE, table.placement = "b", digits = 2, digits.extra = 2)
 
 ```
 
@@ -172,7 +172,6 @@ CorMatrix <- corstars(Model2, method = "pearson", removeTriangle = "upper",  res
 
 number <- c( 1 : (ncol(Model2) - 1)) #number of variables
 colnames(CorMatrix) <- number
-
 NewRowNames <- paste(c( 1 : ncol(Model2)), rownames(CorMatrix), sep = ". ")
 rownames(CorMatrix) <- NewRowNames
 
@@ -191,10 +190,11 @@ table <- stargazer(CorMatrix, summary = FALSE, type = "latex", title = "Correlat
 
 Model1 <- pdata.frame(Model1, index = c("CompaniesIndex", "YearIndex"))
 
-# The vif function can not be used with within model. I need to estimate my models with the pooling model.
-Roa <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FinancialLeverage + Growth + FirmSize + Industry, model = "pooling", data = Model1, index = c("YearIndex", "CompaniesIndex"))
 
-TobinsQ <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FinancialLeverage + Growth + FirmSize + Industry, model = "pooling", data = Model1, index = c("YearIndex", "CompaniesIndex"))
+# The vif function can not be used with within model. I need to estimate my models with the pooling model.
+Roa <- plm(Roa ~ SPL + STC + A + CaP + WaP + WastP + Leverage + Growth + FirmSize + Industry, model = "pooling", data = Model1, index = c("YearIndex", "CompaniesIndex"))
+
+TobinsQ <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + Leverage + Growth + FirmSize + Industry, model = "pooling", data = Model1, index = c("YearIndex", "CompaniesIndex"))
 
 
 #VIF Calculation and summary in a nice stargazer table
@@ -206,7 +206,9 @@ VifTobin <- car::vif(TobinsQ)
 VifTable <- cbind(VifRoa, VifTobin)
 colnames(VifTable) <- c("Roa", "Tobin's Q")
 
-stargazer(VifTable, summary = FALSE, title = "The Variance Inflation Factor", label = "VIF", header = FALSE, type = "latex", align = TRUE, table.placement = "!")
+
+
+stargazer(VifTable, summary = FALSE, title = "Variance Inflation Factor", label = "VIF", header = FALSE, type = "latex", align = TRUE, table.placement = "!", digits = 3)
 ```
 
 
@@ -233,22 +235,22 @@ effect of process-based CEP variables on outcome-based CEP. Consequently, hypoth
 Model3 <- Model1 %>% 
   select(c(YearIndex,
            CompaniesIndex,
-           CarbonProductivity, 
-           WaterProductivity, 
-           WasteProductivity, 
-           SustainabilityPayLink,
-           SustainableThemedCommitment,
-           AuditScore)) 
+           CaP, 
+           WaP, 
+           WastP, 
+           SPL,
+           STC,
+           A)) 
 
 
 # I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
 
 ## Pooling Model
-  CarbonPooling <- plm(CarbonProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="pooling")
+  CarbonPooling <- plm(CaP ~ SPL + STC + A, data = Model3, model="pooling")
 
-  WaterPooling <- plm(WaterProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="pooling")
+  WaterPooling <- plm(WaP ~ SPL + STC + A, data = Model3, model="pooling")
 
-  WastePooling <- plm(WasteProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="pooling")
+  WastePooling <- plm(WastP ~ SPL + STC + A, data = Model3, model="pooling")
 
   ## Plmtest
   PlmtestCarbon <- as.numeric(round(plmtest(CarbonPooling, effect = "time", type = "bp")$p.value, digits = 3))
@@ -271,11 +273,11 @@ Model3 <- Model1 %>%
   
   ## Within Model with time effect
   
-  CarbonWithin <- plm(CarbonProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="within", effect = "time")
+  CarbonWithin <- plm(CaP ~ SPL + STC + A, data = Model3, model="within", effect = "time")
 
-  WaterWithin <- plm(WaterProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="within", effect = "time")
+  WaterWithin <- plm(WaP ~ SPL + STC + A, data = Model3, model="within", effect = "time")
 
-  WasteWithin <- plm(WasteProductivity ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore, data = Model3, model="within", effect = "time")
+  WasteWithin <- plm(WastP ~ SPL + STC + A, data = Model3, model="within", effect = "time")
   
   ## pFtest
   
@@ -320,6 +322,10 @@ TobinsQ model shows evidences of a positive and highly statistically significant
 RoaNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/Roa.csv", header = TRUE, stringsAsFactors = FALSE)
 
 TobinNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/TobinsQ.csv", header = TRUE, stringsAsFactors = FALSE)
+
+# I change names
+RoaNoOut <- RoaNoOut %>% setnames(old = c("FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
+TobinNoOut <- TobinNoOut %>% setnames(old = c("FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
  
 # I make both df a plm dataframe
 RoaNoOut <- RoaNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
@@ -328,8 +334,8 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
 # I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
 
   ## Pooling Model
-  RoaPooling <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + FinancialLeverage + Growth + Industry, data = RoaNoOut, model="pooling")
-  TobinPooling <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + FinancialLeverage + Growth + Industry, data = TobinNoOut, model="pooling")
+  RoaPooling <- plm(Roa ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="pooling")
+  TobinPooling <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model="pooling")
 
 
   ## Plmtest
@@ -348,8 +354,8 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
   
   ## Within Model with time effect
   
-  RoaWithin <- plm(Roa ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + FinancialLeverage + Growth + Industry, data = RoaNoOut, model="within", effect = "time")
-  TobinWithin <- plm(TobinsQ ~ SustainabilityPayLink + SustainableThemedCommitment + AuditScore + CarbonProductivity + WaterProductivity + WasteProductivity + FirmSize + FinancialLeverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
+  RoaWithin <- plm(Roa ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="within", effect = "time")
+  TobinWithin <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
   
   ## pFtest
   
@@ -366,7 +372,7 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
   
 # Based on the results of the tests, TobinsQ need to be estimated with the pooling ols estimations (i.e. model = "pooling" in plm) while Roa with the within effect estimation.. Let's consolidate into a nice stargazer table
   
-stargazer(TobinPooling, RoaWithin, title = "The impact of both process-based and outcome-based CEP on CFP", label = "Lag1", header = FALSE, type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
+stargazer(TobinPooling, RoaWithin, title = "The impact of process and outcome-based CEP on CFP (lag = 1)", label = "Lag1", header = FALSE, type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
                            c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
 
 ```
