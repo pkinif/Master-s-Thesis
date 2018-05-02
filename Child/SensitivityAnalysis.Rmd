@@ -27,10 +27,9 @@ library(stargazer)
 
 # Sensitivity Analysis
 
-Sensitivity Analysis (SA) investigates how the variation in the output of a numerical model can be attributed to variations of its input factors [@Pianosi2016]. To ensure the robustness of the main findings of the previous section I have carried out two robustness tests. 
+Sensitivity Analysis investigates how the variation in the output of a numerical model can be attributed to variations of its input factors [@Pianosi2016]. To ensure the robustness of the main findings of the previous section I have carried out two robustness tests. 
 
-Firstly the equation \ref{EconometricModel} had been re-estimated using dependent variables accelerated by one year in a sense that observations in independent and control variables are now lagged two year behind corporate financial performance. Based on the results of the table \ref{Lag2Test}, estimators of both TobinsQ and Roa
-model had been estimated with the *pooled ols estimation*. Results are reported in table \ref{Lag2} and confirms results of the previous section.
+Firstly the equation \ref{EconometricModel} had been re-estimated using dependent variables accelerated by one year in a sense that observations in independent and control variables are now lagged two year behind corporate financial performance. Based on the results of both Breusch Pagan Multiplier and F tests, estimators had been estimated with the *pooled ols estimation*. Results are reported in table \ref{Lag2} and confirms results of the previous section.
 
 Secondly, I have used an alternative proxy for approaching corporate environmental performance, namely the Green Score assigned to each company of the NewsWeek Green Ranking. The score is based on a weighted average of the key performance indicators of the ranking. Concretely, it means that equation \ref{EconometricModel} becomes the following equation.
 
@@ -43,9 +42,10 @@ Y_{it+1} = \alpha + \beta_{1} GS_{it} + Controls_{it} + u_{it}
 
 where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(GS_{it}\) is a proxy for a firm's green score, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth and lastly \(u_{it}\) which is the error term.
 
-Based on the results of p-value of table \ref{GreenScoreTests}, equation \ref{GreenScoreEquation} had been estimated with the *pooled ols estimators* (for TobinsQ) and the *fixed effect estimation* (for Roa). Results are reported in table \ref{GreenScoreResults} and confirms findings of the previous section. Consequently, the sensitivity analysis supports that CEP do have a significant and positive effect on CFP (short and long-term). 
+The model using TobinsQ as a proxy for CFP had been estimated with the *pooled ols estimators* while the model using Roa uses the *fixed effect estimation*. Results are reported in table \ref{GreenScoreResults} and confirms findings of the previous section. Consequently, the sensitivity analysis supports that CEP do have a significant and positive effect on CFP (short and long-term). 
 
 
+\newpage
 ```{r}
 ################################################
 ######## The impact of CEP on CFP ##############
@@ -68,21 +68,16 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
 
 
   ## Plmtest
-  PlmtestRoa <- cbind("Roa", round(plmtest(RoaPooling, effect = "time", type = "bp")$p.value, digits = 4))
-  PlmtestTobin <- cbind("TobinsQ", round(plmtest(TobinPooling, effect = "time", type = "bp")$p.value, digits = 4))
-
-  
-  ## I consolidate into a table for later reporting 
-  CfpPlmTest <- as.data.frame(rbind(PlmtestRoa, PlmtestTobin))
-  colnames(CfpPlmTest) <- c("DependentVariables", "Plmtest")
-  rownames(CfpPlmTest) <- c()
-  CfpPlmTest[,2] <- as.numeric(as.character(CfpPlmTest[,2]))  
+  PlmtestRoa <-as.numeric(round(plmtest(RoaPooling, effect = "time", type = "bp")$p.value, digits = 3))
+  PlmtestTobin <-as.numeric(round(plmtest(TobinPooling, effect = "time", type = "bp")$p.value, digits = 3))
 
   ## Improve p-value understanding
-  CfpPlmTest$Plmtest<-ifelse(CfpPlmTest$Plmtest<0.01, paste(CfpPlmTest$Plmtest,"***",sep = ""),
-		ifelse(CfpPlmTest$Plmtest<0.05,paste(CfpPlmTest$Plmtest,"**",sep = ""),
-		ifelse(CfpPlmTest$Plmtest<0.1,paste(CfpPlmTest$Plmtest,"*",sep = ""),CfpPlmTest$Plmtest)))
- 
+  PlmtestRoa<-ifelse(PlmtestRoa<0.01, paste(PlmtestRoa,"***",sep = ""),
+		ifelse(PlmtestRoa<0.05,paste(PlmtestRoa,"**",sep = ""),
+		ifelse(PlmtestRoa<0.1,paste(PlmtestRoa,"*",sep = ""),PlmtestRoa)))
+  PlmtestTobin<-ifelse(PlmtestTobin<0.01, paste(PlmtestTobin,"***",sep = ""),
+		ifelse(PlmtestTobin<0.05,paste(PlmtestTobin,"**",sep = ""),
+		ifelse(PlmtestTobin<0.1,paste(PlmtestTobin,"*",sep = ""),PlmtestTobin)))
   
 # I test for Fixed Effect Model using pFtest which is a test of individual and/or time effects based on the comparison of the within and the pooling model.
   
@@ -93,38 +88,29 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
   
   ## pFtest
   
-  pFtestRoa <- cbind("Roa", round(pFtest(RoaWithin, RoaPooling)$p.value, digits = 4))
-  
-  pFtestTobin <- cbind("TobinsQ", round(pFtest(TobinWithin, TobinPooling)$p.value, digits = 4))
-  
-
-  ## I consolidate into a table for later reporting 
-  CfppFtest <- as.data.frame(rbind(pFtestRoa, pFtestTobin))
-  colnames(CfppFtest) <- c("DependentVariables", "pFtest")
-  rownames(CfppFtest) <- c()
-  CfppFtest[,2] <- as.numeric(as.character(CfppFtest[,2]))  
+  pFtestRoa <- as.numeric(round(pFtest(RoaWithin, RoaPooling)$p.value, digits = 3))
+  pFtestTobin <- as.numeric(round(pFtest(TobinWithin, TobinPooling)$p.value, digits = 3))
 
   ## Improve p-value understanding
-  CfppFtest$pFtest<-ifelse(CfppFtest$pFtest<0.01, paste(CfppFtest$pFtest,"***",sep = ""),
-		ifelse(CfppFtest$pFtest<0.05,paste(CfppFtest$pFtest,"**",sep = ""),
-		ifelse(CfppFtest$pFtest<0.1,paste(CfppFtest$pFtest,"*",sep = ""),CfppFtest$pFtest)))
-
-
-# I consolidate the p-value of the two tests into a nice stargazer table 
-
-  NiceTable <- merge(CfpPlmTest, CfppFtest, by = "DependentVariables")
-  colnames(NiceTable) <- c("Dependent Variables", "Lagrange Multiplier Test", "F Test")
-  stargazer(NiceTable, summary = FALSE, title = "P-value Reporting", label = "Lag2Test", align = TRUE, type = "latex", header = FALSE, notes = "Note : * p<0.1; ** p<0.05; *** p<0.01", notes.align = "r" )
+  pFtestRoa<-ifelse(pFtestRoa<0.01, paste(pFtestRoa, "***",sep = ""),
+		ifelse(pFtestRoa<0.05,paste(pFtestRoa,"**",sep = ""),
+		ifelse(pFtestRoa<0.1,paste(pFtestRoa,"*",sep = ""),pFtestRoa)))
+  pFtestTobin<-ifelse(pFtestTobin<0.01, paste(pFtestTobin,"***",sep = ""),
+		ifelse(pFtestTobin<0.05,paste(pFtestTobin,"**",sep = ""),
+		ifelse(pFtestTobin<0.1,paste(pFtestTobin,"*",sep = ""),pFtestTobin)))
   
-# Based on the results of the tests, the three models need to be estimated with the fixed effects estimations (i.e. model = "within" in plm). Let's consolidate into a stargazer table
+# Based on the results of the tests, the two models need to be estimated with the pooling ols estimations (i.e. model = "pooling" in plm). Let's consolidate into a nice stargazer table
   
-  stargazer(TobinPooling, RoaPooling, title = "Robustness check : The impact of both process-based and outcome-based CEP on CFP with lag = 2", label = "Lag2", header = FALSE, type = "latex")
+stargazer(TobinPooling, RoaPooling, title = "The impact of both process-based and outcome-based CEP on CFP (lag = 2)", label = "Lag2", header = FALSE, type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
+                           c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
 
 ```
 
+
+\newpage
 ```{r}
 ################################################
-######## The impact of CEP on CFP ##############
+###### GreenScore as an alternative ############
 ################################################
 
 # I have already removed outliers from both model (i.e. Roa and TobinsQ) through the file = "Analysis/MakeFile_RemoveOutliers_Lag1.rmd". Consequently I just need to download them in this file.
@@ -144,21 +130,16 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
 
 
   ## Plmtest
-  PlmtestRoa <- cbind("Roa", round(plmtest(RoaPooling, effect = "time", type = "bp")$p.value, digits = 4))
-  PlmtestTobin <- cbind("TobinsQ", round(plmtest(TobinPooling, effect = "time", type = "bp")$p.value, digits = 4))
-
-  
-  ## I consolidate into a table for later reporting 
-  CfpPlmTest <- as.data.frame(rbind(PlmtestRoa, PlmtestTobin))
-  colnames(CfpPlmTest) <- c("DependentVariables", "Plmtest")
-  rownames(CfpPlmTest) <- c()
-  CfpPlmTest[,2] <- as.numeric(as.character(CfpPlmTest[,2]))  
+  PlmtestRoa <- as.numeric(round(plmtest(RoaPooling, effect = "time", type = "bp")$p.value, digits = 3))
+  PlmtestTobin <- as.numeric(round(plmtest(TobinPooling, effect = "time", type = "bp")$p.value, digits = 3))
 
   ## Improve p-value understanding
-  CfpPlmTest$Plmtest<-ifelse(CfpPlmTest$Plmtest<0.01, paste(CfpPlmTest$Plmtest,"***",sep = ""),
-		ifelse(CfpPlmTest$Plmtest<0.05,paste(CfpPlmTest$Plmtest,"**",sep = ""),
-		ifelse(CfpPlmTest$Plmtest<0.1,paste(CfpPlmTest$Plmtest,"*",sep = ""),CfpPlmTest$Plmtest)))
- 
+  PlmtestRoa<-ifelse(PlmtestRoa<0.01, paste(PlmtestRoa,"***",sep = ""),
+		ifelse(PlmtestRoa<0.05,paste(PlmtestRoa,"**",sep = ""),
+		ifelse(PlmtestRoa<0.1,paste(PlmtestRoa,"*",sep = ""), PlmtestRoa)))
+  PlmtestTobin<-ifelse(PlmtestTobin<0.01, paste(PlmtestTobin,"***",sep = ""),
+		ifelse(PlmtestTobin<0.05,paste(PlmtestTobin,"**",sep = ""),
+		ifelse(PlmtestTobin<0.1,paste(PlmtestTobin,"*",sep = ""),PlmtestTobin)))
   
 # I test for Fixed Effect Model using pFtest which is a test of individual and/or time effects based on the comparison of the within and the pooling model.
   
@@ -169,31 +150,23 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
   
   ## pFtest
   
-  pFtestRoa <- cbind("Roa", round(pFtest(RoaWithin, RoaPooling)$p.value, digits = 4))
+  pFtestRoa <- as.numeric(round(pFtest(RoaWithin, RoaPooling)$p.value, digits = 3))
   
-  pFtestTobin <- cbind("TobinsQ", round(pFtest(TobinWithin, TobinPooling)$p.value, digits = 4))
+  pFtestTobin <- as.numeric(round(pFtest(TobinWithin, TobinPooling)$p.value, digits = 3))
   
-
-  ## I consolidate into a table for later reporting 
-  CfppFtest <- as.data.frame(rbind(pFtestRoa, pFtestTobin))
-  colnames(CfppFtest) <- c("DependentVariables", "pFtest")
-  rownames(CfppFtest) <- c()
-  CfppFtest[,2] <- as.numeric(as.character(CfppFtest[,2]))  
-
   ## Improve p-value understanding
-  CfppFtest$pFtest<-ifelse(CfppFtest$pFtest<0.01, paste(CfppFtest$pFtest,"***",sep = ""),
-		ifelse(CfppFtest$pFtest<0.05,paste(CfppFtest$pFtest,"**",sep = ""),
-		ifelse(CfppFtest$pFtest<0.1,paste(CfppFtest$pFtest,"*",sep = ""),CfppFtest$pFtest)))
+  pFtestRoa<-ifelse(pFtestRoa<0.01, paste(pFtestRoa,"***",sep = ""),
+		ifelse(pFtestRoa<0.05,paste(pFtestRoa,"**",sep = ""),
+		ifelse(pFtestRoa<0.1,paste(pFtestRoa,"*",sep = ""),pFtestRoa)))
+  pFtestTobin<-ifelse(pFtestTobin<0.01, paste(pFtestTobin,"***",sep = ""),
+		ifelse(pFtestTobin<0.05,paste(pFtestTobin,"**",sep = ""),
+		ifelse(pFtestTobin<0.1,paste(pFtestTobin,"*",sep = ""),pFtestTobin)))
 
-
-# I consolidate the p-value of the two tests into a nice stargazer table 
-
-  NiceTable <- merge(CfpPlmTest, CfppFtest, by = "DependentVariables")
-  colnames(NiceTable) <- c("Dependent Variables", "Lagrange Multiplier Test", "F Test")
-  stargazer(NiceTable, summary = FALSE, title = "P-value Reporting", label = "GreenScoreTests", align = TRUE, type = "latex", header = FALSE, notes = "Note : * p<0.1; ** p<0.05; *** p<0.01", notes.align = "r" )
+# Let's consolidate into a stargazer table
   
-# Based on the results of the tests, the three models need to be estimated with the fixed effects estimations (i.e. model = "within" in plm). Let's consolidate into a stargazer table
-  
-  stargazer(TobinPooling, RoaWithin, title = "Robustness check : alternative variable for CEP", label = "GreenScoreResults", header = FALSE, type = "latex")
+stargazer(TobinPooling, RoaWithin, title = "GreenScore - an alternative variable for CEP", label = "GreenScoreResults", header = FALSE, type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
+                           c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
+
 
 ```
+
