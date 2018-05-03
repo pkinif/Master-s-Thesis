@@ -9,7 +9,7 @@ output:
 
 \Huge
 
-{\bf The future is green companies: evidence from top US publicly listed companies}
+{\bf Green companies are the future: evidence from top US publicly listed companies}
 
 \vspace{1cm}
 
