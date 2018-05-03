@@ -1,0 +1,394 @@
+The following R script is the R code used to produce the section : [Results].
+
+### Packages loading {-}
+
+```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
+
+
+# Packages loading 
+
+rm(list=ls()) #Removes all items in the R environment
+if (!require("plm")) install.packages("plm")
+library(plm) 
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr) 
+if (!require("data.table")) install.packages("data.table")
+library(data.table)
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer)
+if (!require("Hmisc")) install.packages("Hmisc")
+library(Hmisc)
+if (!require("lattice")) install.packages("lattice")
+library(lattice)
+if (!require("survival")) install.packages("survival")
+library(survival)
+if (!require("ggplot2")) install.packages("ggplot2")
+library(ggplot2)
+if (!require("car")) install.packages("car")
+library(car)
+if (!require("ggpubr")) install.packages("ggpubr")
+library(ggpubr)
+if (!require("xtable")) install.packages("xtable")
+library(xtable)
+
+```
+
+\newpage
+### DataBase loading {-}
+
+```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
+
+# Database Loading. Here I consider the database with outliers.
+path <- "Analysis/DataBase/DataSynchronization/Lag1.csv"
+DataBase <- read.csv(file = path, header = TRUE, stringsAsFactors = FALSE)
+
+# I create a new df called "model" which contains only variables that I need
+
+Model <- DataBase %>% select(c(YearIndex,
+                       CompaniesIndex,
+                       Roa,
+                       TobinsQ,
+                       DebtToEquityRatio,
+                       NetMargin,
+                       TotalAssets,
+                       GicsClassification,
+                       CarbonProductivity,
+                       WaterProductivity,
+                       WasteProductivity,
+                       SustainabilityPayLink,
+                       SustainableThemedCommitment,
+                       AuditScore,
+                       GreenScore
+                       ))
+
+# I transform the "TotalAssets" column into FirmSize using the log of TotalAssets 
+Model$TotalAssets <- log(Model$TotalAssets)
+
+# I use the natural log for TobinsQ
+Model$TobinsQ <- log(Model$TobinsQ)
+
+# I rename some columns
+
+Model1 <- Model %>% setnames(old = c("DebtToEquityRatio", "TotalAssets", "GicsClassification", "NetMargin", "CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "FirmSize", "Industry", "Growth", "CaP", "WaP", "WastP", "SPL", "STC", "A")) 
+```
+
+\newpage
+### Unpaired two sample t-test {-}
+
+```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
+# unpaired two-samples t-test 
+# I create two vectors.
+Sample1 <- Model1 %>% subset( subset = !is.na(Roa)) %>% select(Roa)
+Sample2 <- Model1 %>% subset( subset = !is.na(TobinsQ)) %>% select(Roa)
+# I carry out the t test
+IdenticalAnalyses <- round(t.test(
+  Sample1, 
+  Sample2, 
+  alternative = "two.sided", 
+  var.equal = FALSE)$p.value, digits = 4)
+# I print the pvalue
+IdenticalAnalyses
+```
+
+### Descriptive statistics {-}
+
+```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
+# Descriptive statistics 
+
+# I remove the column "GreenScore", "CompaniesIndex" and "YearIndex". Right now I do not need it.
+Model2 <- Model1 %>% select(-c(GreenScore, YearIndex, CompaniesIndex))
+
+# I use stargazer to create a table containing descriptive statistics for each variables
+
+stargazer(Model2, 
+          title = "Descriptive statistics",
+          label = "DescriptiveStatistics", 
+          header = FALSE, 
+          type = "latex", 
+          align = FALSE, 
+          table.placement = "b", 
+          digits = 2, 
+          digits.extra = 2)
+```
+
+\newpage
+### Matrix of correlation {-}
+
+```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
+# The following corstars function creates the matrix of correlation. 
+corstars <-function(x, 
+                    method=c("pearson", "spearman"), 
+                    removeTriangle=c("upper", "lower"), 
+                    result=c("none", "html", "latex"))
+  {
+    # Compute correlation matrix
+    require(Hmisc)
+    x <- as.matrix(x)
+    correlation_matrix<-rcorr(x, type=method[1])
+    # Matrix of correlation coeficients
+    R <- correlation_matrix$r 
+    # Matrix of p-value
+    p <- correlation_matrix$P  
+    # Define notions for significance levels; spacing is important.
+    mystars <- ifelse(p < .01, "*** ", 
+                      ifelse(p < .05, "**  ", 
+                             ifelse(p < .1, "*   ", "    ")))
+    # trunctuate the correlation matrix to two decimal
+    R <- format(round(cbind(rep(-1.11, ncol(x)), R), 2))[,-1]
+    # build a new matrix that includes the correlations 
+    # with apropriate stars
+    Rnew <- matrix(paste(R, mystars, sep=""), ncol=ncol(x))
+    diag(Rnew) <- paste(diag(R), " ", sep="")
+    rownames(Rnew) <- colnames(x)
+    colnames(Rnew) <- paste(colnames(x), "", sep="")
+    # remove upper triangle of correlation matrix
+    if(removeTriangle[1]=="upper")
+      {
+      Rnew <- as.matrix(Rnew)
+      Rnew[upper.tri(Rnew, diag = TRUE)] <- ""
+      Rnew <- as.data.frame(Rnew)
+      }
+    # remove lower triangle of correlation matrix
+    else if(removeTriangle[1]=="lower")
+      {
+      Rnew <- as.matrix(Rnew)
+      Rnew[lower.tri(Rnew, diag = TRUE)] <- ""
+      Rnew <- as.data.frame(Rnew)
+      }
+    # remove last column and return the correlation matrix
+    Rnew <- cbind(Rnew[1:length(Rnew)-1])
+    if (result[1]=="none") return(Rnew)
+    else{
+    if(result[1]=="html") print(xtable(Rnew), type="html")
+    else print(xtable(Rnew), type="latex") 
+    }
+  # end of the function
+  } 
+# I use the function on my database (i.e. Model2)
+CorMatrix <- corstars(Model2, 
+                      method = "pearson", 
+                      removeTriangle = "upper",  
+                      result = "none")
+# Right now, names of each variable stand as row names and column names. 
+# I do not need to have dupplicates. 
+# So I keep the names of the variables as names of the row,
+# and I use a number for the names of the column.
+number <- c( 1 : (ncol(Model2) - 1)) #number of variables
+colnames(CorMatrix) <- number
+NewRowNames <- paste(c( 1 : ncol(Model2)), rownames(CorMatrix), sep = ". ")
+rownames(CorMatrix) <- NewRowNames
+# I use stargazer to make a nice table
+table <- stargazer(CorMatrix, 
+                   summary = FALSE, 
+                   type = "latex", 
+                   title = "Correlation Matrix", 
+                   label = "Matrix", 
+                   float=TRUE, 
+                   float.env = "sidewaystable", 
+                   header = FALSE, 
+                   table.placement = "h", 
+                   column.sep.width = "2pt", 
+                   font.size = "small", 
+                   notes = "Note : * p<0.1; ** p<0.05; *** p<0.01", 
+                   notes.align = "r", 
+                   align = TRUE)
+
+```
+
+### Variance inflation factor {-}
+
+```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
+# Variance Inflation Factor  
+
+# I make Model1 a plm database
+
+Model1 <- pdata.frame(Model1, index = c("CompaniesIndex", "YearIndex"))
+
+
+# The vif function can not be used with within model. I need to estimate my models with the pooling model.
+Roa <- plm(Roa ~ SPL + STC + A + CaP + WaP + WastP + Leverage + Growth + FirmSize + Industry, model = "pooling", data = Model1, index = c("YearIndex", "CompaniesIndex"))
+
+TobinsQ <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + Leverage + Growth + FirmSize + Industry, model = "pooling", data = Model1, index = c("YearIndex", "CompaniesIndex"))
+
+
+# VIF Calculation summary in a nice stargazer table
+
+VifRoa <- car::vif(Roa)
+VifTobin <- car::vif(TobinsQ)
+
+
+VifTable <- cbind(VifRoa, VifTobin)
+colnames(VifTable) <- c("Roa", "Tobin's Q")
+
+# summary in a nice stargazer table
+
+stargazer(VifTable, summary = FALSE, title = "Variance Inflation Factor", label = "VIF", header = FALSE, type = "latex", align = TRUE, table.placement = "!", digits = 3)
+```
+
+\newpage
+### The impact of process-based CEP on outcome-based CEP {-}
+
+```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
+# The impact of process-based CEP on outcome-based CEP
+
+# I select only CEP variables in model2. As Model2 is already a pdata.frame, I do not need to reproduce this function on Model3.
+
+Model3 <- Model1 %>% 
+select(c(YearIndex,
+   CompaniesIndex,
+   CaP, 
+   WaP, 
+   WastP, 
+   SPL,
+   STC,
+   A)) 
+
+
+# I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
+
+# Pooling Model
+CarbonPooling <- plm(CaP ~ SPL + STC + A, data = Model3, model="pooling")
+
+WaterPooling <- plm(WaP ~ SPL + STC + A, data = Model3, model="pooling")
+
+WastePooling <- plm(WastP ~ SPL + STC + A, data = Model3, model="pooling")
+
+# Plmtest
+PlmtestCarbon <- as.numeric(round(plmtest(CarbonPooling, effect = "time", type = "bp")$p.value, digits = 3))
+PlmtestWater <- as.numeric(round(plmtest(WaterPooling, effect = "time", type = "bp")$p.value, digits = 3))
+PlmtestWaste <- as.numeric(round(plmtest(WastePooling, effect = "time", type = "bp")$p.value, digits = 3))
+
+# Improve p-value understanding
+PlmtestCarbon<-ifelse(PlmtestCarbon<0.01, paste(PlmtestCarbon,"***",sep = ""),
+ifelse(PlmtestCarbon<0.05,paste(PlmtestCarbon,"**",sep = ""),
+ifelse(PlmtestCarbon<0.1,paste(PlmtestCarbon,"*",sep = ""),PlmtestCarbon)))
+PlmtestWater<-ifelse(PlmtestWater<0.01, paste(PlmtestWater,"***",sep = ""),
+ifelse(PlmtestWater<0.05,paste(PlmtestWater,"**",sep = ""),
+ifelse(PlmtestWater<0.1,paste(PlmtestWater,"*",sep = ""),PlmtestWater)))
+PlmtestWaste<-ifelse(PlmtestWaste<0.01, paste(PlmtestWaste,"***",sep = ""),
+ifelse(PlmtestWaste<0.05,paste(PlmtestWaste,"**",sep = ""),
+ifelse(PlmtestWaste<0.1,paste(PlmtestWaste,"*",sep = ""),PlmtestWaste)))
+
+
+# I test for Fixed Effect Model using pFtest which is a test of individual and/or time effects based on the comparison of the within and the pooling model.
+
+# Within Model with time effect
+
+CarbonWithin <- plm(CaP ~ SPL + STC + A, data = Model3, model="within", effect = "time")
+
+WaterWithin <- plm(WaP ~ SPL + STC + A, data = Model3, model="within", effect = "time")
+
+WasteWithin <- plm(WastP ~ SPL + STC + A, data = Model3, model="within", effect = "time")
+
+# pFtest
+
+pFtestCarbon <- as.numeric(round(pFtest(CarbonWithin, CarbonPooling)$p.value, digits = 3))
+
+pFtestWater <- as.numeric(round(pFtest(WaterWithin, WaterPooling)$p.value, digits = 3))
+
+pFtestWaste <- as.numeric(round(pFtest(WasteWithin, WastePooling)$p.value, digits = 3))
+
+# Improve p-value understanding
+pFtestCarbon<-ifelse(pFtestCarbon<0.01, paste(pFtestCarbon,"***",sep = ""),
+ifelse(pFtestCarbon<0.05,paste(pFtestCarbon,"**",sep = ""),
+ifelse(pFtestCarbon<0.1,paste(pFtestCarbon,"*",sep = ""),pFtestCarbon)))
+pFtestWater<-ifelse(pFtestWater<0.01, paste(pFtestWater,"***",sep = ""),
+ifelse(pFtestWater<0.05,paste(pFtestWater,"**",sep = ""),
+ifelse(pFtestWater<0.1,paste(pFtestWater,"*",sep = ""),pFtestWater)))
+pFtestWaste<-ifelse(pFtestWaste<0.01, paste(pFtestWaste,"***",sep = ""),
+ifelse(pFtestWaste<0.05,paste(pFtestWaste,"**",sep = ""),
+ifelse(pFtestWaste<0.1,paste(pFtestWaste,"*",sep = ""),pFtestWaste)))
+
+
+# Based on the results of the tests, the three models need to be estimated with the fixed effects estimations (i.e. model = "within" in plm). Let's consolidate into a nice stargazer table
+
+stargazer(CarbonWithin, 
+          WaterWithin, 
+          WasteWithin, 
+          title = 
+            "The impact of process-based on outcome-based CEP", 
+          label = "CepResults", 
+          header = FALSE, 
+          type = "latex", 
+          align = FALSE, 
+          model.numbers = FALSE, 
+          table.placement = "!", 
+          add.lines = list(c("BPLM test (pvalue)", PlmtestCarbon, PlmtestWater, PlmtestWaste),
+                   c("F test (pvalue)", pFtestCarbon ,pFtestWater, pFtestWaste)))
+```
+
+
+
+### The impact of CEP on CFP {-}
+
+```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
+# I have already removed outliers from both models (i.e. Roa and TobinsQ) via the file = "Analysis/MakeFile_RemoveOutliers_Lag1.rmd". 
+# Consequently I load the two following databases.
+path <- "Analysis/DataBase/DataSynchronization/NoOutliersLag1/Roa.csv"
+RoaNoOut <- read.csv(file = path, header = TRUE, stringsAsFactors = FALSE)
+path <- "Analysis/DataBase/DataSynchronization/NoOutliersLag1/TobinsQ.csv"
+TobinNoOut <- read.csv(file = path, header = TRUE, stringsAsFactors = FALSE)
+
+# I change names
+RoaNoOut <- RoaNoOut %>% setnames(old = c("FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
+TobinNoOut <- TobinNoOut %>% setnames(old = c("FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
+
+# I make both df a plm dataframe
+RoaNoOut <- RoaNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
+TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
+
+# I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
+
+# Pooling Model
+RoaPooling <- plm(Roa ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="pooling")
+TobinPooling <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model="pooling")
+
+
+# Plmtest
+PlmtestRoa <-as.numeric(round(plmtest(RoaPooling, effect = "time", type = "bp")$p.value, digits = 3))
+PlmtestTobin <-as.numeric(round(plmtest(TobinPooling, effect = "time", type = "bp")$p.value, digits = 3))
+
+# Improve p-value understanding
+PlmtestRoa<-ifelse(PlmtestRoa<0.01, paste(PlmtestRoa,"***",sep = ""),
+ifelse(PlmtestRoa<0.05,paste(PlmtestRoa,"**",sep = ""),
+ifelse(PlmtestRoa<0.1,paste(PlmtestRoa,"*",sep = ""),PlmtestRoa)))
+PlmtestTobin<-ifelse(PlmtestTobin<0.01, paste(PlmtestTobin,"***",sep = ""),
+ifelse(PlmtestTobin<0.05,paste(PlmtestTobin,"**",sep = ""),
+ifelse(PlmtestTobin<0.1,paste(PlmtestTobin,"*",sep = ""),PlmtestTobin)))
+
+# I test for Fixed Effect Model using pFtest which is a test of individual and/or time effects based on the comparison of the within and the pooling model.
+
+# Within Model with time effect
+
+RoaWithin <- plm(Roa ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="within", effect = "time")
+TobinWithin <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
+
+# pFtest
+
+pFtestRoa <- as.numeric(round(pFtest(RoaWithin, RoaPooling)$p.value, digits = 3))
+pFtestTobin <- as.numeric(round(pFtest(TobinWithin, TobinPooling)$p.value, digits = 3))
+
+# Improve p-value understanding
+pFtestRoa<-ifelse(pFtestRoa<0.01, paste(pFtestRoa, "***",sep = ""),
+ifelse(pFtestRoa<0.05,paste(pFtestRoa,"**",sep = ""),
+ifelse(pFtestRoa<0.1,paste(pFtestRoa,"*",sep = ""),pFtestRoa)))
+pFtestTobin<-ifelse(pFtestTobin<0.01, paste(pFtestTobin,"***",sep = ""),
+ifelse(pFtestTobin<0.05,paste(pFtestTobin,"**",sep = ""),
+ifelse(pFtestTobin<0.1,paste(pFtestTobin,"*",sep = ""),pFtestTobin)))
+
+# Based on the results of the tests, TobinsQ need to be estimated with the pooling ols estimations (i.e. model = "pooling" in plm) while Roa with the within effect estimation.. Let's consolidate into a nice stargazer table
+
+stargazer(TobinPooling, 
+          RoaWithin, 
+          title = 
+            "The impact of process and outcome-based CEP on CFP (lag = 1)", 
+          label = "Lag1", 
+          header = FALSE, 
+          type = "latex", 
+          align = FALSE, 
+          model.numbers = FALSE, 
+          table.placement = "!", 
+          add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
+                   c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
+```
+

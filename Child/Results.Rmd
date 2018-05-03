@@ -38,13 +38,10 @@ library(xtable)
 ```
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
-################################################
-############## DataBase loading ################
-################################################
-
+# Database Loading. Here I consider the database with outliers.
 DataBase <- read.csv(file = "Analysis/DataBase/DataSynchronization/Lag1.csv", header = TRUE, stringsAsFactors = FALSE)
 
-#I create a new df called "model" which contains only variables that I need
+## I create a new df called "model" which contains only variables that I need
 
 Model <- DataBase %>% select(c(YearIndex,
                                CompaniesIndex,
@@ -63,13 +60,13 @@ Model <- DataBase %>% select(c(YearIndex,
                                GreenScore
                                ))
 
-# I transform the "TotalAssets" column into FirmSize using the log of TotalAssets 
+## I transform the "TotalAssets" column into FirmSize using the log of TotalAssets 
 Model$TotalAssets <- log(Model$TotalAssets)
 
-# I use the natural log for TobinsQ
+## I use the natural log for TobinsQ
 Model$TobinsQ <- log(Model$TobinsQ)
 
-# I rename some columns
+## I rename some columns
 
 Model1 <- Model %>% setnames(old = c("DebtToEquityRatio", "TotalAssets", "GicsClassification", "NetMargin", "CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "FirmSize", "Industry", "Growth", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
 
@@ -95,7 +92,7 @@ This section gives an overview of the database. \autoref{DescriptiveStatistics} 
 
 \autoref{Matrix} contains the matrix of correlation of my database. There are statistically significant correlations between outcome-based CEP variables (i.e. carbon, water and waste productivity) suggesting that my model could suffer from multicollinearity. \autoref{VIF} reports the variance inflation factor (i.e. VIF) of all the variables. The maximum VIF is 2,477 meaning that there is no multicollinearity in the model [@Obrien2007].
 
-The R code of this section is available in annex [Data](#appendixA-outliers).
+The R scipt of this section *Results* is available in : [Appendix B : Results - R script]. 
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
@@ -212,7 +209,7 @@ stargazer(VifTable, summary = FALSE, title = "Variance Inflation Factor", label 
 
 ## Outliers treatment
 
-@Lyu2015 defines outliers as observations in the dataset that appear to be unusual and discordant and which could lead to inconsistent results. @Osborne2004 have shown that even a small proportion of outliers can significantly affect simple analyses (i.e. t-tests, correlations and ANOVAs). Outliers are an issue only and only if they are influential \footnote{Influential obervations are observations whose  removal causes a different conclusion in the analysis} [@Cousineau2010]. I have used the Cook's distance [@Cook1977] test which is a common statistical tool to assess the influence of outliers [@JPStevens1984, @Cousineau2010, @Zuurprotocoldataexploration2010]. Cook’s Distance observes the difference between the regression paramater of a given model,  \(\hat{\beta}\) and what they become if the \(i_{th}\) data points is deleted, let's say  \(\hat{\beta}_{i}\). One difficulty with treatment of outliers is that the literature have not found common theoretical framework yet for the treatment of influential outliers [@OrrJohn1991, @Cousineau2010]. @Tabachnick2007 argues that the imputation with the mean is the best method while @Cousineau2010 highlight that it tends to reduce the spread of the population, making the observed distribution more leptokurtic, and possibly increase the likelihood of a type-I error. @Dang2009 argue that more elaborate technique involves replacing outliers with possible values while @Barnett1994 would prefer to remove or windsorized them. Alternatively, @Pollet2017 propose an other route to handle outliers and argue that inclusion or exclusion of outliers depend on the significativity of the results, meaning that if results are more significant without outliers, scholars should remove them and vice versa. Following the mindset of @Pollet2017, I have removed outliers from my database. See [Appendix B : Outliers treatment]  for furthers details.
+@Lyu2015 defines outliers as observations in the dataset that appear to be unusual and discordant and which could lead to inconsistent results. @Osborne2004 have shown that even a small proportion of outliers can significantly affect simple analyses (i.e. t-tests, correlations and ANOVAs). Outliers are an issue only and only if they are influential \footnote{Influential obervations are observations whose  removal causes a different conclusion in the analysis} [@Cousineau2010]. I have used the Cook's distance [@Cook1977] test which is a common statistical tool to assess the influence of outliers [@JPStevens1984, @Cousineau2010, @Zuurprotocoldataexploration2010]. Cook’s Distance observes the difference between the regression paramater of a given model,  \(\hat{\beta}\) and what they become if the \(i_{th}\) data points is deleted, let's say  \(\hat{\beta}_{i}\). One difficulty with treatment of outliers is that the literature have not found common theoretical framework yet for the treatment of influential outliers [@OrrJohn1991, @Cousineau2010]. @Tabachnick2007 argues that the imputation with the mean is the best method while @Cousineau2010 highlight that it tends to reduce the spread of the population, making the observed distribution more leptokurtic, and possibly increase the likelihood of a type-I error. @Dang2009 argue that more elaborate technique involves replacing outliers with possible values while @Barnett1994 would prefer to remove or windsorized them. Alternatively, @Pollet2017 propose an other route to handle outliers and argue that inclusion or exclusion of outliers depend on the significativity of the results, meaning that if results are more significant without outliers, scholars should remove them and vice versa. Following the mindset of @Pollet2017, I have removed outliers from my database. See [Appendix C : Outliers treatment]  for furthers details.
 
 
 

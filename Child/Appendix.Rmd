@@ -4,11 +4,15 @@
 
 ```{r child = 'DataBaseConstruction.Rmd'}
 ```
-
 \newpage
-## Appendix B : Outliers treatment {-}
 
-```{r child = 'OutliersTreatment.Rmd'}
+## Appendix B : Results - R script {-}
+
+```{r child = 'Results_rScript.Rmd'}
 ```
 
 \newpage
+## Appendix C : Outliers treatment {-}
+
+```{r child = 'OutliersTreatment.Rmd'}
+```

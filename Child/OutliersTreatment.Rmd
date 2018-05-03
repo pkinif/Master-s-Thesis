@@ -4,7 +4,7 @@ output:
 
 ---
 
-This appendix presents the R code I have used to identify and remove outliers from my database. 
+This appendix presents the R code I have used to identify and remove outliers from my database. This R scipt is the one contains in the following make file : *Analysis/DataBase/MakeFile_RemoveOutliers_Lag1.Rmd*. I have repeated this process three times, namely when dependent variables were lagged one year (see section : [The impact of CEP on CFP]) and two years behind others variables and also when the GreenScore variables was the only independent variables considered into the econometric model (see section : [Sensitivity Analysis]).  
 
 
 
@@ -70,7 +70,7 @@ ModelLag1 <- ModelLag1 %>% setnames(old =
                                         "GicsClassification", 
                                         "NetMargin"), 
                                     new = 
-                                      c("FinancialLeverage", 
+                                      c("Leverage", 
                                         "FirmSize", 
                                         "Industry", 
                                         "Growth"))
@@ -85,7 +85,7 @@ Roa <-lm(Roa ~ SustainabilityPayLink +
            WasteProductivity + 
            FirmSize + 
            Growth + 
-           FinancialLeverage + 
+           Leverage + 
            Industry, 
          data = ModelLag1)
 
@@ -97,7 +97,7 @@ TobinsQ<-lm(TobinsQ ~ SustainabilityPayLink +
               WasteProductivity + 
               FirmSize + 
               Growth + 
-              FinancialLeverage + 
+              Leverage + 
               Industry, 
             data = ModelLag1)
 
@@ -105,7 +105,7 @@ TobinsQ<-lm(TobinsQ ~ SustainabilityPayLink +
 cooksdRoa <- cooks.distance(Roa)
 cooksdTobinsQ <- cooks.distance(TobinsQ)
 
-# I extract rows considered as influential (i.e. observations whose D > 4 * means)
+# I extract rows considered as influential (i.e. observations whose D > 4 * means) and I print them for the reader.
 influentialRoa <- as.numeric(names(cooksdRoa)[(cooksdRoa > 4*mean(cooksdRoa, na.rm=T))]) 
 influentialRoa
 influentialTobin <- as.numeric(names(cooksdTobinsQ)[(cooksdTobinsQ > 4*mean(cooksdTobinsQ, na.rm=T))])
@@ -129,6 +129,7 @@ write.csv(
 
 ```
 
+\newpage
 ```{r message = FALSE, error = FALSE, warning = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55),  results = 'asis', tidy = TRUE, comment = FALSE}
 # I report influencial obervations on a graph
 
@@ -139,7 +140,10 @@ plot(cooksdTobinsQ, pch="*", cex=2)
 abline(h = 4*mean(cooksdTobinsQ, na.rm=T), col="red")
 ### add labels
 text(x=1:length(cooksdTobinsQ)+1, y=cooksdTobinsQ, labels=ifelse(cooksdTobinsQ>4*mean(cooksdTobinsQ, na.rm=T),names(cooksdTobinsQ),""), col="red")  
+```
 
+\newpage
+```{r  message = FALSE, error = FALSE, warning = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55),  results = 'asis', tidy = TRUE, comment = FALSE}
 ## Roa
 ### plot cook's distance
 plot(cooksdRoa, pch="*", cex=2)  
