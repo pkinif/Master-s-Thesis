@@ -10,7 +10,7 @@ urlcolor: black
 linkcolor: black
 citecolor: black
 nocite: | 
-  @Hlavac2018, @Gandrud2013b
+  @Hlavac2018
 header-includes:
 - \usepackage{placeins}
 - \usepackage{fancyhdr}
@@ -24,7 +24,7 @@ header-includes:
 ---
 
 
-<!-- The following latex function allow to avoid that footnotes split up accros two pages-->
+<!-- The following latex function avoid that footnotes are splited up accros two pages-->
 
 \interfootnotelinepenalty=10000 
 
@@ -51,6 +51,12 @@ rm(list=ls()) #Removes all items in Environment!
 \fancyhead[CO,CE]{Abstract}
 
 ```{r child = 'Abstract.Rmd'}
+```
+
+\newpage
+\fancyhead[CO,CE]{Author's Note}
+
+```{r child = 'AuthorNote.Rmd'}
 ```
 
 \newpage

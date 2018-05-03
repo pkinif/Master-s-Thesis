@@ -16,3 +16,9 @@
 
 ```{r child = 'OutliersTreatment.Rmd'}
 ```
+
+\newpage
+## Appendix D : Sensitivity Analysis - R script {-}
+
+```{r child = 'SensitivityAnalysis_rScript.Rmd'}
+```

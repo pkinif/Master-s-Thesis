@@ -1,0 +1,71 @@
+
+# Author's Note {-}
+
+This master's thesis has been written in *R Markdown* [@Allaire2016] in order to make it *transparent* and *reproducible* for the reader. All ressources are available on my Github account at the following url path : https://github.com/pkinif/Thesis.  The latter is organised following the methodology of @Gandrud2013b. Each section of this thesis corresponds to a R Markdown file in the *Child* folder. The *Child/ThesisSkeleton.Rmd* file is the "parent" document which merges all the "child" documents into a consolidated pdf document, namely the one you are reading. The *Child/Analysis* sub-folders contains a list of R script (i.e. Make files) whose outputs are saved into the following sub-folders *Child/Analysis/DataBase*.
+
+The platform I have used is [Rstudio](https://www.rstudio.com/) which is an open source software for R. Here is the information of my session : 
+
+
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE}
+
+
+# Packages loading 
+
+rm(list=ls()) #Removes all items in the R environment
+if (!require("plm")) install.packages("plm")
+library(plm) 
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr) 
+if (!require("data.table")) install.packages("data.table")
+library(data.table)
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer)
+if (!require("Hmisc")) install.packages("Hmisc")
+library(Hmisc)
+if (!require("purrr")) install.packages("purrr")
+library(purrr)
+if (!require("lattice")) install.packages("lattice")
+library(lattice)
+if (!require("survival")) install.packages("survival")
+library(survival)
+if (!require("ggplot2")) install.packages("ggplot2")
+library(ggplot2)
+if (!require("xts")) install.packages("xts")
+library(xts) 
+if (!require("PerformanceAnalytics")) install.packages("PerformanceAnalytics")
+library(PerformanceAnalytics) 
+if (!require("tibble")) install.packages("tibble")
+library(tibble) 
+if (!require("tidyquant")) install.packages("tidyquant")
+library(tidyquant) 
+if (!require("car")) install.packages("car")
+library(car)
+if (!require("ggpubr")) install.packages("ggpubr")
+library(ggpubr)
+if (!require("xtable")) install.packages("xtable")
+library(xtable)
+if (!require("rvest")) install.packages("rvest")
+library(rvest) 
+if (!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+if (!require("rlist")) install.packages("rlist")
+library(rlist)
+if (!require("RCurl")) install.packages("RCurl")
+library(RCurl)
+if (!require("utils")) install.packages("utils")
+library(utils) #to dowload db
+if (!require("tibble")) install.packages("tibble")
+library(tibble) 
+if (!require("lubridate")) install.packages("lubridate")
+library(lubridate) 
+if (!require("tidyr")) install.packages("tidyr")
+library(tidyr)
+if (!require("plyr")) install.packages("plyr")
+library(plyr)
+```
+
+
+```{r tidy = TRUE}
+sessionInfo()
+```
+

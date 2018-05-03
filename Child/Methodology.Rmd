@@ -9,7 +9,7 @@ header-includes:
 
 ## Panel Data : a theoretical background
 
-This study uses the panel data methodology which is a common approach to adress the CFP-CEP nexus [@Albertini2013]. Panel data analysis is considered to be one of the most efficient analytical methods for data analysis [@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007, @Hsiao2014]. @Roberts2013 also argued that using panel data offers a partial, but by no means complete and costless, solution to the problem of omitted variables in econometric model, namely the most common causes of endogeneity in empirical corporate finance. Panel data takes the following econometric form :  
+This study uses the panel data methodology which is a common approach to adress the CFP-CEP nexus [@Albertini2013]. Panel data analysis is considered to be one of the most efficient analytical methods for data analysis [@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007]. @Roberts2013 also argued that using panel data offers a partial, but by no means complete and costless, solution to the problem of omitted variables in econometric model, namely the most common causes of endogeneity in empirical corporate finance. Panel data takes the following econometric form :  
 
 \begin{equation}
 \centering

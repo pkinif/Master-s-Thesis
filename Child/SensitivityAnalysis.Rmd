@@ -41,6 +41,7 @@ where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(GS_{it}\) i
 
 The model using TobinsQ as a proxy for CFP had been estimated with the *pooled ols estimators* while the model using Roa uses the *fixed effect estimation*. Results are reported in table \ref{GreenScoreResults} and confirms findings of the previous section. Consequently, the sensitivity analysis supports that CEP do have a significant and positive effect on CFP (short and long-term). 
 
+R script of this section is in the [Appendix D : Sensitivity Analysis - R script].
 
 \newpage
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}

@@ -9,18 +9,18 @@ output:
 
 \Huge
 
-{\bf This is the title of my thesis}
+{\bf The future is green companies: evidence from top US publicly listed companies}
 
-\vspace{1.5cm}
+\vspace{1cm}
 
 \Large
 Pierrick Kinif
 
-\vspace{1.5cm}
+\vspace{1cm}
 
 
 \normalsize
-A thesis submitted for the Master's Degree in Business Management and Administration, Finance Specialization
+Thesis submitted for the Master's Degree in Business Management and Administration
 
 
 \vspace{0.5cm}
