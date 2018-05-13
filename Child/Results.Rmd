@@ -61,10 +61,10 @@ Model <- DataBase %>% select(c(YearIndex,
                                ))
 
 ## I transform the "TotalAssets" column into FirmSize using the log of TotalAssets 
-Model$TotalAssets <- log(Model$TotalAssets)
+Model$TotalAssets <- log10(Model$TotalAssets)
 
 ## I use the natural log for TobinsQ
-Model$TobinsQ <- log(Model$TobinsQ)
+Model$TobinsQ <- log10(Model$TobinsQ)
 
 ## I rename some columns
 
