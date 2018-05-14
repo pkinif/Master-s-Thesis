@@ -1,6 +1,48 @@
 # Introduction {-}
 
-Over the past decades, humanity is progressively becoming aware of the finiteness of earth’s resources and its impact on the current global warming. On the one hand, @HoughtonClimateChange19951996 anticipated in their first report an average global warming between +1° and +3.5° C until 2100 relative to the temperature of 1990. They also warned that an increase of temperatures superior to +2° C could have some harsh climatic repercussions. On the other hand the Kyoto Protocol had been written in 1997, enforced in 2005 and led to the first Global Agreement on global warming during the Paris Conference in 2015. Those different solutions implemented over the past decades did not have any significant impacts on the fight against global warming. Greenhouse Gas Emissions (GGE) have still increased considerably across years. Although the environmental consciousness-raising had already gained ground, according to @JeanJouzel2017 human being have to act now if he wants to have a chance to reduce effects of climate change. 
+Over the past decades, humanity is progressively becoming aware of the finiteness of earth’s resources and its impact on the current global warming. The club of Rome, with the book *"The limits to growth"*,  was pioneers in this awareness. They concluded that  *"... if the present growth trends in world population, industrialization, pollution, food production, resource depletion continue unchanged, the limits to growth on this planet will be reached sometime within the next one hundred years"* [@Meadows1972 : p23]. In the nineties, @HoughtonClimateChange19951996 have also warned human kind. They argued in their report that *"most emission scenarios indicate that, in the absence of mitigation policies, greenhouse gas emissions will continue to rise during the next century"* (p9). This will *"increase the global mean surface air temperature relative to 1990 of about 2°C by 2100 ... leading to harsh climatic repercussions"* (p23). 
+
+In 2018, the situation provides evidences that humanity was not listening. Today, we have to face the consequences of our actions.  
+
+1. Global temperature rise
+[@Hansen2010]
+[@GISTEMPTeam2018]
+The planet's average surface temperature has risen about 2.0 degrees Fahrenheit (1.1 degrees Celsius) since the late 19th century, a change driven largely by increased carbon dioxide and other human-made emissions into the atmosphere.5 Most of the warming occurred in the past 35 years, with 16 of the 17 warmest years on record occurring since 2001. 
+
+2. Ocean temperature rise
+[@Levitus2009]
+The oceans have absorbed much of this increased heat, with the top 700 meters (about 2,300 feet) of ocean showing warming of 0.302 degrees Fahrenheit since 1969
+
+3. Shrinking ice sheets 
+The Greenland and Antarctic ice sheets have decreased in mass. Data from NASA's Gravity Recovery and Climate Experiment show Greenland lost 150 to 250 cubic kilometers (36 to 60 cubic miles) of ice per year between 2002 and 2006, while Antarctica lost about 152 cubic kilometers (36 cubic miles) of ice between 2002 and 2005.
+
+4. Decrease snow cover 
+[@zotero-1758]
+[@Derksen2012]
+Satellite observations reveal that the amount of spring snow cover in the Northern Hemisphere has decreased over the past five decades and that the snow is melting earlier.
+
+5. See level rise
+Global sea level rose about 8 inches in the last century. The rate in the last two decades, however, is nearly double that of the last century.
+[@Church2006]
+
+6. Ocean acidification
+Since the beginning of the Industrial Revolution, the acidity of surface ocean waters has increased by about 30 percent.11,12 
+[@zotero-1764]
+This increase is the result of humans emitting more carbon dioxide into the atmosphere and hence more being absorbed into the oceans. The amount of carbon dioxide absorbed by the upper layer of the oceans is increasing by about 2 billion tons per year.
+[@Sabine2004]
+
+7. Glacial retreat
+Glaciers are retreating almost everywhere around the world — including in the Alps, Himalayas, Andes, Rockies, Alaska and Africa.
+[@zotero-1768]
+
+8. Plastic pollution
+In 70 years the world production of plastic have literally exploded passing from 2 million metric tons (Mt) in 1950 to 380 Mt in 2015, namely a compound annual growth rate (GACR) of 8.4%.
+[@GeyerProductionusefate2017]
+
+
+
+
+On the other hand the Kyoto Protocol had been written in 1997, enforced in 2005 and led to the first Global Agreement on global warming during the Paris Conference in 2015. Those different solutions implemented over the past decades did not have any significant impacts on the fight against global warming. Greenhouse Gas Emissions (GGE) have still increased considerably across years. Although the environmental consciousness-raising had already gained ground, according to @JeanJouzel2017 human being have to act now if he wants to have a chance to reduce effects of climate change. 
 
 For the last several decades, companies have been more and more considered as entities responsible for stewardship of the natural environment [@MajumdarRulesDiscretionProductivity2001; @PrzychodzenRelationshipsecoinnovationfinancial2015]. Ecosystem degradation and resources depletion engender a threat to firm’s longevity [@Dowell2000], and as a reaction, firms have to pro-actively adopt an environmental strategy [@HartNaturalResourceBasedViewFirm1995]. In his speech at Lloyds of London 2015, Mark Carney, Governor of the Bank of England and Chair of the Financial Stability Board (FSB), identified climate change as one of the most material threats to financial stability [@Elliott2015]. Companies facing higher risks associated to climate change are the ones subject to greater incentives to develop green strategies [@HoffmanClimateChangeStrategy2005]. However, both economic benefits and strategic opportunities deriving from sustainable development are usually underestimated by managers and still too many companies do not feel concerned about global warming [@Berchicci11PostcardsEdge2007; @HartNaturalResourceBasedViewFirm1995]. Moreover, according to @Scarpellinieconomicfinanceinterface2016, green projects are not common in companies of many countries because of significant barriers and a negligible culture of excluding sustainable development from an organization’s strategy. If we consider that people’s actions reflect a variable mix of altruistic motivation, material self-interest, and social or self-image concerns [@BenabouIncentivesProsocialBehavior2006], demonstrating that green development is a significant interest for firms could be a serious step forward in the fight against global warming.
 

@@ -4,11 +4,13 @@ output:
     fig_caption: yes
     number_sections: yes
 bibliography: References.bib
+csl:  apa.csl 
+link-citations: yes
 fontsize: 11pt
 geometry: margin = 1.2in
 urlcolor: black
-linkcolor: black
-citecolor: black
+linkcolor: blue
+citecolor: blue
 nocite: | 
   @Hlavac2018
 header-includes:
