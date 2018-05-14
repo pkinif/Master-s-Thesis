@@ -1,67 +1,15 @@
 # Introduction {-}
 
-Over the past decades, humanity is progressively becoming aware of the finiteness of earth’s resources and its impact on the current global warming. The club of Rome, with the book *"The limits to growth"*,  was pioneers in this awareness. They concluded that  *"... if the present growth trends in world population, industrialization, pollution, food production, resource depletion continue unchanged, the limits to growth on this planet will be reached sometime within the next one hundred years"* [@Meadows1972 : p23]. In the nineties, @HoughtonClimateChange19951996 have also warned human kind. They argued in their report that *"most emission scenarios indicate that, in the absence of mitigation policies, greenhouse gas emissions will continue to rise during the next century"* (p9). This will *"increase the global mean surface air temperature relative to 1990 of about 2°C by 2100 ... leading to harsh climatic repercussions"* (p23). 
+Over the past decades, humanity is progressively becoming aware of the finiteness of earth’s resources and its impact on the current global warming. The club of Rome, with the book *"The limits to growth"*,  was pioneers in this awareness. They concluded that  *"if the present growth trends in world population, industrialization, pollution, food production, resource depletion continue unchanged, the limits to growth on this planet will be reached sometime within the next one hundred years"* [@Meadows1972 : p23]. In the nineties, @HoughtonClimateChange19951996 have also warned human kind. They argued in their report that *"most emission scenarios indicate that, in the absence of mitigation policies, greenhouse gas emissions will continue to rise during the next century"* (p9). This will *"increase the global mean surface air temperature relative to 1990 of about 2°C by 2100 ... leading to harsh climatic repercussions"* (p23). 
 
-In 2018, the situation provides evidences that humanity was not listening. Today, we have to face the consequences of our actions.  
+In 2018, the current situation provides evidences that humanity was not listening. The global level of carbon dioxide has never been so high (i.e. 407.20 ppm in May 2018). According to the NOAA's Annual Greenhouse Gas Index, the atmospheric abundance of CO2 has increased by an average of 1.80 ppm per year over the past 38 years (i.e. 1979-2016) [@Butler2016]. Since the last 19th century, the average temperature of the planet increased by 1.1 degrees Celsius. Most of the warming occurred in the past 35 years, with 16 of the 17 warmest years on record occurring since 2001. [@Hansen2010, @GISTEMPTeam2018]. Data from NASA's Gravity Recovery and Climate Experiment show Greenland lost 150 to 250 cubic kilometers (i.e. 36 to 60 cubic miles) of ice per year between 2002 and 2006, while Antarctica lost about 152 cubic kilometers (i.e. 36 cubic miles) of ice between 2002 and 2005 [@GISTEMPTeam2018]. @Church2006 has shown that, in the last century, the global sea level rose about 8 inches (i.e. 20.32 cm). @Sabine2004 desmonstrated that oceans have absorbed about the third of the carbon dioxide produced from human activities since 1800 and about the half of the carbon dioxide produced by burning fossil fuels. Consequently, since the beginning of the Industrial Revolution, the acidity of surface ocean waters has increased by about 30 percent [@NOAAsPacificMarineEnvironmentalLaboratory] leading, *inter alia*, to harsh repercussions to corals.
 
-1. Global temperature rise
-[@Hansen2010]
-[@GISTEMPTeam2018]
-The planet's average surface temperature has risen about 2.0 degrees Fahrenheit (1.1 degrees Celsius) since the late 19th century, a change driven largely by increased carbon dioxide and other human-made emissions into the atmosphere.5 Most of the warming occurred in the past 35 years, with 16 of the 17 warmest years on record occurring since 2001. 
+Today, we need to open our eyes and face the consequences of our actions in order to move forward and improve the global situation. The statu quo need to be challenged. As argued by @JeanJouzel2017, *"human beings have to act now if they want to have a chance to reduce effects of climate change"*. The first Global Agreement on global warming during the Paris Conference in 2015 and the 17 Sustainable Development Goals (i.e. SDG) of the United Nation give hope. The @BusinessandSustainableDevelopmentCommission2017 p12) report stated: *"... businesses need to pursue social and environmental sustainability as avidly as they pursue market share and shareholder value. If a critical mass of companies joins us in doing this now, together we will become an unstoppable force. If they don’t, the costs and uncertainty of unsustainable development could swell until there is no viable world in which to do business."* Futhermore, ecosystem degradation and resources depletion engender a threat to firm’s longevity [@Dowell2000]. In his speech at Lloyds of London 2015, Mark Carney, Governor of the Bank of England and Chair of the Financial Stability Board , identified climate change as one of the most material threats to financial stability [@Elliott2015]. In other words, adopting environmental strategies ensure companies' competitiveness and survival in the near future. 
 
-2. Ocean temperature rise
-[@Levitus2009]
-The oceans have absorbed much of this increased heat, with the top 700 meters (about 2,300 feet) of ocean showing warming of 0.302 degrees Fahrenheit since 1969
+@Testa2018 have shown that, due to institutional pressure or the influence of stakeholders, a majority of companies have integrated, either substantially or symbolically (i.e. green washing), proactive environmental practises. However, according to @Scarpellinieconomicfinanceinterface2016, green projects are still not common in companies of many countries because of significant barriers and a negligible culture of excluding sustainable development from an organization’s strategy. If we consider that people’s actions reflect a variable mix of altruistic motivation, material self-interest, and social or self-image concerns [@BenabouIncentivesProsocialBehavior2006], demonstrating that green strategies implementation has a significant financial interest for companies could convince them to incorporate sustainability into their core values and actions. Consequently, using a panel data of 393 US publicly-traded companie for the period 2012-2014, this study explores whether Corporate Environmental Performance (i.e. CEP) positively influences Corporate Financial Performance (i.e. CFP) and observes the time influence (i.e. short vs long term) of the relationship. 
 
-3. Shrinking ice sheets 
-The Greenland and Antarctic ice sheets have decreased in mass. Data from NASA's Gravity Recovery and Climate Experiment show Greenland lost 150 to 250 cubic kilometers (36 to 60 cubic miles) of ice per year between 2002 and 2006, while Antarctica lost about 152 cubic kilometers (36 cubic miles) of ice between 2002 and 2005.
+The rest of the paper is organized as follows: the next section reviews the literature regarding the CEP-CFP nexus. Then, I describe my database and methodology. Next, the results are presented and discussed. Finally, I summarize the main contributions to the literature and highlight potential future researchs.
 
-4. Decrease snow cover 
-[@zotero-1758]
-[@Derksen2012]
-Satellite observations reveal that the amount of spring snow cover in the Northern Hemisphere has decreased over the past five decades and that the snow is melting earlier.
-
-5. See level rise
-Global sea level rose about 8 inches in the last century. The rate in the last two decades, however, is nearly double that of the last century.
-[@Church2006]
-
-6. Ocean acidification
-Since the beginning of the Industrial Revolution, the acidity of surface ocean waters has increased by about 30 percent.11,12 
-[@zotero-1764]
-This increase is the result of humans emitting more carbon dioxide into the atmosphere and hence more being absorbed into the oceans. The amount of carbon dioxide absorbed by the upper layer of the oceans is increasing by about 2 billion tons per year.
-[@Sabine2004]
-
-7. Glacial retreat
-Glaciers are retreating almost everywhere around the world — including in the Alps, Himalayas, Andes, Rockies, Alaska and Africa.
-[@zotero-1768]
-
-8. Plastic pollution
-In 70 years the world production of plastic have literally exploded passing from 2 million metric tons (Mt) in 1950 to 380 Mt in 2015, namely a compound annual growth rate (GACR) of 8.4%.
-[@GeyerProductionusefate2017]
-
-
-
-
-On the other hand the Kyoto Protocol had been written in 1997, enforced in 2005 and led to the first Global Agreement on global warming during the Paris Conference in 2015. Those different solutions implemented over the past decades did not have any significant impacts on the fight against global warming. Greenhouse Gas Emissions (GGE) have still increased considerably across years. Although the environmental consciousness-raising had already gained ground, according to @JeanJouzel2017 human being have to act now if he wants to have a chance to reduce effects of climate change. 
-
-For the last several decades, companies have been more and more considered as entities responsible for stewardship of the natural environment [@MajumdarRulesDiscretionProductivity2001; @PrzychodzenRelationshipsecoinnovationfinancial2015]. Ecosystem degradation and resources depletion engender a threat to firm’s longevity [@Dowell2000], and as a reaction, firms have to pro-actively adopt an environmental strategy [@HartNaturalResourceBasedViewFirm1995]. In his speech at Lloyds of London 2015, Mark Carney, Governor of the Bank of England and Chair of the Financial Stability Board (FSB), identified climate change as one of the most material threats to financial stability [@Elliott2015]. Companies facing higher risks associated to climate change are the ones subject to greater incentives to develop green strategies [@HoffmanClimateChangeStrategy2005]. However, both economic benefits and strategic opportunities deriving from sustainable development are usually underestimated by managers and still too many companies do not feel concerned about global warming [@Berchicci11PostcardsEdge2007; @HartNaturalResourceBasedViewFirm1995]. Moreover, according to @Scarpellinieconomicfinanceinterface2016, green projects are not common in companies of many countries because of significant barriers and a negligible culture of excluding sustainable development from an organization’s strategy. If we consider that people’s actions reflect a variable mix of altruistic motivation, material self-interest, and social or self-image concerns [@BenabouIncentivesProsocialBehavior2006], demonstrating that green development is a significant interest for firms could be a serious step forward in the fight against global warming.
-
-**Prendre en compte les remarques de Prof. Béreau 050418, see pdf dans dropbox**
-
-
-**To be continued...**
-
-<!--  Continue with somethink like this :
-
-From Delmas et al 2015 :
-
-In this study, the impacts of corporate green practices on CFP are examined following the sustainable-value framework proposed by Hart and
-Milstein (2003). Using a panel of 3490 publicly-traded firms from 58 countries for the period 2002e2014, this study explores whether internal and external green practices are able, individually and in combination, to improve CFP at company level. Corporate green practices’ effects on both market-based and accountingbased measures of CFP are examined.
-
-The rest of the paper is organized as follows: the next section
-provides an overview of the main findings emerging from the literature related to the hypotheses of the study. After that, the dataset and the estimation methodology are described. Next, the results are presented and discussed. The last section discusses the main contributions to the literature and avenues for future research.
-
--->
 
 
 
