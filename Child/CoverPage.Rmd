@@ -36,7 +36,7 @@ Supervised by:\\
 
 Prof. Sophie Béreau\\
 Prof. Jean-Yves Gnabo
-\vspace{1.5cm}
+\vspace{1cm}
 
 
 

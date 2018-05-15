@@ -10,7 +10,7 @@ The research framework of this study is summarized in the figure \ref{ResearchFr
 
 \begin{figure}[!b]
 \centering
-\includegraphics{figures/ResearchFramework.jpg}
+\includegraphics[width=14cm, height=12cm]{figures/ResearchFramework.jpg}
 \caption{Research Framework}
 \label{ResearchFramework}
 \end{figure}
