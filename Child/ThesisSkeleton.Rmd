@@ -39,7 +39,7 @@ rm(list=ls()) #Removes all items in Environment!
 
 \pagenumbering{gobble} 
 
-```{r child = 'Coverpage.Rmd'}
+```{r child = 'UnamurCoverpage.Rmd'}
 ```
 
 

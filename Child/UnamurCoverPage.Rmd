@@ -1,0 +1,51 @@
+---
+output:
+  pdf_document
+header-includes:
+- \usepackage{fancyhdr}
+---
+
+\begin{centering}
+
+
+
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=7cm, height=7cm]{figures/UNamur.png}
+\end{figure}
+
+\vspace{2cm}
+
+\Large
+{\bf Green companies are the future:\\ evidence from US publicly traded companies}
+
+\vspace{2cm}
+
+\Large
+{\bf Pierrick Kinif}
+
+\vspace{1cm}
+\normalsize
+Supervised by:\\
+\vspace{0.5cm}
+
+Prof. Sophie Béreau\\
+Prof. Jean-Yves Gnabo
+\vspace{1cm}
+
+\normalsize
+Thesis submitted for the Master's Degree \\
+in Business Management and Administration, \\
+Finance Specialization
+
+\vspace{1cm}
+\normalsize
+{\bf ACADEMIC YEAR 2017-2018\\}
+\end{centering}
+
+\pagestyle{fancy}
+\cfoot{\small University of Namur, ASBL\\
+Faculty of Economics, Social Sciences and Business Administration – Department in Management\\
+Rempart de la Vierge 8, B-5000 Namur, Belgique, Phone. +32 [0]81 72 48 41/49 58, Fax +32 [0]81 72 48 40}
+\renewcommand{\footrulewidth}{0.5pt}
