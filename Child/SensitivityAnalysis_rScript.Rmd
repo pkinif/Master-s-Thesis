@@ -24,10 +24,10 @@ library(stargazer)
 
 # I have already removed outliers from both models (i.e. Roa and TobinsQ) via the file = "Analysis/MakeFile_RemoveOutliers_Lag2.rmd". 
 # Consequently I just need to load folowing databases.
-path <- "Analysis/DataBase/DataSynchronization/NoOutliersLag2/Roa.csv"
-RoaNoOut <- read.csv(file = path, header = TRUE, stringsAsFactors = FALSE)
-path <- "Analysis/DataBase/DataSynchronization/NoOutliersLag2/TobinsQ.csv"
-TobinNoOut <- read.csv(file = path, header = TRUE, stringsAsFactors = FALSE)
+p <- "Analysis/DataBase/DataSynchronization/NoOutliersLag2/Roa.csv"
+RoaNoOut <- read.csv(file = p, header = TRUE, stringsAsFactors = FALSE)
+p <- "Analysis/DataBase/DataSynchronization/NoOutliersLag2/TobinsQ.csv"
+TobinNoOut <- read.csv(file = p, header = TRUE, stringsAsFactors = FALSE)
 
 # I change names
 RoaNoOut <- RoaNoOut %>% setnames(old = c("FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
@@ -65,8 +65,10 @@ TobinWithin <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leve
 
 # pFtest
 
-pFtestRoa <- as.numeric(round(pFtest(RoaWithin, RoaPooling)$p.value, digits = 3))
-pFtestTobin <- as.numeric(round(pFtest(TobinWithin, TobinPooling)$p.value, digits = 3))
+pFtestRoa <- round(pFtest(RoaWithin, 
+                          RoaPooling)$p.value, digits = 3)
+pFtestTobin <- round(pFtest(TobinWithin, 
+                            TobinPooling)$p.value, digits = 3)
 
 # Improve p-value understanding
 pFtestRoa<-ifelse(pFtestRoa<0.01, paste(pFtestRoa, "***",sep = ""),
@@ -77,11 +79,10 @@ pFtestTobin<-ifelse(pFtestTobin<0.01, paste(pFtestTobin,"***",sep = ""),
 	ifelse(pFtestTobin<0.1,paste(pFtestTobin,"*",sep = ""),pFtestTobin)))
 
 # Based on the results of the tests, the two models need to be estimated with the pooling ols estimations (i.e. model = "pooling" in plm). Let's consolidate into a nice stargazer table
-
+titre <- "The impact of process and outcome-based CEP on CFP (lag = 2)"
 stargazer(TobinPooling, 
           RoaPooling, 
-          title = 
-            "The impact of process and outcome-based CEP on CFP (lag = 2)", 
+          title = titre, 
           label = "Lag2", 
           header = FALSE, 
           type = "latex", 
@@ -91,7 +92,7 @@ stargazer(TobinPooling,
           add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
                          c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
 ```
-
+\newpage
 ### Green Score as an alternative {-}
 
 ```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}

@@ -6,7 +6,7 @@ output:
 bibliography: References.bib
 #csl:  freie-universitat-berlin-geographische-wissenschaften.csl 
 #csl : apa.csl
-csl: elsevier-harvard.csl
+csl: CSL/elsevier-harvard.csl
 link-citations: yes
 fontsize: 12pt
 geometry: margin = 1.2in

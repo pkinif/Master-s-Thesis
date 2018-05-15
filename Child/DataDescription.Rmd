@@ -30,10 +30,10 @@ The starting point of my data collection was the Newsweek Green Ranking. This ra
 Even though green rankings were published in 2014, 2015 and 2016, each company is evaluated based on 2012, 2013 and 2014 data. Therefore, measures for financial performance of companies will be based on 2012, 2013 and 2014 fundamental data. Financial data have been collected on [Morningstar](http://www.morningstar.be/be/default.aspx), [Stockpup](http://www.stockpup.com/) and [Ycharts](https://ycharts.com/) using R code. The data collection process is described in [Appendix A: Database construction]. Of the 405 initial companies, a total of 12 were dropped because of missing data. The final sample includes 393 publicly-traded companies in the US covering the period from 2012 till 2014 inclusively. 
 
 \autoref{VarDef} gives an overview of variables of the econometric model. Following sections deeply explain each variable.
-
+"Leverage", "FirmSize", "Industry", "Growth", "CaP", "WaP", "WastP", "SPL", "STC", "A")
 ```{r echo = FALSE, message = FALSE, warning = FALSE,  results='asis', error = FALSE}
 
-Variables <- c("ROA", "Tobins Q", "Carbon Productivity", "Water Productivity", "Waste Productivity", "Sustainability Pay Link", "Sustainable Themed Commitment", "Audit Score", "Financial Leverage", "Growth", "Firm Size", "Industry")
+Variables <- c("ROA", "Tobin's Q", "CaP", "WaP", "WastP", "SPL", "STC", "A", "Leverage", "Growth", "Firm Size", "Industry")
 
 Description <- c("Earnings before interest over total firm assets",
                  "The ratio of a firm’s market value to the replacement cost of its assets",
@@ -51,7 +51,7 @@ Description <- c("Earnings before interest over total firm assets",
 Table <- as.data.frame(cbind(Variables, Description))
 colnames(Table) <- c("Variables", "Description")
 
-table <- xtable(Table, caption = "Variables Description", label ="VarDef", align = c("l","p{4cm}", "p{10cm}"))
+table <- xtable(Table, caption = "Variables Description", label ="VarDef", align = c("l","p{3cm}", "p{10cm}"))
 
 print.xtable(table, comment=FALSE, caption.placement = "top", table.placement = "h", hline.after = c(-1,-1,0,12))
 

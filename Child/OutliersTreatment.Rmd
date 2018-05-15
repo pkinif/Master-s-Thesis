@@ -1,21 +1,19 @@
 ---
 output:
   pdf_document
-
+header-includes:
+- \usepackage{color}
 ---
-
-This appendix presents the R code I have used to identify and remove outliers from my database. This R scipt is the one contains in the following make file : *Analysis/DataBase/MakeFile_RemoveOutliers_Lag1.Rmd*. I have repeated this process three times, namely when dependent variables were lagged one year (see section : [The impact of CEP on CFP]) and two years behind others variables and also when the GreenScore variables was the only independent variables considered into the econometric model (see section : [Sensitivity Analysis]).  
-
-
+\pagecolor{apricot}
+This appendix presents the R code used to identify and remove outliers from the database. This R scipt is the one contains in the makefile : *Analysis/DataBase/MakeFile_RemoveOutliers_Lag1.Rmd*. This step had been repeated three times : (i) when dependent variables were lagged one year (see section: [The impact of CEP on CFP]) and (ii) two years behind others variables and (iii) when the GreenScore variables was the only independent variables considered into the econometric model (see section: [Sensitivity Analysis]).  
 
 
-```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55) }
-
-
+```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), background = "snow"}
 # Packages loading 
-
 if (!require("dplyr")) install.packages("dplyr")
-library(dplyr) 
+library(dplyr)
+if (!require("grDevices")) install.packages("grDevices")
+library(grDevices)
 if (!require("data.table")) install.packages("data.table")
 library(data.table)
 if (!require("formatR")) install.packages("formatR")
@@ -26,7 +24,6 @@ library(highlight)
 ```
 
 ```{r message = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE}
-
 # Database Loading 
 path <- "Analysis/DataBase/DataSynchronization/Lag1.csv"
 Lag1 <- read.csv(
@@ -38,43 +35,42 @@ Lag1 <- read.csv(
 
 
 ```{r message = FALSE, error = FALSE, warning = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55),  results = 'asis', tidy = TRUE, comment = FALSE}
-
-# Select only variables that I need for my models
-ModelLag1 <- Lag1 %>% select(c(YearIndex,
-                               CompaniesIndex,
-                               Roa,
-                               TobinsQ,
-                               DebtToEquityRatio,
-                               NetMargin,
-                               TotalAssets,
-                               GicsClassification,
-                               CarbonProductivity,
-                               WaterProductivity,
-                               WasteProductivity,
-                               SustainabilityPayLink,
-                               SustainableThemedCommitment,
-                               AuditScore
-                               ))
+# Select only variables that I need for my model
+ModelLag1 <- Lag1 %>% 
+  select(c(YearIndex,
+           CompaniesIndex,
+           Roa,
+           TobinsQ,
+           DebtToEquityRatio,
+           NetMargin,
+           TotalAssets,
+           GicsClassification,
+           CarbonProductivity,
+           WaterProductivity,
+           WasteProductivity,
+           SustainabilityPayLink,
+           SustainableThemedCommitment,
+           AuditScore
+           ))
 
 # I transform the "TotalAssets" column into FirmSize using the log of TotalAssets 
-ModelLag1$TotalAssets <- log(ModelLag1$TotalAssets)
+ModelLag1$TotalAssets <- log10(ModelLag1$TotalAssets)
 
 # I use the natural log for TobinsQ
-ModelLag1$TobinsQ <- log(ModelLag1$TobinsQ)
+ModelLag1$TobinsQ <- log10(ModelLag1$TobinsQ)
 
 # I rename some columns
-
-ModelLag1 <- ModelLag1 %>% setnames(old = 
-                                      c("DebtToEquityRatio", 
-                                        "TotalAssets", 
-                                        "GicsClassification", 
-                                        "NetMargin"), 
-                                    new = 
-                                      c("Leverage", 
-                                        "FirmSize", 
-                                        "Industry", 
-                                        "Growth"))
-
+ModelLag1 <- ModelLag1 %>% 
+  setnames(old = 
+             c("DebtToEquityRatio", 
+               "TotalAssets", 
+               "GicsClassification", 
+               "NetMargin"), 
+           new = 
+             c("Leverage", 
+               "FirmSize", 
+               "Industry", 
+               "Growth"))
 
 # I define my models in lm as cooks.distance do not support plm object
 Roa <-lm(Roa ~ SustainabilityPayLink +
@@ -116,20 +112,19 @@ influentialTobin
 
 #I remove outliers and create two new dataframes that I write in my folders
 TobinsQ_Db <- ModelLag1[-c(influentialTobin),]
-path <- "Analysis/DataBase/DataSynchronization/NoOutliersLag1/TobinsQ.csv"
+p <- "Analysis/DataBase/DataSynchronization/NoOutliersLag1/TobinsQ.csv"
 write.csv(
   TobinsQ_Db,
-  file = path)
+  file = p)
 
-path <- "Analysis/DataBase/DataSynchronization/NoOutliersLag1/Roa.csv"
+p <- "Analysis/DataBase/DataSynchronization/NoOutliersLag1/Roa.csv"
 Roa_Db <- ModelLag1[-c(influentialRoa),]
 write.csv(
   Roa_Db, 
-  file = path)
+  file = p)
 
 ```
 
-\newpage
 ```{r message = FALSE, error = FALSE, warning = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55),  results = 'asis', tidy = TRUE, comment = FALSE}
 # I report influencial obervations on a graph
 
@@ -150,5 +145,7 @@ plot(cooksdRoa, pch="*", cex=2)
 ### add cutoff line
 abline(h = 4*mean(cooksdRoa, na.rm=T), col="red")  
 ### add labels
-text(x=1:length(cooksdRoa)+1, y=cooksdRoa, labels=ifelse(cooksdRoa>4*mean(cooksdRoa, na.rm=T),names(cooksdRoa),""), col="red") 
+text(x=1:length(cooksdRoa)+1, y=cooksdRoa, 
+     labels=ifelse(cooksdRoa>4*mean(cooksdRoa, na.rm=T),names(cooksdRoa),""), 
+     col="red") 
 ```
