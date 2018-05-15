@@ -13,7 +13,7 @@ geometry: margin = 1.2in
 urlcolor: blue
 linkcolor: blue
 citecolor: blue
-#indent: true
+indent: true
 nocite: | 
   @Hlavac2018
 header-includes:

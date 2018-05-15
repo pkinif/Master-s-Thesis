@@ -100,10 +100,10 @@ stargazer(TobinPooling,
 
 # I have already removed outliers from both models (i.e. Roa and TobinsQ) via the file = "Analysis/MakeFile_RemoveOutliers_Lag1.rmd". 
 # Consequently I just need to load folowing databases.
-path <- "Analysis/DataBase/DataSynchronization/NoOutliersLag1/GreenScore/Roa.csv"
-RoaNoOut <- read.csv(file = path, header = TRUE, stringsAsFactors = FALSE)
-path <- "Analysis/DataBase/DataSynchronization/NoOutliersLag1/GreenScore/TobinsQ.csv"
-TobinNoOut <- read.csv(file = path, header = TRUE, stringsAsFactors = FALSE)
+p <- "Analysis/DataBase/DataSynchronization/NoOutliersLag1/GreenScore/Roa.csv"
+RoaNoOut <- read.csv(file = p, header = TRUE, stringsAsFactors = FALSE)
+p <- "Analysis/DataBase/DataSynchronization/NoOutliersLag1/GreenScore/TobinsQ.csv"
+TobinNoOut <- read.csv(file = p, header = TRUE, stringsAsFactors = FALSE)
 
 # I change names
 RoaNoOut <- RoaNoOut %>% setnames(old = "FinancialLeverage", new = "Leverage")
@@ -142,9 +142,9 @@ TobinWithin <- plm(TobinsQ ~ GreenScore + FirmSize + Leverage + Growth + Industr
 
 # pFtest
 
-pFtestRoa <- as.numeric(round(pFtest(RoaWithin, RoaPooling)$p.value, digits = 3))
+pFtestRoa <- round(pFtest(RoaWithin, RoaPooling)$p.value, digits = 3)
 
-pFtestTobin <- as.numeric(round(pFtest(TobinWithin, TobinPooling)$p.value, digits = 3))
+pFtestTobin <- round(pFtest(TobinWithin, TobinPooling)$p.value, digits = 3)
 
 # Improve p-value understanding
 pFtestRoa<-ifelse(pFtestRoa<0.01, paste(pFtestRoa,"***",sep = ""),
@@ -155,11 +155,10 @@ pFtestTobin<-ifelse(pFtestTobin<0.01, paste(pFtestTobin,"***",sep = ""),
 	ifelse(pFtestTobin<0.1,paste(pFtestTobin,"*",sep = ""),pFtestTobin)))
 
 # Let's consolidate into a stargazer table
-
+titre <- "GreenScore - an alternative variable for CEP"
 stargazer(TobinPooling, 
         RoaWithin, 
-        title = 
-          "GreenScore - an alternative variable for CEP", 
+        title = titre, 
         label = "GreenScoreResults", 
         header = FALSE, 
         type = "latex", 
