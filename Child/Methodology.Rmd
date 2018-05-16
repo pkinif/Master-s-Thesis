@@ -55,11 +55,11 @@ This study uses equation \ref{CEP} to study the link between outcome-based and p
 
 \begin{equation}
 \centering
-Y_{it} = \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} A_{it} + u_{it}
+Y_{it} = \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} A_{it} + d_{t} + u_{it}
 \label{CEP}
 \end{equation}
 
-where \(Y_{it}\) is a proxy of outcome-based CEP measured as carbon productivity, water productivity and waste productivity, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score and \(u_{it}\) which is the error term.
+where \(Y_{it}\) is a proxy of outcome-based CEP measured as carbon productivity, water productivity and waste productivity, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(d_{t}\) represents time effect and \(u_{it}\) is the error term.
 
 
 \begin{equation}
@@ -69,13 +69,13 @@ Y_{it+1} & = & \alpha + \beta_{1} SPL_{it} \\
 && + { } \beta_{2} STC_{it} + \beta_{3} A_{it} \\
 && + { } \beta_{4} CaP_{it} + \beta_{5} WatP_{it} \\
 && + { } \beta_{6} WastP_{it} + Controls_{it} \\ 
-&& + { } u_{it}
+&& + { } d_{t} + u_{it}
 \label{EconometricModel}
 \end{aligned}
 \end{equation}
 
 
-where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth and lastly \(u_{it}\) which is the error term.
+where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents time effect and \(u_{it}\) is the error term.
 
 Recent meta-analysis provided evidence of the bidirectional causality of the CFP-CEP nexus [@Orlitzky2001; @Orlitzky2003; @Wu2006; @Albertini2013; @Dixon-Fowler2013; @EndrikatMakingsenseconflicting2014; @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016; @Busch2018]. This could cause simultaneous causality between the dependent and independent variables and lead to endogeneity concern [@Sanchez-Ballesta2007; @Biorn2008; @Roberts2013]. To address this issue, I lag observations in independent and control variables one year behind the dependent variable. This increases the confidence of the direction of the relationship [@Hart1996; @Delmas2015; @MiroshnychenkoGreenpracticesfinancial2017] and *in fine* reduces the potential simultaneity bias. 
 

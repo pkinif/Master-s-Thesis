@@ -1,10 +1,3 @@
----
-output: 
-  pdf_document 
----
-
-
-
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 
@@ -74,7 +67,7 @@ Model1 <- Model %>% setnames(old = c("DebtToEquityRatio", "TotalAssets", "GicsCl
 
 # Results
 
-The R script  of this section is available in [Appendix B: Results - R script].
+The R script of this section is available in [Appendix B: Results - R script].
 
 ## Get a feel of the data
 
@@ -90,12 +83,9 @@ IdenticalAnalyses <- round(t.test(Sample1, Sample2, alternative = "two.sided", v
 
 ```
 
-This section gives an overview of the database. \autoref{DescriptiveStatistics} presents the main descriptive statistics of each variable. The sample size of Roa (i.e. N = `r sum(!is.na(Model1$Roa))`) is superior to the sample size of TobinsQ (i.e. N = `r sum(!is.na(Model1$TobinsQ))`). Indeed, compared to ROA, calculating Tobin’s Q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces sample bias. I did the same and the p-value of the unpaired two-sample t-test equals `r IdenticalAnalyses` meaning that there is no significant difference between both samples.
+This section provides an overview of the database. \autoref{DescriptiveStatistics} presents the main descriptive statistics of each variable. The sample size of Roa (i.e. N = `r sum(!is.na(Model1$Roa))`) is superior to the sample size of TobinsQ (i.e. N = `r sum(!is.na(Model1$TobinsQ))`). Compared to ROA, calculating Tobin’s Q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces a sample bias. I did the same and the p-value of the unpaired two-sample t-test equals `r IdenticalAnalyses` meaning that there is no significant difference between both samples.
 
-\autoref{Matrix} contains the matrix of correlation of my database. There are statistically significant correlations between outcome-based CEP variables (i.e. carbon, water and waste productivity) suggesting that my model could suffer from multicollinearity. 
-
-\autoref{VIF} reports the variance inflation factor (i.e. VIF) of all variables. The maximum VIF is 2,477 meaning that there is no multicollinearity in the model [@Obrien2007].
-
+\autoref{Matrix} contains the matrix of correlation of the database. There are highly significant correlations between outcome-based CEP variables (i.e. carbon, water and waste productivity) and process-based CEP variables (i.e. sustainability pay link, sustainable themed commitment and audit score) suggesting that my model could suffer from multicollinearity. \autoref{VIF} reports the variance inflation factor (i.e. VIF) of all variables. The maximum VIF is 2,477 meaning that there is no multicollinearity in the model [@Obrien2007].
  
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
@@ -213,16 +203,17 @@ stargazer(VifTable, summary = FALSE, title = "Variance Inflation Factor", label 
 
 ## Outliers treatment
 
-@Lyu2015 defines outliers as observations in the dataset that appear to be unusual and discordant and which could lead to inconsistent results. @Osborne2004 have shown that even a small proportion of outliers can significantly affect simple analyses (i.e. t-tests, correlations and ANOVAs). Outliers are an issue only and only if they are influential \footnote{Influential obervations are observations whose  removal causes a different conclusion in the analysis} [@Cousineau2010]. I have used the Cook's distance [@Cook1977] test which is a common statistical tool to assess the influence of outliers [@JPStevens1984; @Cousineau2010; @Zuurprotocoldataexploration2010]. Cook’s Distance observes the difference between the regression paramater of a given model,  \(\hat{\beta}\) and what they become if the \(i_{th}\) data points is deleted, let's say  \(\hat{\beta}_{i}\). One difficulty with treatment of outliers is that the literature have not found common theoretical framework yet for the treatment of influential outliers [@OrrJohn1991; @Cousineau2010]. @Tabachnick2007 argues that the imputation with the mean is the best method while @Cousineau2010 highlight that it tends to reduce the spread of the population, making the observed distribution more leptokurtic, and possibly increase the likelihood of a type-I error. @Dang2009 argue that more elaborate technique involves replacing outliers with possible values while @Barnett1994 would prefer to remove or windsorized them. Alternatively, @Pollet2017 propose an other route to handle outliers and argue that inclusion or exclusion of outliers depend on the significativity of the results, meaning that if results are more significant without outliers, scholars should remove them and vice versa. Following the mindset of @Pollet2017, I have removed outliers from my database. See [Appendix C : Outliers treatment]  for furthers details.
+@Lyu2015 defines outliers as observations in the dataset that appear to be unusual and discordant and which could lead to inconsistent results. @Osborne2004 have shown that even a small proportion of outliers can significantly affect simple analyses (i.e. t-tests, correlations and ANOVAs). Outliers are an issue only and only if they are influential, namely observations whose removal causes a different conclusion in the analysis [@Cousineau2010]. 
 
+The literature has not found common theoretical framework yet for the treatment of influential outliers [@OrrJohn1991; @Cousineau2010]. @Tabachnick2007 argue that the imputation with the mean is the best method while @Cousineau2010 highlight that it tends to reduce the spread of the population, making the observed distribution more leptokurtic, and possibly increase the likelihood of a type-I error. @Dang2009 argue that a more elaborate technique involves replacing outliers with possible values (e.g. multiple imputation) while @Barnett1994 would prefer to remove or windsorize them. Alternatively, @Pollet2017 argue that inclusion or exclusion of outliers depend on the significativity of the results. According to them, if results are more significant without outliers, scholars should remove them.
 
+Following the mindset of @Pollet2017, I removed outliers from the database. Influencial outliers had been identified based on the Cook's distance [@Cook1977]. This test is a common statistical tool to assess the influence of outliers [@JPStevens1984; @Cousineau2010; @Zuurprotocoldataexploration2010]. Cook’s Distance observes the difference between the regression parameters of a given model, \(\hat{\beta}\), and what they become if the \(i_{th}\) data points is deleted, let's say  \(\hat{\beta}_{i}\). See [Appendix C: Outliers treatment] for furthers details on how I proceed.
 
 ## The impact of process-based CEP on outcome-based CEP
 
-\autoref{CepResults} reports the main results of the analysis of the impact of process-based CEP (i.e. sustainability pay link, sustainable themed commitment and audit score) on outcome-based CEP (i.e. carbon, water and waste productivity). Estimators of the three models had been estimated with the *fixed effects estimation*. Indeed, based on the p-value of the F test, the three models have FE model making both the random effects and pooled ols estimators biased.
+\autoref{CepResults} reports the main results of the analysis of the impact of process-based CEP (i.e. sustainability pay link, sustainable themed commitment and audit score) on outcome-based CEP (i.e. carbon, water and waste productivity). Estimators of the three models had been estimated with the *fixed effects estimation*. Based on the p-value of the F test, the three models have FE model making both the random effect and pooled ols estimators biased.
 
-Except for Model 1 which indicates no significant relation between sustainability pay link and carbon productivity, all models show evidences of a positive and highly statistically significant
-effect of process-based CEP variables on outcome-based CEP. Consequently, hypothesis 1 is verified.
+Except for Model (1) which indicates no significant relation between sustainability pay link and carbon productivity, all models show evidence of a positive and highly statistically significant effect of process-based CEP on outcome-based CEP. These results support findings of @Xie2007, @Li2017 and @Chencrosscountrycomparisongreen2018 confirming that implementation of environmental management measures allows companies to significantly increase their performance in carbon productivity, water productivity, and energy productivity which in turn will reduce their environmental impact. Hypothesis 1 is verified.
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
@@ -300,17 +291,21 @@ Model3 <- Model1 %>%
 
 # Based on the results of the tests, the three models need to be estimated with the fixed effects estimations (i.e. model = "within" in plm). Let's consolidate into a stargazer table
   
-stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The impact of process-based on outcome-based CEP", label = "CepResults", header = FALSE, type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", add.lines = list(c("BPLM test (pvalue)", PlmtestCarbon, PlmtestWater, PlmtestWaste),
+stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The impact of process-based on outcome-based CEP", label = "CepResults", header = FALSE, type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", column.labels   = c("Model (1)", "Model (2)", "Model (3)"), add.lines = list(c("BPLM test (pvalue)", PlmtestCarbon, PlmtestWater, PlmtestWaste),
                            c("F test (pvalue)", pFtestCarbon ,pFtestWater, pFtestWaste)))
 
 ```
 
+\newpage
 ## The impact of CEP on CFP 
 
-\autoref{Lag1} reports the main results of the analysis of the impact of both process-based CEP (i.e. sustainability pay link, sustainable themed commitment and audit score) and outcome-based CEP (i.e. carbon, water and waste productivity) on short-term CFP (i.e. Roa) and long-term CFP (i.e. TobinsQ). Based on the results of BPLM and F tests, estimators of the TobinsQ model had been estimated with the *pooled ols estimation* and the estimators of the Roa model with the *fixed effects estimation*. 
+\autoref{Lag1} reports the main results of the analysis of the impact of both process-based CEP (i.e. sustainability pay link, sustainable themed commitment and audit score) and outcome-based CEP (i.e. carbon, water and waste productivity) on short-term CFP (i.e. Roa) and long-term CFP (i.e. TobinsQ). Based on the pvalue of BPLM and F tests, model (4) had been estimated with the *pooled ols estimation* while model (5) had been estimated with the *fixed effects estimation*. 
 
-TobinsQ model shows evidences of a positive and highly statistically significant effect of sustainability pay link, audit score and water productivity on long-term CEP. Roa model shows evidences of a positive and highly statistically significant effect of sustainability pay link, sustainable themed commitment and carbon productivity on short-term CEP. Consequently hypothesis 2, 3, 4 and 5 are verified.
+Model (4) shows evidence of a positive and highly statistically significant effect of sustainability pay link, audit score, and water productivity on long-term CEP. Model (5) shows evidence of a positive and highly statistically significant effect of sustainability pay link, sustainable themed commitment and carbon productivity on short-term CEP. 
 
+Those results corroborate recent meta-analyses that claim positive influence between CEP and CFP [@Orlitzky2001; @Orlitzky2003; @Wu2006; @Albertini2013; @Dixon-Fowler2013; @EndrikatMakingsenseconflicting2014; @Ludecadedebatenexus2014; @WangMetaAnalyticReviewCorporate2016; @Busch2018] and provides evidence that the relationship stays the same no matter the time horizon. Hypothesis 2, 3, 4 and 5 are verified.
+
+Regarding control variables, firm size and industry sector influence negatively and significantly CFP in both models while growth has a positive impact, with an effect more pronounced in Model (4). These results support previous research [@Busch2011a; @EndrikatMakingsenseconflicting2014; @Delmas2015;  @MiroshnychenkoGreenpracticesfinancial2017]. Against all odds, leverage does not have any significant impact.
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
@@ -371,7 +366,7 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
   
 # Based on the results of the tests, TobinsQ need to be estimated with the pooling ols estimations (i.e. model = "pooling" in plm) while Roa with the within effect estimation.. Let's consolidate into a nice stargazer table
   
-stargazer(TobinPooling, RoaWithin, title = "The impact of process and outcome-based CEP on CFP (lag = 1)", label = "Lag1", header = FALSE, type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
+stargazer(TobinPooling, RoaWithin, title = "The impact of process and outcome-based CEP on CFP (lag = 1)", label = "Lag1", header = FALSE, type = "latex", single.row = TRUE, align = FALSE, model.numbers = FALSE, table.placement = "!", column.labels   = c("Model (4)", "Model (5)"), add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
                            c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
 
 ```
