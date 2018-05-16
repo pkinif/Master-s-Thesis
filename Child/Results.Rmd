@@ -92,7 +92,9 @@ IdenticalAnalyses <- round(t.test(Sample1, Sample2, alternative = "two.sided", v
 
 This section gives an overview of the database. \autoref{DescriptiveStatistics} presents the main descriptive statistics of each variable. The sample size of Roa (i.e. N = `r sum(!is.na(Model1$Roa))`) is superior to the sample size of TobinsQ (i.e. N = `r sum(!is.na(Model1$TobinsQ))`). Indeed, compared to ROA, calculating Tobin’s Q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces sample bias. I did the same and the p-value of the unpaired two-sample t-test equals `r IdenticalAnalyses` meaning that there is no significant difference between both samples.
 
-\autoref{Matrix} contains the matrix of correlation of my database. There are statistically significant correlations between outcome-based CEP variables (i.e. carbon, water and waste productivity) suggesting that my model could suffer from multicollinearity. \autoref{VIF} reports the variance inflation factor (i.e. VIF) of all the variables. The maximum VIF is 2,477 meaning that there is no multicollinearity in the model [@Obrien2007].
+\autoref{Matrix} contains the matrix of correlation of my database. There are statistically significant correlations between outcome-based CEP variables (i.e. carbon, water and waste productivity) suggesting that my model could suffer from multicollinearity. 
+
+\autoref{VIF} reports the variance inflation factor (i.e. VIF) of all variables. The maximum VIF is 2,477 meaning that there is no multicollinearity in the model [@Obrien2007].
 
  
 
