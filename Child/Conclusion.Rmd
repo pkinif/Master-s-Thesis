@@ -1,3 +1,7 @@
 # Conclusion {-}
 
 This is my conclusion...
+
+Limitation : 
+
+[@Delmas2010] argues that measurement and evaluation of CEP involve some trade-offs.
