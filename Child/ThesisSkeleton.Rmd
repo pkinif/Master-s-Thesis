@@ -93,7 +93,7 @@ rm(list=ls()) #Removes all items in Environment!
 \FloatBarrier
 \newpage
 \fancyhead[CO,CE]{Literature Review}
-```{r child = 'LiteratureReview.Rmd'} 
+```{r child = 'CopyOfLiteratureReview.Rmd'} 
 ```
 
 \FloatBarrier

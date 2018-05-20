@@ -2,13 +2,19 @@
 
 # Literature Review
 
-## Corporate Financial Performance as a brod meta-construct
+## Corporate Financial Performance as a broad meta-construct
 
-CFP is a broad meta-construct. Scholars have adopted three broad subdivisions of CFP: market-based (i.e. investor returns), accounting-based (i.e. accounting returns), and perceptual (i.e. survey) measures. Market-based measures (e.g. price-earning ratio, Tobin's Q, or share price appreciation) consider that returns should be measured from the perspective of the shareholders [@Cochran1984a]. Accounting-based measures require profitability and asset utilization indicators such as Return on Asset (i.e. ROA) or Return on Equity (i.e. ROE) [@Cochran1984a; @Wu2006]. Finally, perceptual measures of CFP is a more subjective approach based on the perception of survey respondents [@Ludecadedebatenexus2014]. 
+CFP is a broad meta-construct. Scholars have adopted three broad subdivisions of CFP: market-based (i.e. investor returns), accounting-based (i.e. accounting returns), and perceptual (i.e. survey) measures [@Orlitzky2003; @Ludecadedebatenexus2014; @EndrikatMakingsenseconflicting2014]. 
 
+*Market-based measures* (e.g. price-earning ratio, Tobin's Q, or share price appreciation) consider that returns should be measured from the perspective of the shareholders [@Cochran1984a]. The latter incorporate intangible assets and reputational effects [@Busch2011a]. Hence, these indicators can be highly influenced by speculations, rumors and capital market breakdowns [@Wright2004]. 
 
+*Accounting-based measures* require profitability and asset utilization indicators such as Return on Asset (i.e. ROA) or Return on Equity (i.e. ROE) [@Cochran1984a; @Wu2006]. These indicators capture a firm’s internal efficiency in some way [@Cochran1984a]. Indeed, @Orlitzky2003 highlight that *"accounting returns are subject to managers’ discretionary allocations of funds to different projects and policy choices, and thus reflect internal decision-making capabilities and managerial performance rather than external market responses to organizational (non-market) actions"*. Accounting-based indicators are highly influenced by the industrial sector characteristics, weakly influenced by the market characteristics and not at all influenced by the firm characteristics [@Montgomery1988].
+  
+*Perceptual measures* of CFP is a more subjective approach based on external (e.g. Fortune magazine rankings) and internal perceptual metrics (e.g. Management surveyx)[@Peloza2009]. The latter ask survey respondents to provide subjective estimates of, for instance, the firm’s *"soundness of financial position"*, *"wise use of corporate assets"*, or *"financial goal achievement relative to competitors"* [@Orlitzky2003]. Hence, these indicators are largely subjective [@Ludecadedebatenexus2014].
 
-## Corporate Environmental Performance as a brod meta-construct
+Based on a recent critical review, @Ludecadedebatenexus2014 have shown that, of the three types of CP measures, accounting-based ones are the most frequency used, followed by the market-based measures, and perceptual measures. Scholars also tend to alleviate weaknesses of one type of indicators by the use of another [@McWilliams2006]. For instance, @King2001; @Delmas2015 have used both Roa and Tobin's Q as proxies for approaching CFP. @Menguc2005 considered market share, sales growth and profit after tax. @Husted2007 have used management surveys while @Verschoor1999 made use of the Fortune magazine rankings. 
+
+## Corporate Environmental Performance as a broad meta-construct
 
  A insérer qq part : 
 @EndrikatMakingsenseconflicting2014 divide CEP into two sub-dimensions. (i) Process-based CEP which refers to *"a strategic level and focuses on managerial principles and processes such as environmental objectives, environmental policies, or environmental management structures"*. (ii) Outcome-based CEP which reflects *"the observable and quantifiable results of these efforts [@Delmas2011a] and refers to measures such as the amount of released pollutants or the ratio of recycled waste to total waste"*. 
