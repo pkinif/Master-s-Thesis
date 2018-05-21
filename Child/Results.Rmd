@@ -230,7 +230,8 @@ Model3 <- Model1 %>%
            WastP, 
            SPL,
            STC,
-           A)) 
+           A
+           )) 
 
 
 # I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 

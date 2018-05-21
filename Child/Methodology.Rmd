@@ -73,6 +73,16 @@ Y_{it+1} & = & \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} A_{i
 
 where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents time effect and \(u_{it}\) is the error term.
 
+
+## Endogeneity concern
+
+This study do not escape the fact that endogeneity is the most important and pervasive issue confronting studies in empirical corporate finance [@Roberts2013]. 
+. the main empirical concern in the CEP-CFP nexus is the . 
+
+- [@Bellemare2017] demonstrate that lag identification is almost never a solution to endogeneity problems in observational data, and that rather than allowing for the identification of causal relationships, lag identification merely moves the channel through which endogeneity biases estimates of causal effects.
+
+
+
 Recent meta-analysis provided evidence of the bidirectional causality of the CFP-CEP nexus [@Orlitzky2001; @Orlitzky2003; @Wu2006; @Albertini2013; @Dixon-Fowler2013; @EndrikatMakingsenseconflicting2014; @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016; @Busch2018]. This could cause simultaneous causality between the dependent and independent variables and lead to endogeneity concern [@Sanchez-Ballesta2007; @Biorn2008; @Roberts2013]. To address this issue, I lag observations in independent and control variables one year behind the dependent variable. This increases the confidence of the direction of the relationship [@Hart1996; @Delmas2015; @MiroshnychenkoGreenpracticesfinancial2017] and *in fine* reduces the potential simultaneity bias. 
 
 

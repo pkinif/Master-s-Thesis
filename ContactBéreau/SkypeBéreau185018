@@ -18,6 +18,6 @@ Skype Prof. Béreau 180518
 - Vérifier si bien impuytation par al moyenne dans le point qui traite des outliers
 - Accentuer le lien entre VIF et autocorrelation
 - Dans reporting des tableaux, ajouter une ligne entre les outcome et process CEP
-- Pour h1, ajout une variable qui mesure l'état de la conjoncture?
+- Pour h1, ajout une variable qui mesure l'état de la conjoncture? + variable de controle. Nb: ajout de vc n'apporte rien au R^2 Ajusté des moèldeS. Donc je ne les insère pas.
 
 
