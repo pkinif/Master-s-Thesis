@@ -98,12 +98,6 @@ rm(list=ls()) #Removes all items in Environment!
 
 \FloatBarrier
 \newpage
-\fancyhead[CO,CE]{Research Framework}
-```{r child = 'ResearchFramework.Rmd'} 
-```
-
-\FloatBarrier
-\newpage
 \fancyhead[CO,CE]{Data Description}
 ```{r child = 'DataDescription.Rmd'} 
 ```
