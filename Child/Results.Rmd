@@ -1,3 +1,17 @@
+---
+output:
+  pdf_document
+header-includes:
+- \usepackage{placeins}
+- \usepackage{fancyhdr}
+- \usepackage{setspace}
+- \usepackage{chngcntr}
+- \onehalfspacing
+- \counterwithin{figure}{section}
+- \counterwithin{table}{section}
+- \usepackage{rotating}
+- \usepackage{dcolumn}
+---
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 
@@ -69,7 +83,7 @@ Model1 <- Model %>% setnames(old = c("DebtToEquityRatio", "TotalAssets", "GicsCl
 
 The R script of this section is available in [Appendix B: Results - R script].
 
-## Get a feel of the data
+## Descriptive statistics
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
@@ -83,9 +97,9 @@ IdenticalAnalyses <- round(t.test(Sample1, Sample2, alternative = "two.sided", v
 
 ```
 
-This section provides an overview of the database. \autoref{DescriptiveStatistics} presents the main descriptive statistics of each variable. The sample size of Roa (i.e. N = `r sum(!is.na(Model1$Roa))`) is superior to the sample size of TobinsQ (i.e. N = `r sum(!is.na(Model1$TobinsQ))`). Compared to ROA, calculating Tobin’s Q requires a relatively high number of financial variables and is more susceptible to missing values. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces a sample bias. I did the same and the p-value of the unpaired two-sample t-test equals `r IdenticalAnalyses` meaning that there is no significant difference between both samples.
+This section provides an overview of the database. \autoref{DescriptiveStatistics} presents the main descriptive statistics of each variable. The sample size of Roa (i.e. N = `r sum(!is.na(Model1$Roa))`) is superior to the sample size of TobinsQ (i.e. N = `r sum(!is.na(Model1$TobinsQ))`). Compared to ROA, calculating Tobin’s Q requires a relatively high number of financial variables and is more susceptible to missing values [@Delmas2015]. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces a sample bias. I did the same and the *p-value* of the unpaired two-sample t-test equals `r IdenticalAnalyses` meaning that there is no significant difference between both samples.
 
-\autoref{Matrix} contains the matrix of correlation of the database. There are highly significant correlations between outcome-based CEP variables (i.e. carbon, water and waste productivity) and process-based CEP variables (i.e. sustainability pay link, sustainable themed commitment and audit score) suggesting that my model could suffer from multicollinearity. \autoref{VIF} reports the variance inflation factor (i.e. VIF) of all variables. The maximum VIF is 2,477 meaning that there is no multicollinearity in the model [@Obrien2007].
+\autoref{Matrix} contains the matrix of correlation of the database. There are highly significant correlations between outcome-based CEP variables (i.e. carbon, water and waste productivity) and process-based CEP variables (i.e. sustainability pay link, sustainable themed commitment and audit score) suggesting that my model could suffer from an high degree of multicollinearity. Multicollinearity inflates  the standard errors of the coefficients making some variables statistically insignificant when they should be significant [@Akinwande2015]. One common practice in the literature to detect multicollinearity is the computation of the Variance Inflation Factor (i.e. VIF) [@Salmeron2018]. VIF indicates how much the estimated variance of the \(i_{th}\) regression coefficient is increased above what it would be if \(R_i^2\) equaled zero [@Obrien2007]. \autoref{VIF} reports VIF of all variables. The maximum VIF is 2,477 meaning that there is no multicollinearity in the model [@Obrien2007].
  
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
