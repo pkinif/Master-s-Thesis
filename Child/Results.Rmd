@@ -225,7 +225,7 @@ Following the mindset of @Pollet2017, I removed outliers from the database. Infl
 
 ## The impact of process-based CEP on outcome-based CEP
 
-\autoref{CepResults} reports the main results of the analysis of the impact of process-based CEP (i.e. sustainability pay link, sustainable themed commitment and audit score) on outcome-based CEP (i.e. carbon, water and waste productivity). Estimators of the three models had been estimated with the *fixed effects estimation*. Based on the p-value of the F test, the three models have FE model making both the random effect and pooled ols estimators biased.
+\autoref{CepResults} reports the main results of the analysis of the impact of process-based CEP (i.e. sustainability pay link, sustainable themed commitment and audit score) on outcome-based CEP (i.e. carbon, water and waste productivity). Given the p-value of the F test, the three models have FE making both the random effect and pooled OLS estimators biased. Hence, models had been estimated with the *fixed effects estimation*.  
 
 Except for Model (1) which indicates no significant relation between sustainability pay link and carbon productivity, all models show evidence of a positive and highly statistically significant effect of process-based CEP on outcome-based CEP. These results support findings of @Xie2007, @Li2017 and @Chencrosscountrycomparisongreen2018 confirming that implementation of environmental management measures allows companies to significantly increase their performance in carbon productivity, water productivity, and energy productivity which in turn will reduce their environmental impact. Hypothesis 1 is verified.
 
@@ -306,7 +306,7 @@ Model3 <- Model1 %>%
 
 # Based on the results of the tests, the three models need to be estimated with the fixed effects estimations (i.e. model = "within" in plm). Let's consolidate into a stargazer table
   
-stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The impact of process-based on outcome-based CEP", label = "CepResults", header = FALSE, type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", column.labels   = c("Model (1)", "Model (2)", "Model (3)"), add.lines = list(c("BPLM test (pvalue)", PlmtestCarbon, PlmtestWater, PlmtestWaste),
+stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The impact of process-based on outcome-based CEP", label = "CepResults", header = FALSE, single.row = TRUE,  type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", column.labels   = c("Model (1)", "Model (2)", "Model (3)"), add.lines = list(c("BPLM test (pvalue)", PlmtestCarbon, PlmtestWater, PlmtestWaste),
                            c("F test (pvalue)", pFtestCarbon ,pFtestWater, pFtestWaste)))
 
 ```
@@ -314,13 +314,15 @@ stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The impact of process
 \newpage
 ## The impact of CEP on CFP 
 
-\autoref{Lag1} reports the main results of the analysis of the impact of both process-based CEP (i.e. sustainability pay link, sustainable themed commitment and audit score) and outcome-based CEP (i.e. carbon, water and waste productivity) on short-term CFP (i.e. Roa) and long-term CFP (i.e. TobinsQ). Based on the pvalue of BPLM and F tests, model (4) had been estimated with the *pooled ols estimation* while model (5) had been estimated with the *fixed effects estimation*. 
+\autoref{Lag1} reports the main results of the analysis of the impact of both process-based CEP (i.e. sustainability pay link, sustainable themed commitment and audit score) and outcome-based CEP (i.e. carbon, water and waste productivity) on short-term CFP (i.e. Roa) and long-term CFP (i.e. TobinsQ). Based on the pvalue of BPLM and F tests, model (4) had been estimated with the *pooled OLS estimation* while model (5) had been estimated with the *fixed effects estimation*. 
 
-Model (4) shows evidence of a positive and highly statistically significant effect of sustainability pay link, audit score, and water productivity on long-term CEP. Model (5) shows evidence of a positive and highly statistically significant effect of sustainability pay link, sustainable themed commitment and carbon productivity on short-term CEP. 
+Model (4) shows evidence of a positive and statistically significant effect of sustainability pay link, audit score, and water productivity on *long-term CEP*. Model (5) shows evidence of a positive and statistically significant effect of sustainability pay link, sustainable themed commitment and carbon productivity on *short-term CEP*.
 
-Those results corroborate recent meta-analyses that claim positive influence between CEP and CFP [@Orlitzky2001; @Orlitzky2003; @Wu2006; @Albertini2013; @Dixon-Fowler2013; @EndrikatMakingsenseconflicting2014; @Ludecadedebatenexus2014; @WangMetaAnalyticReviewCorporate2016; @Busch2018] and provides evidence that the relationship stays the same no matter the time horizon. Hypothesis 2, 3, 4 and 5 are verified.
+More precisely, regarding process-based CEP variables, results show that companies, which link the remuneration of any member of a company’s senior executive team with the achievement of environmental performance targets, are caractherized by both a higher Tobin's Q (i.e. +0.079) and ROA (i.e. +0.008). Then, the fact of having a sustainability committee at the board of directors level increases the ROA by 0.012. Finally, companies having their latest reported environmental metrics audited by a third party have a higher Tobin's Q (i.e. + 0.158). Regarding outcome-based CEP variables, results demonstrate that a 1% increase of carbon productivity increases the ROA by 0.03 and a 1% increase of Water productivity increases the Tobin's Q by 0.337.
 
-Regarding control variables, firm size and industry sector influence negatively and significantly CFP in both models while growth has a positive impact, with an effect more pronounced in Model (4). These results support previous research [@Busch2011a; @EndrikatMakingsenseconflicting2014; @Delmas2015;  @MiroshnychenkoGreenpracticesfinancial2017]. Against all odds, leverage does not have any significant impact.
+These results corroborate recent meta-analyses that claim positive influence between CEP and CFP [@Orlitzky2003; @Wu2006; @Albertini2013; @Dixon-Fowler2013; @EndrikatMakingsenseconflicting2014; @Ludecadedebatenexus2014; @WangMetaAnalyticReviewCorporate2016; @Busch2018]. Furthermore, it provide evidence that the relationship is always positive, no matter the time horizon, and stronger with a long-term than a short-term perspective. Hence, results also support the general consensus that accounting-based measures are characterized by a stronger relation to CEP than market-based indicators [@Orlitzky2003; @Wu2006; @Albertini2013; @Ludecadedebatenexus2014; @Busch2018]. Hypothesis 2, 3, 4 and 5 are verified.
+
+Regarding control variables, firm size and industry sector negatively and significantly influence CFP in both models while growth has a positive impact, with an effect more pronounced in Model (4). These results support previous research [@EndrikatMakingsenseconflicting2014; @MiroshnychenkoGreenpracticesfinancial2017]. Against all odds, leverage does not have any significant impact.
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
@@ -379,7 +381,7 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
 		ifelse(pFtestTobin<0.05,paste(pFtestTobin,"**",sep = ""),
 		ifelse(pFtestTobin<0.1,paste(pFtestTobin,"*",sep = ""),pFtestTobin)))
   
-# Based on the results of the tests, TobinsQ need to be estimated with the pooling ols estimations (i.e. model = "pooling" in plm) while Roa with the within effect estimation.. Let's consolidate into a nice stargazer table
+# Based on the results of the tests, TobinsQ need to be estimated with the pooling OLS estimations (i.e. model = "pooling" in plm) while Roa with the within effect estimation.. Let's consolidate into a nice stargazer table
   
 stargazer(TobinPooling, RoaWithin, title = "The impact of process and outcome-based CEP on CFP (lag = 1)", label = "Lag1", header = FALSE, type = "latex", single.row = TRUE, align = FALSE, model.numbers = FALSE, table.placement = "!", column.labels   = c("Model (4)", "Model (5)"), add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
                            c("F test (pvalue)", pFtestTobin ,pFtestRoa)))

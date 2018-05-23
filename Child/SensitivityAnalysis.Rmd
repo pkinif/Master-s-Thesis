@@ -26,20 +26,20 @@ library(stargazer)
 
 Sensitivity Analysis investigates how the variation in the output of a numerical model can be attributed to variations of its input factors [@Pianosi2016]. To ensure the robustness of the main findings of the previous section I carried out two robustness tests. 
 
-First, the equation \ref{EconometricModel} had been re-estimated using dependent variables accelerated by one year in a sense that observations in independent and control variables are now lagged two years behind corporate financial performance variables. Based on the results of both Breusch Pagan Multiplier and F tests, estimators had been estimated with the *pooled ols estimation*. Results are reported in table \ref{Lag2} and confirm findings of the previous section.
+Firstly, the equation \ref{EconometricModel} had been re-estimated using dependent variables accelerated by one year in a sense that observations in independent and control variables are now lagged two years behind CFP variables. Based on the results of both BPLM and F tests, estimators had been estimated with the *pooled OLS estimation*. Results are reported in table \ref{Lag2} and confirm findings of the previous section.
 
-Secondly, I used an alternative proxy for approaching corporate environmental performance, namely the Green Score assigned to each company of the NewsWeek Green Ranking. The score is based on a weighted average of the key performance indicators of the ranking. Concretely, it means that equation \ref{EconometricModel} becomes the following equation.
+Secondly, I use an alternative proxy for approaching CEP, namely the Green Score assigned to each company of the NewsWeek Green Ranking. The score is based on a weighted average of the KPI's of the ranking. Concretely, it means that equation \ref{EconometricModel} becomes the following equation.
 
 \begin{equation}
 \centering
-Y_{it+1} = \alpha + \beta_{1} GS_{it} + Controls_{it} + d_{t} + u_{it}
+Y_{it+1} = \alpha + \beta_{1} GS_{it} + ContrOLS_{it} + d_{t} + u_{it}
 \label{GreenScoreEquation}
 \end{equation}
 
 
-where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(GS_{it}\) is a proxy for a firm's green score, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents time effect and  \(u_{it}\) is the error term.
+where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(GS_{it}\) is a proxy for a firm's green score, \(ContrOLS_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents time effect and  \(u_{it}\) is the error term.
 
-Model (4) had been estimated with the *pooled ols estimators* while Model (5) had been estimated with the *fixed effect estimation*. Results are reported in table \ref{GreenScoreResults} and confirms findings of the previous section. Consequently, the sensitivity analysis supports that CEP does have a significant and positive effect on CFP (short-term and long-term). 
+Given the pvalue of both BPLM and F tests, Model (4) had been estimated with the *pooled OLS estimators* while Model (5) had been estimated with the *fixed effect estimation*. Results are reported in table \ref{GreenScoreResults} and confirm findings of the previous section. Consequently, the sensitivity analysis supports that CEP does have a significant and positive effect on CFP, no matter the time horizon (short-term and long-term). 
 
 R script of this section is available in [Appendix D: Sensitivity Analysis - R script].
 
@@ -101,7 +101,7 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
 		ifelse(pFtestTobin<0.05,paste(pFtestTobin,"**",sep = ""),
 		ifelse(pFtestTobin<0.1,paste(pFtestTobin,"*",sep = ""),pFtestTobin)))
   
-# Based on the results of the tests, the two models need to be estimated with the pooling ols estimations (i.e. model = "pooling" in plm). Let's consolidate into a nice stargazer table
+# Based on the results of the tests, the two models need to be estimated with the pooling OLS estimations (i.e. model = "pooling" in plm). Let's consolidate into a nice stargazer table
   
 stargazer(TobinPooling, RoaPooling, title = "The impact of process and outcome-based CEP on CFP (lag = 2)", label = "Lag2", header = FALSE, single.row = TRUE, column.labels = c("Model (4)", "Model (5)"), type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
                            c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
@@ -171,7 +171,7 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
 
 # Let's consolidate into a stargazer table
   
-stargazer(TobinPooling, RoaWithin, title = "GreenScore - an alternative variable for CEP", label = "GreenScoreResults", header = FALSE, type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", column.labels = c("Model (4)", "Model (5)"), add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
+stargazer(TobinPooling, RoaWithin, title = "GreenScore - an alternative variable for CEP", label = "GreenScoreResults", header = FALSE, type = "latex", align = FALSE, single.row = TRUE, model.numbers = FALSE, table.placement = "!", column.labels = c("Model (4)", "Model (5)"), add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
                            c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
 
 

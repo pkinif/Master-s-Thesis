@@ -17,7 +17,7 @@ Y_{it} = \alpha + \beta X_{it} + u_{it}
 \label{PanelData}
 \end{equation}
 
-Panel data, also called longitudinal data, includes observations on \(i = 1,..., n\) cross- section units (e.g. firms) over \(t = 1,..., T\) time-periods [@Hsiao2007]. Here, \(Y_{it}\) is the dependent variable, \(X_{it}\) represents a \(K\)-dimensional row vectors of independent variables, \(\alpha\) is the intercept, \(\beta\) is a \(K\)-dimensional column vectors of parameters and \(u_{it}\) is the random disturbance term of mean equals zero. The latter can be decomposed as \(u_{it} = \mu_{i} + \epsilon_{it}\). The first term, \(\mu_{i}\), represents the individual error component and is time-invariant. It can be considered as the unobserved effect model. The second term, \(\epsilon_{it}\), is the idiosyncratic error which is assumed well-behaved and independent of \(X_{it}\) and \(\mu_{i}\).  
+Panel data, also called longitudinal data, includes observations on \(i = 1,..., N\) cross- section units (e.g. firms) over \(t = 1,..., T\) time-periods [@Hsiao2007]. Here, \(Y_{it}\) is the dependent variable, \(X_{it}\) represents a \(K\)-dimensional row vectors of independent variables, \(\alpha\) is the intercept, \(\beta\) is a \(K\)-dimensional column vectors of parameters and \(u_{it}\) is the random disturbance term of mean equals zero. The latter can be decomposed as \(u_{it} = \mu_{i} + \epsilon_{it}\). The first term, \(\mu_{i}\), represents the individual error component and is time-invariant. It can be considered as the unobserved effect model. The second term, \(\epsilon_{it}\), is the idiosyncratic error which is assumed well-behaved and independent of \(X_{it}\) and \(\mu_{i}\).  
 
 The starting point of all panel data is to determine if \(\mu_{i}\) is correlated with \(X_{it}\). In presence of correlation, then \(\mu_{i}\) is considered as the *Fixed Effect* (i.e. FE) and the initial equation \ref{PanelData} becomes equation \ref{Fixed}. Otherwise, \(\mu_{i}\) is considered as the *Random Effect* (i.e. RE) and the equation \ref{PanelData} becomes equation \ref{Random}.
 
@@ -40,7 +40,7 @@ The R package *plm* provides pertinent estimation methods to estimate panel data
 
 \begin{equation}
 \centering
-Y_{it} - \bar{Y}_{i} = \beta (X_{itk} - \bar{X}_{ik}) + (u_{it} - \bar{u}_{i})
+( Y_{it} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} Y_{it} ) = \beta (X_{itk} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} X_{it} ) + ( \epsilon_{it} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} \epsilon_{it} )
 \label{FixedEffectsEstimation}
 \end{equation}
 
@@ -83,6 +83,6 @@ Firstly, to avoid the first source of endogeneity, namely the omission of variab
 \newpage
 Secondly, recent meta-analysis provided evidence of the bidirectional causality in the CEP-CFP nexus [@Orlitzky2001; @Orlitzky2003; @Wu2006; @Albertini2013; @Dixon-Fowler2013; @EndrikatMakingsenseconflicting2014; @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016; @Busch2018]. This could cause simultaneous causality between the dependent and independent variables and lead to endogeneity concern [@Sanchez-Ballesta2007; @Biorn2008; @Roberts2013]. To address this issue, I use a lagged instrument in lagging observations in independent and control variables one year behind the dependent variable (see equation \ref{EconometricModel}). This increases the confidence of the direction of the relationship [@Hart1996; @Delmas2015; @MiroshnychenkoGreenpracticesfinancial2017] and *in fine* reduces the potential simultaneity bias. 
 
-Finally, both equation \ref{CEP} and \ref{EconometricModel}, depending on the considered dependent variable, contains Fixed Effects (see respectively sections *"[The impact of process-based CEP on outcome-based CEP]"* and *"[The impact of CEP on CFP]"* for further details) and had been estimated with the fixed effects estimation. In presence of FE, endogeneity is clearly a concern since the explanatory variable is correlated with a component of the error term [@Roberts2013]. However, using the fixed effects estimation implies that FE is removed as \((u_{it} - \bar{u}_{i}) = 0\) (see equation \ref{FixedEffectsEstimation}), and solves this particular endogeneity problem [@Roberts2013]. 
+Finally, both equation \ref{CEP} and \ref{EconometricModel}, depending on the considered dependent variable, contains Fixed Effects (see respectively sections *"[The impact of process-based CEP on outcome-based CEP]"* and *"[The impact of CEP on CFP]"* for further details) and had been estimated with the fixed effects estimation. In presence of FE, endogeneity is clearly a concern since the explanatory variable is correlated with a component of the error term [@Roberts2013]. However, using the fixed effects estimation implies that FE is removed as \(( \mu_{i} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} \mu_{i} ) = 0\) (see equation \ref{FixedEffectsEstimation}), and solves this particular endogeneity problem [@Roberts2013]. 
 
 

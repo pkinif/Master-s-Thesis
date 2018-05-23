@@ -1,40 +1,7 @@
----
-output: 
-  pdf_document:
-    fig_caption: yes
-    number_sections: yes
-    highlight: haddock
-bibliography: References.bib
-csl: CSL/elsevier-harvard.csl
-link-citations: yes
-fontsize: 12pt
-geometry: margin = 1.2in
-urlcolor: blue
-linkcolor: blue
-citecolor: blue
-indent: true
-nocite: | 
-  @Hlavac2018
-header-includes:
-- \usepackage{placeins}
-- \usepackage{hyperref}
-- \usepackage{fancyhdr}
-- \usepackage{setspace}
-- \usepackage{chngcntr}
-- \onehalfspacing
-- \counterwithin{figure}{section}
-- \counterwithin{table}{section}
-- \usepackage{rotating}
-- \usepackage{dcolumn}
----
-
 \begin{centering}
 \huge
-\title{Green companies are the future: evidence from US publicly traded companies}
-\author{Pierrick KINIF\\
-   University of Namur,\\
-   Belgium}
-\date{June 2018}
+\title{Green companies are the future: Evidence from US publicly traded companies}
+
 \maketitle
 
 \normalsize

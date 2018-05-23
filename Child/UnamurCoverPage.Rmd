@@ -1,32 +1,4 @@
----
-output: 
-  pdf_document:
-    fig_caption: yes
-    number_sections: yes
-    highlight: haddock
-bibliography: References.bib
-csl: CSL/elsevier-harvard.csl
-link-citations: yes
-fontsize: 12pt
-geometry: margin = 1.2in
-urlcolor: blue
-linkcolor: blue
-citecolor: blue
-indent: true
-nocite: | 
-  @Hlavac2018
-header-includes:
-- \usepackage{placeins}
-- \usepackage{hyperref}
-- \usepackage{fancyhdr}
-- \usepackage{setspace}
-- \usepackage{chngcntr}
-- \onehalfspacing
-- \counterwithin{figure}{section}
-- \counterwithin{table}{section}
-- \usepackage{rotating}
-- \usepackage{dcolumn}
----
+
 \begin{centering}
 
 \begin{figure}[!h]
@@ -60,7 +32,7 @@ Finance Specialization
 
 \vspace{1cm}
 \normalsize
-{\bf ACADEMIC YEAR 2017-2018\\}
+{\bf ACADEMIC YEAR 2017 - 2018\\}
 \end{centering}
 
 \fancypagestyle{firstpage}{%

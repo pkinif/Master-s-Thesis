@@ -46,8 +46,8 @@ tribble(
 ) %>%
   arrange(Abbreviation) %>%
   as.data.frame() %>%
-  kable(booktab = T) #%>%
-  #kable_styling(position = "center")
+  kable(booktab = T) %>%
+  kable_styling(position = "center")
 
 
 ```
