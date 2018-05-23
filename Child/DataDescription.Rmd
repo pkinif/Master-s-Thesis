@@ -71,7 +71,7 @@ Q <- na.omit(DbLag1$TobinsQ)
 SkwenessQ <- round(skewness(Q), digits = 2)
 ```
 
-Regarding dependent variables, @EndrikatMakingsenseconflicting2014 claim that accounting-based measures (e.g. Return On Asset, Return On Equity, Return on Sales) capture immediate impacts and can be used as a proxy to measure short-term CFP while market-based measures (e.g. Tobin's Q, market capitalization, market to book value) integrate estimations of a firm’s future prospects and can be better used as a proxy for long-term CFP. Among scholars which used both measures simultaneously, Return On Asset (i.e. Roa) and Tobin's Q are the most frequent [@Lioui2012; @Cavaco2014; @Muhammadrelationshipenvironmentalperformance2015; @Delmas2015; @Semenova2016; @ManriqueAnalyzingEffectCorporate2017]. Therefore, this study uses ROA and Tobin's Q as a proxy for both short and long-term CFP.
+Regarding dependent variables, @EndrikatMakingsenseconflicting2014 claim that accounting-based measures (e.g. Return On Asset, Return On Equity, Return on Sales) capture immediate impacts and can be used as a proxy to measure short-term CFP while market-based measures (e.g. Tobin's Q, market capitalization, market to book value) integrate estimations of a firm’s future prospects and can be better used as a proxy for long-term CFP. Among scholars which used both measures simultaneously, ROA and Tobin's Q are the most frequent [@Lioui2012; @Cavaco2014; @Muhammadrelationshipenvironmentalperformance2015; @Delmas2015; @Semenova2016; @ManriqueAnalyzingEffectCorporate2017]. Therefore, this study uses ROA and Tobin's Q as a proxy for both short and long-term CFP.
 
 *ROA* is a standard accounting measure of financial performance, which is calculated by dividing earnings before interest by total firm assets. Roa gives information about how a company can transform assets into profit. 
 
@@ -115,7 +115,7 @@ WastP_{it} = \frac{Revenue_{it}}{(TWG_{it} - TWRR_{it})}
 \label{WastP}
 \end{equation}
 
-where \(Revenue_{it}\) is the total revenue in USD, \(TGGE_{it}\) is the total greenhouse gaz emissions in \(co_{2}\), \(TW_{it}\) is the total water in \(m_{3}\), \(TWG_{it}\) is the total waste generated in metric tons and \(TWRR\) is the total waste recycled and reused in metric tons.
+where \(Revenue_{it}\) is the total revenue in \(USD\), \(TGGE_{it}\) is the total greenhouse gaz emissions in \(CO_{2}\), \(TW_{it}\) is the total water in \(m_{3}\), \(TWG_{it}\) is the total waste generated in metric tons and \(TWRR\) is the total waste recycled and reused in metric tons.
 
 
 ## Control Variables

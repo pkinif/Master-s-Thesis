@@ -1,10 +1,32 @@
 ---
-output:
-  pdf_document
+output: 
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+    highlight: haddock
+bibliography: References.bib
+csl: CSL/elsevier-harvard.csl
+link-citations: yes
+fontsize: 12pt
+geometry: margin = 1.2in
+urlcolor: blue
+linkcolor: blue
+citecolor: blue
+indent: true
+nocite: | 
+  @Hlavac2018
 header-includes:
+- \usepackage{placeins}
+- \usepackage{hyperref}
 - \usepackage{fancyhdr}
+- \usepackage{setspace}
+- \usepackage{chngcntr}
+- \onehalfspacing
+- \counterwithin{figure}{section}
+- \counterwithin{table}{section}
+- \usepackage{rotating}
+- \usepackage{dcolumn}
 ---
-
 \begin{centering}
 
 \begin{figure}[!h]
@@ -12,15 +34,15 @@ header-includes:
 \includegraphics[width=5cm, height=5cm]{figures/UNamur.png}
 \end{figure}
 
-\vspace{3cm}
+\vspace{3.5cm}
 
 \Large
-{\bf Green companies are the future:\\ evidence from US publicly traded companies}
+{\bf Green companies are the future:\\ Evidence from \\US publicly traded companies}
 
-\vspace{2cm}
+\vspace{1.5cm}
 
 \normalsize
-{\bf Pierrick Kinif}
+{\bf Pierrick KINIF}
 
 \vspace{1cm}
 \normalsize
@@ -43,8 +65,8 @@ Finance Specialization
 
 \fancypagestyle{firstpage}{%
   \cfoot{\scriptsize University of Namur, ASBL\\
-Faculty of Economics, Social Sciences and Business Administration - Department in Management\\
-Rempart de la Vierge 8, B-5000 Namur, Belgique, Phone. +32 [0]81 72 48 41/49 58, Fax +32 [0]81 72 48 40}
+Faculty of Economics, Social Sciences and Business Administration - Department of Business Administration\\
+Rempart de la Vierge 8, B-5000 Namur, Belgium, Phone. +32 [0]81 72 48 41/49 58, Fax +32 [0]81 72 48 40}
 }
 \thispagestyle{firstpage}
 \renewcommand{\footrulewidth}{0pt}

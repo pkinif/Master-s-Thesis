@@ -1,3 +1,52 @@
-# Abstract{-}
+---
+output: 
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+    highlight: haddock
+bibliography: References.bib
+csl: CSL/elsevier-harvard.csl
+link-citations: yes
+fontsize: 12pt
+geometry: margin = 1.2in
+urlcolor: blue
+linkcolor: blue
+citecolor: blue
+indent: true
+nocite: | 
+  @Hlavac2018
+header-includes:
+- \usepackage{placeins}
+- \usepackage{hyperref}
+- \usepackage{fancyhdr}
+- \usepackage{setspace}
+- \usepackage{chngcntr}
+- \onehalfspacing
+- \counterwithin{figure}{section}
+- \counterwithin{table}{section}
+- \usepackage{rotating}
+- \usepackage{dcolumn}
+---
 
-This is an abstract
+\begin{centering}
+\huge
+\title{Green companies are the future: evidence from US publicly traded companies}
+\author{Pierrick KINIF\\
+   University of Namur,\\
+   Belgium}
+\date{June 2018}
+\maketitle
+
+\normalsize
+\begin{abstract}
+Lorem ipsum dolor sit amet, ius ne malorum similique. Ei duo utinam animal urbanitas, no nec rebum partem, an nam solet ridens blandit. Sale consectetuer vituperatoribus et quo, te libris insolens consectetuer mel. Ut est malis periculis inciderint, volutpat persecuti persequeris vis te. Eam eius eligendi constituam eu, ius no unum verterem corrumpit, has ad viris delenit.
+
+Ne graecis civibus sit, graeci fabulas ut eos. Te sed dicat perpetua, est id quis omnesque copiosae. Hinc exerci populo an pri, voluptua lobortis has te. Ius ut inani luptatum voluptatum. Sea ferri feugiat eu, magna viderer efficiantur quo an. Ei vim salutatus forensibus theophrastus, has quando tacimates cu, deleniti rationibus ea has.
+\end{abstract}
+\providecommand{\keywords}[1]
+{
+  \small	
+  \textbf{\textit{Keywords---}} #1
+}
+\keywords{one, two, three, four}
+\end{centering}

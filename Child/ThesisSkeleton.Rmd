@@ -3,9 +3,8 @@ output:
   pdf_document:
     fig_caption: yes
     number_sections: yes
+    highlight: haddock
 bibliography: References.bib
-#csl:  freie-universitat-berlin-geographische-wissenschaften.csl 
-#csl : apa.csl
 csl: CSL/elsevier-harvard.csl
 link-citations: yes
 fontsize: 12pt
@@ -18,6 +17,7 @@ nocite: |
   @Hlavac2018
 header-includes:
 - \usepackage{placeins}
+- \usepackage{hyperref}
 - \usepackage{fancyhdr}
 - \usepackage{setspace}
 - \usepackage{chngcntr}
@@ -52,8 +52,6 @@ rm(list=ls()) #Removes all items in Environment!
 
 \pagenumbering{roman}
 
-\fancyhead[CO,CE]{Abstract}
-
 ```{r child = 'Abstract.Rmd'}
 ```
 
@@ -83,6 +81,11 @@ rm(list=ls()) #Removes all items in Environment!
 \fancyhead[CO,CE]{List of Figures}
 \addcontentsline{toc}{section}{List of Figures}
 \listoffigures
+
+\newpage
+\fancyhead[CO,CE]{List of abbreviations}
+```{r child = 'Abbreviations.Rmd'}
+```
 
 \newpage
 \pagenumbering{arabic}
@@ -134,7 +137,7 @@ rm(list=ls()) #Removes all items in Environment!
 ```
 
 \newpage
-\fancyhead[CO,CE]{Appendix}
+\fancyhead[CO,CE]{Appendices}
 ```{r child = 'Appendix.Rmd'} 
 ```
 

@@ -1,0 +1,53 @@
+
+
+# List of abbreviations {-}
+
+\vspace{2cm}
+
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE}
+# Packages Loading
+if (!require("tibble")) install.packages("tibble")
+library(tibble)
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr) 
+if (!require("knitr")) install.packages("knitr")
+library(knitr)
+if (!require("kableExtra")) install.packages("kableExtra")
+library(kableExtra)
+
+# Abbreviation
+tribble(
+    ~Abbreviation, ~ Term,
+    "CEP", "Corporate Environmental Performance",
+    "CFP", "Corporate Financial Performance",
+    "ppm", "Parts Per Million",
+    "ISO", "The International Organization for Standardization",
+    "ROE", "Return on Equity",
+    "ROA", "Return on Asset",
+    "EMV", "Environmental Management Measures",
+    "EPV", "Environmental Performance Variables",
+    "EDV", "Environmental Disclosure Variables",
+    "ESG", "Environmental, Social and Governmental",
+    "SRI", "Socially Responsible Investments",
+    "CSP", "Corporate Social Performance",
+    "KPI", "Key Performance Indicator",
+    "SPL", "Sustainability Pay Link",
+    "STC", "Sustainability Themed Committee",
+    "A", "Audit Score",
+    "CaP", "Carbon Productivity",
+    "WatP", "Water Productivity",
+    "WastP", "Waste Productivity",
+    "GICS", "Global Industry Classification Standard",
+    "FE", "Fixed Effetcs",
+    "RE", "Random Effetcs",
+    "OLS", "Ordinary Least Square",
+    "BPLM", "Breusch-Pagan Lagrange Multiplier",
+    "VIF", "Variance Inflation Factor"
+) %>%
+  arrange(Abbreviation) %>%
+  as.data.frame() %>%
+  kable(booktab = T) #%>%
+  #kable_styling(position = "center")
+
+
+```
