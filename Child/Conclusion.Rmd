@@ -1,11 +1,10 @@
 # Conclusion {-}
 
-Context
+Using a panel data of 393 US publicly traded companies for the period 2012-2014, this study first investigates the impact of process-based CEP on outcome-based CEP. Then, it explores whether the combined effect of process-based and outcome-based CEP influences CFP and observes the time influence (i.e. short-term vs long-term) of the relationship.
 
-What I did
+Findings of this study provides evidence that process-based CEP positively influence outcome-based CEP and support the idea that it does pay to be green. More precisely, I demonstrate that both process and outcome-based CEP have a positive impact on CFP. This relationship is always positive, no matter the time horizon, and is stronger with a long-term perspective than a short-term perspective. Hence, results highlights that companies with better environmental performance have also better short-term and long-term financial performance.
 
-What I Found
+This research study contributes to the literature. First, I answer the research call of @EndrikatMakingsenseconflicting2014 who highlighted the need for a better understanding of
+the multidimensionality of both CEP and CFP constructs. Second, I answer the call of @Griffin1997 and @Busch2018 who called for research that look at the CEP-CFP relationship over time.
 
-Contribution
 
-Future Research
