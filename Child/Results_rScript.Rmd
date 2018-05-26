@@ -60,7 +60,7 @@ Model <- Db %>% select(c(YearIndex,
                        GreenScore
                        ))
 
-# I transform the "TotalAssets" column into FirmSize using the log of TotalAssets 
+# I transform the "TotalAssets" column into "FirmSize" using the log of TotalAssets 
 Model$TotalAssets <- log10(Model$TotalAssets)
 
 # I use the natural log for TobinsQ
@@ -85,11 +85,10 @@ Model1 <- Model %>% setnames(old = vieux, new = nouveau)
 ### Unpaired two sample t-test {-}
 
 ```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
-# unpaired two-samples t-test 
 # I create two vectors.
 Sample1 <- Model1 %>% subset( subset = !is.na(Roa)) %>% select(Roa)
 Sample2 <- Model1 %>% subset( subset = !is.na(TobinsQ)) %>% select(Roa)
-# I carry out the t test
+# I carry out the t-test and save the pvalue into IdAnal
 IdAnal <- round(t.test(
   Sample1, 
   Sample2, 
@@ -103,10 +102,10 @@ IdAnal <- round(t.test(
 ```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
 # Descriptive statistics 
 
-# I remove the column "GreenScore", "CompaniesIndex" and "YearIndex". Right now I do not need it.
+# I remove the column "GreenScore", "CompaniesIndex" and "YearIndex" as I do not need it.
 Model2 <- Model1 %>% select(-c(GreenScore, YearIndex, CompaniesIndex))
 
-# I use stargazer to create a table containing descriptive statistics for each variables
+# I use stargazer to create a table containing descriptive statistics for each variable
 
 stargazer(Model2, 
           title = "Descriptive statistics",
@@ -180,14 +179,14 @@ CorMatrix <- corstars(Model2,
 # Now, names of each variable stand as row names and column names. 
 # I do not need to have dupplicates. 
 # So I keep the names of the variables as names of the row,
-# and I use a number for the names of the column.
+# and I use a number as the names of the column.
 number <- c( 1 : (ncol(Model2) - 1)) #number of variables
 colnames(CorMatrix) <- number
 NewRowNames <- paste(c( 1 : ncol(Model2)),
                      rownames(CorMatrix), 
                      sep = ". ")
 rownames(CorMatrix) <- NewRowNames
-# I use stargazer to make a nice table
+# I use stargazer to make a table
 table <- stargazer(CorMatrix, 
                    summary = FALSE, 
                    type = "latex", 
@@ -222,18 +221,18 @@ TobinsQ <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + Leverage + Growth +
 VifRoa <- car::vif(Roa)
 VifTobin <- car::vif(TobinsQ)
 
-# Summary in a nice stargazer table
+# Summary in a stargazer table
 VifTable <- cbind(VifRoa, VifTobin)
 colnames(VifTable) <- c("Roa", "Tobin's Q")
 
 titre <- "Variance Inflation Factor"
-stargazer(VifTable, summary = FALSE, title = titre, label = "VIF", header = FALSE, type = "latex", align = TRUE, table.placement = "!", digits = 3)
+stargazer(VifTable, summary = FALSE, title = titre, label = "VIF", header = FALSE, type = "latex", align = TRUE, table.placement = "!")
 ```
 
 ### The impact of process-based CEP on outcome-based CEP {-}
 
 ```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
-# I select only CEP variables in model2. As Model2 is already a pdata.frame, I do not need to reproduce this function on Model3.
+# I select only CEP variables in model2 which is already a pdataframe.
 Model3 <- Model1 %>% 
 select(c(YearIndex,
    CompaniesIndex,
@@ -244,7 +243,7 @@ select(c(YearIndex,
    STC,
    A)) 
 
-# I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
+# I test for Random Effect Model using the Lagrange Multiplier Test 
 # Pooling Model
 CarbonPooling <- plm(CaP ~ SPL + STC + A, data = Model3, model="pooling")
 WaterPooling <- plm(WaP ~ SPL + STC + A, data = Model3, model="pooling")
@@ -291,21 +290,21 @@ pFtestWaste<-ifelse(pFtestWaste<0.01, paste(pFtestWaste,"***",sep = ""),
 ifelse(pFtestWaste<0.05,paste(pFtestWaste,"**",sep = ""),
 ifelse(pFtestWaste<0.1,paste(pFtestWaste,"*",sep = ""),pFtestWaste)))
 
-# Based on the results of the tests, the three models need to be estimated with the fixed effects estimations (i.e. model = "within" in plm). Let's consolidate into a nice stargazer table
+# Based on results of both tests, the three models need to be estimated with the fixed effects estimations (i.e. model = "within" in plm). Let's consolidate into a stargazer table
 titre <- "The impact of process-based on outcome-based CEP"
 stargazer(CarbonWithin, 
-          WaterWithin, 
-          WasteWithin, 
-          title = titre, 
-          label = "CepResults", 
-          header = FALSE, 
-          type = "latex", 
-          align = FALSE,
-          single.row = TRUE,
-          model.numbers = FALSE, 
-          table.placement = "!", 
-          add.lines = list(c("BPLM test (pvalue)", PlmtestCarbon, PlmtestWater, PlmtestWaste),
-                   c("F test (pvalue)", pFtestCarbon ,pFtestWater, pFtestWaste)))
+WaterWithin, 
+WasteWithin, 
+title = titre, 
+label = "CepResults", 
+header = FALSE, 
+type = "latex", 
+align = FALSE,
+single.row = TRUE,
+model.numbers = FALSE, 
+table.placement = "!", 
+add.lines = list(c("BPLM test (pvalue)", PlmtestCarbon, PlmtestWater, PlmtestWaste),
+c("F test (pvalue)", pFtestCarbon ,pFtestWater, pFtestWaste)))
 ```
 
 
@@ -314,7 +313,7 @@ stargazer(CarbonWithin,
 
 ```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
 # I have already removed outliers from both models (i.e. Roa and TobinsQ) via the file = "Analysis/MakeFile_RemoveOutliers_Lag1.rmd". 
-# Consequently I load the two following databases.
+# Consequently, I load the two following databases.
 p <- "Analysis/DataBase/DataSynchronization/NoOutliersLag1/Roa.csv"
 RoaNoOut <- read.csv(file = p, 
                      header = TRUE, 
@@ -373,19 +372,19 @@ pFtestTobin<-ifelse(pFtestTobin<0.01, paste(pFtestTobin,"***",sep = ""),
 ifelse(pFtestTobin<0.05,paste(pFtestTobin,"**",sep = ""),
 ifelse(pFtestTobin<0.1,paste(pFtestTobin,"*",sep = ""),pFtestTobin)))
 
-# Based on the results of the tests, TobinsQ need to be estimated with the pooling ols estimations (i.e. model = "pooling" in plm) while Roa with the within effect estimation.. Let's consolid
+# Let's consolidate into a stargazer table
 titre <- "The impact of process and outcome-based CEP on CFP (lag = 1)"
 stargazer(TobinPooling, 
-          RoaWithin, 
-          title = titre, 
-          label = "Lag1", 
-          header = FALSE, 
-          type = "latex",
-          single.row = TRUE,
-          align = FALSE, 
-          model.numbers = FALSE, 
-          table.placement = "!", 
-          add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
-                   c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
+RoaWithin, 
+title = titre, 
+label = "Lag1", 
+header = FALSE, 
+type = "latex",
+single.row = TRUE,
+align = FALSE, 
+model.numbers = FALSE, 
+table.placement = "!", 
+add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
+c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
 ```
 

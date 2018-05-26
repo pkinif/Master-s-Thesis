@@ -24,7 +24,7 @@ DbLag1<-data.frame(read.csv("Analysis/DataBase/DataSynchronization/Lag1.csv", se
 
 ## Overview
 
-The starting point of the data collection was the Newsweek Green Ranking. This ranking had assessed the world’s largest publicly-traded companies in the US and in the world since 2009. It had been developed through a collaboration between Newsweek, Corporate Knights Capital, HIP Investor Inc and leading sustainability minds from nongovernmental organizations and the academic and accounting communities. 
+The starting point of the data collection was the Newsweek Green Ranking. This ranking had assessed the world’s largest publicly-traded companies in the US and in the world since 2009. It has been developed through a collaboration between Newsweek, Corporate Knights Capital, HIP Investor Inc and leading sustainability minds from nongovernmental organizations and the academic and accounting communities. 
 
 The ranking attributes an overall green score to companies. This score is based on a weighted average of key performance indicators (KPI's). This study uses these KPI's to approach both process-based and outcome-based CEP of the 500 largest publicly-traded companies in the United States. As a result of making a transition to a 100% rules-based approach, the methodology for the 2014 Newsweek Green Rankings differs considerably from the framework used in the 2012 Newsweek Green Rankings. Therefore, this study considers only [`2014`](http://www.newsweek.com/green/worlds-greenest-companies-2014), [`2015`](http://www.newsweek.com/green-2015/top-green-companies-world-2015) and [`2016`](http://www.newsweek.com/green-2016/top-green-companies-world-2016) ranking. Among those three ranking and of the 500 US companies, 405 companies were listed for each year.
 
@@ -89,7 +89,7 @@ where \(MVE\) is the product of a firm's shares prices and the number of common 
 ## Independent Variables
 
 
-Both process-based and outcome-based CEP had been approached with KPI's of the Newsweek Green Ranking. I use “Sustainability Pay Link”, “Sustainability Themed Committee”, and “Audit” as proxies for process-based CEP and "Carbon Productivity", "Water Productivity" and "Waste Productivity" as proxies for outcome-based CEP\footnote{Newsweek Green Ranking has another KPI that captures outcome-based CEP (i.e. Energy Productivity). Due to multicollinearity concern (Variance Inflation Factor superior to 5 for both Energy and Carbon Productivity),  I do not consider it into my model.}.
+Both process-based and outcome-based CEP has been approached with KPI's of the Newsweek Green Ranking. I use “Sustainability Pay Link”, “Sustainability Themed Committee”, and “Audit” as proxies for process-based CEP and "Carbon Productivity", "Water Productivity" and "Waste Productivity" as proxies for outcome-based CEP\footnote{Newsweek Green Ranking has another KPI that captures outcome-based CEP (i.e. Energy Productivity). Due to multicollinearity concern (Variance Inflation Factor superior to 5 for both Energy and Carbon Productivity),  I do not consider it into my model.}.
 
 *A Sustainability Pay Link* (i.e. SPL) is a mechanism to link the remuneration of any member of a company’s senior executive team with the achievement of environmental performance targets. A score of 1 accrues to the company when such a link exists and a score of 0 otherwise.
 

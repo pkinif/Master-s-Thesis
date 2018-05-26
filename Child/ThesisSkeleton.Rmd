@@ -9,8 +9,8 @@ csl: CSL/elsevier-harvard.csl
 link-citations: yes
 fontsize: 12pt
 geometry: margin = 1.2in
-urlcolor: blue
-linkcolor: blue
+urlcolor: red
+linkcolor: red
 citecolor: blue
 indent: true
 nocite: | 
@@ -84,7 +84,7 @@ rm(list=ls()) #Removes all items in Environment!
 \FloatBarrier
 \newpage
 \fancyhead[CO,CE]{Literature Review}
-```{r child = 'CopyOfLiteratureReview.Rmd'} 
+```{r child = 'LiteratureReview.Rmd'} 
 ```
 
 \FloatBarrier
