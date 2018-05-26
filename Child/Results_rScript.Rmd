@@ -1,4 +1,4 @@
-The following R script is the R script used to produce the section [Results].
+The following R script is the R script used to produce the section *"[Results]"*.
 
 ### Packages loading {-}
 

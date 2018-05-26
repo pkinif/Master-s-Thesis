@@ -1,9 +1,9 @@
 
-# Author's Note {-}
+\section*{Author's Note}
 
-This master's thesis has been written in *R Markdown* [@Allaire2016] to make it *transparent* and *reproducible* for the reader. All resources are available on my GitHub [account](https://github.com/pkinif/Thesis).  The latter is organized following the methodology of @Gandrud2013b. Each section of this thesis corresponds to an R Markdown file in the *Child* folder. The *Child/ThesisSkeleton.Rmd* file is the "parent" document which merges all the "child" documents into a consolidated pdf document, namely the one you are reading. The *Child/Analysis* sub-folders contains a list of makefiles whose outputs are saved into the following sub-folders *Child/Analysis/DataBase*.
+This master's thesis has been written in `R Markdown` [@Allaire2016] to make it transparent and reproducible for the reader. All resources are available on my GitHub account `https://github.com/pkinif/Thesis`.  The latter is organized following the methodology of @Gandrud2013b. Each section of this thesis corresponds to an `R Markdown` file in the `Child` folder. The `Child/ThesisSkeleton.Rmd` file is the `parent` document which merges all the `child` directories into a consolidated pdf document, namely the one you are reading. The `Child/Analysis` sub-folder contains a list of makefiles whose outputs are saved into  `Child/Analysis/DataBase`.
 
-The platform I have used is [Rstudio](https://www.rstudio.com/) which is an open source software for R. Here are the information of my session : 
+The platform I have used is `Rstudio` which is an open source software for `R`. Here are the information of my session : 
 
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE}

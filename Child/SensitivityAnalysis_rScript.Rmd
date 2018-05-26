@@ -1,4 +1,4 @@
-The following R script is the R code used to produce the section : [Sensitivity Analysis].
+The following R script is the R code used to produce the section : *"[Sensitivity Analysis]"*.
 
 ### Packages loading {-}
 

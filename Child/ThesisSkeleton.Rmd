@@ -43,51 +43,39 @@ rm(list=ls()) #Removes all items in Environment!
 ```
 
 \newpage
-\pagestyle{fancy}
-
-\fancyhead[LE,RO]{}
-\fancyhead[LO,RE]{}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0pt}
 
 \pagenumbering{roman}
-
 ```{r child = 'Abstract.Rmd'}
 ```
 
 \newpage
-\fancyhead[CO,CE]{Author's Note}
-
 ```{r child = 'AuthorNote.Rmd'}
 ```
 
 \newpage
-\fancyhead[CO,CE]{Acknowledgements}
-
 ```{r child = 'Acknowledgments.Rmd'}
 ```
 
 \newpage
-\fancyhead[CO,CE]{Table of Contents}
+\renewcommand{\contentsname}{Table of Contents}
 \setcounter{tocdepth}{3}
 \tableofcontents
 
 \newpage
-\fancyhead[CO,CE]{List of Tables}
 \addcontentsline{toc}{section}{List of Tables}
 \listoftables
-
-\newpage
-\fancyhead[CO,CE]{List of Figures}
 \addcontentsline{toc}{section}{List of Figures}
 \listoffigures
 
 \newpage
-\fancyhead[CO,CE]{List of abbreviations}
 ```{r child = 'Abbreviations.Rmd'}
 ```
 
 \newpage
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
 \pagenumbering{arabic}
 \fancyhead[CO,CE]{Introduction}
 ```{r child = 'Introduction.Rmd'} 
@@ -144,5 +132,5 @@ rm(list=ls()) #Removes all items in Environment!
 \newpage
 \fancyhead[CO,CE]{References}
 
-# References
+# References {-}
 \noindent

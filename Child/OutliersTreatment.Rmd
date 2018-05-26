@@ -2,7 +2,7 @@
 output:
   pdf_document
 ---
-This appendix presents the R code used to identify and remove outliers from the database. This R scipt is the one contains in the makefile : *Analysis/DataBase/MakeFile_RemoveOutliers_Lag1.Rmd*. This step had been repeated three times : (i) when dependent variables were lagged one year (see section: [The impact of CEP on CFP]) and (ii) two years behind others variables and (iii) when the GreenScore variable was the only independent variable considered into the econometric model (see section: [Sensitivity Analysis]).  
+This appendix presents the R code used to identify and remove outliers from the database. This R script is the one contains in the makefile : `Analysis/DataBase/MakeFile_RemoveOutliers_Lag1.Rmd`. This step had been repeated three times : (i) when dependent variables were lagged one year (see section: *"[The impact of CEP on CFP]"*) and (ii) two years behind others variables and (iii) when the GreenScore variable was the only independent variable considered into the econometric model (see section: [Sensitivity Analysis]).  
 
 
 ```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55)}
@@ -125,7 +125,10 @@ write.csv(
 
 ## TobinsQ
 ### plot cook's distance
-plot(cooksdTobinsQ, pch="*", cex=2)  
+plot(cooksdTobinsQ, 
+     pch="*", 
+     cex=2, 
+     main = "Influencial outliers - Tobin's Q")  
 ### add cutoff line
 abline(h = 4*mean(cooksdTobinsQ, na.rm=T), col="red")
 ### add labels
@@ -136,7 +139,10 @@ text(x=1:length(cooksdTobinsQ)+1, y=cooksdTobinsQ, labels=ifelse(cooksdTobinsQ>4
 ```{r  message = FALSE, error = FALSE, warning = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55),  results = 'asis', tidy = TRUE, comment = FALSE}
 ## Roa
 ### plot cook's distance
-plot(cooksdRoa, pch="*", cex=2)  
+plot(cooksdRoa, 
+     pch="*", 
+     cex=2, 
+     main = "Influencial outliers - ROA")  
 ### add cutoff line
 abline(h = 4*mean(cooksdRoa, na.rm=T), col="red")  
 ### add labels

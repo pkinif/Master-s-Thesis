@@ -18,7 +18,7 @@
 
 \vspace{1cm}
 \normalsize
-Supervised by:\\
+Supervisors :\\
 \vspace{0.5cm}
 
 Prof. Sophie Béreau\\

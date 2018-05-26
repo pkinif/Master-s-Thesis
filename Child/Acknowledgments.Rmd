@@ -3,8 +3,7 @@ output:
   pdf_document
 ---
 
-# Acknowledgements {-}
-
+\section*{Acknowledgements}
 \begin{flushright}
 \hspace{0pt}
 \vfill

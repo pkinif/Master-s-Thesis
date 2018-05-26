@@ -81,7 +81,7 @@ Model1 <- Model %>% setnames(old = c("DebtToEquityRatio", "TotalAssets", "GicsCl
 
 # Results
 
-The R script of this section is available in [Appendix B: Results - R script].
+The R script of this section is available in *"[Appendix B: Results - R script]"*.
 
 ## Descriptive statistics
 
@@ -221,7 +221,7 @@ stargazer(VifTable, summary = FALSE, title = "Variance Inflation Factor", label 
 
 How to treat influential outliers is still a lively debate in the literature [@@OrrJohn1991; @Cousineau2010]. @Tabachnick2007 argue that the imputation with the mean is the best method while @Cousineau2010 highlight that it tends to reduce the spread of the population, making the observed distribution more leptokurtic, and possibly increase the likelihood of a type-I error. @Dang2009 argue that a more elaborate technique involves replacing outliers with possible values (e.g. multiple imputation) while @Barnett1994 would prefer to remove or windsorize them. Alternatively, @Pollet2017 argue that inclusion or exclusion of outliers depend on the significativity of the results. According to them, if results are more significant without outliers, scholars should remove them.
 
-Following the mindset of @Pollet2017, I removed outliers from the database. Influencial outliers had been identified based on the Cook's distance [@Cook1977] which is a common statistical tool to assess the influence of outliers [@JPStevens1984; @Cousineau2010; @Zuurprotocoldataexploration2010]. Cook’s Distance observes the difference between the regression parameters of a given model, \(\hat{\beta}\), and what they become if the \(i_{th}\) data points is deleted, let's say  \(\hat{\beta}_{i}\). See [Appendix C: Outliers treatment] for furthers details on how I proceed.
+Following the mindset of @Pollet2017, I removed outliers from the database. Influencial outliers had been identified based on the Cook's distance [@Cook1977] which is a common statistical tool to assess the influence of outliers [@JPStevens1984; @Cousineau2010; @Zuurprotocoldataexploration2010]. Cook’s Distance observes the difference between the regression parameters of a given model, \(\hat{\beta}\), and what they become if the \(i_{th}\) data points is deleted, let's say  \(\hat{\beta}_{i}\). See *"[Appendix C: Outliers treatment]"* for furthers details on how I proceed.
 
 ## The impact of process-based CEP on outcome-based CEP
 

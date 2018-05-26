@@ -39,9 +39,7 @@ Y_{it+1} = \alpha + \beta_{1} GS_{it} + ContrOLS_{it} + d_{t} + u_{it}
 
 where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(GS_{it}\) is a proxy for a firm's green score, \(ContrOLS_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents time effect and  \(u_{it}\) is the error term.
 
-Given the pvalue of both BPLM and F tests, Model (4) had been estimated with the *pooled OLS estimators* while Model (5) had been estimated with the *fixed effect estimation*. Results are reported in table \ref{GreenScoreResults} and confirm findings of the previous section. Consequently, the sensitivity analysis supports that CEP does have a significant and positive effect on CFP, no matter the time horizon (short-term and long-term). 
-
-R script of this section is available in [Appendix D: Sensitivity Analysis - R script].
+Given the pvalue of both BPLM and F tests, Model (4) had been estimated with the *pooled OLS estimators* while Model (5) had been estimated with the *fixed effect estimation*. Results are reported in table \ref{GreenScoreResults} and confirm findings of the previous section. Consequently, the sensitivity analysis supports that CEP does have a significant and positive effect on CFP, no matter the time horizon (short-term and long-term). R script of this section is available in *"[Appendix D: Sensitivity Analysis - R script]"*.
 
 \newpage
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
