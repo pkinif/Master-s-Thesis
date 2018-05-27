@@ -33,7 +33,6 @@ library(xtable)
 
 ```
 
-\newpage
 ### DataBase loading {-}
 
 ```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
@@ -81,7 +80,6 @@ nouveau <- c("Leverage", "FirmSize", "Industry", "Growth", "CaP", "WaP", "WastP"
 Model1 <- Model %>% setnames(old = vieux, new = nouveau) 
 ```
 
-\newpage
 ### Unpaired two sample t-test {-}
 
 ```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
@@ -118,7 +116,6 @@ stargazer(Model2,
           digits.extra = 2)
 ```
 
-\newpage
 ### Matrix of correlation {-}
 
 ```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}

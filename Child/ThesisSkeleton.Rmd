@@ -61,6 +61,7 @@ rm(list=ls()) #Removes all items in Environment!
 \setcounter{tocdepth}{3}
 \tableofcontents
 
+\newpage
 \addcontentsline{toc}{section}{List of Tables}
 \listoftables
 \addcontentsline{toc}{section}{List of Figures}
@@ -71,11 +72,11 @@ rm(list=ls()) #Removes all items in Environment!
 ```
 
 \newpage
+\pagenumbering{arabic}
+
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
-
-\pagenumbering{arabic}
 \fancyhead[CO,CE]{Introduction}
 ```{r child = 'Introduction.Rmd'} 
 ```

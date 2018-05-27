@@ -13,12 +13,9 @@ CFP is a broad meta-construct and scholars have adopted three broad subdivisions
 
 Based on a recent critical review, @Ludecadedebatenexus2014 have shown that, of the three types of CFP measures, accounting-based ones are the most frequency used, followed by the market-based measures, and perceptual measures. Scholars also tend to alleviate weaknesses of one type of indicators by the use of another [@McWilliams2006]. For instance, @King2002 and @Delmas2015 have used ROA and Tobin's Q as proxies for approaching CFP. @Menguc2005 considered market share, sales growth and profit after tax. @Husted2007 used management surveys while @Verschoor1999 adopted the Fortune magazine rankings. 
 
-\newpage
 ## CEP as a broad meta-construct
 
-CEP is also a broad meta-constructs and no common definition exist in the literature [@Albertini2013; @EndrikatMakingsenseconflicting2014]. Scholars have used a wide variety of indicators as proxies for approaching the green performance of companies. 
-
-@Albertini2013 use a three-group classification to summarize CEP measures : (i) *Environmental Management Measures* (i.e. EMV) which mostly refer to environmental strategy, integration of environmental issues into strategic planning processes, environmental practices, process-driven initiatives, product-driven management systems, ISO 14001 certification, environmental management system adoption, and participation in voluntary programs [@Molina-Azorin2009; @Schultze2012]. (ii) *Environmental Performance Variables* (i.e. EPV) which are mostly measures quantified in physical units (carbon dioxide emissions, physical waste, water consumption, toxic release) that can be positive (emission reduction) or negative (emission generated) [@Albertini2013]. (iii) *Environmental Disclosure Variables* (i.e. EDV) such as information releases regarding toxic emission [@Hamilton1995], environmental awards [@Chencrosscountrycomparisongreen2018], environmental accidents and crises [@Blacconiere1994], and environmental investment announcements [@Gilley2000]. 
+CEP is also a broad meta-constructs and no common definition exist in the literature [@Albertini2013; @EndrikatMakingsenseconflicting2014]. Scholars have used a wide variety of indicators as proxies for approaching the green performance of companies. @Albertini2013 use a three-group classification to summarize CEP measures : (i) *Environmental Management Measures* (i.e. EMV) which mostly refer to environmental strategy, integration of environmental issues into strategic planning processes, environmental practices, process-driven initiatives, product-driven management systems, ISO 14001 certification, environmental management system adoption, and participation in voluntary programs [@Molina-Azorin2009; @Schultze2012]. (ii) *Environmental Performance Variables* (i.e. EPV) which are mostly measures quantified in physical units (carbon dioxide emissions, physical waste, water consumption, toxic release) that can be positive (emission reduction) or negative (emission generated) [@Albertini2013]. (iii) *Environmental Disclosure Variables* (i.e. EDV) such as information releases regarding toxic emission [@Hamilton1995], environmental awards [@Chencrosscountrycomparisongreen2018], environmental accidents and crises [@Blacconiere1994], and environmental investment announcements [@Gilley2000]. 
 
 @EndrikatMakingsenseconflicting2014 split up CEP into two sub-dimension. On the one hand, *process-based CEP* which can be linked to the EMV approach of @Albertini2013. It refers to *"a strategic level and focuses on managerial principles and processes such as environmental objectives, environmental policies, or environmental management structures"*. On the other hand, *outcome-based CEP* which can be linked to the EPV dimension of @Albertini2013. It reflects *"the observable and quantifiable results of these efforts [@Delmas2011a] and refers to measures such as the number of released pollutants or the ratio of recycled waste to total waste"*. According to @Xie2007, process-based CEP can be considered as a preliminary step of outcome-based CEP. Besides, scholars demonstrated that the first approach has a positive impact on the second one which in turn has a positive impact on financial performance [@Li2017; @Chencrosscountrycomparisongreen2018].
 
@@ -31,7 +28,6 @@ CEP can also be linked to the Environmental, Social and Governmental (i.e. ESG) 
 
 @Ambec2008 demonstrated that the expenses incurred to reduce pollution can be partly or completely offset by gains made elsewhere. @Porter1995 argued that properly crafted environmental standards can trigger innovation offsets, allowing companies to improve their resource productivity. He redefined the self-concept of value creation. According to him, companies have to create shared value. Sharing value creation involves building economic value which addresses the current needs and challenges of the society [@Porter2011a; @Porter2011]. In the same logic, @Freeman1984 calls for a radical rethinking of our firm's model. He argues that companies have to consider their stakeholders (i.e. any group or individual who can affect or is affected by the achievement of an organization's objectives (p25)) or otherwise face a negative contest from non-shareholder groups (e.g. boycotts, lawsuits, and protests). In other words, @Freeman1984 summarizes the idea that companies should consider corporate environmental performance as an undeniable cost of doing business. 
 
-\newpage
 ## Does it pay to be green?
 
 More and more companies are developing profitable business strategies that deliver tangible social benefits [@Testa2018] and that embrace the new business paradigm of @Freeman1984, @Porter1995 and @Ambec2008. However, others prefer keeping the old fashion way of @MiltonFriedman1970. This dichotomy has interested scholars and since they have sought to empirically answer the question, *"Does it pay to be green?"*. As claimed by @Ludecadedebatenexus2014, in a competitive business world, answering this question is crucial to provide a genuine economic justification to the new paradigm. 
@@ -71,7 +67,9 @@ Taking into account previous theoretical arguments and considering varying empir
 
 The research framework of this study, inspired by @LiSuhong2017 and @Chencrosscountrycomparisongreen2018, is summarized in figure \ref{ResearchFramework}.
 
-\begin{figure}[!b]
+\vspace{3cm}
+
+\begin{figure}[!h]
 \centering
 \includegraphics[width=14cm, height=12cm]{figures/ResearchFramework.jpg}
 \caption{Research Framework}
