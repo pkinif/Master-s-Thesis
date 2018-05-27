@@ -1,5 +1,4 @@
 
-
 # Literature Review
 
 ## CFP as a broad meta-construct
@@ -14,6 +13,7 @@ CFP is a broad meta-construct and scholars have adopted three broad subdivisions
 
 Based on a recent critical review, @Ludecadedebatenexus2014 have shown that, of the three types of CFP measures, accounting-based ones are the most frequency used, followed by the market-based measures, and perceptual measures. Scholars also tend to alleviate weaknesses of one type of indicators by the use of another [@McWilliams2006]. For instance, @King2002 and @Delmas2015 have used ROA and Tobin's Q as proxies for approaching CFP. @Menguc2005 considered market share, sales growth and profit after tax. @Husted2007 used management surveys while @Verschoor1999 adopted the Fortune magazine rankings. 
 
+\newpage
 ## CEP as a broad meta-construct
 
 CEP is also a broad meta-constructs and no common definition exist in the literature [@Albertini2013; @EndrikatMakingsenseconflicting2014]. Scholars have used a wide variety of indicators as proxies for approaching the green performance of companies. 
@@ -25,14 +25,13 @@ CEP is also a broad meta-constructs and no common definition exist in the litera
 CEP can also be linked to the Environmental, Social and Governmental (i.e. ESG) framework or also called, Socially Responsible Investments (i.e. SRI). ESG investing provides criteria that allow investors and advisors to select investments that align with their values as well as their financial goals [@Fulton2012]. It applies a set of investment screens to select or exclude assets based on ESG criteria [@Renneboog2008]. A plethora of organizations have developed methodologies to attribute an ESG score to companies and support investors who consider corporate governance insights into their investment processes. For instance, Sustainalytics, based in New York and Thomson Reuters with the Asset4 ESG database. Scholars [@MiroshnychenkoGreenpracticesfinancial2017; @Halbritter2015] have used these ESG scores as proxies for CEP.
 
 
-
 ## Two perspectives on CEP
 
 @MiltonFriedman1970 considers investment in pollution efficient technology as a deviation from the profit maximization goal (i.e. an increase in cost). According to him, *"businessmen who want to promote desirably social ends...are unwitting puppets of the intellectual forces that have been undermining the basis of a free society"*. In recent decades, this paradigm has been widely challenged. The literature is showing growing evidence that improving a company's environmental performance can lead to better economic or financial performance. 
 
 @Ambec2008 demonstrated that the expenses incurred to reduce pollution can be partly or completely offset by gains made elsewhere. @Porter1995 argued that properly crafted environmental standards can trigger innovation offsets, allowing companies to improve their resource productivity. He redefined the self-concept of value creation. According to him, companies have to create shared value. Sharing value creation involves building economic value which addresses the current needs and challenges of the society [@Porter2011a; @Porter2011]. In the same logic, @Freeman1984 calls for a radical rethinking of our firm's model. He argues that companies have to consider their stakeholders (i.e. any group or individual who can affect or is affected by the achievement of an organization's objectives (p25)) or otherwise face a negative contest from non-shareholder groups (e.g. boycotts, lawsuits, and protests). In other words, @Freeman1984 summarizes the idea that companies should consider corporate environmental performance as an undeniable cost of doing business. 
-\newpage
 
+\newpage
 ## Does it pay to be green?
 
 More and more companies are developing profitable business strategies that deliver tangible social benefits [@Testa2018] and that embrace the new business paradigm of @Freeman1984, @Porter1995 and @Ambec2008. However, others prefer keeping the old fashion way of @MiltonFriedman1970. This dichotomy has interested scholars and since they have sought to empirically answer the question, *"Does it pay to be green?"*. As claimed by @Ludecadedebatenexus2014, in a competitive business world, answering this question is crucial to provide a genuine economic justification to the new paradigm. 
@@ -41,7 +40,6 @@ The relationship between CEP and CFP has been broadly discussed in the literatur
 
 @Delmas2015 found that improving CEP causes a decline in ROA while an increase in Tobin’s q. Unlike @Cavaco2014 and @Muhammadrelationshipenvironmentalperformance2015, who obtained a positive relation between ROA and CEP while no relation between Tobin's Q and CEP. Results of @MiroshnychenkoGreenpracticesfinancial2017 show that internal green practices (i.e. pollution prevention and green supply chain management) are the major environmental drivers of financial performance, while external green practices (i.e. green product development) play a secondary role in determining financial performance. Besides, according to them, the adoption of ISO 14001 appears to have a negative impact on financial performance. @Fernando2010 observed that all else equal, toxic firms can realize a higher valuation by becoming environmentally neutral but they found no such financial benefit to neutral firms becoming green. @Busch2011a found that process-based CEP (in terms of carbon management) negatively affects CFP, while outcome-based CEP (in terms of carbon emissions) has a positive influence on CFP. @SongCanenvironmentalmanagement2017 provided evidence that environmental management is significantly positively related to financial performance in the following year while no significant in the current year. @Fisher-Vanden2008 found that companies announcing membership in environmental programs experience significantly negative abnormal stock returns. Results of @PrzychodzenRelationshipsecoinnovationfinancial2015 indicate that companies involved in environmental innovation process were generally characterized by higher ROA and ROE and lower earnings retention ratio. 
 
-\newpage
 Some scholars advanced that the multidimensionality of CEP and CFP constructs is one reason why the conclusion of the relationship has been so mixed [@Albertini2013; @EndrikatMakingsenseconflicting2014]. However, the large number of studies in the last three decades allowed the appearance of recent meta-analyses\footnote{Initially, the literature focused on the link between Corporate Social Performance (i.e. CSP) and Corporate Financial Performance. Orlitzky and Benjamin (2001) were the first to consider CEP as apart from CSP. Given that Busch and Friede (2018) could not detect statistically significant differences between the effects of environmental CEP and social-related CSP on CFP and concludes that good CSP pays off, whether social or environmental related, this study considers CSP equals to CEP.} [@Orlitzky2001; @Orlitzky2003; @Wu2006; @Albertini2013; @Dixon-Fowler2013; @EndrikatMakingsenseconflicting2014; @Ludecadedebatenexus2014; @WangMetaAnalyticReviewCorporate2016; @Busch2018] and all confirm that indeed it does pay to be green. More precisely, a positive and bidirectional relationship does exist between CEP and CFP meaning that successful firms may have the resources necessary to improve their environmental performance, which in turn increases financial benefits that can be invested back into further improvements of CEP [@EndrikatMakingsenseconflicting2014].
 
  
@@ -79,7 +77,6 @@ The research framework of this study, inspired by @LiSuhong2017 and @Chencrossco
 \caption{Research Framework}
 \label{ResearchFramework}
 \end{figure}
-
 
 
 

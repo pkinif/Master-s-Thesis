@@ -1,7 +1,4 @@
----
-output:
-  pdf_document
----
+
 # Data Description
 
 ```{r echo = FALSE, warning = FALSE, message = FALSE, error = FALSE}
@@ -85,7 +82,6 @@ Tobin's Q = \frac{MVE + PS + DEBT}{TA}
 
 where \(MVE\) is the product of a firm's shares prices and the number of common stock shares outstanding, \(PS\) is the liquidating value of the firm's outstanding preferred stock, \(DEBT\) is the value of the firm's short-term liabilities net of its short-term assets, plus the book value of the firm's long-term debt and \(TA\) is the book value of the total assets of the firms.
 
-\newpage
 ## Independent Variables
 
 
@@ -117,9 +113,7 @@ WastP_{it} = \frac{Revenue_{it}}{(TWG_{it} - TWRR_{it})}
 
 where \(Revenue_{it}\) is the total revenue in \(USD\), \(TGGE_{it}\) is the total greenhouse gaz emissions in \(CO_{2}\), \(TW_{it}\) is the total water in \(m_{3}\), \(TWG_{it}\) is the total waste generated in metric tons and \(TWRR\) is the total waste recycled and reused in metric tons.
 
-\newpage
 ## Control Variables
-
 
 Scholars have argued that misspecified models may be another reason for the inconsistency of the empirical results in the CEP-CFP nexus [@Telle2006; @McWilliams2006; @Surroca2010]. To improve the construct and to avoid the endogeneity issue due to omitted variables [@Roberts2013], @EndrikatMakingsenseconflicting2014 have highlighted potential determinants of the relationship between CEP and CFP: firm size, industry sector, and capital structure. In a meta-analysis study, @Ludecadedebatenexus2014 argued that growth rate is equally important. This study uses those four determinants as control variables.
 
