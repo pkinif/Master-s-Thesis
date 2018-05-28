@@ -1,6 +1,6 @@
-The following R script is the R code used to produce the section : *"[Sensitivity Analysis]"*.
+The following `R` script is the one used to produce the section : *"[Sensitivity Analysis]"*.
 
-### Packages loading {-}
+### Packages Loading {-}
 
 ```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
 
@@ -18,7 +18,7 @@ library(stargazer)
 
 ```
 
-### The impact of CEP on CFP {-}
+### The Impact of CEP on CFP {-}
 
 ```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
 
@@ -93,7 +93,7 @@ stargazer(TobinPooling,
           add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
                          c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
 ```
-### Green Score as an alternative {-}
+### Green Score as an Alternative {-}
 
 ```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55), eval = FALSE}
 

@@ -20,7 +20,7 @@ tribble(
     ~Abbreviation, ~ Term,
     "CEP", "Corporate Environmental Performance",
     "CFP", "Corporate Financial Performance",
-    "ppm", "Parts Per Million",
+    "PPM", "Parts Per Million",
     "ISO", "The International Organization for Standardization",
     "ROE", "Return on Equity",
     "ROA", "Return on Asset",
@@ -42,7 +42,9 @@ tribble(
     "RE", "Random Effetcs",
     "OLS", "Ordinary Least Square",
     "BPLM", "Breusch-Pagan Lagrange Multiplier",
-    "VIF", "Variance Inflation Factor"
+    "VIF", "Variance Inflation Factor",
+    "GS", "Green Score",
+    "NGR","Newsweek Green Rankings"
 ) %>%
   arrange(Abbreviation) %>%
   as.data.frame() %>%

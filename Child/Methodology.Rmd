@@ -7,45 +7,45 @@ header-includes:
 
 # Methodology {#Methodology}
 
-## Panel Data: a theoretical background
+## Panel Data: A Theoretical Background
 
-This study uses the panel data methodology. Panel data is a common approach to address the CFP-CEP nexus [@Albertini2013]. It is considered to be one of the most efficient analytical methods for data analysis [@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e.cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007]. @Roberts2013 also argued that using panel data offers a partial solution to the problem of omitted variables in the econometric model, namely the most common causes of endogeneity in empirical corporate finance. Panel data takes the following econometric form :  
+This study uses the panel data methodology. Panel data is a common approach to address the CEP-CFP nexus [@Albertini2013]. It is considered to be one of the most efficient analytical methods for data analysis [@DimitriosAsteriou2006]. It usually contains more degrees of freedom, less collinearity among the variables, more efficiency and more sample variability than one-dimensional method (i.e. cross-sectional data and time series data) giving a more accurate inference of the parameters estimated in the model [@Hsiao2007]. @Roberts2013 also argued that using panel data offers a partial solution to the problem of omitted variables in the econometric model, namely the most common causes of endogeneity in empirical corporate finance. Panel data takes the following econometric form :  
 
 \begin{equation}
 \centering
-Y_{it} = \alpha + \beta X_{it} + u_{it} 
+Y_{it} = \alpha + \beta_k X_{itk} + u_{it} 
 \label{PanelData}
 \end{equation}
 
-Panel data, also called longitudinal data, includes observations on \(i = 1,..., N\) cross- section units (e.g. firms) over \(t = 1,..., T\) time-periods [@Hsiao2007]. Here, \(Y_{it}\) is the dependent variable, \(X_{it}\) represents a \(K\)-dimensional row vectors of independent variables, \(\alpha\) is the intercept, \(\beta\) is a \(K\)-dimensional column vectors of parameters and \(u_{it}\) is the random disturbance term of mean equals zero. The latter can be decomposed as \(u_{it} = \mu_{i} + \epsilon_{it}\). The first term, \(\mu_{i}\), represents the individual error component and is time-invariant. It can be considered as the unobserved effect model. The second term, \(\epsilon_{it}\), is the idiosyncratic error which is assumed well-behaved and independent of \(X_{it}\) and \(\mu_{i}\).  
+Panel data, also called longitudinal data, includes observations on \(i = 1,..., N\) cross- section units (e.g. firms) over \(t = 1,..., T\) time-periods [@Hsiao2007]. Here, \(Y_{it}\) is the dependent variable, \(X_{itk}\) represents a \(K\)-dimensional row vectors of independent variables, \(\alpha\) is the intercept, \(\beta_k\) is a \(K\)-dimensional column vectors of parameters and \(u_{it}\) is the random disturbance term of mean equals zero. The latter can be decomposed as \(u_{it} = \mu_{i} + \epsilon_{it}\). The first term, \(\mu_{i}\), represents the individual error component and is time-invariant. It can be considered as the unobserved effect model. The second term, \(\epsilon_{it}\), is the idiosyncratic error which is assumed well-behaved and independent of \(X_{it}\) and \(\mu_{i}\).  
 
 The starting point of all panel data is to determine if \(\mu_{i}\) is correlated with \(X_{it}\). In presence of correlation, then \(\mu_{i}\) is considered as the *Fixed Effect* (i.e. FE) and the initial equation \ref{PanelData} becomes equation \ref{Fixed}. Otherwise, \(\mu_{i}\) is considered as the *Random Effect* (i.e. RE) and the equation \ref{PanelData} becomes equation \ref{Random}.
 
 \begin{equation}
 \centering
-Y_{it} = (\alpha + \mu{i}) + \beta X_{it} + \epsilon_{it} 
+Y_{it} = (\alpha + \mu{i}) + \beta_k X_{itk} + \epsilon_{it} 
 \label{Fixed}
 \end{equation}
 
 \begin{equation}
 \centering
-Y_{it} = \alpha + \beta X_{it} + (\epsilon_{it} + \mu{i})
+Y_{it} = \alpha + \beta_k X_{itk} + (\epsilon_{it} + \mu{i})
 \label{Random}
 \end{equation}
 
-Fixed (i.e. \autoref{Fixed}) and Random (i.e. \autoref{Random}) Effect model imply that the Ordinary Least Square (i.e. OLS) estimators of \(\beta\) are inconsistent. Five assumptions are required to produce consistent estimators with OLS : (i) a random sample of observations on \(y\) and \((x_{1},..., x_{n})\), (ii) a random sample of \(n\) observations, (iii) no linear relationship among the explanatory variables, (iv) an error term that is uncorrelated with each explanatory variables and (v) an error term with zero mean conditional on the explanatory variables. FE Model violates the fourth assumption while RE model implies that the common error component over individuals induces correlation across the composite error terms making the third assumption violated [@Croissant2008]. 
+Fixed (i.e. \autoref{Fixed}) and Random (i.e. \autoref{Random}) Effect model imply that the Ordinary Least Square (i.e. OLS) estimators of \(\beta\) are inconsistent. Five assumptions are required to produce consistent estimators with OLS : (i) a random sample of observations on \(Y\) and \((X_{1},..., X_{k})\), (ii) a random sample of \(N\) observations, (iii) no linear relationship among the explanatory variables, (iv) an error term that is uncorrelated with each explanatory variables and (v) an error term with zero mean conditional on the explanatory variables. FE Model violates the fourth assumption while RE model implies that the common error component over individuals induces correlation across the composite error terms making the third assumption violated [@Croissant2008]. 
 
-The R package *plm* provides pertinent estimation methods to estimate panel data model. (i) *The pooled OLS estimation* ignores the panel structure of the data and applies the same coefficient to each individual [@Schmidheiny2015]. (ii) *The random effects estimation* is the feasible Generalized Least Squares estimator. (iii) *The fixed effects estimation* also called *within estimation*, transforms the original equation \ref{PanelData} in subtracting the time average from every variable, such as :
+The `R` package `plm` provides pertinent estimation methods to estimate panel data model. (i) *The pooled OLS estimation* ignores the panel structure of the data and applies the same coefficient to each individual [@Schmidheiny2015]. (ii) *The random effects estimation* is the feasible Generalized Least Squares estimator. (iii) *The fixed effects estimation*, also called *within estimation*, transforms the original equation \ref{PanelData} in subtracting the time average from every variable, such as :
 
 \begin{equation}
 \centering
-( Y_{it} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} Y_{it} ) = \beta (X_{itk} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} X_{it} ) + ( \epsilon_{it} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} \epsilon_{it} )
+( Y_{it} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} Y_{it} ) = \beta_k (X_{itk} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} X_{it} ) + ( \epsilon_{it} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} \epsilon_{it} )
 \label{FixedEffectsEstimation}
 \end{equation}
 
-The presence of RE in panel data is tested using the Breusch-Pagan Lagrange Multiplier (i.e. BPLM) test [@Breusch1980] which is represented by the *plmtest* function in *R*. It examines if time and/or individual specific variance components equal zero [@Park2011]. If H0 is verified, there is no RE in the panel data. The presence of FE is tested by an F test (i.e. the function *pFtest* in *R*). The latter tests the individual and/or time effects based on the comparison of the within and the pooling model [@Croissant2008]. If H0 is verified, there is no FE in the panel data.
+The presence of RE in panel data is tested using the Breusch-Pagan Lagrange Multiplier (i.e. BPLM) test [@Breusch1980] which is represented by the `plmtest` function in `R`. It examines if time and/or individual specific variance components equal zero [@Park2011]. If H0 is verified, there is no RE in the panel data. The presence of FE is tested by an F test (i.e. the function `pFtest` in `R`). The latter tests the individual and/or time effects based on the comparison of the within and the pooling model [@Croissant2008]. If H0 is verified, there is no FE in the panel data.
 
-In case of the absence of both RE and FE, namely \(\mu_{i} = 0\), pooled OLS estimation is the most efficient estimator [@Croissant2008]. Under FE, the random effects estimators are biased and inconsistent given that \(\mu_{i}\) is omitted and potentially correlated with other regressors. Therefore, the fixed effects estimation need to be used. Under RE, the random and fixed effects estimators are unbiased and consistent. According to @Schmidheiny2015, scholars should prefer the RE estimator only and only if \(E[\mu_{i}, X_{i}] = 0\). This precondition is tested by the Hausman test [@Hausman1981]. If H0 is verified, scholars should use the RE estimator.
+In case of the absence of both RE and FE, namely \(\mu_{i} = 0\), pooled OLS estimation is the most efficient estimator [@Croissant2008]. Under FE, the random effects estimators are biased and inconsistent given that \(\mu_{i}\) is omitted and potentially correlated with other regressors. Therefore, the fixed effects estimation need to be used. Under RE, the random and fixed effects estimators are unbiased and consistent. According to @Schmidheiny2015, scholars should prefer the random effects estimation only and only if \(E[\mu_{i}, X_{i}] = 0\). This precondition is tested by the Hausman test [@Hausman1981]. If H0 is verified, scholars should use the random effects estimation.
 
 ## Econometric Model
 
@@ -54,11 +54,11 @@ This study uses equation \ref{CEP} to study the link between outcome-based and p
 
 \begin{equation}
 \centering
-Y_{it} = \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} A_{it} + d_{t} + u_{it}
+Y_{it} = \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} A_{it} + Controls_{it} + d_{t} + u_{it}
 \label{CEP}
 \end{equation}
 
-where \(Y_{it}\) is a proxy of outcome-based CEP measured as carbon productivity, water productivity and waste productivity, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(d_{t}\) represents the time effect and \(u_{it}\) is the error term.
+where \(Y_{it}\) is a proxy of outcome-based CEP measured as carbon productivity, water productivity and waste productivity, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents the time effect and \(u_{it}\) is the error term.
 
 \begin{equation}
 \centering
@@ -73,7 +73,7 @@ Y_{it+1} & = & \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} A_{i
 where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents the time effect and \(u_{it}\) is the error term.
 
 
-## Endogeneity concern
+## Endogeneity Concern
 
 Endogeneity is a common issue in empirical corporate finance. It can be defined as a correlation between the explanatory variables and the error term in a regression, making assumption 4 and 5 of OLS rejected [@Roberts2013]. To that extent, @EndrikatMakingsenseconflicting2014 claim that the leak of endogeneity control, within the CEP-CFP nexus, could partly explain the inconsistency of the empirical results. To provide unbiased and consistent parameters, this study have controlled for endogeneity. 
 
@@ -81,6 +81,6 @@ Firstly, to avoid the first source of endogeneity, namely the omission of variab
 
 Secondly, recent meta-analysis provided evidence of the bidirectional causality in the CEP-CFP nexus [@Orlitzky2001; @Orlitzky2003; @Wu2006; @Albertini2013; @Dixon-Fowler2013; @EndrikatMakingsenseconflicting2014; @Ludecadedebatenexus2014, @WangMetaAnalyticReviewCorporate2016; @Busch2018]. This could cause simultaneous causality between the dependent and independent variables and lead to endogeneity concern [@Sanchez-Ballesta2007; @Biorn2008; @Roberts2013]. To address this issue, I use a lagged instrument in lagging observations in independent and control variables one year behind the dependent variable (see equation \ref{EconometricModel}). This increases the confidence of the direction of the relationship [@Hart1996; @Delmas2015; @MiroshnychenkoGreenpracticesfinancial2017] and *in fine* reduces the potential simultaneity bias. 
 
-Finally, both equation \ref{CEP} and \ref{EconometricModel}, depending on the considered dependent variable, contains Fixed Effects (see respectively sections *"[The impact of process-based CEP on outcome-based CEP]"* and *"[The impact of CEP on CFP]"* for further details) and had been estimated with the fixed effects estimation. In presence of FE, endogeneity is clearly a concern since the explanatory variable is correlated with a component of the error term [@Roberts2013]. However, using the fixed effects estimation implies that FE is removed as \(( \mu_{i} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} \mu_{i} ) = 0\) (see equation \ref{FixedEffectsEstimation}), and solves this particular endogeneity problem [@Roberts2013]. 
+Finally, both equation \ref{CEP} and \ref{EconometricModel}, depending on the considered dependent variable, contains Fixed Effects (see respectively sections *"[The Impact of Process-Based CEP on Outcome-Based CEP]"* and *"[The Impact of CEP on CFP]"* for further details) and had been estimated with the fixed effects estimation. In presence of FE, endogeneity is clearly a concern since the explanatory variable is correlated with a component of the error term [@Roberts2013]. However, using the fixed effects estimation implies that FE is removed as \(( \mu_{i} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} \mu_{i} ) = 0\) (see equation \ref{FixedEffectsEstimation}), and solves this particular endogeneity problem [@Roberts2013]. 
 
 

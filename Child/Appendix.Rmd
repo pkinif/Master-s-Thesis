@@ -1,24 +1,24 @@
 # Appendices {-}
 
-## Appendix A: Database construction {-}
+## Appendix A: Database Construction {-}
 
 ```{r child = 'DataBaseConstruction.Rmd'}
 ```
 \newpage
 
-## Appendix B: Results - R script {-}
+## Appendix B: Results - R Script {-}
 
 ```{r child = 'Results_rScript.Rmd'}
 ```
 
 \newpage
-## Appendix C: Outliers treatment {-}
+## Appendix C: Outliers Treatment {-}
 
 ```{r child = 'OutliersTreatment.Rmd'}
 ```
 
 \newpage
-## Appendix D: Sensitivity Analysis - R script {-}
+## Appendix D: Sensitivity Analysis - R Script {-}
 
 ```{r child = 'SensitivityAnalysis_rScript.Rmd'}
 ```

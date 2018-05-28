@@ -114,14 +114,8 @@ rm(list=ls()) #Removes all items in Environment!
 
 \FloatBarrier
 \newpage
-\fancyhead[CO,CE]{Discussion}
-```{r child = 'Discussion.Rmd'} 
-```
-
-\FloatBarrier
-\newpage
-\fancyhead[CO,CE]{Conclusion}
-```{r child = 'Conclusion.Rmd'} 
+\fancyhead[CO,CE]{Discussion and Conclusion}
+```{r child = 'DiscussionConclusion.Rmd'} 
 ```
 
 \newpage
