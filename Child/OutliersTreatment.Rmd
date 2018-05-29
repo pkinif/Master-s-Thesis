@@ -1,8 +1,5 @@
----
-output:
-  pdf_document
----
-This appendix presents the `R` code used to identify and remove outliers from the database. This R script is the one contains in the makefile `Analysis/DataBase/MakeFile_RemoveOutliers_Lag1.Rmd`. This step had been repeated three times : (i) when dependent variables were lagged one year (see section: *"[The Impact of CEP on CFP]"*) and (ii) two years behind others variables and (iii) when the Green Score variable was the only independent variable considered into the econometric model (see section: *"[Sensitivity Analysis]"*).  
+
+This appendix presents the `R` code used to identify and remove outliers from the database. This R script is the one contains in the makefile `Analysis/DataBase/MakeFile_RmvOut_Lag1.Rmd`. This step had been repeated three times : (i) when dependent variables were lagged one year (see section: *"[The Impact of CEP on CFP]"*) and (ii) two years behind others variables and (iii) when the Green Score variable was the only independent variable considered into the econometric model (see section: *"[Sensitivity Analysis]"*).  
 
 
 ```{r message = FALSE, size = 'smallsize', error = FALSE, warning = FALSE, results = 'asis', tidy = TRUE, comment = FALSE, tidy.opts=list(blank=FALSE, width.cutoff=55)}

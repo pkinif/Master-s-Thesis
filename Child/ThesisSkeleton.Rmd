@@ -14,7 +14,7 @@ linkcolor: red
 citecolor: blue
 indent: true
 nocite: | 
-  @Hlavac2018
+ @Hlavac2018, @TerryTherneau2000, @YihuiXie2018, @Sarkar2008, @Wickham2009, @Fox2011, @Grolemund2011,  @Wickham2011, @Dahl2016, @Ren2016, @Wickham2016, @Dowle2017, @Henry2017, @Wickham2017a, @Wickham2017, @Dancho2018, @HarrellJr2018, @Lang2018, @Muller2017, @Peterson2018, @Ryan2018, @Wickham2018, @Zhu2018
 header-includes:
 - \usepackage{placeins}
 - \usepackage{hyperref}
@@ -51,6 +51,7 @@ rm(list=ls()) #Removes all items in Environment!
 \newpage
 ```{r child = 'AuthorNote.Rmd'}
 ```
+
 
 \newpage
 ```{r child = 'Acknowledgments.Rmd'}
