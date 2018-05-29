@@ -320,7 +320,7 @@ stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The Impact of Process
 
 \autoref{Lag1} reports the main results of the analysis of the impact of both process-based CEP (i.e. SPL, STC and A) and outcome-based CEP (i.e. CaP, WatP and WastP) on short-term CFP (ROA) and long-term CFP (i.e. TobinsQ). Based on the pvalue of BPLM and F tests, model (4) had been estimated with the *pooled OLS estimation* while model (5) had been estimated with the *fixed effects estimation*. 
 
-Model (4) shows evidence of a positive and statistically significant effect of SPL, A, and WaP on *long-term CEP*. Model (5) shows evidence of a positive and statistically significant effect of SPL, STC and CaP on *short-term CEP*.
+Model (4) shows evidence of a positive and statistically significant effect of SPL, A, and WaP on *long-term CFP*. Model (5) shows evidence of a positive and statistically significant effect of SPL, STC and CaP on *short-term CFP*.
 
 More precisely, regarding process-based CEP variables, results show that companies, which link the remuneration of any member of a company’s senior executive team with the achievement of environmental performance targets, are characterized  by both a higher Tobin's Q (+0.079) and ROA (+0.008). Then, the fact of having a sustainability committee on the board of directors level increases the ROA (+0.012). Finally, companies having their latest reported environmental metrics audited by a third party have a higher Tobin's Q (+ 0.158). Regarding outcome-based CEP variables, results demonstrate that a 1% increase of carbon productivity increases the ROA by 0.03 and a 1% increase of water productivity increases the Tobin's Q by 0.337. Hence, hypotheses 2, 3, 4 and 5 are verified.
 

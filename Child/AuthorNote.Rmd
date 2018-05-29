@@ -1,7 +1,7 @@
 
 \section*{Author's Note}
 
-This master's thesis has been written in `R Markdown` [@Allaire2018] to make it transparent and reproducible for the reader. All resources are available on my `GitHub` account\footnote{For now, the repository containing my thesis project is private. If you wish to get an access to it, please send me an email at \texttt{pierrick-kinif@hotmail.be}.} `https://github.com/pkinif/Thesis`. The latter is organized following the methodology of @Gandrud2013b. Each section of this thesis corresponds to an `R Markdown` file in the `Child` folder. The `Child/ThesisSkeleton.Rmd` file is the `parent` document which merges all the `child` directories into a consolidated pdf document, namely the one you are reading. The `Child/Analysis` sub-folder contains a list of makefiles whose outputs are saved into  `Child/Analysis/DataBase`.
+This master's thesis has been written in `R Markdown` [@Allaire2018] to make it transparent and reproducible for the reader. All resources are available on my `GitHub` account\footnote{For now, the repository containing my thesis project is private. If you wish to get an access to it, please send me an email to \texttt{pierrick-kinif@hotmail.be}.} `https://github.com/pkinif/Thesis`. The latter is organized following the methodology of @Gandrud2013b. Each section of this thesis corresponds to an `R Markdown` file in the `Child` folder. The `Child/ThesisSkeleton.Rmd` file is the `parent` document which merges all the `child` directories into a consolidated pdf document, namely the one you are reading. The `Child/Analysis` sub-folder contains a list of makefiles whose outputs are saved into  `Child/Analysis/DataBase`.
 
 The platform I have used is `Rstudio` which is an open source software for `R` [@RCoreTeam2018]. Here are the information of my session : 
 
@@ -73,15 +73,19 @@ library(kableExtra)
 sessionInfo()
 ```
 
-
-\vspace{3cm}
+\newpage
 
 \section*{Author's Declaration}
+\hspace{0pt}
+\vfill
+\noindent
 
-I certify that this master's thesis does not incorporate without acknowledegment, any material previously submitted for a degree or diploma in any university; and that to the best of my knowledge and belief, it does not contain any material previously published or written by another person where due reference is not made in the text.
+I, Pierrick KINIF, certify that this master's thesis does not incorporate without acknowledegment, any material previously submitted for a degree or diploma in any university; and that to the best of my knowledge and belief, it does not contain any material previously published or written by another person where due reference is not made in the text.
 
 \vspace*{3cm}
 
 \noindent\hrulefill\hrulefill\hrulefill\hfill\hrulefill\hrulefill
 
 \noindent\small\textsc{signed}\hfill\textsc{dated}
+\vfill
+\hspace{0pt}

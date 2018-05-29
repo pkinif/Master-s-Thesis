@@ -1,8 +1,7 @@
 \section*{Acknowledgements}
-\begin{flushright}
 \hspace{0pt}
 \vfill
-\textit{I would first like to express my deep gratitude to Professor Sophie Béreau and Professor Jean-Yves Gnabo, my research supervisors, for their guidance and useful critiques. I would also like to thank Professor Paulo Roberto Feldmann and Professor Paulo Tromboni de Souza Nascimento who taught me the necessary scientific research expertise to fulfill this master's thesis. I am also very thankful to Mr. Patrick Virakam, Risk reporting team leader at Banque International à Luxembourg, who gave me the computer skills I needed to carry out this research project. The developer and blogging community, notably in the field of Reproducible Research, has also been incredibly important. I wish finally to thank my family and friends for their support and encouragement.}
+\noindent
+I would first like to express my deep gratitude to Professor Sophie Béreau and Professor Jean-Yves Gnabo, my research supervisors, for their guidance and useful critiques. I would also like to thank Professor Paulo Roberto Feldmann and Professor Paulo Tromboni de Souza Nascimento who taught me the necessary scientific research expertise to fulfill this master's thesis. I am also very thankful to Mr. Patrick Virakam, Risk reporting team leader at Banque International à Luxembourg, who gave me the computer skills I needed to carry out this research project. The developer and blogging community, notably in the field of Reproducible Research, has also been incredibly important. I wish finally to thank my family and friends for their support and encouragement.
 \vfill
 \hspace{0pt}
-\end{flushright} 

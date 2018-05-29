@@ -100,7 +100,6 @@ rm(list=ls()) #Removes all items in Environment!
 ```{r child = 'Methodology.Rmd'} 
 ```
 
-
 \FloatBarrier
 \newpage
 \fancyhead[CO,CE]{Results}
@@ -119,13 +118,16 @@ rm(list=ls()) #Removes all items in Environment!
 ```{r child = 'DiscussionConclusion.Rmd'} 
 ```
 
+<!-- To use APA style (i.e. place references before appendices), I can not uses #References{-}. Instead I hack the system with <div id="refs"></div> to force the references to be printed before the appendices-->
+
+\newpage
+\fancyhead[CO,CE]{References}
+\section*{Reference}
+\addcontentsline{toc}{section}{References}
+
+<div id="refs"></div>
+
 \newpage
 \fancyhead[CO,CE]{Appendices}
 ```{r child = 'Appendix.Rmd'} 
 ```
-
-\newpage
-\fancyhead[CO,CE]{References}
-
-# References {-}
-\noindent

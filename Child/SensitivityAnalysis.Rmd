@@ -24,11 +24,23 @@ library(stargazer)
 
 # Sensitivity Analysis
 
-Sensitivity Analysis investigates how the variation in the output of a numerical model can be attributed to variations of its input factors [@Pianosi2016]. To ensure the robustness of the main findings of the previous section I carried out two robustness tests. 
+To ensure the robustness of the main findings of the previous section I carry out a Sensitivity Analysis which investigates how the variation in the output of equation \ref{EconometricModel} can be attributed to variations of its input [@Pianosi2016]. First, equation \ref{EconometricModel} had been re-estimated using a lagged variables of two years, such as:
 
-Firstly, the equation \ref{EconometricModel} had been re-estimated using dependent variables accelerated by one year in a sense that observations in independent and control variables are now lagged two years behind CFP variables. Based on the results of both BPLM and F tests, estimators had been estimated with the *pooled OLS estimation*. Results are reported in table \ref{Lag2} and confirm findings of the previous section.
+\begin{equation}
+\centering
+\begin{aligned}
+Y_{it+2} & = & \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} A_{it} + \beta_{4} CaP_{it} \\
+&& + { }  \beta_{5} WatP_{it} + \beta_{6} WastP_{it} + Controls_{it} + d_{t} + u_{it}
+\label{EconometricModelLag2}
+\end{aligned}
+\end{equation}
 
-Secondly, I use an alternative proxy for approaching CEP, namely the Green Score assigned to each company of the NGR. The score is based on a weighted average of the KPI of the ranking. Concretely, it means that equation \ref{EconometricModel} becomes the following equation.
+
+where \(Y_{it+2}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents the time effect and \(u_{it}\) is the error term.
+
+Estimators of equation \ref{EconometricModelLag2} are reported in table \ref{Lag2}. Based on the results of both BPLM and F tests, estimators had been estimated with the *pooled OLS estimation*. Except for the estimator of WaP in Model (4) which loose its significativity, findings stay the same than in section: *"[Results]"*. 
+
+Second, I use GS assigned to each company of the NGR as an alternative proxy for CEP. GS is based on a weighted average of KPI of the ranking. Concretely, it means that equation \ref{EconometricModel} becomes:
 
 \begin{equation}
 \centering
@@ -39,7 +51,9 @@ Y_{it+1} = \alpha + \beta_{1} GS_{it} + ContrOLS_{it} + d_{t} + u_{it}
 
 where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(GS_{it}\) is a proxy for a firm's green score, \(ContrOLS_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents time effect and  \(u_{it}\) is the error term.
 
-Given the pvalue of both BPLM and F tests, Model (4) had been estimated with the *pooled OLS estimation* while Model (5) had been estimated with the *fixed effect estimation*. Results are reported in table \ref{GreenScoreResults} and confirm findings of the previous section. Consequently, the sensitivity analysis supports that CEP does have a significant and positive effect on CFP, no matter the time horizon (short-term and long-term). `R` script of this section is available in *"[Appendix D: Sensitivity Analysis - R Script]"*.
+Given the pvalue of both BPLM and F tests, Model (4) had been estimated with the *pooled OLS estimation* while Model (5) had been estimated with the *fixed effect estimation*. Results are reported in table \ref{GreenScoreResults} and confirm findings of the previous section. More precisely, it shows that a 1% increase of GS increases the long-term CFP (+ 0.669) and the short-term CFP (+ 0.051) of companies.
+
+Hence, the sensitivity analysis supports that CEP does have a significant and positive effect on CFP, no matter the time horizon (short-term and long-term), and is stronger with a long-term perspective than a short-term perspective. `R` script of this section is available in *"[Appendix D: Sensitivity Analysis - R Script]"*.
 
 \newpage
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}

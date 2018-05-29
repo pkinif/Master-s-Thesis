@@ -9,7 +9,7 @@
 \vspace{3.5cm}
 
 \Large
-{\bf Green companies are the future:\\ Evidence from \\US publicly traded companies}
+{\bf Green Companies Are the Future:\\ Evidence from \\US Publicly Traded Companies}
 
 \vspace{1.5cm}
 
@@ -21,14 +21,14 @@
 Supervisors:\\
 \vspace{0.5cm}
 
-Prof. Sophie Béreau\\
-Prof. Jean-Yves Gnabo
+Prof. Sophie BÉREAU\\
+Prof. Jean-Yves GNABO
 \vspace{1cm}
 
 \normalsize
-Thesis submitted for the Master's Degree \\
-in Business Management and Administration, \\
-Finance Specialization
+A thesis submitted in fulfillment of the requirements\\
+for the Master's Degree in Business Management \\
+and Administration, Finance Specialization
 
 \vspace{1cm}
 \normalsize
