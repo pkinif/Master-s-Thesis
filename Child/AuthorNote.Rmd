@@ -78,9 +78,7 @@ sessionInfo()
 \section*{Author's Declaration}
 \hspace{0pt}
 \vfill
-\noindent
-
-I, Pierrick KINIF, certify that this master's thesis does not incorporate without acknowledegment, any material previously submitted for a degree or diploma in any university; and that to the best of my knowledge and belief, it does not contain any material previously published or written by another person where due reference is not made in the text.
+\noindent I, Pierrick KINIF, certify that this master's thesis does not incorporate without acknowledegment, any material previously submitted for a degree or diploma in any university; and that to the best of my knowledge and belief, it does not contain any material previously published or written by another person where due reference is not made in the text.
 
 \vspace*{3cm}
 

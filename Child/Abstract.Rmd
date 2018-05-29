@@ -1,6 +1,7 @@
+\addcontentsline{toc}{section}{Abstract}
 \begin{centering}
 \huge
-\title{Green Companies Are the Future: Evidence from US Publicly Traded Companies}
+\title{Towards Green Companies: A Panel Data Study of The Environmental and Financial Performance Nexus}
 
 \maketitle
 
@@ -19,5 +20,4 @@ Findings of this study provide evidence that process-based CEP positively influe
 }
 \keywords{Corporate Environmental Performance, Corporate Financial Performance, Panel Data, Global Warming}
 \end{centering}
-\addcontentsline{toc}{section}{Abstract}
 

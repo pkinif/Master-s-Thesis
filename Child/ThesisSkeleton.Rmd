@@ -26,6 +26,7 @@ header-includes:
 - \counterwithin{table}{section}
 - \usepackage{rotating}
 - \usepackage{dcolumn}
+- \usepackage[bottom]{footmisc}
 ---
 
 
@@ -79,6 +80,7 @@ rm(list=ls()) #Removes all items in Environment!
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
 \fancyhead[CO,CE]{Introduction}
+
 ```{r child = 'Introduction.Rmd'} 
 ```
 
@@ -123,6 +125,7 @@ rm(list=ls()) #Removes all items in Environment!
 \newpage
 \fancyhead[CO,CE]{References}
 \section*{Reference}
+\indent
 \addcontentsline{toc}{section}{References}
 
 <div id="refs"></div>

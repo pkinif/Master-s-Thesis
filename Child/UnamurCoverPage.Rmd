@@ -9,12 +9,12 @@
 \vspace{3.5cm}
 
 \Large
-{\bf Green Companies Are the Future:\\ Evidence from \\US Publicly Traded Companies}
+{Towards Green Companies: A Panel \\Data Study of The Environmental \\and Financial Performance Nexus}
 
 \vspace{1.5cm}
 
 \normalsize
-{\bf Pierrick KINIF}
+{Pierrick KINIF}
 
 \vspace{1cm}
 \normalsize
@@ -32,7 +32,7 @@ and Administration, Finance Specialization
 
 \vspace{1cm}
 \normalsize
-{\bf ACADEMIC YEAR 2017 - 2018\\}
+{ACADEMIC YEAR 2017 - 2018\\}
 \end{centering}
 
 \fancypagestyle{firstpage}{%
