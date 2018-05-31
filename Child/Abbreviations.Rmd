@@ -26,6 +26,7 @@ tribble(
     "ROA", "Return on Asset",
     "EMV", "Environmental Management Measures",
     "EPV", "Environmental Performance Variables",
+    "SA", "Sensitivity Analysis",
     "EDV", "Environmental Disclosure Variables",
     "ESG", "Environmental, Social and Governmental",
     "SRI", "Socially Responsible Investments",

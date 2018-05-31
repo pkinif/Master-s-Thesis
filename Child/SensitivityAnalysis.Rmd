@@ -24,23 +24,23 @@ library(stargazer)
 
 # Sensitivity Analysis
 
-To ensure the robustness of the main findings of the previous section I carry out a Sensitivity Analysis which investigates how the variation in the output of equation \ref{EconometricModel} can be attributed to variations of its input [@Pianosi2016]. First, equation \ref{EconometricModel} had been re-estimated using a lagged variables of two years, such as:
+To ensure the robustness of the main findings of the previous section, I carry out a Sensitivity Analysis (i.e. SA). SA investigates how the variation in the output of equation \ref{EconometricModel} can be attributed to variations of its input [@Pianosi2016]. First, equation \ref{EconometricModel} has been re-estimated using a lagged variables of two years, such as:
 
 \begin{equation}
 \centering
 \begin{aligned}
-Y_{it+2} & = & \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} A_{it} + \beta_{4} CaP_{it} \\
+Y_{it+2} & = & \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} AS_{it} + \beta_{4} CaP_{it} \\
 && + { }  \beta_{5} WatP_{it} + \beta_{6} WastP_{it} + Controls_{it} + d_{t} + u_{it}
 \label{EconometricModelLag2}
 \end{aligned}
 \end{equation}
 
 
-where \(Y_{it+2}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(A_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents the time effect and \(u_{it}\) is the error term.
+where \(Y_{it+2}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(AS_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents the time effect and \(u_{it}\) is the error term.
 
-Estimators of equation \ref{EconometricModelLag2} are reported in table \ref{Lag2}. Based on the results of both BPLM and F tests, estimators had been estimated with the *pooled OLS estimation*. Except for the estimator of WaP in Model (4) which loose its significativity, findings stay the same than in section: *"[Results]"*. 
+Estimators of equation \ref{EconometricModelLag2} are reported in table \ref{Lag2}. Based on the results of both BPLM and F tests, estimators has been estimated with the *pooled OLS estimation*. Except for the estimator of WaP in Model (4) which loose its significativity, findings stay the same than in section: *"[Results]"*. 
 
-Second, I use GS assigned to each company of the NGR as an alternative proxy for CEP. GS is based on a weighted average of KPI of the ranking. Concretely, it means that equation \ref{EconometricModel} becomes:
+Second, I use the Green Score (i.e. GS) assigned to each company of the NGR as an alternative proxy for CEP. GS is based on a weighted average of the KPI of the ranking. Concretely, it means that equation \ref{EconometricModel} becomes:
 
 \begin{equation}
 \centering
@@ -51,9 +51,9 @@ Y_{it+1} = \alpha + \beta_{1} GS_{it} + ContrOLS_{it} + d_{t} + u_{it}
 
 where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(GS_{it}\) is a proxy for a firm's green score, \(ContrOLS_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents time effect and  \(u_{it}\) is the error term.
 
-Given the pvalue of both BPLM and F tests, Model (4) had been estimated with the *pooled OLS estimation* while Model (5) had been estimated with the *fixed effect estimation*. Results are reported in table \ref{GreenScoreResults} and confirm findings of the previous section. More precisely, it shows that a 1% increase of GS increases the long-term CFP (+ 0.669) and the short-term CFP (+ 0.051) of companies.
+Given the pvalue of both BPLM and F tests, Model (4) has been estimated with the *pooled OLS estimation* while Model (5) has been estimated with the *fixed effect estimation*. Results are reported in table \ref{GreenScoreResults} and confirm findings of the section: *"[Results]"*. More precisely, it shows that a 1% increase of GS increases the long-term CFP (+0.669) and the short-term CFP (+0.051).
 
-Hence, the sensitivity analysis supports that CEP does have a significant and positive effect on CFP, no matter the time horizon (short-term and long-term), and is stronger with a long-term perspective than a short-term perspective. `R` script of this section is available in *"[Appendix D: Sensitivity Analysis - R Script]"*.
+Hence, the SA supports that CEP does have a significant and positive effect on CFP, no matter the time horizon (short-term and long-term), and is stronger with a long-term perspective than a short-term perspective. `R` script of this section is available in *"[Appendix D: Sensitivity Analysis - R Script]"*.
 
 \newpage
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
@@ -67,8 +67,8 @@ RoaNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag
 TobinNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag2/TobinsQ.csv", header = TRUE, stringsAsFactors = FALSE)
 
 # I change names
-RoaNoOut <- RoaNoOut %>% setnames(old = c("FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
-TobinNoOut <- TobinNoOut %>% setnames(old = c("FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
+RoaNoOut <- RoaNoOut %>% setnames(old = c("Roa", "FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("ROA", "Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "AS"))
+TobinNoOut <- TobinNoOut %>% setnames(old = c("Roa", "FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("ROA", "Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "AS"))
 
 # I make both df a plm dataframe
 RoaNoOut <- RoaNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
@@ -77,8 +77,8 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
 # I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
 
   ## Pooling Model
-  RoaPooling <- plm(Roa ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="pooling")
-  TobinPooling <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model="pooling")
+  RoaPooling <- plm(ROA ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="pooling")
+  TobinPooling <- plm(TobinsQ ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model="pooling")
 
 
   ## Plmtest
@@ -97,8 +97,8 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
   
   ## Within Model with time effect
   
-  RoaWithin <- plm(Roa ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="within", effect = "time")
-  TobinWithin <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
+  RoaWithin <- plm(ROA ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="within", effect = "time")
+  TobinWithin <- plm(TobinsQ ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
   
   ## pFtest
   
@@ -133,8 +133,8 @@ RoaNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag
 TobinNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/GreenScore/TobinsQ.csv", header = TRUE, stringsAsFactors = FALSE)
 
 # I change names
-RoaNoOut <- RoaNoOut %>% setnames(old = "FinancialLeverage", new = "Leverage")
-TobinNoOut <- TobinNoOut %>% setnames(old = "FinancialLeverage", new = "Leverage")
+RoaNoOut <- RoaNoOut %>% setnames(old = c("GreenScore", "FinancialLeverage", "Roa"), new = c("GS", "Leverage", "ROA"))
+TobinNoOut <- TobinNoOut %>% setnames(old = c("GreenScore", "FinancialLeverage", "Roa"), new = c("GS", "Leverage", "ROA"))
 
 
 # I make both df a plm dataframe
@@ -144,8 +144,8 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
 # I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
 
   ## Pooling Model
-  RoaPooling <- plm(Roa ~ GreenScore + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="pooling")
-  TobinPooling <- plm(TobinsQ ~ GreenScore + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model="pooling")
+  RoaPooling <- plm(ROA ~ GS + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="pooling")
+  TobinPooling <- plm(TobinsQ ~ GS + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model="pooling")
 
 
   ## Plmtest
@@ -164,8 +164,8 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
   
   ## Within Model with time effect
   
-  RoaWithin <- plm(Roa ~ GreenScore + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model = "within", effect = "time")
-  TobinWithin <- plm(TobinsQ ~ GreenScore + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
+  RoaWithin <- plm(ROA ~ GS + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model = "within", effect = "time")
+  TobinWithin <- plm(TobinsQ ~ GS + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
   
   ## pFtest
   

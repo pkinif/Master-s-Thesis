@@ -75,7 +75,7 @@ Model$TobinsQ <- log10(Model$TobinsQ)
 
 ## I rename some columns
 
-Model1 <- Model %>% setnames(old = c("DebtToEquityRatio", "TotalAssets", "GicsClassification", "NetMargin", "CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "FirmSize", "Industry", "Growth", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
+Model1 <- Model %>% setnames(old = c("Roa", "DebtToEquityRatio", "TotalAssets", "GicsClassification", "NetMargin", "CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("ROA", "Leverage", "FirmSize", "Industry", "Growth", "CaP", "WaP", "WastP", "SPL", "STC", "AS"))
 
 ```
 
@@ -90,8 +90,8 @@ The `R` script of this section is available in *"[Appendix B: Results - R Script
 ######## unpaired two-samples t-test ###########
 ################################################
 
-Sample1 <- Model1 %>% subset( subset = !is.na(Roa)) %>% select(Roa)
-Sample2 <- Model1 %>% subset( subset = !is.na(TobinsQ)) %>% select(Roa)
+Sample1 <- Model1 %>% subset( subset = !is.na(ROA)) %>% select(ROA)
+Sample2 <- Model1 %>% subset( subset = !is.na(TobinsQ)) %>% select(ROA)
 
 IdenticalAnalyses <- round(t.test(Sample1, Sample2, alternative = "two.sided", var.equal = FALSE)$p.value, digits = 4)
 
@@ -99,7 +99,7 @@ IdenticalAnalyses <- round(t.test(Sample1, Sample2, alternative = "two.sided", v
 
 This section provides an overview of the database. \autoref{DescriptiveStatistics} presents the main descriptive statistics of each variable. The sample size of ROA (i.e. N = `r sum(!is.na(Model1$Roa))`) is superior to the sample size of TobinsQ (i.e. N = `r sum(!is.na(Model1$TobinsQ))`). Compared to ROA, calculating Tobin’s Q requires a relatively high number of financial variables and is more susceptible to missing values [@Delmas2015]. This creates a disparity among the number of observations for each dependent variables. @Delmas2015 encountered the same issue and conducted an identical analysis to check whether this introduces a sample bias. I did the same and the *p-value* of the unpaired two-sample t-test equals `r IdenticalAnalyses` meaning that there is no significant difference between both samples.
 
-\autoref{Matrix} contains the matrix of correlation of the database. There are highly significant correlations between outcome-based CEP variables (i.e. carbon, water and waste productivity) and process-based CEP variables (i.e. sustainability pay link, sustainable themed commitment and audit score) suggesting that my model could suffer from a high degree of multicollinearity. Multicollinearity inflates the standard errors of the coefficients making some variables statistically insignificant when they should be significant [@Akinwande2015]. One common practice in the literature to detect multicollinearity is the computation of the Variance Inflation Factor (i.e. VIF) [@Salmeron2018]. VIF indicates how much the estimated variance of the \(i_{th}\) regression coefficient is increased above what it would be if \(R_i^2\) equaled zero [@Obrien2007]. \autoref{VIF} reports VIF of all variables. The maximum VIF is 2,477 meaning that there is no multicollinearity in the model [@Obrien2007].
+\autoref{Matrix} contains the matrix of correlation. There are highly significant correlations between outcome-based CEP variables (i.e. carbon, water and waste productivity) and process-based CEP variables (i.e. sustainability pay link, sustainable themed commitment and audit score) suggesting that the model could suffer from a high degree of multicollinearity. Multicollinearity inflates the standard errors of the coefficients making some variables statistically insignificant when they should be significant [@Akinwande2015]. One common practice in the literature to detect multicollinearity is the computation of the Variance Inflation Factor (i.e. VIF) [@Salmeron2018]. VIF indicates how much the estimated variance of the \(i_{th}\) regression coefficient is increased above what it would be if \(R_i^2\) equaled zero [@Obrien2007]. \autoref{VIF} reports VIF of all variables. The maximum VIF is 2,477 meaning that there is no multicollinearity in the model [@Obrien2007].
  
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
@@ -195,9 +195,9 @@ Model1 <- pdata.frame(Model1, index = c("CompaniesIndex", "YearIndex"))
 
 
 # The vif function can not be used with within model. I need to estimate my models with the pooling model.
-Roa <- plm(Roa ~ SPL + STC + A + CaP + WaP + WastP + Leverage + Growth + FirmSize + Industry, model = "pooling", data = Model1, index = c("YearIndex", "CompaniesIndex"))
+Roa <- plm(ROA ~ SPL + STC + AS + CaP + WaP + WastP + Leverage + Growth + FirmSize + Industry, model = "pooling", data = Model1, index = c("YearIndex", "CompaniesIndex"))
 
-TobinsQ <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + Leverage + Growth + FirmSize + Industry, model = "pooling", data = Model1, index = c("YearIndex", "CompaniesIndex"))
+TobinsQ <- plm(TobinsQ ~ SPL + STC + AS + CaP + WaP + WastP + Leverage + Growth + FirmSize + Industry, model = "pooling", data = Model1, index = c("YearIndex", "CompaniesIndex"))
 
 
 #VIF Calculation and summary in a nice stargazer table
@@ -207,7 +207,7 @@ VifTobin <- car::vif(TobinsQ)
 
 
 VifTable <- cbind(VifRoa, VifTobin)
-colnames(VifTable) <- c("Roa", "Tobin's Q")
+colnames(VifTable) <- c("ROA", "Tobin's Q")
 
 
 
@@ -217,15 +217,15 @@ stargazer(VifTable, summary = FALSE, title = "Variance Inflation Factor", label 
 
 ## Outliers Treatment
 
-@Lyu2015 defines outliers as observations in the dataset that appear to be unusual and discordant and which could lead to inconsistent results. @Osborne2004 have shown that even a small proportion of outliers can significantly affect simple analyses (i.e. t-tests, correlations and ANOVAs). Outliers are an issue only and only if they are influential, namely observations whose removal causes a different conclusion in the analysis [@Cousineau2010]. 
+@Lyu2015 has defined outliers as observations in the dataset that appear to be unusual and discordant and which could lead to inconsistent results. @Osborne2004 showed that even a small proportion of outliers can significantly affect simple analyses (i.e. t-tests, correlations and ANOVAs). @Cousineau2010 claimed that outliers are an issue only and only if they are influential (i.e. any extreme observations whose removal causes a different conclusion in the analysis). 
 
-How to treat influential outliers is still a lively debate in the literature [@OrrJohn1991; @Cousineau2010]. @Tabachnick2007 argue that the imputation with the mean is the best method while @Cousineau2010 highlight that it tends to reduce the spread of the population, making the observed distribution more leptokurtic, and possibly increase the likelihood of a type-I error. @Dang2009 argue that a more elaborate technique involves replacing outliers with possible values (e.g. multiple imputation) while @Barnett1994 would prefer to remove or winsorize them. Alternatively, @Pollet2017 argue that inclusion or exclusion of outliers depend on the significativity of the results. According to them, if results are more significant without outliers, scholars should remove them.
+How to treat influential outliers has been a lively debate in the literature [@OrrJohn1991; @Cousineau2010]. @Tabachnick2007 argued that the imputation with the mean is the best method while @Cousineau2010 highlighted that it tends to reduce the spread of the population, making the observed distribution more leptokurtic, and possibly increase the likelihood of a type-I error. @Dang2009 advocated that a more elaborate technique involves replacing outliers with possible values (e.g. multiple imputations) while @Barnett1994 stressed that the best option is to remove or winsorize them. Alternatively, @Pollet2017 argued that inclusion or exclusion of outliers depend on the significativity of the results. According to them, if results are more significant without outliers, scholars should remove them.
 
-Following the mindset of @Pollet2017, I removed outliers from the database. Influential outliers had been identified based on the Cook's distance [@Cook1977] which is a common statistical tool to assess the influence of outliers [@JPStevens1984; @Cousineau2010; @Zuurprotocoldataexploration2010]. Cook’s Distance observes the difference between the regression parameters of a given model, \(\hat{\beta}\), and what they become if the \(i_{th}\) data point is deleted, let's say  \(\hat{\beta}_{i}\). See *"[Appendix C: Outliers Treatment]"* for further details on how I proceed.
+Following the mindset of @Pollet2017, I removed outliers from the database. Influential outliers have been identified based on the Cook's distance [@Cook1977] which is a common statistical tool to assess the influence of outliers [@JPStevens1984; @Cousineau2010; @Zuurprotocoldataexploration2010]. Cook’s Distance observes the difference between the regression parameters of a given model, \(\hat{\beta}\), and what they become if the \(i_{th}\) data point is deleted, let's say  \(\hat{\beta}_{i}\). See *"[Appendix C: Outliers Treatment]"* for further details on how I proceed.
 
 ## The Impact of Process-Based CEP on Outcome-Based CEP
 
-\autoref{CepResults} reports the main results of the analysis of the impact of process-based CEP (i.e. SPL, STC and A) on outcome-based CEP (i.e. CaP, WatP and WastP). Given the p-value of the F test, all models have FE making the *fixed effects estimation*, the most efficient estimator.  
+\autoref{CepResults} reports the main results of the analysis of the impact of process-based CEP (i.e. SPL, STC and AS) on outcome-based CEP (i.e. CaP, WatP and WastP). Given the p-value of the F test, all models have FE making the *fixed effects estimation* the most efficient estimator.  
 
 Except for Model (1) which indicates no significant relation between SPL and CaP, all models show evidence of a positive and highly statistically significant effect of process-based CEP on outcome-based CEP. Indeed, results demonstrate that companies, which link the remuneration of any member of a company’s senior executive team with the achievement of environmental performance targets, have a better WatP (+0.022%) and WastP (+0.025%). The fact of having a sustainability committee on the board of directors level increases the CaP (+0.058%), WatP (+0.067%) and WastP (+0.046%). Finally, companies having their latest reported environmental metrics audited by a third party have a higher CaP (+0.057%), WatP (+0.068%) and WastP (+0.071%). Hence, hypothesis 1 is verified.
 
@@ -245,7 +245,7 @@ Model3 <- Model1 %>%
            WastP, 
            SPL,
            STC,
-           A,
+           AS,
            Leverage, 
            FirmSize, 
            Industry, 
@@ -256,11 +256,11 @@ Model3 <- Model1 %>%
 # I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
 
 ## Pooling Model
-  CarbonPooling <- plm(CaP ~ SPL + STC + A + FirmSize + Leverage + Growth + Industry, data = Model3, model="pooling")
+  CarbonPooling <- plm(CaP ~ SPL + STC + AS + FirmSize + Leverage + Growth + Industry, data = Model3, model="pooling")
 
-  WaterPooling <- plm(WaP ~ SPL + STC + A + FirmSize + Leverage + Growth + Industry, data = Model3, model="pooling")
+  WaterPooling <- plm(WaP ~ SPL + STC + AS + FirmSize + Leverage + Growth + Industry, data = Model3, model="pooling")
 
-  WastePooling <- plm(WastP ~ SPL + STC + A + FirmSize + Leverage + Growth + Industry, data = Model3, model="pooling")
+  WastePooling <- plm(WastP ~ SPL + STC + AS + FirmSize + Leverage + Growth + Industry, data = Model3, model="pooling")
 
   ## Plmtest
   PlmtestCarbon <- as.numeric(round(plmtest(CarbonPooling, effect = "time", type = "bp")$p.value, digits = 3))
@@ -283,11 +283,11 @@ Model3 <- Model1 %>%
   
   ## Within Model with time effect
   
-  CarbonWithin <- plm(CaP ~ SPL + STC + A + FirmSize + Leverage + Growth + Industry, data = Model3, model="within", effect = "time")
+  CarbonWithin <- plm(CaP ~ SPL + STC + AS + FirmSize + Leverage + Growth + Industry, data = Model3, model="within", effect = "time")
 
-  WaterWithin <- plm(WaP ~ SPL + STC + A + FirmSize + Leverage + Growth + Industry, data = Model3, model="within", effect = "time")
+  WaterWithin <- plm(WaP ~ SPL + STC + AS + FirmSize + Leverage + Growth + Industry, data = Model3, model="within", effect = "time")
 
-  WasteWithin <- plm(WastP ~ SPL + STC + A + FirmSize + Leverage + Growth + Industry, data = Model3, model="within", effect = "time")
+  WasteWithin <- plm(WastP ~ SPL + STC + AS + FirmSize + Leverage + Growth + Industry, data = Model3, model="within", effect = "time")
   
   ## pFtest
   
@@ -318,11 +318,11 @@ stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The Impact of Process
 
 ## The Impact of CEP on CFP 
 
-\autoref{Lag1} reports the main results of the analysis of the impact of both process-based CEP (i.e. SPL, STC and A) and outcome-based CEP (i.e. CaP, WatP and WastP) on short-term CFP (ROA) and long-term CFP (i.e. TobinsQ). Based on the pvalue of BPLM and F tests, model (4) had been estimated with the *pooled OLS estimation* while model (5) had been estimated with the *fixed effects estimation*. 
+\autoref{Lag1} reports the main results of the analysis of the impact of both process-based CEP (i.e. SPL, STC and AS) and outcome-based CEP (i.e. CaP, WatP and WastP) on short-term CFP (ROA) and long-term CFP (i.e. TobinsQ). Based on the pvalue of BPLM and F tests, model (4) has been estimated with the *pooled OLS estimation* while model (5) has been estimated with the *fixed effects estimation*. 
 
-Model (4) shows evidence of a positive and statistically significant effect of SPL, A, and WaP on *long-term CFP*. Model (5) shows evidence of a positive and statistically significant effect of SPL, STC and CaP on *short-term CFP*.
+Model (4) shows evidence of a positive and statistically significant effect of SPL, AS, and WaP on *long-term CFP*. Model (5) shows evidence of a positive and statistically significant effect of SPL, STC and CaP on *short-term CFP*.
 
-More precisely, regarding process-based CEP variables, results show that companies, which link the remuneration of any member of a company’s senior executive team with the achievement of environmental performance targets, are characterized  by both a higher Tobin's Q (+0.079) and ROA (+0.008). Then, the fact of having a sustainability committee on the board of directors level increases the ROA (+0.012). Finally, companies having their latest reported environmental metrics audited by a third party have a higher Tobin's Q (+ 0.158). Regarding outcome-based CEP variables, results demonstrate that a 1% increase of carbon productivity increases the ROA by 0.03 and a 1% increase of water productivity increases the Tobin's Q by 0.337. Hence, hypotheses 2, 3, 4 and 5 are verified.
+More precisely, regarding process-based CEP variables, results stress that companies, which link the remuneration of any member of a company’s senior executive team with the achievement of environmental performance targets, are characterized by both a higher Tobin's Q (+0.079) and ROA (+0.008). Then, the fact of having a sustainability committee on the board of directors level increases the ROA (+0.012). Finally, companies having their latest reported environmental metrics audited by a third party have a higher Tobin's Q (+0.158). Regarding outcome-based CEP variables, results demonstrate that a 1% increase of carbon productivity increases the ROA (+0.03) and a 1% increase of water productivity increases the Tobin's Q (+0.337). Hence, hypotheses 2, 3, 4 and 5 are verified.
 
 Regarding control variables, firm size and industry sector negatively and significantly influence CFP in both models while growth has a positive impact, with an effect more pronounced in Model (4). These results support previous research [@EndrikatMakingsenseconflicting2014; @MiroshnychenkoGreenpracticesfinancial2017]. Against all odds, leverage does not have any significant impact.
 
@@ -337,8 +337,8 @@ RoaNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag
 TobinNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/TobinsQ.csv", header = TRUE, stringsAsFactors = FALSE)
 
 # I change names
-RoaNoOut <- RoaNoOut %>% setnames(old = c("FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
-TobinNoOut <- TobinNoOut %>% setnames(old = c("FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "A"))
+RoaNoOut <- RoaNoOut %>% setnames(old = c("Roa", "FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("ROA", "Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "AS"))
+TobinNoOut <- TobinNoOut %>% setnames(old = c("Roa", "FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("ROA", "Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "AS"))
  
 # I make both df a plm dataframe
 RoaNoOut <- RoaNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
@@ -347,8 +347,8 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
 # I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
 
   ## Pooling Model
-  RoaPooling <- plm(Roa ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="pooling")
-  TobinPooling <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model="pooling")
+  RoaPooling <- plm(ROA ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="pooling")
+  TobinPooling <- plm(TobinsQ ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model="pooling")
 
 
   ## Plmtest
@@ -367,8 +367,8 @@ TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"
   
   ## Within Model with time effect
   
-  RoaWithin <- plm(Roa ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="within", effect = "time")
-  TobinWithin <- plm(TobinsQ ~ SPL + STC + A + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
+  RoaWithin <- plm(ROA ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="within", effect = "time")
+  TobinWithin <- plm(TobinsQ ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
   
   ## pFtest
   
