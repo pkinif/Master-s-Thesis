@@ -38,7 +38,7 @@ Y_{it+2} & = & \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} AS_{
 
 where \(Y_{it+2}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(AS_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents the time effect and \(u_{it}\) is the error term.
 
-Estimators of equation \ref{EconometricModelLag2} are reported in table \ref{Lag2}. Based on the results of both BPLM and F tests, estimators has been estimated with the *pooled OLS estimation*. Except for the estimator of WaP in Model (4) which loose its significativity, findings stay the same than in section: *"[Results]"*. 
+Estimators of equation \ref{EconometricModelLag2} are reported in table \ref{Lag2}. Based on the results of both BPLM and F tests, estimators has been estimated with the *pooled OLS estimation*. Except for the estimator of WaP in Model (4) which loses its significativity, findings stay the same than in section: *"[Results]"*. 
 
 Second, I use the Green Score (i.e. GS) assigned to each company of the NGR as an alternative proxy for CEP. GS is based on a weighted average of the KPI of the ranking. Concretely, it means that equation \ref{EconometricModel} becomes:
 
