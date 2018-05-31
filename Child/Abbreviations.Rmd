@@ -33,7 +33,7 @@ tribble(
     "KPI", "Key Performance Indicator",
     "SPL", "Sustainability Pay Link",
     "STC", "Sustainability Themed Committee",
-    "A", "Audit Score",
+    "AS", "Audit Score",
     "CaP", "Carbon Productivity",
     "WatP", "Water Productivity",
     "WastP", "Waste Productivity",
