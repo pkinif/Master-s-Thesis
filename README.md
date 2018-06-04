@@ -6,7 +6,7 @@
 
 **Author** : Pierrick KINIF
 
-The repository is organized following the methodology of Gandrud, Christopher. 2013. Reproducible Research with R and R Studio. New York: Chapman and Hall/CRC}. 
+The repository is organized following the methodology of Gandrud, Christopher. 2013. Reproducible Research with R and R Studio. New York: Chapman and Hall/CRC. 
 
 Each section of this thesis corresponds to an R Markdown file in the `Child` folder. The `Child/ThesisSkeleton.Rmd` file is the parent document which merges all the child directories into a consolidated pdf document `ThesisSkeleton.pdf`. The `Child/Analysis` sub-folder contains a list of makefiles whose outputs are saved into `Child/Analysis/DataBase`. The final database states in the folder `Thesis/Child/Analysis/DataBase/DataSynchronization/`:
 
