@@ -55,6 +55,7 @@ Given the pvalue of both BPLM and F tests, Model (4) has been estimated with the
 
 Hence, the SA supports that CEP does have a significant and positive effect on CFP, no matter the time horizon (short-term and long-term), and is stronger with a long-term perspective than a short-term perspective. `R` script of this section is available in *"[Appendix D: Sensitivity Analysis - R Script]"*.
 
+
 \newpage
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
