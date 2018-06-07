@@ -82,6 +82,8 @@ sessionInfo()
 
 \vspace*{3cm}
 
+\hfill{\today}
+
 \noindent\hrulefill\hrulefill\hrulefill\hfill\hrulefill\hrulefill
 
 \noindent\small\textsc{signed}\hfill\textsc{dated}
