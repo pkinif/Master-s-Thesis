@@ -1,6 +1,10 @@
+<img src="Child/figures/Unamur.png" style="width:19%; border:10px solid; margin-right: 20px;position:absolute;top:0px;right:0px;" />
+
 # Thesis
 
 **Project:** This repository contains the project of my master's thesis submitted in fulfillment of the requirements for the Master’s Degree in Business Management and Administration, Finance Specialization at the University of Namur, Belgium.
+
+> Towards Green Companies: A Panel Data Study of The Environmental and Financial Performance Nexus
 
 **Academic year:** 2017-2018
 
