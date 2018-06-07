@@ -1,4 +1,6 @@
-<img src="Child/figures/UNamur.png" style="width:5%; border:10px solid; margin-right: 20px;position:absolute;top:0px;right:0px;" />
+
+<a href="https://www.unamur.be/en"><img src="Child/figures/UNamur.png" alt="Unamur logo" align="right" /></a>
+
 
 # Thesis
 
