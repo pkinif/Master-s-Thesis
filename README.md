@@ -1,5 +1,5 @@
 
-<a href="https://www.unamur.be/en"><img src="Child/figures/UNamur.png" alt="Unamur logo" align="right" /></a>
+<a href="https://www.unamur.be/en"><img src="Child/figures/UNamur.png" alt="Unamur logo" align="right" style="width:10%" /></a>
 
 
 # Thesis
