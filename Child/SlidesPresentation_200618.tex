@@ -1,0 +1,240 @@
+\documentclass[ignorenonframetext,]{beamer}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+\usetheme[]{Darmstadt}
+\usecolortheme{beaver}
+\usefonttheme{structurebold}
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\newif\ifbibliography
+\hypersetup{
+            pdftitle={Towards Green Companies: A Panel Data Study of The Environmental and Financial Performance Nexus},
+            pdfauthor={Pierrick KINIF},
+            colorlinks=true,
+            linkcolor=red,
+            citecolor=blue,
+            urlcolor=red,
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+
+\AtBeginPart{
+  \let\insertpartnumber\relax
+  \let\partname\relax
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \let\insertsectionnumber\relax
+    \let\sectionname\relax
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \let\insertsubsectionnumber\relax
+  \let\subsectionname\relax
+  \frame{\subsectionpage}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+
+\title{Towards Green Companies: A Panel Data Study of The Environmental and
+Financial Performance Nexus}
+\author{Pierrick KINIF}
+\institute{Supervised by Sophie BÉREAU and Jean-Yves GNABO \and University of Namur \and Faculty of Economics, Social Sciences and Business Administration}
+\date{June 20, 2018}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}
+\tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Introduction}\label{introduction}
+
+\begin{frame}{Context}
+
+\end{frame}
+
+\begin{frame}{Objectives}
+
+\begin{itemize}[<+->]
+\tightlist
+\item
+  cite objectives
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+\end{frame}
+
+\section{Theoretical Framework}\label{theoretical-framework}
+
+\begin{frame}{CEP - CFP Nexus}
+
+\end{frame}
+
+\begin{frame}{Hypotheses}
+
+\end{frame}
+
+\begin{frame}
+
+\end{frame}
+
+\section{Methodology}\label{methodology}
+
+\begin{frame}{Data Description}
+
+\end{frame}
+
+\begin{frame}{Panel Data}
+
+\end{frame}
+
+\begin{frame}
+
+\end{frame}
+
+\section{Results}\label{results}
+
+\begin{frame}{Process-based CEP positively influences outcome-based CEP}
+
+\begin{table}[!] \centering 
+  \caption{The Impact of Process-Based on Outcome-Based CEP} 
+  \label{CepResults} 
+\tiny 
+\begin{tabular}{@{\extracolsep{5pt}}lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-4} 
+\\[-1.8ex] & CaP & WaP & WastP \\ 
+ & Model (1) & Model (2) & Model (3) \\ 
+\hline \\[-1.8ex] 
+ SPL & 0.010 (0.011) & 0.022$^{*}$ (0.012) & 0.025$^{**}$ (0.011) \\ 
+  STC & 0.058$^{***}$ (0.010) & 0.067$^{***}$ (0.011) & 0.046$^{***}$ (0.011) \\ 
+  AS & 0.057$^{***}$ (0.010) & 0.068$^{***}$ (0.011) & 0.071$^{***}$ (0.011) \\ 
+  FirmSize & $-$0.005 (0.008) & $-$0.008 (0.008) & $-$0.010 (0.008) \\ 
+  Leverage & 0.0003 (0.001) & 0.001$^{*}$ (0.001) & 0.001$^{**}$ (0.001) \\ 
+  Growth & 0.028 (0.028) & 0.001 (0.030) & 0.003 (0.028) \\ 
+  Industry & 0.002 (0.002) & $-$0.00001 (0.002) & 0.004$^{**}$ (0.002) \\ 
+ \hline \\[-1.8ex] 
+BPLM test (pvalue) & 0*** & 0*** & 0*** \\ 
+F test (pvalue) & 0*** & 0*** & 0*** \\ 
+Observations & 1,123 & 1,123 & 1,123 \\ 
+Adjusted R$^{2}$ & 0.109 & 0.138 & 0.132 \\ 
+F Statistic (df = 7; 1113) & 20.888$^{***}$ & 26.892$^{***}$ & 25.632$^{***}$ \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+
+\end{frame}
+
+\begin{frame}{Both process and outcome-based CEP have a positive impact
+on CFP}
+
+\begin{table}[!] \centering 
+  \caption{The Impact of Process and Outcome-Based CEP on CFP} 
+  \label{Lag1} 
+\tiny 
+\begin{tabular}{@{\extracolsep{5pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & TobinsQ & ROA \\ 
+ & Model (4) & Model (5) \\ 
+\hline \\[-1.8ex] 
+ SPL & 0.079$^{*}$ (0.044) & 0.008$^{**}$ (0.004) \\ 
+  STC & 0.063 (0.044) & 0.012$^{***}$ (0.004) \\ 
+  AS & 0.158$^{***}$ (0.044) & $-$0.004 (0.004) \\ 
+  CaP & $-$0.012 (0.135) & 0.030$^{**}$ (0.012) \\ 
+  WaP & 0.337$^{**}$ (0.155) & 0.006 (0.012) \\ 
+  WastP & $-$0.199 (0.156) & 0.010 (0.012) \\ 
+  FirmSize & $-$0.443$^{***}$ (0.015) & $-$0.020$^{***}$ (0.001) \\ 
+  Leverage & 0.003 (0.003) & $-$0.00000 (0.0003) \\ 
+  Growth & 0.465$^{***}$ (0.152) & 0.138$^{***}$ (0.012) \\ 
+  Industry & $-$0.026$^{***}$ (0.007) & $-$0.002$^{***}$ (0.001) \\ 
+  Constant & 10.701$^{***}$ (0.345) &  \\ 
+ \hline \\[-1.8ex] 
+BPLM test (pvalue) & 0.508 & 0.024** \\ 
+F test (pvalue) & 0.323 & 0.012** \\ 
+Observations & 954 & 1,093 \\ 
+Adjusted R$^{2}$ & 0.500 & 0.282 \\ 
+F Statistic & 96.388$^{***}$ (df = 10; 943) & 44.007$^{***}$ (df = 10; 1080) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table}
+
+\end{frame}
+
+\begin{frame}{Sensitivity analyses}
+
+\begin{itemize}[<+->]
+\item ~
+  \subsection{Describe + confirms
+  results}\label{describe-confirms-results}
+\end{itemize}
+
+\end{frame}
+
+\section{Summary}\label{summary}
+
+\begin{frame}{Main findings and contributions}
+
+\end{frame}
+
+\begin{frame}{Limitations}
+
+\end{frame}
+
+\begin{frame}
+
+\end{frame}
+
+\section{References}\label{references}
+
+\begin{frame}{References}
+
+\end{frame}
+
+\end{document}

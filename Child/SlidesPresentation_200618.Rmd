@@ -1,0 +1,295 @@
+---
+title: "Towards Green Companies: A Panel Data Study of The Environmental and Financial Performance Nexus"
+#subtitle: "Master's Thesis Defence"
+author: 
+  - Pierrick KINIF
+institute: 
+  - Supervised by Sophie BÉREAU and Jean-Yves GNABO
+  - University of Namur
+  - Faculty of Economics, Social Sciences and Business Administration
+date: June 20, 2018
+output: 
+  beamer_presentation:
+    incremental: true
+    theme: "Darmstadt" #see http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+    colortheme: "beaver"
+    fonttheme: "structurebold"
+    toc: true
+    slide_level: 2
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+    highlight: tango
+bibliography: References.bib
+csl: CSL/elsevier-harvard.csl
+link-citations: yes
+urlcolor: red
+linkcolor: red
+citecolor: blue
+---
+
+# Introduction 
+
+## Context
+
+## Objectives
+
+- cite objectives
+
+----
+
+# Theoretical Framework
+
+## CEP - CFP Nexus
+
+
+
+## Hypotheses
+
+----
+
+# Methodology
+
+## Data Description
+
+## Panel Data
+
+----
+
+# Results
+
+## Process-based CEP positively influences outcome-based CEP
+
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
+
+################################################
+############## Package loading #################
+################################################
+
+rm(list=ls()) #Removes all items in the R environment
+if (!require("plm")) install.packages("plm")
+library(plm) 
+if (!require("dplyr")) install.packages("dplyr")
+library(dplyr) 
+if (!require("data.table")) install.packages("data.table")
+library(data.table)
+if (!require("stargazer")) install.packages("stargazer")
+library(stargazer)
+if (!require("Hmisc")) install.packages("Hmisc")
+library(Hmisc)
+if (!require("lattice")) install.packages("lattice")
+library(lattice)
+if (!require("survival")) install.packages("survival")
+library(survival)
+if (!require("ggplot2")) install.packages("ggplot2")
+library(ggplot2)
+if (!require("car")) install.packages("car")
+library(car)
+if (!require("ggpubr")) install.packages("ggpubr")
+library(ggpubr)
+if (!require("xtable")) install.packages("xtable")
+library(xtable)
+```
+
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
+# Database Loading. Here I consider the database with outliers.
+DataBase <- read.csv(file = "Analysis/DataBase/DataSynchronization/Lag1.csv", header = TRUE, stringsAsFactors = FALSE)
+
+## I create a new df called "model" which contains only variables that I need
+
+Model <- DataBase %>% select(c(YearIndex,
+                               CompaniesIndex,
+                               Roa,
+                               TobinsQ,
+                               DebtToEquityRatio,
+                               NetMargin,
+                               TotalAssets,
+                               GicsClassification,
+                               CarbonProductivity,
+                               WaterProductivity,
+                               WasteProductivity,
+                               SustainabilityPayLink,
+                               SustainableThemedCommitment,
+                               AuditScore,
+                               GreenScore
+                               ))
+
+## I transform the "TotalAssets" column into FirmSize using the log of TotalAssets 
+Model$TotalAssets <- log10(Model$TotalAssets)
+
+## I use the natural log for TobinsQ
+Model$TobinsQ <- log10(Model$TobinsQ)
+
+## I rename some columns
+
+Model1 <- Model %>% setnames(old = c("Roa", "DebtToEquityRatio", "TotalAssets", "GicsClassification", "NetMargin", "CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("ROA", "Leverage", "FirmSize", "Industry", "Growth", "CaP", "WaP", "WastP", "SPL", "STC", "AS"))
+
+```
+
+
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
+################################################
+######## Process vs outcome based CEP ##########
+################################################
+Model1 <- pdata.frame(Model1, index = c("CompaniesIndex", "YearIndex"))
+# I select only CEP variables in model2. As Model2 is already a pdata.frame, I do not need to reproduce this function on Model3.
+
+Model3 <- Model1 %>% 
+  select(c(YearIndex,
+           CompaniesIndex,
+           CaP, 
+           WaP, 
+           WastP, 
+           SPL,
+           STC,
+           AS,
+           Leverage, 
+           FirmSize, 
+           Industry, 
+           Growth
+           )) 
+
+
+# I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
+
+## Pooling Model
+  CarbonPooling <- plm(CaP ~ SPL + STC + AS + FirmSize + Leverage + Growth + Industry, data = Model3, model="pooling")
+
+  WaterPooling <- plm(WaP ~ SPL + STC + AS + FirmSize + Leverage + Growth + Industry, data = Model3, model="pooling")
+
+  WastePooling <- plm(WastP ~ SPL + STC + AS + FirmSize + Leverage + Growth + Industry, data = Model3, model="pooling")
+
+  ## Plmtest
+  PlmtestCarbon <- as.numeric(round(plmtest(CarbonPooling, effect = "time", type = "bp")$p.value, digits = 3))
+  PlmtestWater <- as.numeric(round(plmtest(WaterPooling, effect = "time", type = "bp")$p.value, digits = 3))
+  PlmtestWaste <- as.numeric(round(plmtest(WastePooling, effect = "time", type = "bp")$p.value, digits = 3))
+
+  ## Improve p-value understanding
+  PlmtestCarbon<-ifelse(PlmtestCarbon<0.01, paste(PlmtestCarbon,"***",sep = ""),
+		ifelse(PlmtestCarbon<0.05,paste(PlmtestCarbon,"**",sep = ""),
+		ifelse(PlmtestCarbon<0.1,paste(PlmtestCarbon,"*",sep = ""),PlmtestCarbon)))
+  PlmtestWater<-ifelse(PlmtestWater<0.01, paste(PlmtestWater,"***",sep = ""),
+		ifelse(PlmtestWater<0.05,paste(PlmtestWater,"**",sep = ""),
+		ifelse(PlmtestWater<0.1,paste(PlmtestWater,"*",sep = ""),PlmtestWater)))
+  PlmtestWaste<-ifelse(PlmtestWaste<0.01, paste(PlmtestWaste,"***",sep = ""),
+		ifelse(PlmtestWaste<0.05,paste(PlmtestWaste,"**",sep = ""),
+		ifelse(PlmtestWaste<0.1,paste(PlmtestWaste,"*",sep = ""),PlmtestWaste)))
+  
+  
+# I test for Fixed Effect Model using pFtest which is a test of individual and/or time effects based on the comparison of the within and the pooling model.
+  
+  ## Within Model with time effect
+  
+  CarbonWithin <- plm(CaP ~ SPL + STC + AS + FirmSize + Leverage + Growth + Industry, data = Model3, model="within", effect = "time")
+
+  WaterWithin <- plm(WaP ~ SPL + STC + AS + FirmSize + Leverage + Growth + Industry, data = Model3, model="within", effect = "time")
+
+  WasteWithin <- plm(WastP ~ SPL + STC + AS + FirmSize + Leverage + Growth + Industry, data = Model3, model="within", effect = "time")
+  
+  ## pFtest
+  
+  pFtestCarbon <- as.numeric(round(pFtest(CarbonWithin, CarbonPooling)$p.value, digits = 3))
+  
+  pFtestWater <- as.numeric(round(pFtest(WaterWithin, WaterPooling)$p.value, digits = 3))
+  
+  pFtestWaste <- as.numeric(round(pFtest(WasteWithin, WastePooling)$p.value, digits = 3))
+  
+  ## Improve p-value understanding
+  pFtestCarbon<-ifelse(pFtestCarbon<0.01, paste(pFtestCarbon,"***",sep = ""),
+		ifelse(pFtestCarbon<0.05,paste(pFtestCarbon,"**",sep = ""),
+		ifelse(pFtestCarbon<0.1,paste(pFtestCarbon,"*",sep = ""),pFtestCarbon)))
+  pFtestWater<-ifelse(pFtestWater<0.01, paste(pFtestWater,"***",sep = ""),
+		ifelse(pFtestWater<0.05,paste(pFtestWater,"**",sep = ""),
+		ifelse(pFtestWater<0.1,paste(pFtestWater,"*",sep = ""),pFtestWater)))
+  pFtestWaste<-ifelse(pFtestWaste<0.01, paste(pFtestWaste,"***",sep = ""),
+		ifelse(pFtestWaste<0.05,paste(pFtestWaste,"**",sep = ""),
+		ifelse(pFtestWaste<0.1,paste(pFtestWaste,"*",sep = ""),pFtestWaste)))
+
+
+# Based on the results of the tests, the three models need to be estimated with the fixed effects estimations (i.e. model = "within" in plm). Let's consolidate into a stargazer table
+  
+stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The Impact of Process-Based on Outcome-Based CEP", label = "CepResults", header = FALSE, single.row = TRUE,  type = "latex", font.size = "tiny", omit.stat = "rsq", align = FALSE, model.numbers = FALSE, table.placement = "!", column.labels   = c("Model (1)", "Model (2)", "Model (3)"), add.lines = list(c("BPLM test (pvalue)", PlmtestCarbon, PlmtestWater, PlmtestWaste), c("F test (pvalue)", pFtestCarbon ,pFtestWater, pFtestWaste)))
+
+```
+
+## Both process and outcome-based CEP have a positive impact on CFP
+
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
+################################################
+######## The impact of CEP on CFP ##############
+################################################
+
+# I have already removed outliers from both model (i.e. Roa and TobinsQ) through the file = "Analysis/MakeFile_RemoveOutliers_Lag1.rmd". Consequently I just need to download them in this file.
+RoaNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/Roa.csv", header = TRUE, stringsAsFactors = FALSE)
+
+TobinNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/TobinsQ.csv", header = TRUE, stringsAsFactors = FALSE)
+
+# I change names
+RoaNoOut <- RoaNoOut %>% setnames(old = c("Roa", "FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("ROA", "Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "AS"))
+TobinNoOut <- TobinNoOut %>% setnames(old = c("Roa", "FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("ROA", "Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "AS"))
+ 
+# I make both df a plm dataframe
+RoaNoOut <- RoaNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
+TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
+
+# I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
+
+  ## Pooling Model
+  RoaPooling <- plm(ROA ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="pooling")
+  TobinPooling <- plm(TobinsQ ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model="pooling")
+
+
+  ## Plmtest
+  PlmtestRoa <-as.numeric(round(plmtest(RoaPooling, effect = "time", type = "bp")$p.value, digits = 3))
+  PlmtestTobin <-as.numeric(round(plmtest(TobinPooling, effect = "time", type = "bp")$p.value, digits = 3))
+
+  ## Improve p-value understanding
+  PlmtestRoa<-ifelse(PlmtestRoa<0.01, paste(PlmtestRoa,"***",sep = ""),
+		ifelse(PlmtestRoa<0.05,paste(PlmtestRoa,"**",sep = ""),
+		ifelse(PlmtestRoa<0.1,paste(PlmtestRoa,"*",sep = ""),PlmtestRoa)))
+  PlmtestTobin<-ifelse(PlmtestTobin<0.01, paste(PlmtestTobin,"***",sep = ""),
+		ifelse(PlmtestTobin<0.05,paste(PlmtestTobin,"**",sep = ""),
+		ifelse(PlmtestTobin<0.1,paste(PlmtestTobin,"*",sep = ""),PlmtestTobin)))
+  
+# I test for Fixed Effect Model using pFtest which is a test of individual and/or time effects based on the comparison of the within and the pooling model.
+  
+  ## Within Model with time effect
+  
+  RoaWithin <- plm(ROA ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="within", effect = "time")
+  TobinWithin <- plm(TobinsQ ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
+  
+  ## pFtest
+  
+  pFtestRoa <- as.numeric(round(pFtest(RoaWithin, RoaPooling)$p.value, digits = 3))
+  pFtestTobin <- as.numeric(round(pFtest(TobinWithin, TobinPooling)$p.value, digits = 3))
+
+  ## Improve p-value understanding
+  pFtestRoa<-ifelse(pFtestRoa<0.01, paste(pFtestRoa, "***",sep = ""),
+		ifelse(pFtestRoa<0.05,paste(pFtestRoa,"**",sep = ""),
+		ifelse(pFtestRoa<0.1,paste(pFtestRoa,"*",sep = ""),pFtestRoa)))
+  pFtestTobin<-ifelse(pFtestTobin<0.01, paste(pFtestTobin,"***",sep = ""),
+		ifelse(pFtestTobin<0.05,paste(pFtestTobin,"**",sep = ""),
+		ifelse(pFtestTobin<0.1,paste(pFtestTobin,"*",sep = ""),pFtestTobin)))
+  
+# Based on the results of the tests, TobinsQ need to be estimated with the pooling OLS estimations (i.e. model = "pooling" in plm) while Roa with the within effect estimation.. Let's consolidate into a nice stargazer table
+  
+stargazer(TobinPooling, RoaWithin, title= "The Impact of Process and Outcome-Based CEP on CFP", label = "Lag1", header = FALSE, type = "latex", single.row = TRUE, align = FALSE, font.size = "tiny", omit.stat = "rsq", model.numbers = FALSE, table.placement = "!", column.labels   = c("Model (4)", "Model (5)"), add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
+                           c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
+
+```
+## Sensitivity analyses
+
+- Describe + confirms results
+----
+
+# Summary
+
+## Main findings and contributions
+
+## Limitations
+
+----
+
+# References
+## References 
+
