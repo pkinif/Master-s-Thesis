@@ -16,8 +16,8 @@ output:
     fonttheme: "structurebold"
     toc: true
     slide_level: 2
-    fig_width: 7
-    fig_height: 6
+    fig_width: 5
+    fig_height: 4
     fig_caption: true
     highlight: tango
 bibliography: References.bib
@@ -42,6 +42,14 @@ citecolor: blue
 
 ## CEP - CFP Nexus
 
+### CEP
+
+![CEP](figures/BeamerPresentation/Cep_Digraph.png)
+
+### CFP
+
+![CFP](figures/BeamerPresentation/CFP_Digraph.png)
+
 
 
 ## Hypotheses
@@ -52,13 +60,30 @@ citecolor: blue
 
 ## Data Description
 
+\begin{equation}
+\centering
+Y_{it} = \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} AS_{it} + Controls_{it} + d_{t} + u_{it}
+\label{CEP}
+\end{equation}
+
+where \(Y_{it}\) is a proxy of outcome-based CEP measured as carbon productivity, water productivity and waste productivity, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(AS_{it}\) is a proxy for a firm's audit score, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents the time effect and \(u_{it}\) is the error term.
+
+\begin{equation}
+\centering
+\begin{aligned}
+Y_{it+1} & = & \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} AS_{it} + \beta_{4} CaP_{it} \\
+&& + { }  \beta_{5} WatP_{it} + \beta_{6} WastP_{it} + Controls_{it} + d_{t} + u_{it}
+\label{EconometricModel}
+\end{aligned}
+\end{equation}
+
+where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(AS_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents the time effect and \(u_{it}\) is the error term.
+
 ## Panel Data
 
 ----
 
 # Results
-
-## Process-based CEP positively influences outcome-based CEP
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 
@@ -66,7 +91,7 @@ citecolor: blue
 ############## Package loading #################
 ################################################
 
-rm(list=ls()) #Removes all items in the R environment
+#rm(list=ls()) #Removes all items in the R environment
 if (!require("plm")) install.packages("plm")
 library(plm) 
 if (!require("dplyr")) install.packages("dplyr")
@@ -126,6 +151,7 @@ Model1 <- Model %>% setnames(old = c("Roa", "DebtToEquityRatio", "TotalAssets", 
 
 ```
 
+## Process-based CEP positively influences outcome-based CEP
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
@@ -277,16 +303,35 @@ stargazer(TobinPooling, RoaWithin, title= "The Impact of Process and Outcome-Bas
                            c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
 
 ```
+
 ## Sensitivity analyses
 
 - Describe + confirms results
+
 ----
+
 
 # Summary
 
 ## Main findings and contributions
 
+1. Contribution 1
+
+2. Contribution 2
+
+3. Contribution 3
+
+4. Contribution 4
+
 ## Limitations
+
+1. Limitation 1
+
+2. Limitation 2
+
+3. Limitation 3
+
+4. Limitation 4
 
 ----
 
