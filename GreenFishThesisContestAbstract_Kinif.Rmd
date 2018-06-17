@@ -1,15 +1,40 @@
 ---
-output: pdf_document
+title: "Towards Green Companies: A Panel Data Study of The Environmental and Financial Performance Nexus"
+subtitle: "Pierrick Kinif - pierrick-kinif@hotmail.be"
+author: 
+  - University of Namur, Master's Degree in Business Administration, Finance specialization
+date: June 17, 2018
+output: 
+  pdf_document:
+    fig_caption: yes
+    number_sections: yes
+    highlight: haddock
+bibliography: Child/References.bib
+csl: Child/CSL/elsevier-harvard.csl
+link-citations: yes
+fontsize: 12pt
+geometry: margin = 1.2in
+urlcolor: red
+linkcolor: red
+citecolor: blue
+indent: true
+header-includes:
+- \usepackage{placeins}
+- \usepackage{hyperref}
+- \usepackage{fancyhdr}
+- \usepackage{setspace}
+- \usepackage{chngcntr}
+- \onehalfspacing
+- \counterwithin{figure}{section}
+- \counterwithin{table}{section}
+- \usepackage{rotating}
+- \usepackage{dcolumn}
+- \usepackage[bottom]{footmisc}
 ---
 
-\addcontentsline{toc}{section}{Abstract}
-\begin{centering}
-\huge
-\title{Towards Green Companies: A Panel Data Study of The Environmental and Financial Performance Nexus}
 
-\maketitle
+\pagenumbering{gobble} 
 
-\normalsize
 \begin{abstract}
 
 Providing evidence that companies with better Corporate Environmental Performance (i.e. CEP) have also better Corporate Financial Performance (i.e. CFP) have been a lively debate in the literature.  Two major opposite trends emerged. Some scholars provided evidence of a positive link between CEP and CFP while others demonstrated a negative relationship. Using a panel data of 393 US publicly traded companies for the period 2012-2014, this study first investigates the impact of process-based CEP on outcome-based CEP. Then, it explores whether the combined effect of process-based and outcome-based CEP influences CFP. Finally, it observes the time influence (i.e. short-term vs long-term) on the relationship.
@@ -23,5 +48,4 @@ This study provides evidence that process-based CEP positively influences outcom
   \textbf{\textit{Keywords---}} #1
 }
 \keywords{Corporate Environmental Performance, Corporate Financial Performance, Panel Data, Global Warming}
-\end{centering}
 
