@@ -10,7 +10,7 @@ institute:
 date: June 20, 2018
 output: 
   beamer_presentation:
-    incremental: true
+    #incremental: true
     theme: "Darmstadt" #see http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
     colortheme: "beaver"
     fonttheme: "structurebold"
@@ -18,38 +18,106 @@ output:
     slide_level: 2
     fig_width: 5
     fig_height: 4
-    fig_caption: true
+    fig_caption: no
     highlight: tango
 bibliography: References.bib
 csl: CSL/elsevier-harvard.csl
+nocite: | 
+ @PieterTans2018, @USEPA2016, @GistempTeam2018, @ImbieTeam2018
 link-citations: yes
 urlcolor: red
 linkcolor: red
 citecolor: blue
+header-includes:
+- \usepackage{subcaption}
+- \usepackage{caption}
 ---
 
-# Introduction 
+# Introduction
 
-## Context
+## Global warming is not a myth and is growing fast 
 
-## Objectives
+\begin{figure}[h]
+    \centering
+    \caption{Global Atmospheric Concentrations of Carbon Dioxide Over Time}
+    \includegraphics{figures/BeamerPresentation/PpmEvolution.png}
+    \caption*{\footnotesize\textbf{Source}: Data coming from US EPA (2016) and Pieter Tans et al. (2018)}
+\end{figure}
 
-- cite objectives
+## Global warming is not a myth and is growing fast 
+
+\begin{figure}[h]
+    \centering
+    \caption{Global Mean Estimates Based On Land and Ocean Data}
+    \includegraphics{figures/BeamerPresentation/TemperatureAnomaly.png}
+    \caption*{\scriptsize\textbf{Source}: Data coming from Gistemp Team (2018)}
+\end{figure}
+
+## Global warming is not a myth and is growing fast 
+
+\begin{figure}[h]
+    \centering
+    \caption{Cumulative Antarctic Ice Sheet Mass Change}
+    \includegraphics[width=9cm, height=8cm]{figures/BeamerPresentation/AntarticMelting1992-2017.jpg}
+    \caption*{\scriptsize\textbf{Source}: IMBIE team (2018)}
+\end{figure}
+
+## Global Warming represents a threat for companies
+
+- Resource depletion, effect on geography, increase of incertainty, increase of natural disasters,...
+
+- The @BusinessandSustainableDevelopmentCommission2017 (p12) report states: 
+
+> *"... businesses need to pursue social and environmental sustainability as avidly as they pursue market share and shareholder value... If they don’t, the costs and uncertainty of unsustainable development could swell until there is no viable world in which to do business."*
+
+## Turn the threat into an opportunity
+
+
+- Companies are important stakeholders of Global Warming. They are part of the **problem** but also part of the **solution.**
+
+- The solution can be profitable
+
+\vfill
+
+### Contribution of this thesis
+
+This thesis **provides incentives** for companies to invest in environmental strategies and shows that **it does pay to be green**. Companies with better corporate environmental performance have better financal performance and the relation increases with a long-term perspective.
 
 ----
 
 # Theoretical Framework
 
-## CEP - CFP Nexus
+## Corporate Environmental And Financial Performance Nexus
 
-### CEP
+\begin{figure}[h]
+\centering
+\caption{Research Framework}
+\includegraphics{figures/ResearchFramework.jpg}
+\label{ResearchFramework}
+\end{figure}
 
-![CEP](figures/BeamerPresentation/Cep_Digraph.png)
+## Corporate Financial Performance (i.e. CFP)
 
-### CFP
+Assesses the outcomes of business strategy [@Bansal2014] and is a fundamental indicator of organizational performance and long-term survival of an organization [@Hamann2013]. 
 
-![CFP](figures/BeamerPresentation/CFP_Digraph.png)
+### Three-group classification [@Orlitzky2003]:
 
+1. **Market-based measures** (e.g. price-earning ratio or Tobin's Q) consider that returns should be measured from the perspective of shareholders [@Cochran1984a]. They are considered as proxies for **long-term CFP** [@EndrikatMakingsenseconflicting2014].
+
+2. **Accounting-based measures** require profitability and asset utilization indicators such as Return on Asset (i.e. ROA) or Return on Equity (i.e. ROE) [@Cochran1984a; @Wu2006]. They are considered as proxies for **short-term CFP** [@EndrikatMakingsenseconflicting2014].
+
+3. **Perceptual measures** of CFP are a more subjective approach [@Ludecadedebatenexus2014] based on external (e.g. Fortune magazine rankings) and internal (e.g. Management surveys) perceptual metrics [@Peloza2009].
+
+
+## Corporate Environmental Performance (i.e. CEP)
+
+“Measurable results of an organization’s management of its environmental aspects” [@ISO2013].  
+
+### Two-group classification [@EndrikatMakingsenseconflicting2014]:
+
+1. **Process-based CEP** which refers to "a strategic level and focuses on managerial principles and processes such as environmental objectives, environmental policies, or environmental management structures". 
+
+2. **Outcome-based CEP** which reflects "the observable and quantifiable results of these efforts [@Delmas2011a] and refers to measures such as the number of released pollutants or the ratio of recycled waste to total waste". 
 
 
 ## Hypotheses
