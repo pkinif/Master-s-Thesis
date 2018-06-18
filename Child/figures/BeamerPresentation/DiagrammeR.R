@@ -75,3 +75,45 @@ grViz("
       ")
 
 
+# Estimation Model
+grViz("
+      digraph boxes_and_circles {
+      layout = dot
+      # a 'graph' statement
+      graph [overlap = true, fontsize = 10,width = 1, height = 0.5,]
+      
+      # several 'node' statements
+      node [shape = box,
+      fontname = Helvetica, style = filled,
+      color = tan]
+      A(FE?) ; B(RE?); C(Pooled OLS Estimation); D(FE estimation); E(RE estimation)
+      }
+      ")
+
+mermaid("graph TB; 
+        A[FE?]-->B((oui));
+        A-->C((non));
+        B-->BB[Fixed Effect Estimation];
+        C-->D[RE?];
+        D-->F((non));
+        D-->E((oui));
+        F-->G[Pooled OLS Estimation];
+        E-->H[Hausman Test - H0 Verified?];
+        H-->HHH((oui));
+        H-->HHHH((non));
+        HHH-->P[Random Effect Estimation];
+        HHHH-->PP[Fixed Effect Estimation]
+        "
+)
+
+
+mermaid("graph LR; 
+        A[FE?]-->AA((oui))-->B(([Fixed Effect Estimation));
+        A-- non -->C[RE?];
+        C-- non -->D[Pooled OLS Estimation];
+        C-- oui -->E[Hausman Test];
+        E-->F((Is HO Verified?));
+        F-- oui -->G[Random Effect Model];
+        F-- non -->H[Fixed Effect Model]
+        "
+  )

@@ -18,64 +18,63 @@ output:
     slide_level: 2
     fig_width: 5
     fig_height: 4
-    fig_caption: no
+    fig_caption: yes
     highlight: tango
 bibliography: References.bib
 csl: CSL/elsevier-harvard.csl
 nocite: | 
  @PieterTans2018, @USEPA2016, @GistempTeam2018, @ImbieTeam2018
 link-citations: yes
-urlcolor: red
-linkcolor: red
-citecolor: blue
 header-includes:
-- \usepackage{subcaption}
 - \usepackage{caption}
+- \usepackage{graphicx}
 ---
 
 # Introduction
 
-## Global warming is not a myth and is growing fast 
+## Global Warming Is Not a Myth and Is Growing Fast 
 
 \begin{figure}[h]
     \centering
     \caption{Global Atmospheric Concentrations of Carbon Dioxide Over Time}
-    \includegraphics{figures/BeamerPresentation/PpmEvolution.png}
-    \caption*{\footnotesize\textbf{Source}: Data coming from US EPA (2016) and Pieter Tans et al. (2018)}
+    \includegraphics[width=0.9\textwidth, height=0.9\textheight,keepaspectratio]{figures/BeamerPresentation/PpmEvolution.png}
+    \caption*{\scriptsize\textbf{Source}: Data coming from US EPA (2016) and Pieter Tans et al. (2018)}
 \end{figure}
 
-## Global warming is not a myth and is growing fast 
+## Global Warming Is Not a Myth and Is Growing Fast 
 
 \begin{figure}[h]
     \centering
     \caption{Global Mean Estimates Based On Land and Ocean Data}
-    \includegraphics{figures/BeamerPresentation/TemperatureAnomaly.png}
+    \includegraphics[width=0.9\textwidth, height=0.9\textheight,keepaspectratio]{figures/BeamerPresentation/TemperatureAnomaly.png}
     \caption*{\scriptsize\textbf{Source}: Data coming from Gistemp Team (2018)}
 \end{figure}
 
-## Global warming is not a myth and is growing fast 
+## Global Warming Is Not a Myth and Is Growing Fast 
 
 \begin{figure}[h]
     \centering
     \caption{Cumulative Antarctic Ice Sheet Mass Change}
-    \includegraphics[width=9cm, height=8cm]{figures/BeamerPresentation/AntarticMelting1992-2017.jpg}
+    \includegraphics[width=0.9\textwidth, height=0.9\textheight,keepaspectratio]{figures/BeamerPresentation/AntarticMelting1992-2017.jpg}
     \caption*{\scriptsize\textbf{Source}: IMBIE team (2018)}
 \end{figure}
 
-## Global Warming represents a threat for companies
+## Global Warming Represents a Threat for Companies
 
-- Resource depletion, effect on geography, increase of incertainty, increase of natural disasters,...
+- Resource depletion, effect on geography, increase of incertainty, increase of natural  disasters,...
+
+- "The ice sheets of Antarctica hold enough water to raise global sea level by 58 meters" [@Fretwell2013]
 
 - The @BusinessandSustainableDevelopmentCommission2017 (p12) report states: 
 
 > *"... businesses need to pursue social and environmental sustainability as avidly as they pursue market share and shareholder value... If they don’t, the costs and uncertainty of unsustainable development could swell until there is no viable world in which to do business."*
 
-## Turn the threat into an opportunity
+## Turn the Threat into an Opportunity
 
 
-- Companies are important stakeholders of Global Warming. They are part of the **problem** but also part of the **solution.**
+- Companies are important stakeholders of Global Warming. They are part of the **problem** but can be part of the **solution**
 
-- The solution can be profitable
+- The solution is **profitable**
 
 \vfill
 
@@ -92,28 +91,21 @@ This thesis **provides incentives** for companies to invest in environmental str
 \begin{figure}[h]
 \centering
 \caption{Research Framework}
-\includegraphics{figures/ResearchFramework.jpg}
+\includegraphics[width=0.9\textwidth, height=0.9\textheight,keepaspectratio]{figures/ResearchFramework.jpg}
 \label{ResearchFramework}
 \end{figure}
 
 ## Corporate Financial Performance (i.e. CFP)
 
-Assesses the outcomes of business strategy [@Bansal2014] and is a fundamental indicator of organizational performance and long-term survival of an organization [@Hamann2013]. 
-
-### Three-group classification [@Orlitzky2003]:
+### Focus on two of the three-group classification of @Orlitzky2003:
 
 1. **Market-based measures** (e.g. price-earning ratio or Tobin's Q) consider that returns should be measured from the perspective of shareholders [@Cochran1984a]. They are considered as proxies for **long-term CFP** [@EndrikatMakingsenseconflicting2014].
 
 2. **Accounting-based measures** require profitability and asset utilization indicators such as Return on Asset (i.e. ROA) or Return on Equity (i.e. ROE) [@Cochran1984a; @Wu2006]. They are considered as proxies for **short-term CFP** [@EndrikatMakingsenseconflicting2014].
 
-3. **Perceptual measures** of CFP are a more subjective approach [@Ludecadedebatenexus2014] based on external (e.g. Fortune magazine rankings) and internal (e.g. Management surveys) perceptual metrics [@Peloza2009].
-
-
 ## Corporate Environmental Performance (i.e. CEP)
 
-“Measurable results of an organization’s management of its environmental aspects” [@ISO2013].  
-
-### Two-group classification [@EndrikatMakingsenseconflicting2014]:
+### Two-group classification of @EndrikatMakingsenseconflicting2014:
 
 1. **Process-based CEP** which refers to "a strategic level and focuses on managerial principles and processes such as environmental objectives, environmental policies, or environmental management structures". 
 
@@ -122,11 +114,25 @@ Assesses the outcomes of business strategy [@Bansal2014] and is a fundamental in
 
 ## Hypotheses
 
+- **Hypothesis 1.** Process-based CEP has a positive impact on Outcome-based CEP
+
+- **Hypothesis 2.** Outcome-based CEP has a positive impact on short-term CFP
+
+- **Hypothesis 3.** Outcome-based CEP has a positive impact on long-term CFP
+
+- **Hypothesis 4.** Process-based CEP has a positive impact on short-term CFP
+
+- **Hypothesis 5.** Process-based CEP has a positive impact on long-term CFP
+
 ----
 
 # Methodology
 
-## Data Description
+## Econometric Model
+
+\scriptsize
+
+### The link between Process-Based CEP and Outcome-Based CEP
 
 \begin{equation}
 \centering
@@ -134,7 +140,9 @@ Y_{it} = \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} AS_{it} + 
 \label{CEP}
 \end{equation}
 
-where \(Y_{it}\) is a proxy of outcome-based CEP measured as carbon productivity, water productivity and waste productivity, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(AS_{it}\) is a proxy for a firm's audit score, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents the time effect and \(u_{it}\) is the error term.
+\scriptsize where \(Y_{it}\) is a proxy of outcome-based CEP measured as carbon productivity, water productivity and waste productivity, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(AS_{it}\) is a proxy for a firm's audit score, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents the time effect and \(u_{it}\) is the error term.
+
+### The link between CEP and CFP
 
 \begin{equation}
 \centering
@@ -145,10 +153,107 @@ Y_{it+1} & = & \alpha + \beta_{1} SPL_{it} + \beta_{2} STC_{it} + \beta_{3} AS_{
 \end{aligned}
 \end{equation}
 
-where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(AS_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents the time effect and \(u_{it}\) is the error term.
+\scriptsize where \(Y_{it+1}\) is a proxy of CFP measured as ROA or Tobin's Q, \(SPL_{it}\) is a proxy for a firm's sustainability pay link, \(STC_{it}\) is a proxy for a firm's sustainability themed commitment, \(AS_{it}\) is a proxy for a firm's audit score, \(CP_{it}\) is a proxy for a firm's carbon productivity, \(WatP_{it}\) is a proxy for a firm's water productivity, \(WasP_{it}\) is a proxy for a firm's waste productivity, \(Controls_{it}\) is a vector of control variables that includes firm size, industry sector, financial leverage and growth, \(d_{t}\) represents the time effect and \(u_{it}\) is the error term.
 
 ## Panel Data
 
+\scriptsize
+
+### General form:
+
+\scriptsize
+
+\begin{equation}
+\centering
+Y_{it} = \alpha + \beta_k X_{itk} + u_{it} 
+\label{PanelData}
+\end{equation}
+
+- with \(u_{it} = \mu_{i} + \epsilon_{it}\) 
+
+- \(\mu_{i}\) is the individual error component and is time-invariant. It can be considered as the unobserved effect model
+
+- \(\epsilon_{it}\), is the idiosyncratic error which is assumed well-behaved and independent of \(X_{it}\) and \(\mu_{i}\)
+
+If \(\rho(X_{itk},\mu_{i}) \neq 0\) then \(\mu_{i}\) is considered as the *Fixed Effect* (i.e. FE) and equation \ref{PanelData} becomes:
+
+\begin{equation}
+\centering
+Y_{it} = (\alpha + \mu{i}) + \beta_k X_{itk} + \epsilon_{it} 
+\label{Fixed}
+\end{equation}
+
+else, \(\mu_{i}\) is considered as the *Fixed Effect* (i.e. FE) and equation \ref{PanelData} becomes:
+
+\begin{equation}
+\centering
+Y_{it} = \alpha + \beta_k X_{itk} + (\epsilon_{it} + \mu{i})
+\label{Random}
+\end{equation}
+
+- FE and RE models imply that OLS estimators of \(\beta_k\) are inconsistent
+
+## Panel Data 
+
+\scriptsize
+
+### Testing for RE
+\scriptsize
+
+- Breusch-Pagan Lagrange Multiplier (i.e. BPLM) test [@Breusch1980]
+
+- Examines if time and/or individual specific variance components equal zero [@Park2011]. 
+
+- If H0 is verified, there is no RE in the panel data.
+
+### Testing for FE
+\scriptsize
+
+- The presence of FE is tested by an F test (i.e. the function `pFtest` in `R`). 
+
+- It tests the individual and/or time effects based on the comparison of the within and the pooling model [@Croissant2008]. 
+
+- If H0 is verified, there is no FE in the panel data.
+
+## Panel Data
+
+\begin{figure}[h]
+\centering
+\begin{minipage}[c]{0.67\textwidth}
+\includegraphics[width=\textwidth, height=\textheight,keepaspectratio]{figures/BeamerPresentation/PanelData3.png}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.3\textwidth}
+    \caption{Process to Determine the Estimation Method} 
+  \end{minipage}
+\end{figure}
+
+## Endogeneity Concern
+
+\scriptsize
+
+### Omission variable bias
+
+\scriptsize
+
+Inclusion of a vector of control variables \(Controls_{it}\) that explain the relation between CEP and CFP
+
+### Simultaneity bias
+
+\scriptsize
+
+There is a bidirectional causality between CEP and CFP [@EndrikatMakingsenseconflicting2014] that could cause  simultaneous causality. I used a lagged instrument \(Y_{it+1}\) to increases the confidence of the direction of the relationship [@MiroshnychenkoGreenpracticesfinancial2017]
+
+### Presence of FE in the model
+
+\scriptsize
+
+Under FE, endogeneity is a concern. The Fixed Effect Estimation (i.e. equation \ref{FixedEffectsEstimation}) solves this as \(( \mu_{i} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} \mu_{i} ) = 0\) [@Roberts2013].
+
+\begin{equation}
+\centering
+( Y_{it} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} Y_{it} ) = \beta_k (X_{itk} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} X_{itk} ) + ( \epsilon_{it} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} \epsilon_{it} )
+\label{FixedEffectsEstimation}
+\end{equation}
 ----
 
 # Results
@@ -403,6 +508,8 @@ stargazer(TobinPooling, RoaWithin, title= "The Impact of Process and Outcome-Bas
 
 ----
 
-# References
-## References 
+# References {.allowframebreaks}
 
+## References {.allowframebreaks}
+
+\tiny
