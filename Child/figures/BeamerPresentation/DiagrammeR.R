@@ -106,14 +106,58 @@ mermaid("graph TB;
         "
 )
 
+####### Final graph - Main findings
 
-mermaid("graph LR; 
-        A[FE?]-->AA((oui))-->B(([Fixed Effect Estimation));
-        A-- non -->C[RE?];
-        C-- non -->D[Pooled OLS Estimation];
-        C-- oui -->E[Hausman Test];
-        E-->F((Is HO Verified?));
-        F-- oui -->G[Random Effect Model];
-        F-- non -->H[Fixed Effect Model]
-        "
-  )
+###
+# Perform more node-to-edge traversals
+# from multiple nodes and with use
+# of matching conditions
+###
+
+library(DiagrammeR)
+library(magrittr)
+
+# Create a random graph
+# (10 nodes, 20 edges)
+graph <-
+  create_random_graph(
+    10, 20,
+    directed = TRUE,
+    set_seed = 20) %>%
+  set_global_graph_attrs(
+    "graph", "output", "visNetwork")
+
+# Set a seed for the various uses
+# of the `sample()` function
+set.seed(20)
+
+# Use a `for` loop to randomly set
+# various `type` values to nodes
+for (i in 1:node_count(graph)) {
+  graph %<>%
+    set_node_attrs(
+      nodes = i,
+      node_attr = "type",
+      values = sample(
+        c("A", "B", "C"), 1))
+}
+
+# Use another `for` loop to randomly
+# set various numerical values to
+# the graph's edges
+for (i in 1:edge_count(graph)) {
+  graph %<>%
+    set_edge_attrs(
+      from = get_edges(., return_type = "df")[i, 1],
+      to = get_edges(., return_type = "df")[i, 2],
+      edge_attr = "data_value",
+      values = sample(
+        seq(0, 8, 0.5), 1))
+}
+
+# Look at the graph
+graph %>% render_graph
+
+random_graph_directed <-
+  create_random_graph(
+    n = 50, m = 75)

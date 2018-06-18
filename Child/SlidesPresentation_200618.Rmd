@@ -72,7 +72,9 @@ header-includes:
 ## Turn the Threat into an Opportunity
 
 
-- Companies are important stakeholders of Global Warming. They are part of the **problem** but can be part of the **solution**
+- Companies are important stakeholders of Global Warming. 
+
+- They are part of the **problem** but can be part of the **solution**
 
 - The solution is **profitable**
 
@@ -85,15 +87,6 @@ This thesis **provides incentives** for companies to invest in environmental str
 ----
 
 # Theoretical Framework
-
-## Corporate Environmental And Financial Performance Nexus
-
-\begin{figure}[h]
-\centering
-\caption{Research Framework}
-\includegraphics[width=0.9\textwidth, height=0.9\textheight,keepaspectratio]{figures/ResearchFramework.jpg}
-\label{ResearchFramework}
-\end{figure}
 
 ## Corporate Financial Performance (i.e. CFP)
 
@@ -111,6 +104,14 @@ This thesis **provides incentives** for companies to invest in environmental str
 
 2. **Outcome-based CEP** which reflects "the observable and quantifiable results of these efforts [@Delmas2011a] and refers to measures such as the number of released pollutants or the ratio of recycled waste to total waste". 
 
+## Corporate Environmental And Financial Performance Nexus
+
+\begin{figure}[h]
+\centering
+\caption{Research Framework}
+\includegraphics[width=0.9\textwidth, height=0.9\textheight,keepaspectratio]{figures/ResearchFramework.jpg}
+\label{ResearchFramework}
+\end{figure}
 
 ## Hypotheses
 
@@ -235,13 +236,13 @@ Y_{it} = \alpha + \beta_k X_{itk} + (\epsilon_{it} + \mu{i})
 
 \scriptsize
 
-Inclusion of a vector of control variables \(Controls_{it}\) that explain the relation between CEP and CFP
+Inclusion of a vector of control variables \(Controls_{it}\) that explains the relation between CEP and CFP
 
 ### Simultaneity bias
 
 \scriptsize
 
-There is a bidirectional causality between CEP and CFP [@EndrikatMakingsenseconflicting2014] that could cause  simultaneous causality. I used a lagged instrument \(Y_{it+1}\) to increases the confidence of the direction of the relationship [@MiroshnychenkoGreenpracticesfinancial2017]
+There is a bidirectional causality between CEP and CFP [@EndrikatMakingsenseconflicting2014] that could cause  simultaneous causality. I used a lagged instrument \(Y_{it+1}\) to increase the confidence of the direction of the relationship [@MiroshnychenkoGreenpracticesfinancial2017]
 
 ### Presence of FE in the model
 
@@ -254,6 +255,7 @@ Under FE, endogeneity is a concern. The Fixed Effect Estimation (i.e. equation \
 ( Y_{it} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} Y_{it} ) = \beta_k (X_{itk} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} X_{itk} ) + ( \epsilon_{it} - \frac{1}{T} \displaystyle\sum_{t=1}^{T} \epsilon_{it} )
 \label{FixedEffectsEstimation}
 \end{equation}
+
 ----
 
 # Results
@@ -324,7 +326,7 @@ Model1 <- Model %>% setnames(old = c("Roa", "DebtToEquityRatio", "TotalAssets", 
 
 ```
 
-## Process-based CEP positively influences outcome-based CEP
+## Process-Based CEP Positively Influences Outcome-Based CEP
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
@@ -411,7 +413,7 @@ stargazer(CarbonWithin, WaterWithin, WasteWithin, title = "The Impact of Process
 
 ```
 
-## Both process and outcome-based CEP have a positive impact on CFP
+## Both Process and Outcome-Based CEP Have a Positive Impact on CFP
 
 ```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
 ################################################
@@ -477,39 +479,187 @@ stargazer(TobinPooling, RoaWithin, title= "The Impact of Process and Outcome-Bas
 
 ```
 
-## Sensitivity analyses
+----
 
-- Describe + confirms results
+# Sensitivity Analyses 
+
+## Lagged Instrument of 2 Years
+
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
+################################################
+######## The impact of CEP on CFP ##############
+################################################
+
+# I have already removed outliers from both model (i.e. Roa and TobinsQ) through the file = "Analysis/MakeFile_RemoveOutliers_Lag1.rmd". Consequently I just need to download them in this file.
+RoaNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag2/Roa.csv", header = TRUE, stringsAsFactors = FALSE)
+
+TobinNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag2/TobinsQ.csv", header = TRUE, stringsAsFactors = FALSE)
+
+# I change names
+RoaNoOut <- RoaNoOut %>% setnames(old = c("Roa", "FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("ROA", "Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "AS"))
+TobinNoOut <- TobinNoOut %>% setnames(old = c("Roa", "FinancialLeverage","CarbonProductivity", "WaterProductivity", "WasteProductivity", "SustainabilityPayLink", "SustainableThemedCommitment", "AuditScore"), new = c("ROA", "Leverage", "CaP", "WaP", "WastP", "SPL", "STC", "AS"))
+
+# I make both df a plm dataframe
+RoaNoOut <- RoaNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
+TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
+
+# I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
+
+  ## Pooling Model
+  RoaPooling <- plm(ROA ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="pooling")
+  TobinPooling <- plm(TobinsQ ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model="pooling")
+
+
+  ## Plmtest
+  PlmtestRoa <-as.numeric(round(plmtest(RoaPooling, effect = "time", type = "bp")$p.value, digits = 3))
+  PlmtestTobin <-as.numeric(round(plmtest(TobinPooling, effect = "time", type = "bp")$p.value, digits = 3))
+
+  ## Improve p-value understanding
+  PlmtestRoa<-ifelse(PlmtestRoa<0.01, paste(PlmtestRoa,"***",sep = ""),
+		ifelse(PlmtestRoa<0.05,paste(PlmtestRoa,"**",sep = ""),
+		ifelse(PlmtestRoa<0.1,paste(PlmtestRoa,"*",sep = ""),PlmtestRoa)))
+  PlmtestTobin<-ifelse(PlmtestTobin<0.01, paste(PlmtestTobin,"***",sep = ""),
+		ifelse(PlmtestTobin<0.05,paste(PlmtestTobin,"**",sep = ""),
+		ifelse(PlmtestTobin<0.1,paste(PlmtestTobin,"*",sep = ""),PlmtestTobin)))
+  
+# I test for Fixed Effect Model using pFtest which is a test of individual and/or time effects based on the comparison of the within and the pooling model.
+  
+  ## Within Model with time effect
+  
+  RoaWithin <- plm(ROA ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="within", effect = "time")
+  TobinWithin <- plm(TobinsQ ~ SPL + STC + AS + CaP + WaP + WastP + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
+  
+  ## pFtest
+  
+  pFtestRoa <- as.numeric(round(pFtest(RoaWithin, RoaPooling)$p.value, digits = 3))
+  pFtestTobin <- as.numeric(round(pFtest(TobinWithin, TobinPooling)$p.value, digits = 3))
+
+  ## Improve p-value understanding
+  pFtestRoa<-ifelse(pFtestRoa<0.01, paste(pFtestRoa, "***",sep = ""),
+		ifelse(pFtestRoa<0.05,paste(pFtestRoa,"**",sep = ""),
+		ifelse(pFtestRoa<0.1,paste(pFtestRoa,"*",sep = ""),pFtestRoa)))
+  pFtestTobin<-ifelse(pFtestTobin<0.01, paste(pFtestTobin,"***",sep = ""),
+		ifelse(pFtestTobin<0.05,paste(pFtestTobin,"**",sep = ""),
+		ifelse(pFtestTobin<0.1,paste(pFtestTobin,"*",sep = ""),pFtestTobin)))
+  
+# Based on the results of the tests, the two models need to be estimated with the pooling OLS estimations (i.e. model = "pooling" in plm). Let's consolidate into a nice stargazer table
+  
+stargazer(TobinPooling, RoaPooling, title = "The Impact of Process and Outcome-Based CEP on CFP", label = "Lag2", header = FALSE, single.row = TRUE, font.size = "tiny", omit.stat = "rsq", column.labels = c("Model (4)", "Model (5)"), type = "latex", align = FALSE, model.numbers = FALSE, table.placement = "!", add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
+                           c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
+
+```
+
+## Green Score as an Alternative
+
+```{r echo = FALSE, message = FALSE, error = FALSE, warning = FALSE, results = 'asis'}
+################################################
+###### GreenScore as an alternative ############
+################################################
+
+# I have already removed outliers from both model (i.e. Roa and TobinsQ) through the file = "Analysis/MakeFile_RemoveOutliers_Lag1.rmd". Consequently I just need to download them in this file.
+RoaNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/GreenScore/Roa.csv", header = TRUE, stringsAsFactors = FALSE)
+
+TobinNoOut <- read.csv(file = "Analysis/DataBase/DataSynchronization/NoOutliersLag1/GreenScore/TobinsQ.csv", header = TRUE, stringsAsFactors = FALSE)
+
+# I change names
+RoaNoOut <- RoaNoOut %>% setnames(old = c("GreenScore", "FinancialLeverage", "Roa"), new = c("GS", "Leverage", "ROA"))
+TobinNoOut <- TobinNoOut %>% setnames(old = c("GreenScore", "FinancialLeverage", "Roa"), new = c("GS", "Leverage", "ROA"))
+
+
+# I make both df a plm dataframe
+RoaNoOut <- RoaNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
+TobinNoOut <- TobinNoOut %>% pdata.frame(index = c("CompaniesIndex", "YearIndex"))
+
+# I test for Random Effect Model using the Lagrange Multiplier Tests for Panel Models. 
+
+  ## Pooling Model
+  RoaPooling <- plm(ROA ~ GS + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model="pooling")
+  TobinPooling <- plm(TobinsQ ~ GS + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model="pooling")
+
+
+  ## Plmtest
+  PlmtestRoa <- as.numeric(round(plmtest(RoaPooling, effect = "time", type = "bp")$p.value, digits = 3))
+  PlmtestTobin <- as.numeric(round(plmtest(TobinPooling, effect = "time", type = "bp")$p.value, digits = 3))
+
+  ## Improve p-value understanding
+  PlmtestRoa<-ifelse(PlmtestRoa<0.01, paste(PlmtestRoa,"***",sep = ""),
+		ifelse(PlmtestRoa<0.05,paste(PlmtestRoa,"**",sep = ""),
+		ifelse(PlmtestRoa<0.1,paste(PlmtestRoa,"*",sep = ""), PlmtestRoa)))
+  PlmtestTobin<-ifelse(PlmtestTobin<0.01, paste(PlmtestTobin,"***",sep = ""),
+		ifelse(PlmtestTobin<0.05,paste(PlmtestTobin,"**",sep = ""),
+		ifelse(PlmtestTobin<0.1,paste(PlmtestTobin,"*",sep = ""),PlmtestTobin)))
+  
+# I test for Fixed Effect Model using pFtest which is a test of individual and/or time effects based on the comparison of the within and the pooling model.
+  
+  ## Within Model with time effect
+  
+  RoaWithin <- plm(ROA ~ GS + FirmSize + Leverage + Growth + Industry, data = RoaNoOut, model = "within", effect = "time")
+  TobinWithin <- plm(TobinsQ ~ GS + FirmSize + Leverage + Growth + Industry, data = TobinNoOut, model = "within", effect = "time")
+  
+  ## pFtest
+  
+  pFtestRoa <- as.numeric(round(pFtest(RoaWithin, RoaPooling)$p.value, digits = 3))
+  
+  pFtestTobin <- as.numeric(round(pFtest(TobinWithin, TobinPooling)$p.value, digits = 3))
+  
+  ## Improve p-value understanding
+  pFtestRoa<-ifelse(pFtestRoa<0.01, paste(pFtestRoa,"***",sep = ""),
+		ifelse(pFtestRoa<0.05,paste(pFtestRoa,"**",sep = ""),
+		ifelse(pFtestRoa<0.1,paste(pFtestRoa,"*",sep = ""),pFtestRoa)))
+  pFtestTobin<-ifelse(pFtestTobin<0.01, paste(pFtestTobin,"***",sep = ""),
+		ifelse(pFtestTobin<0.05,paste(pFtestTobin,"**",sep = ""),
+		ifelse(pFtestTobin<0.1,paste(pFtestTobin,"*",sep = ""),pFtestTobin)))
+
+# Let's consolidate into a stargazer table
+  
+stargazer(TobinPooling, RoaWithin, title = "Green Score - an Alternative Variable for CEP", label = "GreenScoreResults", header = FALSE , font.size = "tiny", omit.stat = "rsq", type = "latex", align = FALSE, single.row = TRUE, model.numbers = FALSE, table.placement = "!", column.labels = c("Model (4)", "Model (5)"), add.lines = list(c("BPLM test (pvalue)", PlmtestTobin, PlmtestRoa),
+                           c("F test (pvalue)", pFtestTobin ,pFtestRoa)))
+
+
+```
 
 ----
 
 
 # Summary
 
-## Main findings and contributions
+## Main Findings and Contributions
 
-1. Contribution 1
+1. Process-based CEP positively influences outcome-based CEP
 
-2. Contribution 2
+<!--
+- Companies which link the remuneration of any member of a company’s senior executive team with the achievement of environmental performance targets, have a better WatP (+0.022%) and WastP (+0.025%)
 
-3. Contribution 3
+- The fact of having a sustainability committee on the board of directors level increases the CaP (+0.058%), WatP (+0.067%) and WastP (+0.046%)
 
-4. Contribution 4
+- Companies having their latest reported environmental metrics audited by a third party have a higher CaP (+0.057%), WatP (+0.068%) and WastP (+0.071%)
+-->
 
-## Limitations
+2. Both process and outcome-based CEP have a positive impact on CFP. This relationship is always positive, no matter the time horizon, and is stronger with a long-term perspective than a short-term perspective.
 
-1. Limitation 1
+<!--
+#### Regarding process-based CEP variables:
 
-2. Limitation 2
+- Companies which link the remuneration of any member of a company’s senior executive team with the achievement of environmental performance targets, are characterized by both a higher long-term CFP (+0.079) and short-term CFP (+0.008). 
 
-3. Limitation 3
+- The fact of having a sustainability committee on the board of directors level increases the short-term CFP (+0.012)
 
-4. Limitation 4
+- Companies having their latest reported environmental metrics audited by a third party have a higher long-term CFP (+0.158)
+
+#### Regarding outcome-based CEP variables: 
+
+- A 1% increase of carbon productivity increases the short-term CFP (+0.03) and a 1% increase of water productivity increases the long-term CFP (+0.337).
+
+-->
+
+3. Answerr the call of @EndrikatMakingsenseconflicting2014 who highlighted the need for a better understanding of the multidimensionality of both CEP and CFP constructs
 
 ----
 
-# References {.allowframebreaks}
-
-## References {.allowframebreaks}
+\begin{frame}[allowframebreaks]
+        \frametitle{References}
+        \bibliographystyle{amsalpha}
+        \bibliography{../bib_files/jabrefmaster.bib}
+\end{frame}
 
 \tiny

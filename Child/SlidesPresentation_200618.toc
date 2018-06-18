@@ -2,5 +2,6 @@
 \beamer@sectionintoc {2}{Theoretical Framework}{10}{0}{2}
 \beamer@sectionintoc {3}{Methodology}{16}{0}{3}
 \beamer@sectionintoc {4}{Results}{23}{0}{4}
-\beamer@sectionintoc {5}{Summary}{28}{0}{5}
-\beamer@sectionintoc {6}{References}{32}{0}{6}
+\beamer@sectionintoc {5}{Sensitivity Analyses}{27}{0}{5}
+\beamer@sectionintoc {6}{Summary}{31}{0}{6}
+\beamer@sectionintoc {7}{References}{36}{0}{7}
