@@ -19,7 +19,7 @@ output:
     fig_width: 5
     fig_height: 4
     fig_caption: yes
-    highlight: tango
+    highlight: haddock
 bibliography: References.bib
 csl: CSL/elsevier-harvard.csl
 nocite: | 
@@ -271,6 +271,8 @@ if (!require("plm")) install.packages("plm")
 library(plm) 
 if (!require("dplyr")) install.packages("dplyr")
 library(dplyr) 
+if (!require("purrr")) install.packages("purrr")
+library(purrr) 
 if (!require("data.table")) install.packages("data.table")
 library(data.table)
 if (!require("stargazer")) install.packages("stargazer")
@@ -654,12 +656,11 @@ stargazer(TobinPooling, RoaWithin, title = "Green Score - an Alternative Variabl
 
 3. Answerr the call of @EndrikatMakingsenseconflicting2014 who highlighted the need for a better understanding of the multidimensionality of both CEP and CFP constructs
 
-----
+#References
 
-\begin{frame}[allowframebreaks]
-        \frametitle{References}
-        \bibliographystyle{amsalpha}
-        \bibliography{../bib_files/jabrefmaster.bib}
-\end{frame}
+## References {.allowframebreaks}
 
 \tiny
+
+
+
