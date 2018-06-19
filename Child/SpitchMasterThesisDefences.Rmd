@@ -130,6 +130,47 @@ Ensuite, la thématique de mon mémoire peut souffrir d'un biais de simultanéit
 
 Finanelemtn, certains de mes modèles avaient du FE ce qui implique un problème d'endogénéité. En estimant ces modèles avec le FE estimation, alors, on supprime le FE soit mu_i. En effet, le FE estimation prend la forme suivante et on peut voir que via cette transformation, FE disparait.
 
+# Results
 
-....
+Passon désormais aux résultats de l'étude.
+
+## Process-Based CEP Positively Influences Outcome-Based CEP
+
+Concernant l'hypothèse 1 qui analyse l'effect de process-based CEP sur outcome-based CEP. Les trois modèles ont du FE et on donc été estimé avec le FE estimation.
+
+Mise à part le model 1 qui démontre un lien non significatif entre Cap et SPL, tout les autres estimateurs sont positifs et significatif. Ainsi, l'hypothèse 1 de mon étude est vérifiée et témoigne d'un lien positif entre process-based CEP et outcome-based CEP. Les entreprises qui mettent en place un management favorable au développement durable ont des meilleurs performances financière en terme d'indicateur de performance.
+
+## Both Process and Outcome-Based CEP Have a Positive Impact on CFP
+
+Concernant les hypothèses 2 à 5, qui analyse l'effet de outcomes-based CEP et process-based CEP sur CFP long term et court terme. Le model 4 ne possède ni FE ni RE et a donc été estimé avec le Pooled OLS estimation. Le model 5 possède du FE et a donc été estimé avec le FE estimation.
+
+Pour le model 4, les résultats montrent que SPL, AS et WaP améliore les performances financières long terme des entreprises.
+
+Pour le model 5, les résultats montrent que SPL, STC et CaP améliorent les performances financières court terme des entreprises.
+
+Ce qui est intérèssant à notifier, c'est le rapport de grandeur entre CFP long terme et court terme. CEP influences CFP long terme dans un ordre de grandeur presque de 10 fois plus important que ce qu'il n'influence CFP court terme. Par exemple, le fait d'avoir un système de paye qui rémunère le comité de direction pour les performances environnementales de l'E, cela augmente le CFP court terme de 0.008 alors que cela augmente le CFP long terme de 0.079. 
+
+Les hypotèses 2 à 4 sont donc vérifiées. Ainsi, autant Process-based CEP que Outcome-based CEP influence CFP court et long term.
+
+# Sensitivity Analyses
+
+Afin d'appuer la solidité de mes résultats, j'ai réalisé une analyse de sensitivité. 
+
+Tout d'abord, j'ai utilisé une variable instrumentale de deux ans. Les résultats restent les mêmes exepté pour le lien entre CaP et tobinsQ qui n'est plus significatif. 
+
+Ensuite, j'ai utilisé une variables alternative pour estimer CEP. J'ai utilisé le score environnementale attribué aux entreprises par Newsweek. Les résultats restent les mêmes et l'ordre de grandeur de 10 est toujours observé.
+
+Ainsi, j'en ai conclu que mes résultats étaient solides.
+
+# Main findings et contributions
+
+Il est venu le temps de conclure cette présentation et de souligner les trois résultats de cette étude:
+
+1. Les entreprises qui ont mis en place un système de management propice au développement durable sont charactérisée par de meilleur indicateurs de performance environnementale.
+
+2. Les entreprises qui ont ont de meilleur process et outcome-based CEP ont de meilleurs performances financières.
+
+3. Qu'on observe la relation sur le long terme ou bien le court terme, la relation entre CEP et CFP est toujours positive et la relation est plus forte (odre de 10) entre CEP et CFP long terme que CEP et CFP short terme.
+
+Ainsi, les entreprises ont tout intérêt à investir dans des stratégies environnementales. Cela leur sera rentable et ce sera bénéfique pour notre planète.
 

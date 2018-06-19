@@ -41,6 +41,8 @@ header-includes:
     \caption*{\scriptsize\textbf{Source}: Data coming from US EPA (2016) and Pieter Tans et al. (2018)}
 \end{figure}
 
+<!--
+
 ## Global Warming Is Not a Myth and Is Growing Fast 
 
 \begin{figure}[h]
@@ -58,6 +60,8 @@ header-includes:
     \includegraphics[width=0.9\textwidth, height=0.9\textheight,keepaspectratio]{figures/BeamerPresentation/AntarticMelting1992-2017.jpg}
     \caption*{\scriptsize\textbf{Source}: IMBIE team (2018)}
 \end{figure}
+
+-->
 
 ## Global Warming Represents a Threat for Companies
 
@@ -85,10 +89,9 @@ header-includes:
 
 This thesis **provides incentives** for companies to invest in environmental strategies and shows that **it does pay to be green**. Companies with better corporate environmental performance have better financal performance and the relation increases with a long-term perspective.
 
-----
-
 # Theoretical Framework
 
+<!--
 ## Corporate Financial Performance (i.e. CFP)
 
 ### Focus on two of the three-group classification of @Orlitzky2003:
@@ -105,6 +108,8 @@ This thesis **provides incentives** for companies to invest in environmental str
 
 2. **Outcome-based CEP** which reflects "the observable and quantifiable results of these efforts [@Delmas2011a] and refers to measures such as the number of released pollutants or the ratio of recycled waste to total waste". 
 
+-->
+
 ## Corporate Environmental And Financial Performance Nexus
 
 \begin{figure}[h]
@@ -114,6 +119,7 @@ This thesis **provides incentives** for companies to invest in environmental str
 \label{ResearchFramework}
 \end{figure}
 
+<!--
 ## Hypotheses
 
 - **Hypothesis 1.** Process-based CEP has a positive impact on Outcome-based CEP
@@ -125,8 +131,7 @@ This thesis **provides incentives** for companies to invest in environmental str
 - **Hypothesis 4.** Process-based CEP has a positive impact on short-term CFP
 
 - **Hypothesis 5.** Process-based CEP has a positive impact on long-term CFP
-
-----
+-->
 
 # Methodology
 
@@ -232,6 +237,7 @@ Y_{it} = \alpha + \beta_k X_{itk} + (\epsilon_{it} + \mu{i})
   \end{minipage}
 \end{figure}
 
+<!--
 ## Endogeneity Concern
 
 \scriptsize
@@ -260,7 +266,7 @@ Under FE, endogeneity is a concern. The Fixed Effect Estimation (i.e. equation \
 \label{FixedEffectsEstimation}
 \end{equation}
 
-----
+-->
 
 # Results
 
@@ -485,8 +491,7 @@ stargazer(TobinPooling, RoaWithin, title= "The Impact of Process and Outcome-Bas
 
 ```
 
-----
-
+<!--
 # Sensitivity Analyses 
 
 ## Lagged Instrument of 2 Years
@@ -623,9 +628,7 @@ stargazer(TobinPooling, RoaWithin, title = "Green Score - an Alternative Variabl
 
 
 ```
-
-----
-
+-->
 
 # Summary
 
@@ -643,7 +646,9 @@ stargazer(TobinPooling, RoaWithin, title = "Green Score - an Alternative Variabl
 
 2. Both process and outcome-based CEP have a positive impact on CFP
 
-3. This relationship is always positive, no matter the time horizon, and is stronger with a long-term perspective than a short-term perspective.
+3. This relationship is always positive, no matter the time horizon, and is stronger with a long-term perspective than a short-term perspective
+
+4. It pays to be green
 
 <!--
 #### Regarding process-based CEP variables:
@@ -660,10 +665,13 @@ stargazer(TobinPooling, RoaWithin, title = "Green Score - an Alternative Variabl
 
 -->
 
-#References
-\tiny
-
-## References {.allowframebreaks}
-\tiny
 
 ----
+
+\centering
+\huge Thank you,
+
+----
+
+## References
+\tiny
