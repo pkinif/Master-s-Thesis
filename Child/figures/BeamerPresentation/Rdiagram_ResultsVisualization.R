@@ -1,76 +1,52 @@
-###
-# Create a graph, select
-# the last node of the graph's
-# NDF, then, select the last
-# edge of the graph's EDF
-###
-
-devtools::install_github('rich-iannone/DiagrammeR')
 
 library(DiagrammeR)
-library(magrittr)
 
-nodes <- create_nodes(1:4)
+a_graph <-
+  create_graph() %>%
+  add_node() %>%
+  add_node() %>%
+  add_edge(
+    from = 1,
+    to = 2)
 
-edges <-
-  create_edges(
-    from = 1:4,
-    to = c(2:4, 1),
-    data = c(8.6, 2.8, 6.3, 4.5))
+a_graph %>%
+  render_graph(layout = "nicely")
 
-graph <-
-  create_graph(nodes, edges)
+b_graph <-
+  a_graph %>%
+  delete_edge(
+    from = 1,
+    to = 2)
 
-# Inspect the graph's NDF
-get_node_df(graph)
-#>   nodes type label
-#> 1     1          1
-#> 2     2          2
-#> 3     3          3
-#> 4     4          4
+c_graph <-
+  b_graph %>%
+  add_node(
+    from = 1,
+    to = 2)
 
-# Inspect the graph's EDF
-get_edge_df(graph)
-#>   from to rel data
-#> 1    1  2      8.6
-#> 2    2  3      2.8
-#> 3    3  4      6.3
-#> 4    4  1      4.5
+d_graph <-
+  c_graph %>%
+  add_node(
+    type = "type_a",
+    node_aes = node_aes(
+      color = "steelblue",
+      fillcolor = "lightblue",
+      fontcolor = "gray35"),
+    node_data = node_data(
+      value = 2.5)) %>%
+  add_edge(
+    from = 4,
+    to = 3,
+    rel = "interacted_with",
+    edge_aes = edge_aes(
+      color = "red",
+      arrowhead = "vee",
+      tooltip = "Red Arrow"),
+    edge_data = edge_data(
+      value = 2.5))
 
-# Select the last node in the graph's NDF and confirm
-# that the selection was made
-graph %>%
-  select_last_node %>%
-  get_selection
-#> [1] "4"
+d_graph %>%
+  render_graph(layout = "nicely")
 
-# Select the last edge in the graph's EDF and confirm
-# that the selection was made
-graph %>%
-  select_last_edge %>%
-  get_selection
-#>[1] "4->1"
 
-# Create a graph, node-by-node and
-# edge-by-edge and add attributes
-graph_2 <-
-  create_graph(
-    graph_attrs = "output = visNetwork") %>%
-  add_node %>%
-  select_last_node %>%
-  set_node_attrs_ws(
-    "timestamp", as.character(Sys.time())) %>%
-  set_node_attrs_ws("type", "A") %>%
-  clear_selection %>%
-  add_node %>%
-  select_last_node %>%
-  set_node_attrs_ws(
-    "timestamp", as.character(Sys.time())) %>%
-  set_node_attrs_ws("type", "B") %>%
-  add_edge(1, 2, "AB") %>%
-  select_last_edge %>%
-  set_edge_attrs_ws(
-    "timestamp", as.character(Sys.time()))
 
-# View the new graph
-graph_2 %>% render_graph

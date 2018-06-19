@@ -195,6 +195,7 @@ Y_{it} = \alpha + \beta_k X_{itk} + (\epsilon_{it} + \mu{i})
 
 - FE and RE models imply that OLS estimators of \(\beta_k\) are inconsistent
 
+<!--
 ## Panel Data 
 
 \scriptsize
@@ -216,6 +217,8 @@ Y_{it} = \alpha + \beta_k X_{itk} + (\epsilon_{it} + \mu{i})
 - It tests the individual and/or time effects based on the comparison of the within and the pooling model [@Croissant2008]. 
 
 - If H0 is verified, there is no FE in the panel data.
+
+-->
 
 ## Panel Data
 
@@ -658,12 +661,9 @@ stargazer(TobinPooling, RoaWithin, title = "Green Score - an Alternative Variabl
 -->
 
 #References
-
 \tiny
 
 ## References {.allowframebreaks}
-
 \tiny
-
 
 ----

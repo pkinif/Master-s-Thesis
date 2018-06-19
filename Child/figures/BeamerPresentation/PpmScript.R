@@ -35,16 +35,33 @@ arrange(mydat2, Year)
 
 
 ## NOA Data#
+### From 2008-2018
 ### data coming from ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_trend_gl.txt
 
-dat <- read.table("Child/figures/BeamerPresentation/co2_trend_gl.txt")
-colnames(dat) <- c("Year", "Month", "Day", "PPM")
+data <- read.table("Child/figures/BeamerPresentation/co2_trend_gl.txt")
+colnames(data) <- c("Year", "Month", "Day", "PPM")
 
 library(tidyr)
-dat1 <- dat %>% unite("Year", c("Year", "Month", "Day"), sep = "-")
-dat1$Year <- as.Date(dat1$Year)
-str(dat1)
+data1 <- data %>% unite("Year", c("Year", "Month", "Day"), sep = "-")
+data1$Year <- as.Date(data1$Year)
+str(data1)
 
+### From 1959-2017
+###a Data coming from ftp://aftp.cmdl.noaa.gov/products/trends/co2/co2_annmean_mlo.txt
+
+dat <- read.table("Child/figures/BeamerPresentation/co2_annmean_mlo.txt")
+colnames(dat) <- c("Year" $ "PPM", "unc")
+dat <- dat[,-3]
+str(dat)
+
+### From 1900-1958
+#### I use mydat2
+
+DixNeuf <- mydat2 %>% filter(Year > 1899, Year < 1959)
+
+### From 1900-2017
+DixNeufFull <- rbind.data.frame(DixNeuf, dat)
+View(DixNeufFull)
 
 ##creation of a ggplot2
 library(ggplot2)
@@ -53,9 +70,10 @@ library(gridExtra)
 
 theme_set(theme_bw())
 p1 <- ggplot(mydat2, aes(Year, PPM, frame = Year)) +
-  geom_point() 
-p2 <- ggplot(dat1, aes(Year, PPM, frame = Year)) + geom_point() 
-grid.arrange(p1, p2, ncol=2)
+  geom_point() + geom_smooth() 
+p2 <- ggplot(DixNeufFull, aes(Year, PPM, frame = Year)) + geom_point() + geom_smooth() + scale_x_continuous(breaks = seq(1900, 2010, by = 20))
+grid.arrange(p1, p2, ncol=2) 
+
 
 
 ```     

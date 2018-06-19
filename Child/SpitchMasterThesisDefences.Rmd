@@ -1,0 +1,135 @@
+---
+title: "Spitch Presentation"
+author: "Kinif Pierrick"
+date: "19 juin 2018"
+output: 
+  pdf_document:
+    number_sections: yes
+fontsize: 11pt
+indent: true
+---
+
+# Slide 1
+
+Bonjour,
+
+Je vais donc commencer la présentation de mon mémoire. J'ai décidé d'orienter ma thèse vers la finance durable et plus particulièrement, j'ai souhaité démontrer les incitations financières pour les entreprises à investir dans des stratégies environnementales. 
+
+Ainsi, le titre de mon mémoire est: *Towards Green Companies: A Panel Data Study of The Environmental and Financial Performance Nexus*. 
+
+# TDM
+
+Le fil rouge de la présentation sera le suivant. Une brève introduction qui souligera l'importance du sujet. En deuxième lieu, je définirai la structure théorique sur laquelle je me suis basé. Ensuite, je développerai ma méthodologie et terminerai sur les principaux résultats de cette étude.
+
+# Introduction
+
+## First graphic: Evolution of carbon dioxide
+
+Le premier constat qui m'a motivé à traiter de cette thématique est le suivant: le réchauchement climatique est bien réel et s'accèlère de plus en plus.
+
+Regardez ces deux graphiques. Ils illustrent l'évolution global de la concentration de dioxyde de carbon à travers le temps. L'unité de mesure est la PPM, soit la partie par million et représente le nombre de molécule de carbon dioxide par 1 000 000 de particule d'aire. Pendant plus de 800 000 années, le niveau de concentration de carbon de dioxide n'a jamais dépassé les 300 ppm. Ce niveau de 300 ppm a été atteint pour la première fois au début du 19e siècle et depuis, il n'a cessé de croire pour atteindre aujourd'hui un niveau de plus de 400 ppm.
+
+## Second graphic: Evolution of temprature
+
+Cette croissance de dioxide de carbon n'est pas resté sans conséquences. Le deuxième graphique témoigne qu'en un peu plus d'un siècle, la température global a augmenté d'un dégré celcius.
+
+## Troisième graphic: Fonte des glaces
+
+Cette montée de température affecte la fonte des glaces dans les pôles. Ces dernières années, l'IMBIE team, un groupe internationale de scientifique ont mené deux expéditions pour évaluer le niveau de fonte des glaces en Antarctique. Une en 2012 et l'autre entre 2016 et 2018.
+
+L’Antarctique a perdu 2720 milliards de tonnes de glace depuis 1992, assez pour faire monter le niveau global des océans de 7.6 millimètres. Cette tendance s’est accélérée de façon spectaculaire au cours des cinq dernières années. La première expédition démontrait que l'Antartique avait perdu de 1992 à 2011, annuellement et en moyenne 71 milliard de tonne de glace par an. Entre 2012 et 2017, le taux de fonte des glaces annuelles s'est élevé à 219 milliars de tonnes par an.
+
+## Global Warming is a threat for companies
+
+Le réchauffement climatique représente une importante menace pour les entreprises. Mise à part, les facteurs de réduction des ressources premières, des effets du réchauffement climatique sur la géograhie de la terre, de la montée des incertitudes ou encore de l'augementation des catastrophes naturelles.... l'Antartique possède également assez d'eau pour faire monter le niveau de la mer de 58 mètres. Comme souligné par le rapport de la commission d'affaire et de développement durable, les entreprises ont tout intérêt à s'engagement dans le développent durable sous peine qu'il n'y ait bientot plus aucun monde pour faire du business... :)
+
+## Turn the threat into an opportunity
+
+Les entreprises sont d'importantes parties prenantes du réchauffement climatique. Elles y ont contribué de manière tres importante. Mais elles peuvent également devenir la solution aux problèmes. Elles peuvent transformer la menace du réchauffement climatique en opportunité rentable. 
+
+Ceci est l'objet même de mon mémoire. J'ai voulu montrer aux entreprises qu'investir dans des stratégies environnementales ne représente pas qu'un accroissement des couts. Mais qu'au contraire cela peu être profitable pour elles et qu'il y a un intérêt financier à devenir une entreprise verte.
+
+# Theoretical Framework
+
+Le cadre de recherche que j'ai utilisé pour mener à bien ce mémoire implique deux concepts principaux.
+
+Les performances financieres des entreprises, soit CFP et les performances environnementales des entreprises, soit cEP.
+
+Ces deux concepts sont largement définis dans la littérature.
+
+## CFP
+
+CFP peut être divisé en deux catégories. 
+
+1. Les indicateurs de performances de marchés qui considère que le rendement doit être mesuré par la perspective des actionnaires. Par exemple, le price earning ratio ou encore le Q de Tobin. La littérature considère ces indicateurs comme des proxies pour mesurer la performance financière à LT des entreprises
+
+2. Les indicateurs de performance basés sur la comptabilite, par ex le ROE et ROA. Ceux-ci sont considérés comme des proxies pour mesurer la performance à cout terme. 
+
+## CEP
+
+CEP est divisé en deux catégories. D'une part Outcome-based CEP qui renvoit aux résultats quantifiables des entreprises en terme d'effort environnementale. Par exemple un ratio qui mesure la part des déchets recyclés des entreprises. D'autre part, Process-based CEP qui se réfère au management mis en place par l'entreprise pour atteindre des objectifs environnementales.
+
+## Research Framework
+
+Ainsi, mon cadre de recherche peut être illustrer comme ceci.
+
+D'une part, j'ai voulu analysé si les process-based CEP influence positivement les outcomes-based CEP. L'idée derrière cela est que si une entreprises à mis en place un bon management favorable aux déveollepement durable alors ces indicateurs de performances environnement devrait être plus élevé. Ensuite, j'ai testé si outcomes-based CEP et process-based CEP influencait la performance financières des entreprieses. J'ai fait une distinction entre les performances financières long term et court terme.
+
+Les données que j'ai utilisée correspondent aux indicateurs de performance utilisé par le Newsweek green ranking qui est un un ranking qui attribue un score environnementale aux entreprises. Ce score est une moyenne pondérée de différent indicateurs de performance.
+
+Pour mesurer process-based CEP, j'ai considé SP, STL et AS.
+
+SPL correspond à une dummy variable qui obtient le score 1 si l'entreprise rémunère les membres du comité de direction en fonction des entreprises environnementales de l'E.
+
+STC correspond à une dummy variable qui otbient le score 1 si l'E possède une branche du comitée de direction qui s'occupe en partie mais non exclusivement des sujets de développement durable.
+
+AS correpond à une dummy variable qui obteint le score 1 si l'entreprise fait auditée ses mesures de performance environnementale.
+
+Carbon, Waste et Water productivity sont des indicateurs de performance qui mesure la productivité des entreprises en terme d'émission carbone, de gestion de l'eau et des déchets. Le score attribué varie entre 0% et 100%.
+
+Pour mesurer les performances financières court term, j'ai utilisé le ROA et le Q de tobin pour les performances finières long term.
+
+
+## Hypothèse
+
+Les hypothèses de cette étude peuvent se résumer comme suivant:
+
+...
+
+# Methodology
+
+## Econometric Model
+
+Pour tester ma première H, j'ai utilisé le model économétrique en equation une. Celui-ci considèrent comme variable dépendente les indicateur outcome-based CEP et en VI les indicateurs process-based CEP. 
+
+Pour tester H2-H5, j'ai utilisé le modèle économétrique de l'équation 2. Les variables Indépendantes sont les indicateurs de Process et Outcome-based CEP. En VD, on retrouve les variables de performances financières soit ROA et Q de Tobin.
+
+Pour les deux modèles, j'ai inclu un vecteur de variables de controle, soit la taille de la firme, le levier financier, le secteur d'industrie de l'E et finalement la croissance de l'entreprise. Pour les deux, j'inclus également un effet temps.
+
+## Panel Data
+
+### General Form
+
+Pour régresser ces deux modèles, j'ai utilisé la méthodolgie des donées en panel ou panel data en anglais.
+
+La forme général des panel data se présente comme l'equation 3. Une variable dépendente, un, un vecteur de paramètre et de variables indépendante et un terme d'erreur.
+
+Ce terme d'erreur peut être décomposé en deux parties. Le premier qui mu_i soit l'effet qu'on ne peut observé dans le model. Le deuxième epsilon it qui est bien connu et indépendent de Xit et mu_i.
+
+La première étape dans un panel data c'est de déterminer si Mu_i est corrélé avec les variables indépendantes. Si oui, alors alors on peut considérer Mu_i comme un effet fixe et sinon on le considérera comme un effet aléatoire. Dans les deux cas, les modèles économétrique nes peuvent être estimé avec OLS car cela produirait des estimateurs inconsistant. 
+
+### Process
+
+pour déterminer la présence de FE ou RE dans mes modèles, j'ai utilisé le BPLM test pour tester pour RE et un F test pour tester pour FE. Une fois que j'avais identifié la présence ou non, j'ai suivis ce processus. Si FE, alors, j'utilise le FE estimation. Sinon, et pas de RE alors, le Pooled OLS estimation peut être utilisé. Si pas de FE mais RE, alors j'utilise un Hausman test pour trancher entre le RE model ou FE model. Dans mon cas, aucun de mes modèles n'avaient de RE. Ainsi, j'ai estimé mes modèles avec soit le Pooled OLS estimation ou alors le FE estimation.
+
+### Problème d'endogénéité
+
+Un des principales problèmes de mes modèles est la présence d'endogénéité. soit la corrélation entre le terme d'erreur et les variables indépendantes. Pour traiter ce problème, j'ai tout d'abord inclus un vecteur de variable de controle qui prévienne du biais d'omission de variables. 
+
+Ensuite, la thématique de mon mémoire peut souffrir d'un biais de simultanéité dans le sens ou CEP influence CFP mais CFP influence également CEP. Une E qui a de meilleur performance financière aura tendance à investir plus dans CEP et à l'inverse plus une E investit dans CEP, plus ses performances financières s'amélioreront. Pour prévenir ce biais, j'ai inclus dans mon modèle une variable dépendante laggée en t+1.
+
+Finanelemtn, certains de mes modèles avaient du FE ce qui implique un problème d'endogénéité. En estimant ces modèles avec le FE estimation, alors, on supprime le FE soit mu_i. En effet, le FE estimation prend la forme suivante et on peut voir que via cette transformation, FE disparait.
+
+
+....
+
