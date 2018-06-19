@@ -72,7 +72,9 @@ header-includes:
 
 - **2011-2100** Sea Level Rise expected between +0.20m (95%) and +1m (5%) [@Pickering2017]
 
+<!--
 - "The ice sheets of Antarctica hold enough water to raise global sea level by 58 meters" [@Fretwell2013]
+-->
 
 - *"... the costs and uncertainty of unsustainable development could swell until there is no viable world in which to do business."* [@BusinessandSustainableDevelopmentCommission2017, p12]
 
