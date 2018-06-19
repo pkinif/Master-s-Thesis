@@ -66,13 +66,15 @@ header-includes:
 ## Global Warming Represents a Threat for Companies
 
 
-- Resource depletion, effect on geography, increase of incertainty, increase of natural  disasters,...
+- **1880 - 2017:** +1°(C) of the world's temperature [@GistempTeam2018]
+
+- **1900-2011:** Sea Level Rise of 0.19m [@ImbieTeam2018]
+
+- **2011-2100** Sea Level Rise expected between +0.20m (95%) and +1m (5%) [@Pickering2017]
 
 - "The ice sheets of Antarctica hold enough water to raise global sea level by 58 meters" [@Fretwell2013]
 
-- The @BusinessandSustainableDevelopmentCommission2017 (p12) report states: 
-
-> *"... businesses need to pursue social and environmental sustainability as avidly as they pursue market share and shareholder value... If they don’t, the costs and uncertainty of unsustainable development could swell until there is no viable world in which to do business."*
+- *"... the costs and uncertainty of unsustainable development could swell until there is no viable world in which to do business."* [@BusinessandSustainableDevelopmentCommission2017, p12]
 
 ## Turn the Threat into an Opportunity
 
@@ -85,9 +87,10 @@ header-includes:
 
 \vfill
 
-### Contribution of this thesis
+\huge
+\centering
 
-This thesis **provides incentives** for companies to invest in environmental strategies and shows that **it does pay to be green**. Companies with better corporate environmental performance have better financal performance and the relation increases with a long-term perspective.
+Does it pay to be green?
 
 # Theoretical Framework
 
@@ -190,7 +193,7 @@ Y_{it} = (\alpha + \mu{i}) + \beta_k X_{itk} + \epsilon_{it}
 \label{Fixed}
 \end{equation}
 
-else, \(\mu_{i}\) is considered as the *Fixed Effect* (i.e. FE) and equation \ref{PanelData} becomes:
+else, \(\mu_{i}\) is considered as the *Random Effect* (i.e. RE) and equation \ref{PanelData} becomes:
 
 \begin{equation}
 \centering
@@ -223,7 +226,6 @@ Y_{it} = \alpha + \beta_k X_{itk} + (\epsilon_{it} + \mu{i})
 
 - If H0 is verified, there is no FE in the panel data.
 
--->
 
 ## Panel Data
 
@@ -237,7 +239,7 @@ Y_{it} = \alpha + \beta_k X_{itk} + (\epsilon_{it} + \mu{i})
   \end{minipage}
 \end{figure}
 
-<!--
+
 ## Endogeneity Concern
 
 \scriptsize
@@ -632,7 +634,8 @@ stargazer(TobinPooling, RoaWithin, title = "Green Score - an Alternative Variabl
 
 # Summary
 
-## Main Findings and Contributions
+
+## It pays to be green !
 
 1. Process-based CEP positively influences outcome-based CEP
 
@@ -647,8 +650,6 @@ stargazer(TobinPooling, RoaWithin, title = "Green Score - an Alternative Variabl
 2. Both process and outcome-based CEP have a positive impact on CFP
 
 3. This relationship is always positive, no matter the time horizon, and is stronger with a long-term perspective than a short-term perspective
-
-4. It pays to be green
 
 <!--
 #### Regarding process-based CEP variables:
@@ -669,7 +670,7 @@ stargazer(TobinPooling, RoaWithin, title = "Green Score - an Alternative Variabl
 ----
 
 \centering
-\huge Thank you,
+\huge Thank you
 
 ----
 
